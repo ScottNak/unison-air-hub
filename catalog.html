@@ -183,6 +183,10 @@
         </div>
       </div>
       <div class="controls utility-row">
+        <button class="reset-link" id="export-owned-btn">&#11015; Export owned</button>
+        <label class="reset-link" style="cursor:pointer;">&#11014; Import owned
+          <input type="file" id="import-owned-file" accept="application/json" style="display:none;">
+        </label>
         <button class="reset-link" id="clear-owned">&#8634; Clear owned marks</button>
         <span class="owned-count" id="owned-count"></span>
       </div>
@@ -212,7 +216,9 @@
       own bond or discography progress, so this list is a common reference across accounts. This page checks for
       a newer card database only when you click <b>Check for update</b> - it never polls in the background.
       <b>Owned</b> marks are stored only in this browser - nothing is uploaded or synced anywhere, and clearing
-      your browser data clears them too. <b>Center Skill</b> filter groups S.teller/Veaut-style cards by the text
+      your browser data clears them too, so use <b>Export owned</b> to save a backup file and <b>Import owned</b>
+      to load it back (here, on another device, or after clearing your browser data - import merges with
+      whatever's already marked, it never overwrites). <b>Center Skill</b> filter groups S.teller/Veaut-style cards by the text
       before their "+" (e.g. "Da85%+&lt;mechanic text&gt;" filters under "Da85%"), not as one-off categories.
       Song and Center Skill support selecting multiple values (ctrl/cmd-click, or shift-click for a range).
     </div>
@@ -291,12 +297,14 @@ const tbody = document.getElementById('tbody');
 const countLine = document.getElementById('count-line');
 const colorFiltersEl = document.getElementById('color-filters');
 
-// --- Owned tracking (Phase 1: local marker + filter only) ---------------
+// --- Owned tracking (Phase 1: local marker + filter + Export/Import) -----
 // Purely visitor-local - stored in this browser's own localStorage, never
 // uploaded or synced anywhere. Not the same key/shape as Scott's personal
 // owned.json workflow; this is a separate, unrelated feature for visitors
-// of the public catalog. No export/import yet, no scoring - just a mark +
-// filter so a visitor can browse their own collection.
+// of the public catalog. Export/Import (below) is the backup/transfer
+// mechanism, added 2026-07-31 so visitors can't silently lose marks to a
+// cleared cache - still no scoring, just a mark + filter so a visitor can
+// browse their own collection.
 const OWNED_KEY = 'uniair_public_owned';
 
 function cardKey(c) { return c.member + '|' + c.title; }
@@ -346,6 +354,54 @@ document.getElementById('clear-owned').addEventListener('click', () => {
     saveOwned(ownedSet);
     render();
   }
+});
+
+// Export/Import: ownedSet only lives in this browser's localStorage (see
+// the Phase 1 comment above), so this is the one way to back it up or move
+// it to another device/browser - export a small JSON file here, import it
+// wherever you want the marks to also apply. Import MERGES into whatever
+// is already marked on this browser rather than replacing it, so re-
+// importing an old backup can never lose marks you've made since.
+document.getElementById('export-owned-btn').addEventListener('click', () => {
+  const list = Object.keys(ownedSet).map(key => {
+    const i = key.indexOf('|');
+    return { member: key.slice(0, i), title: key.slice(i + 1) };
+  });
+  const blob = new Blob([JSON.stringify(list, null, 1)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'uniair_catalog_owned.json';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+});
+
+document.getElementById('import-owned-file').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    let list;
+    try { list = JSON.parse(reader.result); } catch (err) {
+      alert('Could not parse that file: ' + err.message);
+      return;
+    }
+    if (!Array.isArray(list)) {
+      alert('That file doesn\'t look like an exported owned-cards file (expected a list).');
+      return;
+    }
+    let added = 0;
+    list.forEach(entry => {
+      if (!entry || !entry.member || !entry.title) return;
+      const key = entry.member + '|' + entry.title;
+      if (!ownedSet[key]) { ownedSet[key] = true; added++; }
+    });
+    saveOwned(ownedSet);
+    render();
+    alert('Imported ' + added + ' new owned mark(s) (merged with what was already marked here).');
+  };
+  reader.readAsText(file);
+  e.target.value = '';
 });
 
 tbody.addEventListener('click', (e) => {
