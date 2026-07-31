@@ -44,8 +44,6 @@
   }
   .chip.active { color: #fff; border-color: transparent; }
   .chip.active-neutral { background: #2d2d42; color: #fff; }
-  .count-line { font-size: 11.5px; color: #888; margin: 0 0 8px; }
-
   .table-scroll { overflow-x: auto; max-height: 68vh; overflow-y: auto; border-radius: 10px; border: 1px solid #eee; }
   table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
   thead th {
@@ -69,13 +67,13 @@
   .cs-cell { max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
   .owned-th, .owned-cell { min-width: 130px; }
 
-  .owned-tag { font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 999px; background: #dff3e0; color: #1c7a2e; }
+  .owned-tag { font-size: 11px; font-weight: 800; padding: 3px 9px; border-radius: 999px; background: #1c7a2e; color: #fff; letter-spacing: 0.2px; }
   .owned-btn, .unown-btn {
     appearance: none; border: none; cursor: pointer; font-weight: 800; font-size: 10.5px;
     padding: 3px 8px; border-radius: 5px; line-height: 1.4; margin-left: 4px;
   }
-  .owned-btn { background: #111; color: #fff; }
-  .owned-btn:hover { background: #333; }
+  .owned-btn { background: #1c7a2e; color: #fff; }
+  .owned-btn:hover { background: #155e22; }
   .unown-btn { background: #c93b7f; color: #fff; }
   .unown-btn:hover { background: #a82f68; }
   .filter-toggle-label {
@@ -85,13 +83,21 @@
   .filter-toggle-label:hover { border-color: #b8bad0; }
   .filter-toggle-label input[type="checkbox"] { accent-color: #2d2d42; width: 14px; height: 14px; }
 
-  .utility-row { justify-content: flex-end; margin-top: -2px; }
+  .utility-row { justify-content: space-between; margin-top: -2px; }
+  .utility-row-right { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
   .reset-link {
     appearance: none; border: none; background: none; cursor: pointer;
     font-size: 11px; color: #888; text-decoration: underline; padding: 4px;
   }
   .reset-link:hover { color: #444; }
-  .owned-count { font-size: 11.5px; color: #1c7a2e; font-weight: 700; }
+
+  .mode-switch { display: inline-flex; background: #eceef4; border-radius: 999px; padding: 3px; gap: 2px; }
+  .mode-switch-btn {
+    appearance: none; border: none; cursor: pointer; font-size: 12px; font-weight: 700;
+    padding: 6px 16px; border-radius: 999px; background: transparent; color: #666;
+  }
+  .mode-switch-btn.active { background: #2d2d42; color: #fff; }
+  .mode-switch-btn:hover:not(.active) { color: #333; }
 
   .filters-panel {
     background: #f5f6fb; border: 1px solid #e4e6f0; border-radius: 12px;
@@ -183,14 +189,17 @@
         </div>
       </div>
       <div class="controls utility-row">
-        <button class="reset-link" id="export-owned-btn">&#11015; Export owned</button>
-        <label class="reset-link" style="cursor:pointer;">&#11014; Import owned
-          <input type="file" id="import-owned-file" accept="application/json" style="display:none;">
-        </label>
-        <button class="reset-link" id="clear-owned">&#8634; Clear owned marks</button>
-        <span class="owned-count" id="owned-count"></span>
+        <div class="mode-switch" id="mode-switch" role="group" aria-label="Owned marks mode">
+          <button type="button" class="mode-switch-btn active" data-mode="view">View</button>
+          <button type="button" class="mode-switch-btn" data-mode="add">Add</button>
+        </div>
+        <div class="utility-row-right">
+          <button class="reset-link" id="export-owned-btn">&#11015; Export owned</button>
+          <label class="reset-link" style="cursor:pointer;">&#11014; Import owned
+            <input type="file" id="import-owned-file" accept="application/json" style="display:none;">
+          </label>
+        </div>
       </div>
-      <p class="count-line" id="count-line"></p>
       <div class="table-scroll">
         <table>
           <thead>
@@ -215,6 +224,8 @@
       Stats, SK%, and Center Skill come straight from each card's own definition - not affected by any player's
       own bond or discography progress, so this list is a common reference across accounts. This page checks for
       a newer card database only when you click <b>Check for update</b> - it never polls in the background.
+The <b>View/Add</b> switch controls the Owned column: View just shows a
+      badge on cards you've marked, Add shows +Owned/Remove buttons for actually marking them.
       <b>Owned</b> marks are stored only in this browser - nothing is uploaded or synced anywhere, and clearing
       your browser data clears them too, so use <b>Export owned</b> to save a backup file and <b>Import owned</b>
       to load it back (here, on another device, or after clearing your browser data - import merges with
@@ -292,9 +303,12 @@ let selectedCsBases = new Set();
 let skMinVal = 0;
 let ownedOnly = false;
 let excludeGrads = false;
+let editOwned = false; // View/Add mode switch - View (default) shows a quiet
+// badge instead of a +Owned/Remove button on every one of 5433 rows; Add
+// switches to the editable buttons. Resets to View on reload (in-memory
+// only, not persisted to localStorage).
 
 const tbody = document.getElementById('tbody');
-const countLine = document.getElementById('count-line');
 const colorFiltersEl = document.getElementById('color-filters');
 
 // --- Owned tracking (Phase 1: local marker + filter + Export/Import) -----
@@ -326,17 +340,28 @@ function unmarkOwned(key) {
   saveOwned(ownedSet);
   render();
 }
-function updateOwnedCount() {
-  document.getElementById('owned-count').textContent =
-    Object.keys(ownedSet).length + ' owned (this browser)';
-}
 function ownedCell(c) {
-  const key = encodeURIComponent(cardKey(c));
-  if (ownedSet[cardKey(c)]) {
-    return '<span class="owned-tag">Owned</span><button class="unown-btn" data-key="' + key + '">Remove</button>';
+  const isOwned = !!ownedSet[cardKey(c)];
+  if (!editOwned) {
+    // View mode (default): just a badge, or nothing - no buttons cluttering
+    // every row. Switch to Add mode to get the Add/Remove buttons back for
+    // actually editing marks.
+    return isOwned ? '<span class="owned-tag">&#10003; Owned</span>' : '';
   }
-  return '<button class="owned-btn" data-key="' + key + '">+ Owned</button>';
+  const key = encodeURIComponent(cardKey(c));
+  if (isOwned) {
+    return '<button class="unown-btn" data-key="' + key + '">Remove</button>';
+  }
+  return '<button class="owned-btn" data-key="' + key + '">Add</button>';
 }
+
+document.querySelectorAll('#mode-switch .mode-switch-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    editOwned = btn.dataset.mode === 'add';
+    document.querySelectorAll('#mode-switch .mode-switch-btn').forEach(b => b.classList.toggle('active', b === btn));
+    render();
+  });
+});
 
 document.getElementById('owned-filter').addEventListener('change', (e) => {
   ownedOnly = e.target.checked;
@@ -346,14 +371,6 @@ document.getElementById('owned-filter').addEventListener('change', (e) => {
 document.getElementById('grad-filter').addEventListener('change', (e) => {
   excludeGrads = e.target.checked;
   render();
-});
-
-document.getElementById('clear-owned').addEventListener('click', () => {
-  if (confirm('Clear all "Owned" marks in this browser? This only affects this browser/device - nothing is synced anywhere, so this can\'t be undone from another device.')) {
-    ownedSet = {};
-    saveOwned(ownedSet);
-    render();
-  }
 });
 
 // Export/Import: ownedSet only lives in this browser's localStorage (see
@@ -480,8 +497,6 @@ function render() {
     return 0;
   });
 
-  countLine.textContent = rows.length + ' of ' + CARDS.length + ' cards';
-
   document.querySelectorAll('thead th').forEach(th => {
     th.classList.toggle('sorted', th.dataset.key === sortKey);
     th.setAttribute('data-arrow', sortDir === 1 ? '▲' : '▼');
@@ -507,7 +522,6 @@ function render() {
   });
   tbody.innerHTML = '';
   tbody.appendChild(frag);
-  updateOwnedCount();
 }
 
 function esc(s) {
