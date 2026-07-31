@@ -68,6 +68,23 @@
 
   .cs-cell { max-width: 320px; overflow: hidden; text-overflow: ellipsis; }
 
+  .owned-tag { font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 999px; background: #dff3e0; color: #1c7a2e; }
+  .owned-btn, .unown-btn {
+    appearance: none; border: none; cursor: pointer; font-weight: 800; font-size: 10.5px;
+    padding: 3px 8px; border-radius: 5px; line-height: 1.4; margin-left: 4px;
+  }
+  .owned-btn { background: #111; color: #fff; }
+  .owned-btn:hover { background: #333; }
+  .unown-btn { background: #c93b7f; color: #fff; }
+  .unown-btn:hover { background: #a82f68; }
+  .owned-only-label { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #444; cursor: pointer; }
+  .reset-link {
+    appearance: none; border: none; background: none; cursor: pointer;
+    font-size: 11px; color: #888; text-decoration: underline; padding: 4px;
+  }
+  .reset-link:hover { color: #444; }
+  .owned-count { font-size: 11.5px; color: #1c7a2e; font-weight: 700; margin-left: auto; }
+
   .note {
     background: rgba(255,255,255,0.85); border-radius: 12px; padding: 14px 18px;
     font-size: 11.5px; color: #555; line-height: 1.5; margin-top: 18px;
@@ -87,6 +104,11 @@
       <div class="controls">
         <input type="text" class="search-box" id="search" placeholder="Search member or song title...">
         <div class="chip-row" id="color-filters"></div>
+        <label class="owned-only-label"><input type="checkbox" id="owned-filter"> Owned only</label>
+      </div>
+      <div class="controls">
+        <button class="reset-link" id="clear-owned">&#8634; Clear owned marks</button>
+        <span class="owned-count" id="owned-count"></span>
       </div>
       <p class="count-line" id="count-line"></p>
       <div class="table-scroll">
@@ -102,6 +124,7 @@
               <th data-key="pe">Pe</th>
               <th data-key="sk">SK%</th>
               <th data-key="cs">Center Skill</th>
+              <th>Owned</th>
             </tr>
           </thead>
           <tbody id="tbody"></tbody>
@@ -112,6 +135,8 @@
       Stats, SK%, and Center Skill come straight from each card's own definition - not affected by any player's
       own bond or discography progress, so this list is a common reference across accounts. This page checks for
       a newer card database only when you click <b>Check for update</b> - it never polls in the background.
+      <b>Owned</b> marks are stored only in this browser - nothing is uploaded or synced anywhere, and clearing
+      your browser data clears them too.
     </div>
   </div>
 
@@ -158,6 +183,13 @@ document.getElementById('check-update-btn').addEventListener('click', async () =
       updateVersionLabel();
       render();
       statusEl.textContent = 'Updated to ' + DB_VERSION + '.';
+      // The live re-render above already reflects the new card data, but
+      // this page's own HTML/JS (catalog.html) may also have changed since
+      // it was loaded - a data-only fetch can't pick that up. Offer a
+      // refresh so the page code itself is current too, without forcing it.
+      if (confirm('Updated to ' + DB_VERSION + '. Refresh the page now to make sure you also have the latest version of the page itself?')) {
+        location.reload();
+      }
     }
   } catch (err) {
     statusEl.textContent = 'Update check failed (' + err.message + ') - has the DB file been uploaded yet?';
@@ -170,10 +202,70 @@ let sortKey = 'tot';
 let sortDir = -1; // 1 asc, -1 desc
 let activeColor = 'all';
 let searchTerm = '';
+let ownedOnly = false;
 
 const tbody = document.getElementById('tbody');
 const countLine = document.getElementById('count-line');
 const colorFiltersEl = document.getElementById('color-filters');
+
+// --- Owned tracking (Phase 1: local marker + filter only) ---------------
+// Purely visitor-local - stored in this browser's own localStorage, never
+// uploaded or synced anywhere. Not the same key/shape as Scott's personal
+// owned.json workflow; this is a separate, unrelated feature for visitors
+// of the public catalog. No export/import yet, no scoring - just a mark +
+// filter so a visitor can browse their own collection.
+const OWNED_KEY = 'uniair_public_owned';
+
+function cardKey(c) { return c.member + '|' + c.title; }
+
+function loadOwned() {
+  try { return JSON.parse(localStorage.getItem(OWNED_KEY) || '{}'); } catch (e) { return {}; }
+}
+function saveOwned(o) { localStorage.setItem(OWNED_KEY, JSON.stringify(o)); }
+
+let ownedSet = loadOwned();
+
+function markOwned(key) {
+  ownedSet[key] = true;
+  saveOwned(ownedSet);
+  render();
+}
+function unmarkOwned(key) {
+  delete ownedSet[key];
+  saveOwned(ownedSet);
+  render();
+}
+function updateOwnedCount() {
+  document.getElementById('owned-count').textContent =
+    Object.keys(ownedSet).length + ' owned (this browser)';
+}
+function ownedCell(c) {
+  const key = encodeURIComponent(cardKey(c));
+  if (ownedSet[cardKey(c)]) {
+    return '<span class="owned-tag">Owned</span><button class="unown-btn" data-key="' + key + '">Remove</button>';
+  }
+  return '<button class="owned-btn" data-key="' + key + '">+ Owned</button>';
+}
+
+document.getElementById('owned-filter').addEventListener('change', (e) => {
+  ownedOnly = e.target.checked;
+  render();
+});
+
+document.getElementById('clear-owned').addEventListener('click', () => {
+  if (confirm('Clear all "Owned" marks in this browser? This only affects this browser/device - nothing is synced anywhere, so this can\'t be undone from another device.')) {
+    ownedSet = {};
+    saveOwned(ownedSet);
+    render();
+  }
+});
+
+tbody.addEventListener('click', (e) => {
+  const ownBtn = e.target.closest('.owned-btn');
+  const unownBtn = e.target.closest('.unown-btn');
+  if (ownBtn) { markOwned(decodeURIComponent(ownBtn.dataset.key)); }
+  else if (unownBtn) { unmarkOwned(decodeURIComponent(unownBtn.dataset.key)); }
+});
 
 const COLORS = ['all', 'R', 'B', 'G', 'Y', 'P'];
 const COLOR_LABEL = { all: 'All', R: 'Red', B: 'Blue', G: 'Green', Y: 'Yellow', P: 'Purple' };
@@ -202,6 +294,7 @@ function render() {
   let rows = CARDS.filter(c => {
     if (activeColor !== 'all' && c.color !== activeColor) return false;
     if (term && !(c.member.toLowerCase().includes(term) || c.title.toLowerCase().includes(term))) return false;
+    if (ownedOnly && !ownedSet[cardKey(c)]) return false;
     return true;
   });
 
@@ -236,11 +329,13 @@ function render() {
       '<td>' + c.da + '</td>' +
       '<td>' + c.pe + '</td>' +
       '<td>' + (c.sk === 'FLEEK!' ? 'FLEEK!' : (c.sk ? (c.sk * 100).toFixed(2) + '%' : '&mdash;')) + '</td>' +
-      '<td class="cs-cell" title="' + esc(c.cs) + '">' + esc(c.cs) + '</td>';
+      '<td class="cs-cell" title="' + esc(c.cs) + '">' + esc(c.cs) + '</td>' +
+      '<td>' + ownedCell(c) + '</td>';
     frag.appendChild(tr);
   });
   tbody.innerHTML = '';
   tbody.appendChild(frag);
+  updateOwnedCount();
 }
 
 function esc(s) {
