@@ -67,15 +67,19 @@
   .cs-cell { max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
   .owned-th, .owned-cell { min-width: 130px; }
 
-  .owned-tag { font-size: 11px; font-weight: 800; padding: 3px 9px; border-radius: 999px; background: #1c7a2e; color: #fff; letter-spacing: 0.2px; }
-  .owned-btn, .unown-btn {
-    appearance: none; border: none; cursor: pointer; font-weight: 800; font-size: 10.5px;
-    padding: 3px 8px; border-radius: 5px; line-height: 1.4; margin-left: 4px;
+  .owned-tag, .owned-btn, .unown-btn, .upgrade-btn {
+    display: inline-block; box-sizing: border-box; appearance: none; border: none;
+    font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 6px;
+    line-height: 1.4; letter-spacing: 0.2px; min-width: 64px; text-align: center;
   }
+  .owned-btn, .unown-btn, .upgrade-btn { cursor: pointer; margin-left: 4px; }
+  .owned-tag { background: #1c7a2e; color: #fff; }
   .owned-btn { background: #1c7a2e; color: #fff; }
   .owned-btn:hover { background: #155e22; }
   .unown-btn { background: #c93b7f; color: #fff; }
   .unown-btn:hover { background: #a82f68; }
+  .upgrade-btn { background: #3a5bc7; color: #fff; }
+  .upgrade-btn:hover { background: #2e49a3; }
   .filter-toggle-label {
     display: flex; align-items: center; gap: 6px; font-size: 12px; color: #444; cursor: pointer;
     padding: 7px 12px; border-radius: 999px; border: 1px solid #d8d8e0; background: #fff;
@@ -185,6 +189,7 @@
             <label class="filter-label">Options</label>
             <label class="filter-toggle-label"><input type="checkbox" id="owned-filter"> Owned only</label>
             <label class="filter-toggle-label"><input type="checkbox" id="grad-filter"> Exclude graduated</label>
+            <label class="filter-toggle-label"><input type="checkbox" id="upgradable-filter"> Upgradable only</label>
           </div>
         </div>
       </div>
@@ -224,8 +229,12 @@
       Stats, SK%, and Center Skill come straight from each card's own definition - not affected by any player's
       own bond or discography progress, so this list is a common reference across accounts. This page checks for
       a newer card database only when you click <b>Check for update</b> - it never polls in the background.
-The <b>View/Add</b> switch controls the Owned column: View just shows a
-      badge on cards you've marked, Add shows +Owned/Remove buttons for actually marking them.
+The <b>View/Add</b> switch controls the Owned column: Add shows Add/Remove buttons for marking cards owned.
+      View mostly just shows a quiet "Owned" badge, except one case - an owned card with a "+" (discography-
+      upgraded) version available gets an <b>↑ Upgrade</b> button right there instead of the badge (hover it to
+      see the exact stat bonus), since you can't really own both a card and its "+" at once in-game, so upgrading
+      is one click regardless of which mode you're in. The <b>Upgradable only</b> filter shows just the cards
+      you own that have a "+" waiting.
       <b>Owned</b> marks are stored only in this browser - nothing is uploaded or synced anywhere, and clearing
       your browser data clears them too, so use <b>Export owned</b> to save a backup file and <b>Import owned</b>
       to load it back (here, on another device, or after clearing your browser data - import merges with
@@ -276,6 +285,7 @@ document.getElementById('check-update-btn').addEventListener('click', async () =
       DB_VERSION = data.version;
       localStorage.setItem(CACHE_KEY, JSON.stringify(data));
       updateVersionLabel();
+      buildDisplayRows();
       buildFilterOptions();
       render();
       statusEl.textContent = 'Updated to ' + DB_VERSION + '.';
@@ -303,6 +313,7 @@ let selectedCsBases = new Set();
 let skMinVal = 0;
 let ownedOnly = false;
 let excludeGrads = false;
+let upgradableOnly = false;
 let editOwned = false; // View/Add mode switch - View (default) shows a quiet
 // badge instead of a +Owned/Remove button on every one of 5433 rows; Add
 // switches to the editable buttons. Resets to View on reload (in-memory
@@ -310,6 +321,79 @@ let editOwned = false; // View/Add mode switch - View (default) shows a quiet
 
 const tbody = document.getElementById('tbody');
 const colorFiltersEl = document.getElementById('color-filters');
+
+// --- Base/+ pairing (2026-07-31) ------------------------------------------
+// In-game you never own both a card and its '+' (discography-upgraded)
+// version at once - upgrading consumes the base. displayRows collapses
+// each base/+ pair (970 of them, verified 2026-07-31: every '+' card has a
+// matching base, always +750 Vo/Da/Pe) into ONE row with 3 states (Not
+// owned / Owned / Upgraded), instead of two independent rows that could
+// both be marked owned at the same time, which can't really happen.
+// Standalone cards (no pair) get a row with plus: null and behave exactly
+// like before. Rebuilt whenever CARDS changes (initial load, Check for
+// update) since pairing depends on the current card list.
+let displayRows = [];
+
+function buildDisplayRows() {
+  const byKey = {};
+  CARDS.forEach(c => { byKey[c.member + '|' + c.title] = c; });
+  const consumed = new Set(); // '+' cards already attached to a base below
+  CARDS.forEach(c => {
+    if (!c.title.endsWith('+')) return;
+    const baseKey = c.member + '|' + c.title.slice(0, -1);
+    if (byKey[baseKey]) consumed.add(c.member + '|' + c.title);
+  });
+  const rows = [];
+  CARDS.forEach(c => {
+    const key = c.member + '|' + c.title;
+    if (consumed.has(key)) return; // attached to its base below, not its own row
+    if (c.title.endsWith('+')) {
+      // Orphan '+' with no base (none exist as of 2026-07-31, but handled
+      // defensively in case a future card import creates one) - shown as
+      // its own standalone row.
+      rows.push({ base: c, plus: null });
+      return;
+    }
+    const plus = byKey[c.member + '|' + c.title + '+'];
+    rows.push({ base: c, plus: plus || null });
+  });
+  displayRows = rows;
+  reconcileOwnedSet();
+}
+
+// A row is "upgraded" if its '+' card is marked owned - that's the only
+// state that matters even if (from stale/hand-edited localStorage) the
+// base key also happens to be set; reconcileOwnedSet() cleans that up so
+// it shouldn't normally happen.
+function rowState(row) {
+  if (row.plus && ownedSet[cardKey(row.plus)]) return 'upgraded';
+  if (ownedSet[cardKey(row.base)]) return 'owned';
+  return 'none';
+}
+function effectiveCard(row) {
+  return rowState(row) === 'upgraded' ? row.plus : row.base;
+}
+function rowOwned(row) {
+  return rowState(row) !== 'none';
+}
+
+// Enforces "never both at once": if some ownedSet ever has both a base and
+// its '+' marked (shouldn't happen via the UI below, but a hand-edited
+// import file could do it), keep the '+' (the stronger/later state) and
+// drop the base mark. Safe to call anytime displayRows is rebuilt.
+function reconcileOwnedSet() {
+  let changed = false;
+  displayRows.forEach(row => {
+    if (!row.plus) return;
+    const baseKey = cardKey(row.base);
+    const plusKey = cardKey(row.plus);
+    if (ownedSet[baseKey] && ownedSet[plusKey]) {
+      delete ownedSet[baseKey];
+      changed = true;
+    }
+  });
+  if (changed) saveOwned(ownedSet);
+}
 
 // --- Owned tracking (Phase 1: local marker + filter + Export/Import) -----
 // Purely visitor-local - stored in this browser's own localStorage, never
@@ -340,19 +424,56 @@ function unmarkOwned(key) {
   saveOwned(ownedSet);
   render();
 }
-function ownedCell(c) {
-  const isOwned = !!ownedSet[cardKey(c)];
+// Upgrading a base card to '+' is one atomic action, not two: unmark the
+// base and mark the '+' together so a row is never briefly in the
+// impossible "both owned" state between the two.
+function upgradeCard(baseKey, plusKey) {
+  delete ownedSet[baseKey];
+  ownedSet[plusKey] = true;
+  saveOwned(ownedSet);
+  render();
+}
+
+function skDisplay(sk) {
+  return sk === 'FLEEK!' ? 'FLEEK!' : (sk ? (sk * 100).toFixed(2) + '%' : '—');
+}
+
+// Every real base/+ pair adds a flat +750 to Vo/Da/Pe (verified 2026-07-31
+// across all 970 pairs, no exceptions) - SK% also changes for some pairs
+// (355 of 970), so that part is shown only when it actually differs.
+function upgradeBonusText(row) {
+  let text = '+750 Vo / +750 Da / +750 Pe (+2250 Tot)';
+  if (row.plus && row.base.sk !== row.plus.sk) {
+    text += ', SK ' + skDisplay(row.base.sk) + ' → ' + skDisplay(row.plus.sk);
+  }
+  return text;
+}
+
+function ownedCell(row) {
+  const state = rowState(row);
+  const baseKey = encodeURIComponent(cardKey(row.base));
+
   if (!editOwned) {
-    // View mode (default): just a badge, or nothing - no buttons cluttering
-    // every row. Switch to Add mode to get the Add/Remove buttons back for
-    // actually editing marks.
-    return isOwned ? '<span class="owned-tag">&#10003; Owned</span>' : '';
+    // View mode (default): a quiet badge for most rows, except one
+    // deliberate exception - an owned base card that's upgradable gets the
+    // "↑ Upgrade" button right here, so that one-click opportunity doesn't
+    // require switching to Add mode to notice or act on.
+    if (state === 'owned' && row.plus) {
+      const plusKey = encodeURIComponent(cardKey(row.plus));
+      return '<button class="upgrade-btn" data-base-key="' + baseKey + '" data-plus-key="' + plusKey
+        + '" title="' + esc(upgradeBonusText(row)) + '">&#8593; Upgrade</button>';
+    }
+    if (state === 'owned' || state === 'upgraded') return '<span class="owned-tag">&#10003; Owned</span>';
+    return '';
   }
-  const key = encodeURIComponent(cardKey(c));
-  if (isOwned) {
-    return '<button class="unown-btn" data-key="' + key + '">Remove</button>';
+
+  // Add mode: just Add/Remove, no Upgrade button here - upgrading is
+  // available straight from View mode above instead.
+  if (state === 'none') {
+    return '<button class="owned-btn" data-key="' + baseKey + '">Add</button>';
   }
-  return '<button class="owned-btn" data-key="' + key + '">Add</button>';
+  const removeKey = state === 'upgraded' ? encodeURIComponent(cardKey(row.plus)) : baseKey;
+  return '<button class="unown-btn" data-key="' + removeKey + '">Remove</button>';
 }
 
 document.querySelectorAll('#mode-switch .mode-switch-btn').forEach(btn => {
@@ -370,6 +491,11 @@ document.getElementById('owned-filter').addEventListener('change', (e) => {
 
 document.getElementById('grad-filter').addEventListener('change', (e) => {
   excludeGrads = e.target.checked;
+  render();
+});
+
+document.getElementById('upgradable-filter').addEventListener('change', (e) => {
+  upgradableOnly = e.target.checked;
   render();
 });
 
@@ -414,6 +540,7 @@ document.getElementById('import-owned-file').addEventListener('change', (e) => {
       if (!ownedSet[key]) { ownedSet[key] = true; added++; }
     });
     saveOwned(ownedSet);
+    reconcileOwnedSet(); // in case the file marks both a base and its '+'
     render();
     alert('Imported ' + added + ' new owned mark(s) (merged with what was already marked here).');
   };
@@ -424,7 +551,10 @@ document.getElementById('import-owned-file').addEventListener('change', (e) => {
 tbody.addEventListener('click', (e) => {
   const ownBtn = e.target.closest('.owned-btn');
   const unownBtn = e.target.closest('.unown-btn');
-  if (ownBtn) { markOwned(decodeURIComponent(ownBtn.dataset.key)); }
+  const upgradeBtn = e.target.closest('.upgrade-btn');
+  if (upgradeBtn) {
+    upgradeCard(decodeURIComponent(upgradeBtn.dataset.baseKey), decodeURIComponent(upgradeBtn.dataset.plusKey));
+  } else if (ownBtn) { markOwned(decodeURIComponent(ownBtn.dataset.key)); }
   else if (unownBtn) { unmarkOwned(decodeURIComponent(unownBtn.dataset.key)); }
 });
 
@@ -473,21 +603,29 @@ COLORS.forEach(c => {
 updateColorChipStyles();
 
 function render() {
-  let rows = CARDS.filter(c => {
+  // Every filter/sort/display field below reads from effectiveCard(row) -
+  // the base card's stats normally, or the '+' card's once upgraded - so
+  // the table always reflects what a row's owner actually has. The one
+  // exception is the Song filter, which matches row.base.title (the
+  // pair's stable identity) instead - see buildFilterOptions().
+  let rows = displayRows.filter(row => {
+    const c = effectiveCard(row);
     if (selectedColors.size && !selectedColors.has(c.color)) return false;
     if (memberTerm && !(c.member.toLowerCase().includes(memberTerm) || stripDiacritics((c.memberEn || '').toLowerCase()).includes(memberTerm))) return false;
-    if (selectedSongs.size && !selectedSongs.has(c.title)) return false;
+    if (selectedSongs.size && !selectedSongs.has(row.base.title)) return false;
     if (selectedCsBases.size && !selectedCsBases.has(c.csBase)) return false;
     if (skMinVal > 0) {
       const skPct = (c.sk === 'FLEEK!' || !c.sk) ? -1 : c.sk * 100;
       if (skPct < skMinVal) return false;
     }
-    if (ownedOnly && !ownedSet[cardKey(c)]) return false;
+    if (ownedOnly && !rowOwned(row)) return false;
     if (excludeGrads && c.grad) return false;
+    if (upgradableOnly && !(rowState(row) === 'owned' && row.plus)) return false;
     return true;
   });
 
-  rows.sort((a, b) => {
+  rows.sort((ra, rb) => {
+    const a = effectiveCard(ra), b = effectiveCard(rb);
     let av = a[sortKey], bv = b[sortKey];
     if (av === null || av === undefined) av = '';
     if (bv === null || bv === undefined) bv = '';
@@ -503,7 +641,8 @@ function render() {
   });
 
   const frag = document.createDocumentFragment();
-  rows.forEach((c) => {
+  rows.forEach((row) => {
+    const c = effectiveCard(row);
     const tr = document.createElement('tr');
     if (c.grad) tr.classList.add('grad-row');
     const hex = COLOR_HEX[c.color] || '#999';
@@ -515,9 +654,9 @@ function render() {
       '<td>' + c.vo + '</td>' +
       '<td>' + c.da + '</td>' +
       '<td>' + c.pe + '</td>' +
-      '<td>' + (c.sk === 'FLEEK!' ? 'FLEEK!' : (c.sk ? (c.sk * 100).toFixed(2) + '%' : '&mdash;')) + '</td>' +
+      '<td>' + skDisplay(c.sk) + '</td>' +
       '<td class="cs-cell" title="' + esc(c.cs) + '">' + esc(c.cs) + '</td>' +
-      '<td class="owned-cell">' + ownedCell(c) + '</td>';
+      '<td class="owned-cell">' + ownedCell(row) + '</td>';
     frag.appendChild(tr);
   });
   tbody.innerHTML = '';
@@ -565,7 +704,10 @@ function selectedValues(sel) {
 function buildFilterOptions() {
   const songSel = document.getElementById('song-filter');
   const prevSongs = new Set(selectedValues(songSel));
-  const titles = Array.from(new Set(CARDS.map(c => c.title))).sort((a, b) => a.localeCompare(b, 'ja'));
+  // Song options use row.base.title (the pair's stable identity), not
+  // effectiveCard - a paired song shows one entry ("キュン") regardless of
+  // whether any given visitor has upgraded it to "キュン+" or not.
+  const titles = Array.from(new Set(displayRows.map(row => row.base.title))).sort((a, b) => a.localeCompare(b, 'ja'));
   songSel.innerHTML = '';
   titles.forEach(t => {
     const opt = document.createElement('option');
@@ -577,7 +719,7 @@ function buildFilterOptions() {
 
   const csSel = document.getElementById('cs-filter');
   const prevCs = new Set(selectedValues(csSel));
-  const bases = Array.from(new Set(CARDS.map(c => c.csBase).filter(Boolean))).sort((a, b) => a.localeCompare(b, 'ja'));
+  const bases = Array.from(new Set(displayRows.map(row => effectiveCard(row).csBase).filter(Boolean))).sort((a, b) => a.localeCompare(b, 'ja'));
   csSel.innerHTML = '';
   bases.forEach(b => {
     const opt = document.createElement('option');
@@ -648,11 +790,15 @@ function resetFilters() {
   excludeGrads = false;
   document.getElementById('grad-filter').checked = false;
 
+  upgradableOnly = false;
+  document.getElementById('upgradable-filter').checked = false;
+
   render();
 }
 
 document.getElementById('filters-reset-btn').addEventListener('click', resetFilters);
 
+buildDisplayRows();
 buildFilterOptions();
 render();
 </script>
