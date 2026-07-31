@@ -402,7 +402,7 @@ updateColorChipStyles();
 function render() {
   let rows = CARDS.filter(c => {
     if (selectedColors.size && !selectedColors.has(c.color)) return false;
-    if (memberTerm && !(c.member.toLowerCase().includes(memberTerm) || (c.memberEn || '').toLowerCase().includes(memberTerm))) return false;
+    if (memberTerm && !(c.member.toLowerCase().includes(memberTerm) || stripDiacritics((c.memberEn || '').toLowerCase()).includes(memberTerm))) return false;
     if (selectedSongs.size && !selectedSongs.has(c.title)) return false;
     if (selectedCsBases.size && !selectedCsBases.has(c.csBase)) return false;
     if (skMinVal > 0) {
@@ -458,6 +458,15 @@ function esc(s) {
   return String(s).replace(/[&<>"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
 }
 
+// Strips macrons/diacritics (ō, ū, ā, ī, ē, etc.) so English-name search
+// isn't case/accent-sensitive - member_romaji.json uses real macrons (e.g.
+// "Katō", "Ōno"), but most people type plain "o" when searching. Applied to
+// both the search term and memberEn, so it works regardless of which side
+// has the macron typed.
+function stripDiacritics(s) {
+  return String(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
 document.querySelectorAll('thead th').forEach(th => {
   th.addEventListener('click', () => {
     const key = th.dataset.key;
@@ -469,7 +478,7 @@ document.querySelectorAll('thead th').forEach(th => {
 let memberSearchTimer = null;
 document.getElementById('member-search').addEventListener('input', (e) => {
   clearTimeout(memberSearchTimer);
-  memberSearchTimer = setTimeout(() => { memberTerm = e.target.value.trim().toLowerCase(); render(); }, 120);
+  memberSearchTimer = setTimeout(() => { memberTerm = stripDiacritics(e.target.value.trim().toLowerCase()); render(); }, 120);
 });
 
 // --- Song / Center Skill multi-selects -----------------------------------
