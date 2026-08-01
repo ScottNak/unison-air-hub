@@ -67,6 +67,8 @@
   .cs-cell { max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
   .owned-th, .owned-cell { min-width: 130px; }
 
+  .sk-hint { font-size: 10.5px; color: #888; margin-left: 3px; white-space: nowrap; }
+
   .owned-tag, .owned-btn, .unown-btn, .upgrade-btn {
     display: inline-block; box-sizing: border-box; appearance: none; border: none;
     font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 6px;
@@ -102,6 +104,8 @@
   }
   .mode-switch-btn.active { background: #2d2d42; color: #fff; }
   .mode-switch-btn:hover:not(.active) { color: #333; }
+  .mode-switch-sm { display: flex; }
+  .mode-switch-sm .mode-switch-btn { flex: 1; padding: 5px 8px; font-size: 11px; }
 
   .filters-panel {
     background: #f5f6fb; border: 1px solid #e4e6f0; border-radius: 12px;
@@ -129,6 +133,9 @@
     background: #fff; border: 1px solid #e6e8f2; border-radius: 9px; padding: 9px 11px;
   }
   .filter-label { font-size: 10px; text-transform: uppercase; color: #888; letter-spacing: .03em; font-weight: 700; }
+  .filter-stack { display: flex; flex-direction: column; gap: 10px; }
+  .filter-row-inner { display: flex; gap: 10px; }
+  .filter-row-inner .filter-group { flex: 1; }
   .search-box.small { padding: 6px 9px; font-size: 12px; width: 190px; flex: none; }
   .multi-select {
     width: 190px; height: 110px; border-radius: 8px; border: 1px solid #d8d8e0;
@@ -181,15 +188,28 @@
             <label class="filter-label" for="cs-filter">Center Skill (multi-select)</label>
             <select multiple id="cs-filter" class="multi-select"></select>
           </div>
-          <div class="filter-group">
-            <label class="filter-label" for="sk-min">Skill EV% &ge;</label>
-            <input type="number" id="sk-min" class="sk-input" min="0" max="100" step="0.01" placeholder="e.g. 1.5">
-          </div>
-          <div class="filter-group">
-            <label class="filter-label">Options</label>
-            <label class="filter-toggle-label"><input type="checkbox" id="owned-filter"> Owned only</label>
-            <label class="filter-toggle-label"><input type="checkbox" id="grad-filter"> Exclude graduated</label>
-            <label class="filter-toggle-label"><input type="checkbox" id="upgradable-filter"> Upgradable only</label>
+          <div class="filter-stack">
+            <div class="filter-row-inner">
+              <div class="filter-group">
+                <label class="filter-label" for="sk-min">Skill EV% &ge;</label>
+                <input type="number" id="sk-min" class="sk-input" min="0" max="100" step="0.01" placeholder="e.g. 1.5">
+              </div>
+              <div class="filter-group">
+                <label class="filter-label">Owned</label>
+                <div class="mode-switch mode-switch-sm" id="owned-switch" role="group" aria-label="Owned filter">
+                  <button type="button" class="mode-switch-btn active" data-owned="all">All</button>
+                  <button type="button" class="mode-switch-btn" data-owned="owned">Owned</button>
+                  <button type="button" class="mode-switch-btn" data-owned="unowned">Unowned</button>
+                </div>
+              </div>
+            </div>
+            <div class="filter-group">
+              <label class="filter-label">Options</label>
+              <div class="filter-row-inner">
+                <label class="filter-toggle-label"><input type="checkbox" id="grad-filter"> Exclude graduated</label>
+                <label class="filter-toggle-label"><input type="checkbox" id="has-plus-filter"> Has SSR+</label>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -233,8 +253,9 @@ The <b>View/Add</b> switch controls the Owned column: Add shows Add/Remove butto
       View mostly just shows a quiet "Owned" badge, except one case - an owned card with a "+" (discography-
       upgraded) version available gets an <b>↑ Upgrade</b> button right there instead of the badge (hover it to
       see the exact stat bonus), since you can't really own both a card and its "+" at once in-game, so upgrading
-      is one click regardless of which mode you're in. The <b>Upgradable only</b> filter shows just the cards
-      you own that have a "+" waiting.
+      is one click regardless of which mode you're in. The <b>Has SSR+</b> filter shows every card that has a "+"
+      version at all, owned or not. If a "+" version's SK% differs from the base card's, the SK% column
+      previews it as "base% → +%" until you upgrade, after which it just shows the "+" value directly.
       <b>Owned</b> marks are stored only in this browser - nothing is uploaded or synced anywhere, and clearing
       your browser data clears them too, so use <b>Export owned</b> to save a backup file and <b>Import owned</b>
       to load it back (here, on another device, or after clearing your browser data - import merges with
@@ -311,9 +332,9 @@ let memberTerm = '';
 let selectedSongs = new Set();
 let selectedCsBases = new Set();
 let skMinVal = 0;
-let ownedOnly = false;
+let ownedFilter = 'all'; // 'all' | 'owned' | 'unowned'
 let excludeGrads = false;
-let upgradableOnly = false;
+let hasPlusOnly = false; // "Has SSR+" filter - any row with a '+' pair, owned or not
 let editOwned = false; // View/Add mode switch - View (default) shows a quiet
 // badge instead of a +Owned/Remove button on every one of 5433 rows; Add
 // switches to the editable buttons. Resets to View on reload (in-memory
@@ -484,9 +505,12 @@ document.querySelectorAll('#mode-switch .mode-switch-btn').forEach(btn => {
   });
 });
 
-document.getElementById('owned-filter').addEventListener('change', (e) => {
-  ownedOnly = e.target.checked;
-  render();
+document.querySelectorAll('#owned-switch .mode-switch-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    ownedFilter = btn.dataset.owned;
+    document.querySelectorAll('#owned-switch .mode-switch-btn').forEach(b => b.classList.toggle('active', b === btn));
+    render();
+  });
 });
 
 document.getElementById('grad-filter').addEventListener('change', (e) => {
@@ -494,8 +518,8 @@ document.getElementById('grad-filter').addEventListener('change', (e) => {
   render();
 });
 
-document.getElementById('upgradable-filter').addEventListener('change', (e) => {
-  upgradableOnly = e.target.checked;
+document.getElementById('has-plus-filter').addEventListener('change', (e) => {
+  hasPlusOnly = e.target.checked;
   render();
 });
 
@@ -618,9 +642,10 @@ function render() {
       const skPct = (c.sk === 'FLEEK!' || !c.sk) ? -1 : c.sk * 100;
       if (skPct < skMinVal) return false;
     }
-    if (ownedOnly && !rowOwned(row)) return false;
+    if (ownedFilter === 'owned' && !rowOwned(row)) return false;
+    if (ownedFilter === 'unowned' && rowOwned(row)) return false;
     if (excludeGrads && c.grad) return false;
-    if (upgradableOnly && !(rowState(row) === 'owned' && row.plus)) return false;
+    if (hasPlusOnly && !row.plus) return false;
     return true;
   });
 
@@ -646,6 +671,12 @@ function render() {
     const tr = document.createElement('tr');
     if (c.grad) tr.classList.add('grad-row');
     const hex = COLOR_HEX[c.color] || '#999';
+    // While not yet upgraded, a differing '+' SK% is previewed inline
+    // ("2.52% → 3.10%") so you can see the upgrade's skill impact without
+    // owning it - once actually upgraded, effectiveCard already shows the
+    // '+' value directly, so there's nothing left to preview.
+    const skHint = (row.plus && rowState(row) !== 'upgraded' && row.base.sk !== row.plus.sk)
+      ? '<span class="sk-hint">&#8594; ' + skDisplay(row.plus.sk) + '</span>' : '';
     tr.innerHTML =
       '<td><span class="color-chip" style="background:' + hex + '">' + c.color + '</span></td>' +
       '<td>' + esc(c.member) + '</td>' +
@@ -654,7 +685,7 @@ function render() {
       '<td>' + c.vo + '</td>' +
       '<td>' + c.da + '</td>' +
       '<td>' + c.pe + '</td>' +
-      '<td>' + skDisplay(c.sk) + '</td>' +
+      '<td>' + skDisplay(c.sk) + skHint + '</td>' +
       '<td class="cs-cell" title="' + esc(c.cs) + '">' + esc(c.cs) + '</td>' +
       '<td class="owned-cell">' + ownedCell(row) + '</td>';
     frag.appendChild(tr);
@@ -784,14 +815,14 @@ function resetFilters() {
   skMinVal = 0;
   document.getElementById('sk-min').value = '';
 
-  ownedOnly = false;
-  document.getElementById('owned-filter').checked = false;
+  ownedFilter = 'all';
+  document.querySelectorAll('#owned-switch .mode-switch-btn').forEach(b => b.classList.toggle('active', b.dataset.owned === 'all'));
 
   excludeGrads = false;
   document.getElementById('grad-filter').checked = false;
 
-  upgradableOnly = false;
-  document.getElementById('upgradable-filter').checked = false;
+  hasPlusOnly = false;
+  document.getElementById('has-plus-filter').checked = false;
 
   render();
 }
