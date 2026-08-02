@@ -499,9 +499,6 @@
           </div>
         </div>
         <div class="utility-row-right">
-          <button class="reset-link" id="disco-save-file">&#11015; Export</button>
-          <button class="reset-link" id="disco-load-file-btn">&#11014; Import</button>
-          <input type="file" id="disco-load-file-input" accept="application/json" style="display:none">
         </div>
       </div>
       <p class="save-note" id="disco-save-note">&nbsp;</p>
@@ -11635,7 +11632,7 @@
     </div>
   </div>
 <script>
-const SOURCE_FILE = "v61-2026-08-02";
+const SOURCE_FILE = "v62-2026-08-02";
 </script>
 <script>
 (function() {
@@ -11975,6 +11972,34 @@ const SOURCE_FILE = "v61-2026-08-02";
       reader.readAsText(file);
     });
   }
+
+  window.addEventListener('message', function(e) {
+    var msg = e.data;
+    if (!msg || typeof msg !== 'object') return;
+    if (msg.type === 'uniair-request-snapshot') {
+      e.source.postMessage({ type: 'uniair-snapshot', id: msg.id, discography: buildSnapshot().discography }, '*');
+    } else if (msg.type === 'uniair-import-data') {
+      var data = msg.data || {};
+      var changed = 0;
+      if (data.discography) {
+        for (var k in data.discography) {
+          var v = parseInt(data.discography[k], 10);
+          if (isNaN(v)) continue;
+          if (overrides[k] !== v) changed++;
+          overrides[k] = v;
+        }
+        if (changed) {
+          saveOwn(overrides);
+          Object.keys(pairs).forEach(function(key) {
+            if (key in data.discography) pairs[key].baseline = currentLevel(key);
+            refreshPair(key);
+          });
+          Object.keys(rowTotals).forEach(refreshRowTotal);
+        }
+      }
+      e.source.postMessage({ type: 'uniair-import-ack', id: msg.id, page: 'song_overview', changed: changed }, '*');
+    }
+  });
 })();
 </script>
 <script>

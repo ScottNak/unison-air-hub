@@ -14,10 +14,12 @@
   .wrap { max-width: 900px; margin: 0 auto; }
 
   .note {
+    display: flex; align-items: center; gap: 16px;
     background: rgba(255,255,255,0.85); border-radius: 12px; padding: 12px 18px;
     font-size: 12px; color: #444; line-height: 1.55; margin-bottom: 18px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.2);
   }
+  .note-text { flex: 1 1 auto; }
   .note a { color: #2e49a3; font-weight: 700; text-decoration: none; }
   .note a:hover { text-decoration: underline; }
 
@@ -81,16 +83,28 @@
   .empty-state a { color: #2e49a3; font-weight: 700; }
 
   .loading { text-align: center; color: #cfd8ff; padding: 40px 0; font-size: 14px; }
+
+  #recalc-btn {
+    flex: none; appearance: none; border: 1px solid #d8d8e0; background: #fff;
+    color: #333; padding: 7px 16px; border-radius: 999px; cursor: pointer;
+    font-size: 12px; font-weight: 700; white-space: nowrap;
+  }
+  #recalc-btn:hover { border-color: #b8bad0; background: #f5f6fb; }
+  #recalc-btn:disabled { opacity: 0.6; cursor: default; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="note">
-    Builds each color's strongest 5-card team from cards you've marked owned
-    in the <a href="catalog.html" target="_top">Card Database</a>. Accuracy
-    depends on your <a href="kizuna.html" target="_top">Kizuna Bond</a> and
-    <a href="song_overview.html" target="_top">Discography</a> data too -
-    keep those up to date for the most accurate scores.
+    <div class="note-text">
+      Builds each color's strongest 5-card team from cards you've marked owned
+      in the <a href="catalog.html" target="_top">Card Database</a>.
+      <br><br>
+      Accuracy depends on your <a href="kizuna.html" target="_top">Kizuna Bond</a> and
+      <a href="song_overview.html" target="_top">Discography</a> data too -
+      keep those up to date for the most accurate scores.
+    </div>
+    <button id="recalc-btn" title="This page only computes once on load - use this after changing ownership/kizuna/discography elsewhere.">&#8635; Recalculate</button>
   </div>
   <div id="loading" class="loading">Computing your best teams&hellip;</div>
   <div id="color-tab-bar" class="color-tab-bar" style="display:none;"></div>
@@ -914,27 +928,44 @@ function setActiveColor(color) {
   });
 }
 
+// Remembers which color tab was open across a Recalculate click, so hitting
+// the button doesn't silently jump the visitor back to the first tab.
+var lastActiveColor = null;
+
 function init() {
+  var loadingEl = document.getElementById('loading');
+  var tabBar = document.getElementById('color-tab-bar');
+  var panelsEl = document.getElementById('panels');
+  var recalcBtn = document.getElementById('recalc-btn');
+
   var results;
   try {
     results = runBestTeams();
   } catch (e) {
-    document.getElementById('loading').textContent =
-      'Something went wrong computing your teams: ' + e.message;
+    loadingEl.textContent = 'Something went wrong computing your teams: ' + e.message;
+    loadingEl.style.display = '';
+    recalcBtn.disabled = false;
     return;
   }
 
-  var tabBar = document.getElementById('color-tab-bar');
-  var panelsEl = document.getElementById('panels');
+  // Clear out any previous run's tabs/panels (this page only ever computes
+  // once on its own - see setTimeout(init, 0) below - but init() itself is
+  // re-entrant so the Recalculate button can just call it again).
+  tabBar.innerHTML = '';
+  panelsEl.innerHTML = '';
+
   var byLetter = {};
   Object.keys(results).forEach(function(jp) {
     var letter = JP_TO_LETTER[jp] || jp;
     byLetter[letter] = results[jp];
   });
 
-  COLOR_ORDER.forEach(function(color, idx) {
+  var activeColor = (lastActiveColor && COLOR_ORDER.indexOf(lastActiveColor) !== -1) ? lastActiveColor : COLOR_ORDER[0];
+
+  COLOR_ORDER.forEach(function(color) {
+    var isActive = color === activeColor;
     var tabBtn = document.createElement('button');
-    tabBtn.className = 'color-tab-btn' + (idx === 0 ? ' active' : '');
+    tabBtn.className = 'color-tab-btn' + (isActive ? ' active' : '');
     tabBtn.dataset.color = color;
     tabBtn.style.setProperty('--tc', COLOR_HEX[color]);
     tabBtn.textContent = COLOR_LABEL[color];
@@ -942,7 +973,7 @@ function init() {
     tabBar.appendChild(tabBtn);
 
     var panel = document.createElement('div');
-    panel.className = 'panel' + (idx === 0 ? ' active' : '');
+    panel.className = 'panel' + (isActive ? ' active' : '');
     panel.id = 'panel-' + color;
     panel.innerHTML = '<div class="panel-inner" id="panel-inner-' + color + '"></div>';
     panelsEl.appendChild(panel);
@@ -950,9 +981,32 @@ function init() {
     renderPanel(color, byLetter[color]);
   });
 
-  document.getElementById('loading').style.display = 'none';
+  lastActiveColor = activeColor;
+  loadingEl.style.display = 'none';
   tabBar.style.display = 'flex';
+  recalcBtn.disabled = false;
+  recalcBtn.textContent = '↻ Recalculate';
 }
+
+setActiveColor = (function(original) {
+  return function(color) {
+    lastActiveColor = color;
+    original(color);
+  };
+})(setActiveColor);
+
+document.getElementById('recalc-btn').addEventListener('click', function() {
+  var loadingEl = document.getElementById('loading');
+  var recalcBtn = document.getElementById('recalc-btn');
+  recalcBtn.disabled = true;
+  recalcBtn.textContent = 'Recalculating…';
+  loadingEl.textContent = 'Recalculating your best teams…';
+  loadingEl.style.display = '';
+  document.getElementById('color-tab-bar').style.display = 'none';
+  // Deferred one tick so the "Recalculating..." message actually paints
+  // before the (synchronous, CPU-bound) optimizer runs.
+  setTimeout(init, 0);
+});
 
 // Deferred one tick so the "Computing..." message actually paints before
 // the (synchronous, CPU-bound) optimizer runs.

@@ -14,9 +14,33 @@
     display: flex; flex-direction: column;
     background: linear-gradient(135deg, #1a1a2e, #16213e 60%, #0f3460);
   }
-  header { padding: 20px 16px 0; flex: none; }
-  h1 { color: #fff; text-align: center; font-size: 24px; margin: 0 0 2px; text-shadow: 0 2px 8px rgba(0,0,0,0.4); }
-  .subtitle { color: #cfd8ff; text-align: center; margin: 0 0 16px; font-size: 12.5px; }
+  header { padding: 20px 16px 0; flex: none; position: relative; }
+  h1 { color: #fff; text-align: center; font-size: 24px; margin: 0 0 16px; text-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+
+  .gear-btn {
+    position: absolute; top: 14px; right: 16px; z-index: 21;
+    width: 34px; height: 34px; padding: 0; border-radius: 50%; border: none; cursor: pointer;
+    background: rgba(255,255,255,0.14); color: #fff; font-size: 16px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .12s ease, transform .18s ease;
+  }
+  .gear-btn:hover { background: rgba(255,255,255,0.26); }
+  .gear-btn.open { transform: rotate(45deg); background: rgba(255,255,255,0.26); }
+
+  .gear-menu {
+    display: none; flex-direction: column; gap: 8px;
+    position: absolute; top: 52px; right: 16px; z-index: 20; min-width: 190px;
+    background: #fff; border-radius: 10px; padding: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  }
+  .gear-menu.open { display: flex; }
+  .gear-menu .save-btn {
+    appearance: none; border: none; cursor: pointer; font-weight: 700; font-size: 12.5px;
+    padding: 8px 12px; border-radius: 8px; background: #eceef4; color: #2d2d42; text-align: left;
+    transition: background .12s ease;
+  }
+  .gear-menu .save-btn:hover { background: #dde1ec; }
+  .gear-menu .save-note { color: #555; font-size: 11.5px; min-height: 14px; }
 
   .tabs {
     display: flex; justify-content: center; gap: 8px; padding: 0 16px 16px;
@@ -42,7 +66,13 @@
 <body>
 <header>
   <h1>UNI'S ON AIR — Hub</h1>
-  <p class="subtitle">Card Database & Discography</p>
+  <button class="gear-btn" id="hub-gear-btn" title="Export / Import" aria-label="Export / Import" aria-haspopup="true">&#9881;</button>
+  <div class="gear-menu" id="hub-gear-menu">
+    <button class="save-btn" id="hub-export-btn">&#11015; Export all</button>
+    <button class="save-btn" id="hub-import-btn">&#11014; Import all</button>
+    <input type="file" id="hub-import-file" accept="application/json" style="display:none">
+    <span class="save-note" id="hub-save-note">&nbsp;</span>
+  </div>
 </header>
 
 <div class="tabs" id="tabs"></div>
@@ -59,6 +89,7 @@
 
   var tabsEl = document.getElementById('tabs');
   var frameWrap = document.getElementById('frame-wrap');
+  var iframes = []; // parallel array to `pages`, filled below
 
   pages.forEach(function (page, i) {
     var tab = document.createElement('button');
@@ -71,6 +102,7 @@
     iframe.src = page.file;
     iframe.title = page.label;
     frameWrap.appendChild(iframe);
+    iframes.push(iframe);
 
     tab.addEventListener('click', function () {
       document.querySelectorAll('.tab').forEach(function (b) { b.classList.remove('active'); });
@@ -78,6 +110,162 @@
       tab.classList.add('active');
       iframe.classList.add('active');
     });
+  });
+
+  // --- Combined Export/Import -----------------------------------------
+  // Each tab (catalog/songs/kizuna) used to have its own Export/Import
+  // button and file. As of 2026-08 that's consolidated here: the hub
+  // broadcasts a postMessage request to every tab's iframe (all 4 are
+  // already loaded above, not lazy-loaded on tab click, so every tab can
+  // answer immediately regardless of which one is currently visible),
+  // collects the replies, and reads/writes the SAME localStorage keys +
+  // file shapes each tab always used (owned/bond/discography) - so a file
+  // saved here still round-trips with Scott's personal Kizuna/Discography
+  // tools, and an old single-tab export/import file still loads fine here
+  // too. best_teams.html doesn't own any data itself (it only reads the
+  // other three tabs' localStorage), so it's not part of the message
+  // protocol - it just gets reloaded after an Import like the other tabs,
+  // so it re-reads the fresh values.
+  // Gear menu: Export/Import used to sit as always-visible buttons in the
+  // header, tucked behind this icon per Scott's request so the header stays
+  // clean. Pure show/hide, no framework needed.
+  var gearBtn = document.getElementById('hub-gear-btn');
+  var gearMenu = document.getElementById('hub-gear-menu');
+  gearBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    gearBtn.classList.toggle('open');
+    gearMenu.classList.toggle('open');
+  });
+  document.addEventListener('click', function (e) {
+    if (!gearMenu.classList.contains('open')) return;
+    if (gearMenu.contains(e.target) || e.target === gearBtn) return;
+    gearBtn.classList.remove('open');
+    gearMenu.classList.remove('open');
+  });
+
+  var MSG_TIMEOUT_MS = 900;
+  var noteEl = document.getElementById('hub-save-note');
+  var noteTimer = null;
+  function flashNote(msg, holdMs) {
+    noteEl.textContent = msg;
+    clearTimeout(noteTimer);
+    noteTimer = setTimeout(function () { noteEl.textContent = ' '; }, holdMs || 6000);
+  }
+
+  function pageIndexForWindow(win) {
+    for (var i = 0; i < iframes.length; i++) { if (iframes[i].contentWindow === win) return i; }
+    return -1;
+  }
+
+  // Broadcasts {type, id, ...extra} to every iframe and collects replies of
+  // the given replyType that carry a matching id, keyed by page id.
+  function broadcastAndCollect(type, extra, replyType, cb) {
+    var id = type + '-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+    var replies = {};
+    function onMessage(e) {
+      var msg = e.data;
+      if (!msg || typeof msg !== 'object' || msg.id !== id || msg.type !== replyType) return;
+      var idx = pageIndexForWindow(e.source);
+      if (idx === -1) return;
+      replies[pages[idx].id] = msg;
+    }
+    window.addEventListener('message', onMessage);
+    var payload = Object.assign({ type: type, id: id }, extra || {});
+    iframes.forEach(function (f) {
+      try { f.contentWindow.postMessage(payload, '*'); } catch (err) { /* not loaded yet */ }
+    });
+    setTimeout(function () {
+      window.removeEventListener('message', onMessage);
+      cb(replies);
+    }, MSG_TIMEOUT_MS);
+  }
+
+  function missingLabels(replies) {
+    // best_teams.html never answers (it has no snapshot of its own) -
+    // don't report it as "missing".
+    return pages
+      .filter(function (p) { return p.id !== 'bestteams' && !(p.id in replies); })
+      .map(function (p) { return p.label; });
+  }
+
+  document.getElementById('hub-export-btn').addEventListener('click', function () {
+    flashNote('Gathering data from every tab…', 4000);
+    broadcastAndCollect('uniair-request-snapshot', null, 'uniair-snapshot', function (replies) {
+      var snapshot = { savedAt: new Date().toISOString(), source: 'uniair_public_hub' };
+      if (replies.catalog) snapshot.owned = replies.catalog.owned || [];
+      if (replies.kizuna) snapshot.bond = replies.kizuna.bond || {};
+      if (replies.songs) snapshot.discography = replies.songs.discography || {};
+
+      var stamp = new Date().toISOString().slice(0, 10);
+      var filename = 'uniair_public_save_' + stamp + '.json';
+      var blob = new Blob([JSON.stringify(snapshot, null, 2)], { type: 'application/json' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = filename;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      var missing = missingLabels(replies);
+      if (missing.length) {
+        flashNote('Saved to ' + filename + ' - but no reply from: ' + missing.join(', ') + ' (give those tabs a moment to finish loading, then try again if their data matters).', 9000);
+      } else {
+        flashNote('Saved to ' + filename);
+      }
+    });
+  });
+
+  var importFileInput = document.getElementById('hub-import-file');
+  document.getElementById('hub-import-btn').addEventListener('click', function () {
+    importFileInput.click();
+  });
+  importFileInput.addEventListener('change', function (e) {
+    var file = e.target.files[0];
+    e.target.value = '';
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      var data;
+      try { data = JSON.parse(reader.result); }
+      catch (err) { window.alert('That file is not valid JSON - could not load.'); return; }
+
+      // Backward-compat: catalog.html's old standalone export was a bare
+      // array of {member, title}, not wrapped in {owned: [...]}.
+      if (Array.isArray(data)) data = { owned: data };
+
+      var hasOwned = Array.isArray(data.owned) && data.owned.length > 0;
+      var hasBond = data.bond || data.values;
+      var hasDisco = data.discography;
+      if (!hasOwned && !hasBond && !hasDisco) {
+        window.alert('That file does not look like a UNI\'S ON AIR save file.');
+        return;
+      }
+
+      var parts = [];
+      if (hasOwned) parts.push('merge in owned-card marks (never unmarks anything)');
+      if (hasBond) parts.push('overwrite Kizuna bond values for every member listed');
+      if (hasDisco) parts.push('overwrite Discography levels for every song listed');
+      var msg = 'Import from "' + file.name + '"? This will:\n\n• ' + parts.join('\n• ') + '\n\nEverything not mentioned in the file is left untouched.';
+      if (!window.confirm(msg)) return;
+
+      broadcastAndCollect('uniair-import-data', { data: data }, 'uniair-import-ack', function (replies) {
+        var summary = [];
+        if (replies.catalog) summary.push('Owned +' + (replies.catalog.changed || 0));
+        if (replies.kizuna) summary.push('Kizuna ' + (replies.kizuna.changed || 0) + ' updated');
+        if (replies.songs) summary.push('Discography ' + (replies.songs.changed || 0) + ' updated');
+
+        // Reload every tab so it re-reads localStorage fresh - the safety
+        // net that makes this reliable even if a tab's ack got lost, and
+        // the only way best_teams.html (a pure reader) ever picks up the
+        // change, since it computes everything once at load time.
+        iframes.forEach(function (f) { f.src = f.src; });
+
+        var missing = missingLabels(replies);
+        var note = summary.length ? ('Imported: ' + summary.join(', ') + '.') : 'Imported.';
+        if (missing.length) note += ' No reply from: ' + missing.join(', ') + ' (reloaded anyway).';
+        flashNote(note, 9000);
+      });
+    };
+    reader.readAsText(file);
   });
 </script>
 </body>
