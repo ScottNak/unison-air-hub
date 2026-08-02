@@ -248,7 +248,16 @@
   .empty-note { text-align: center; color: #888; font-style: italic; padding: 16px 0; }
 
   .dm-row.dm-row-coached { border-radius: 0; }
-  .dm-row-coached .dm-value { color: #e8c468; }
+  .dm-row-coached .dm-value { color: #6b5416; }
+  /* Tiles has no per-level ramp like the Grid view's gc-l1..l5 (a coached
+     row is one flat highlight regardless of pip level) - lightened here
+     (2026-08-01, per user request) to sit in the same pale-to-bright
+     yellow family as the Grid ramp below, instead of dul._STYLE's dark
+     #4a3a10 bg / #e8c468 text. Picked the ramp's ~level-100 shade rather
+     than its palest (level-0) or brightest (level-500) tone, since this
+     row has to read clearly on its own with no level to anchor it. */
+  .dm-row.dm-row-coached { background: #fbedb0; }
+  .dm-row-coached .dm-name { color: #6b5416; }
   /* Extend the coached-row highlight edge-to-edge in the expanded tile
      (2026-07-31, per user request) - .dm-list has 12px of left/right
      padding the row otherwise sits inside, leaving the amber background
@@ -309,10 +318,51 @@
     padding: 9px 14px; border-radius: 8px; text-align: center;
     font-size: 12px; text-transform: uppercase; letter-spacing: .04em;
   }
+
+  /* Locked Tiles row for a real card the visitor hasn't marked owned in the
+     Card Database tab (2026-08-01, per user request) - same dark-red/muted
+     palette as the Grid view's .grid-cell-unowned, so the two views read as
+     the same "locked" state. The 5 .pip circles stay in the DOM (dul's
+     reused JS expects them) but go invisible, as does the "0" .dm-value -
+     pointer-events:none on .pips keeps dul._DISCO_JS's click listener from
+     ever firing. Unlike the Grid view's cramped single-character cell,
+     a Tiles row has room to spare after the pips/value, so the label reads
+     "Not Owned" in full (2026-08-01, per user request) rather than just an
+     "x" - added as ::after on the row itself (a flex item, not the narrow
+     .pips box) with margin-left:auto to push it flush right into that
+     spare space. */
+  .dm-row.dm-row-unowned { background: #3d1a1e; border-radius: 6px; }
+  .dm-row-unowned .dm-name { color: #c9898f; }
+  .dm-row-unowned .pips { pointer-events: none; }
+  .dm-row-unowned .pip { visibility: hidden; }
+  .dm-row-unowned .dm-value { visibility: hidden; }
+  .dm-row-unowned::after {
+    content: 'Not Owned'; margin-left: auto; padding-right: 6px;
+    color: #c9898f; font-weight: 700; font-size: 11.5px; white-space: nowrap;
+  }
+
+  /* Grid view coaching ramp, public page only (2026-08-01, per user
+     request) - overrides dul._STYLE's dark amber-to-gold .grid-cell-coached
+     ramp (level 0 near-black #3a2f10 up to #e8b628 at 500) with a pale-to-
+     bright yellow ramp instead: level 0 starts light (no more near-black
+     "coaching not started" look) and gets steadily more saturated, never
+     dark again, ending at a bright #f0b400 gold at 500. Selectors/specificity
+     match dul._STYLE's originals exactly so these simply win by appearing
+     later in the same concatenated <style> block ({dul._STYLE}{_EXTRA_STYLE}
+     in render_html) - disco_upgrade_live.html (the private tool) is
+     untouched since it only loads dul._STYLE on its own. */
+  .grid-cell-owned.grid-cell-coached { background: #f0b400; color: #4a3a10; }
+  .grid-cell-owned.grid-cell-coached[data-level="0"] { color: #8a6d1a; background: #fdf6d8; }
+  .grid-cell-owned.grid-cell-coached.gc-l1 { background: #fbedb0; color: #8a6d1a; }
+  .grid-cell-owned.grid-cell-coached.gc-l2 { background: #f7e085; color: #6b5416; }
+  .grid-cell-owned.grid-cell-coached.gc-l3 { background: #f5d155; color: #6b5416; }
+  .grid-cell-owned.grid-cell-coached.gc-l4 { background: #f0c020; color: #4a3a10; }
+  .grid-cell-owned.grid-cell-coached.gc-l5 { background: #f0b400; color: #4a3a10; }
 </style>
 </head>
 <body>
   <div class="wrap">
+    
     <div class="section-card">
       <div class="controls utility-row">
         <div class="mode-switch-wrap">
@@ -11455,7 +11505,32 @@
     </div>
   </div>
 <script>
-const SOURCE_FILE = "v60-2026-07-31";
+const SOURCE_FILE = "v61-2026-08-01";
+</script>
+<script>
+(function() {
+  var CATALOG_OWNED_KEY = 'uniair_public_owned';
+  var ownedSet = {};
+  try { ownedSet = JSON.parse(localStorage.getItem(CATALOG_OWNED_KEY) || '{}'); } catch (e) {}
+
+  function hasCard(member, song) {
+    return !!(ownedSet[member + '|' + song] || ownedSet[member + '|' + song + '+']);
+  }
+
+  document.querySelectorAll('td.grid-cell-owned:not(.grid-cell-coached)').forEach(function(cell) {
+    if (!hasCard(cell.dataset.member, cell.dataset.song)) {
+      cell.classList.remove('grid-cell-owned');
+      cell.classList.add('grid-cell-unowned');
+      cell.textContent = '\u00d7';
+    }
+  });
+
+  document.querySelectorAll('.dm-row:not(.dm-row-coached)').forEach(function(row) {
+    if (!hasCard(row.dataset.member, row.dataset.song)) {
+      row.classList.add('dm-row-unowned');
+    }
+  });
+})();
 </script>
 <script>
 (function() {
