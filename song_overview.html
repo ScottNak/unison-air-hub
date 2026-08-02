@@ -269,8 +269,29 @@
      here. */
   .dm-row.dm-row-coached { margin: 0 -12px; padding: 6px 14px; }
   .dm-row.dm-edited { border-radius: 0; }
-  .dm-row.dm-edited .dm-value { color: #b8860b; }
-  .grid-cell-owned.gc-edited { color: #ffe9b8; }
+
+  /* The public generator always bakes data-baseline="0" for every cell/row
+     (see the module docstring - real progress is deliberately never baked
+     in, only the visitor's own browser-local levels exist here). That
+     means dul._DISCO_JS's edited = (level !== baseline) check reads
+     "differs from 0", not "differs from what the page last shipped with" -
+     so the private tool's intentional yellow .dm-edited/.gc-edited
+     highlight (meant to flag genuinely unsaved changes since the workbook
+     was last regenerated) instead lit up permanently on every nonzero
+     level, on every reload, whether set by a click or by Import
+     (2026-08-02, per user report: "everything" has yellow borders after
+     reloading). There's no substitute signal worth showing in its place -
+     every level here is already persisted to localStorage the instant
+     it's set, so there's no real "unsaved" state to flag. Grid has no
+     conflicting background rule to preserve, so box-shadow alone is
+     enough; Tiles' coached/unowned rows DO set their own background
+     (#fbedb0 / #3d1a1e) that dul._STYLE's plain .dm-edited background
+     would otherwise clobber via later source order, so those two combos
+     get their own box-shadow-only override instead of the general one. */
+  .grid-cell-owned.gc-edited { box-shadow: none; }
+  .dm-row.dm-edited:not(.dm-row-coached):not(.dm-row-unowned) { background: transparent; box-shadow: none; }
+  .dm-row-coached.dm-edited { box-shadow: none; }
+  .dm-row-unowned.dm-edited { box-shadow: none; }
 
   /* Ported from public_catalog.py's catalog.html (2026-07-31, per user
      request to keep the two public pages consistent) - the utility row
@@ -358,6 +379,83 @@
   .grid-cell-owned.grid-cell-coached.gc-l3 { background: #f5d155; color: #6b5416; }
   .grid-cell-owned.grid-cell-coached.gc-l4 { background: #f0c020; color: #4a3a10; }
   .grid-cell-owned.grid-cell-coached.gc-l5 { background: #f0b400; color: #4a3a10; }
+
+  /* Grid view standard-cell ramp, per group (2026-08-02, per user request:
+     "gradually to skyblue for hinata, pink for sakura, matching the color
+     of the tab"). Replaces dul._STYLE's single fixed purple ramp with two
+     group-specific ramps, each ending exactly at that group's own tab
+     accent color at level 500 (HINATA #7CC7E8, SAKURA #F19DB5) and fading
+     to a pale tint of the same hue at level 0, rather than the base
+     style's neutral gray-to-purple. Scoped via the .grid-scroll ancestor's
+     data-grid-group attribute (every real cell sits inside one) rather
+     than editing dul._STYLE directly, so disco_upgrade_live.html (the
+     private tool) keeps its original purple ramp untouched.
+     :not(.grid-cell-coached) on every rule is required, not decorative -
+     without it these would tie in specificity with the coaching-ramp rules
+     above and win by source order, silently overwriting the amber/yellow
+     coached cells with blue/pink. Text stays a dark shade of the same hue
+     the whole way (not the base style's white) since these are pale tab
+     colors even at their most saturated (level 500) - checked contrast
+     stays >=3.6:1 across every step of both ramps. */
+  .grid-scroll[data-grid-group="HINATA"] .grid-cell-owned:not(.grid-cell-coached) { color: #0c5a80; }
+  .grid-scroll[data-grid-group="HINATA"] .grid-cell-owned:not(.grid-cell-coached)[data-level="0"] { color: #0c5a80; background: #f2f9fd; }
+  .grid-scroll[data-grid-group="HINATA"] .grid-cell-owned:not(.grid-cell-coached).gc-l1 { background: #d8eef8; color: #0c5a80; }
+  .grid-scroll[data-grid-group="HINATA"] .grid-cell-owned:not(.grid-cell-coached).gc-l2 { background: #bee3f4; color: #0c5a80; }
+  .grid-scroll[data-grid-group="HINATA"] .grid-cell-owned:not(.grid-cell-coached).gc-l3 { background: #a3d8ef; color: #0c5a80; }
+  .grid-scroll[data-grid-group="HINATA"] .grid-cell-owned:not(.grid-cell-coached).gc-l4 { background: #90cfeb; color: #0c5a80; }
+  .grid-scroll[data-grid-group="HINATA"] .grid-cell-owned:not(.grid-cell-coached).gc-l5 { background: #7cc7e8; color: #0c5a80; }
+  .grid-scroll[data-grid-group="SAKURA"] .grid-cell-owned:not(.grid-cell-coached) { color: #99295a; }
+  .grid-scroll[data-grid-group="SAKURA"] .grid-cell-owned:not(.grid-cell-coached)[data-level="0"] { color: #99295a; background: #fef5f8; }
+  .grid-scroll[data-grid-group="SAKURA"] .grid-cell-owned:not(.grid-cell-coached).gc-l1 { background: #fbe2e9; color: #99295a; }
+  .grid-scroll[data-grid-group="SAKURA"] .grid-cell-owned:not(.grid-cell-coached).gc-l2 { background: #f8ceda; color: #99295a; }
+  .grid-scroll[data-grid-group="SAKURA"] .grid-cell-owned:not(.grid-cell-coached).gc-l3 { background: #f5bacb; color: #99295a; }
+  .grid-scroll[data-grid-group="SAKURA"] .grid-cell-owned:not(.grid-cell-coached).gc-l4 { background: #f3acc0; color: #99295a; }
+  .grid-scroll[data-grid-group="SAKURA"] .grid-cell-owned:not(.grid-cell-coached).gc-l5 { background: #f19db5; color: #99295a; }
+
+  /* Tiles view pip color, matching the same per-group recolor as the Grid
+     ramp above (2026-08-02, per user request: "update the circle colors in
+     the tile view from purple to the similar color changes as well").
+     Pips don't have a per-level ramp (only their COUNT indicates level, all
+     filled pips are one flat color) so this just swaps that one flat color
+     - no need for six hardcoded shades here like the Grid ramp needed:
+     .group-half already carries --tc inline (set once, same custom
+     property the h3 banner and grid-group-sum badge both already read),
+     and custom properties inherit straight down to these pips with no
+     extra selector work. :not(.dm-row-coached), same reasoning as the
+     Grid ramp's :not(.grid-cell-coached) - leaves coached rows' pips on
+     the original purple rather than reassigning them a color that would
+     visually contradict their amber row background. The border was a
+     darker shade of the fixed purple fill before (#58419e under #6a4fc9);
+     rgba(0,0,0,0.22) reproduces that same "slightly darker ring" look
+     without needing a second hardcoded color per group. */
+  .dm-row:not(.dm-row-coached) .pip.filled { background: var(--tc, #6a4fc9); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.22); }
+  .dm-row:not(.dm-row-coached) .pip:hover { background: var(--tc, #a99be0); }
+
+  /* Grand-total badge in the Grid group tabs (2026-08-02, per user request:
+     "sum of all totals in the upper tab area"). Sits next to the
+     日向坂/Sakurazaka label as a small pill. White text was the original
+     choice here (matching .grid-group-btn.active's own white-on-color
+     text), but both group colors are pale pastels (HINATA #7CC7E8,
+     SAKURA #F19DB5) - white-on-pastel measures under 2:1 contrast either
+     way (checked both the solid-color inactive badge and the translucent-
+     white-over-color active badge), nowhere near the ~4.5:1 WCAG floor for
+     small text. Dark ink text (#2d2d42, the same color the rest of the
+     page uses for body text) clears 6.5:1+ against both badge backgrounds
+     in both states instead (2026-08-02, per user report: "white on light
+     blue is a bit hard to read"). */
+  .grid-group-sum {
+    margin-left: 6px; padding: 1px 7px; border-radius: 999px; font-size: 10.5px;
+    font-weight: 700; background: var(--tc, #6a4fc9); color: #2d2d42;
+  }
+  .grid-group-btn.active .grid-group-sum { background: rgba(255,255,255,0.55); color: #2d2d42; }
+
+  /* Same grand-total badge, also in the Tiles view's group headers
+     (2026-08-02, per user request: "the total pill on the tiles side as
+     well"). .group-half h3 is always a solid --tc banner (never toggles
+     white/colored the way .grid-group-btn does), so it only needs the one
+     translucent-white treatment - same colors as the Grid tab's active
+     state, for the same contrast reason documented above. */
+  .group-half h3 .grid-group-sum { background: rgba(255,255,255,0.55); color: #2d2d42; }
 </style>
 </head>
 <body>
@@ -388,7 +486,7 @@
         </div>
         <div class="group-halves">
           <div class="group-half" style="--tc:#7CC7E8">
-            <h3 data-label-jp="日向坂" data-label-en="Hinatazaka">日向坂</h3>
+            <h3><span data-label-jp="日向坂" data-label-en="Hinatazaka">日向坂</span><span class="grid-group-sum" data-grid-group-sum="HINATA">0</span></h3>
             <div class="song-grid">
         <details class="song-tile">
           <summary class="song-tile-head">
@@ -5812,7 +5910,7 @@
         </details></div>
           </div>
           <div class="group-half" style="--tc:#F19DB5">
-            <h3 data-label-jp="櫻坂" data-label-en="Sakurazaka">櫻坂</h3>
+            <h3><span data-label-jp="櫻坂" data-label-en="Sakurazaka">櫻坂</span><span class="grid-group-sum" data-grid-group-sum="SAKURA">0</span></h3>
             <div class="song-grid">
         <details class="song-tile">
           <summary class="song-tile-head">
@@ -11460,10 +11558,14 @@
       <div class="view-panel" data-view-panel="grid">
         
       <div class="grid-group-tabs">
-        <button class="grid-group-btn active" data-grid-group-btn="HINATA" style="--tc:#7CC7E8"
-          data-label-jp="日向坂" data-label-en="Hinatazaka">日向坂</button>
-        <button class="grid-group-btn" data-grid-group-btn="SAKURA" style="--tc:#F19DB5"
-          data-label-jp="櫻坂" data-label-en="Sakurazaka">櫻坂</button>
+        <button class="grid-group-btn active" data-grid-group-btn="HINATA" style="--tc:#7CC7E8">
+          <span data-label-jp="日向坂" data-label-en="Hinatazaka">日向坂</span>
+          <span class="grid-group-sum" data-grid-group-sum="HINATA">0</span>
+        </button>
+        <button class="grid-group-btn" data-grid-group-btn="SAKURA" style="--tc:#F19DB5">
+          <span data-label-jp="櫻坂" data-label-en="Sakurazaka">櫻坂</span>
+          <span class="grid-group-sum" data-grid-group-sum="SAKURA">0</span>
+        </button>
       </div>
       
       <div class="grid-scroll" data-grid-group="HINATA" style="--tc:#7CC7E8">
@@ -11845,6 +11947,39 @@ const SOURCE_FILE = "v61-2026-08-01";
       reader.readAsText(file);
     });
   }
+})();
+</script>
+<script>
+(function() {
+  function sumGroup(group) {
+    var scroll = document.querySelector('.grid-scroll[data-grid-group="' + group + '"]');
+    if (!scroll) return 0;
+    var total = 0;
+    scroll.querySelectorAll('.grid-total-col[data-member]').forEach(function(cell) {
+      total += parseInt(cell.textContent, 10) || 0;
+    });
+    return total;
+  }
+  function refreshGroupSums() {
+    ['HINATA', 'SAKURA'].forEach(function(group) {
+      var text = sumGroup(group).toLocaleString();
+      document.querySelectorAll('.grid-group-sum[data-grid-group-sum="' + group + '"]').forEach(function(el) {
+        el.textContent = text;
+      });
+    });
+  }
+  refreshGroupSums();
+
+  var pending = false;
+  function scheduleRefresh() {
+    if (pending) return;
+    pending = true;
+    requestAnimationFrame(function() { pending = false; refreshGroupSums(); });
+  }
+  var observer = new MutationObserver(scheduleRefresh);
+  document.querySelectorAll('.grid-total-col[data-member]').forEach(function(cell) {
+    observer.observe(cell, { characterData: true, childList: true, subtree: true });
+  });
 })();
 </script>
 <script>
