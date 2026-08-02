@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>UNI'S ON AIR Kizuna Bond Tracker</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e, #16213e 60%, #0f3460);
+    margin: 0; padding: 28px 16px 60px; color: #222;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+
+  .toolbar {
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.92); border-radius: 14px; padding: 14px 18px; margin-bottom: 20px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.30);
+  }
+  .toolbar input[type=text] {
+    flex: 1 1 220px; min-width: 160px; padding: 9px 12px; border-radius: 8px;
+    border: 1px solid #ccc; font-size: 13px;
+  }
+  .toolbar button {
+    appearance: none; border: none; cursor: pointer; font-weight: 700; font-size: 12.5px;
+    padding: 9px 14px; border-radius: 8px; background: #2d2d42; color: #fff;
+  }
+  .toolbar button.secondary { background: #eee; color: #333; }
+  .toolbar button:hover { filter: brightness(1.12); }
+  .save-note { text-align: center; color: #cfd8ff; font-size: 11px; margin: 0 0 16px; min-height: 14px; }
+
+  .group-tab-bar {
+    /* No side padding here (2026-08-02, per user report of misaligned
+       edges) - .group below has none either, so the tab bar's left/right
+       edges need to span the exact same 0-100% width to line up with the
+       content panel underneath instead of stepping in by 4px on each side. */
+    display: flex; gap: 6px; margin-bottom: -1px;
+  }
+  .group-tab-btn {
+    appearance: none; border: none; cursor: pointer; font-weight: 800; font-size: 14px;
+    flex: 1 1 0; text-align: center;
+    padding: 12px 22px; border-radius: 12px 12px 0 0;
+    background: rgba(255,255,255,0.55); color: #2d2d42;
+    transition: background .12s ease, color .12s ease;
+  }
+  .group-tab-btn:hover { background: rgba(255,255,255,0.75); }
+  .group-tab-btn.active { background: var(--tc); color: #23233a; box-shadow: 0 -2px 10px rgba(0,0,0,0.2); }
+
+  /* Both top corners square, not just top-left (2026-08-02, per user
+     request) - ANY curve on the top-right pulls that edge inward right at
+     the very top row, so it can never sit perfectly flush against the full-
+     width tab bar above it the way a square corner does. Bottom corners
+     keep their 14px rounding since nothing sits above them to line up with. */
+  .group { border-radius: 0 0 14px 14px; overflow: hidden; box-shadow: 0 8px 28px rgba(0,0,0,0.32); margin-bottom: 26px; display: none; }
+  .group.active { display: block; }
+  .group[data-group=SAKURA] { background: #fbe4ec; }
+  .group[data-group=HINATA] { background: #e3eefb; }
+
+  .tile-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 22px 14px; padding: 26px 22px 22px;
+  }
+
+  .tile { display: flex; flex-direction: column; align-items: center; }
+  .diamond-wrap {
+    position: relative;
+    width: 84px; height: 84px;
+  }
+  /* Diamond is a rotated square, not a clip-path polygon (2026-08-01, per
+     user report of discolored corners) - clip-path antialiases its own
+     paint (background/box-shadow) separately from the rest of the page,
+     which shows up as a faint fringe right at the diamond's four sharp
+     points. A plain square rotated 45deg avoids that entirely since
+     browsers rasterize rotated rects cleanly; box-shadow/background then
+     "just work" with no clip-path interaction to go wrong. Side length is
+     84/sqrt(2) so the rotated square's point-to-point span still matches
+     the old clip-path diamond's 84px width/height exactly. Gradient angles
+     below are each shifted -45deg from their old value so the ON-SCREEN
+     angle is unchanged after the added rotate(45deg) (gradients are painted
+     in the element's own pre-transform space, so the transform rotates
+     them too - without the compensation the stripes would visibly shift). */
+  .diamond {
+    position: absolute; top: 50%; left: 50%;
+    width: 59.4px; height: 59.4px;
+    transform: translate(-50%, -50%) rotate(45deg);
+    box-shadow: inset 0 0 0 3px rgba(255,255,255,0.55);
+    transition: transform .12s ease;
+  }
+  .diamond-label {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 26px; font-weight: 800; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.35);
+    pointer-events: none;
+  }
+  .group[data-group=SAKURA] .diamond { background: linear-gradient(115deg,#F19DB5,#DE90A7); }
+  .group[data-group=HINATA] .diamond { background: linear-gradient(115deg,#7CC7E8,#72B7D5); }
+  .group[data-group=SAKURA] .tile.k-member .diamond { background: linear-gradient(115deg,#5EB954,#56AA4D); }
+  .tile.graduated .diamond { filter: saturate(42%) brightness(1.2); }
+  .tile:hover .diamond { transform: translate(-50%, -50%) rotate(45deg) scale(1.06); }
+  /* No gold "edited" ring here (2026-08-02, per user question) - unlike the
+     personal kizuna_live.html, this public page always bakes baseline=0 for
+     every member (see the module docstring: no real data is ever shipped
+     here), so "edited" only ever means "differs from 0", not "differs from
+     what the page last shipped with". A value you type is already persisted
+     to localStorage the instant you type it, so there's no real "unsaved
+     change" to flag - the ring would just light up permanently on every
+     nonzero value with no useful signal, same issue already fixed in
+     public_song_overview.py's .dm-edited/.gc-edited rules. The .edited class
+     itself is kept (undecorated) since "Show set only" still needs it. */
+
+  .name {
+    font-size: 11.5px; font-weight: 700; color: #2d2d42; text-align: center;
+    margin-top: 6px; line-height: 1.25; min-height: 28px;
+  }
+  .kizuna-input {
+    margin-top: 4px; width: 74px; text-align: center; font-weight: 800; font-size: 13px;
+    border: none; border-radius: 999px; padding: 4px 6px; color: #fff;
+    background: #2d2d42; box-shadow: 0 2px 6px rgba(0,0,0,.25);
+    -moz-appearance: textfield;
+  }
+  .kizuna-input::-webkit-inner-spin-button,
+  .kizuna-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .kizuna-input:focus { outline: 2px solid #ffd23f; }
+
+  .tile.hidden { display: none; }
+
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="toolbar">
+    <button class="secondary" id="show-edited">Show set only</button>
+    <button class="secondary" id="export-btn">&#11015; Export</button>
+    <button class="secondary" id="import-btn">&#11014; Import</button>
+    <input type="file" id="import-file-input" accept="application/json" style="display:none">
+  </div>
+
+  <p class="save-note" id="save-note">&nbsp;</p>
+
+  <div class="group-tab-bar" id="group-tab-bar"></div>
+  <div id="groups"></div>
+</div>
+
+<script>
+const DATA = {"SAKURA": [{"name": "遠藤光莉", "nameEn": "Endō Hikari", "idPrefix": "S", "graduated": false}, {"name": "大園玲", "nameEn": "Ōzono Rei", "idPrefix": "S", "graduated": false}, {"name": "大沼晶保", "nameEn": "Ōnuma Akiho", "idPrefix": "S", "graduated": false}, {"name": "幸阪茉里乃", "nameEn": "Kōsaka Marino", "idPrefix": "S", "graduated": false}, {"name": "田村保乃", "nameEn": "Tamura Hono", "idPrefix": "S", "graduated": false}, {"name": "藤吉夏鈴", "nameEn": "Fujiyoshi Karin", "idPrefix": "S", "graduated": false}, {"name": "増本綺良", "nameEn": "Masumoto Kira", "idPrefix": "S", "graduated": false}, {"name": "松田里奈", "nameEn": "Matsuda Rina", "idPrefix": "S", "graduated": false}, {"name": "森田ひかる", "nameEn": "Morita Hikaru", "idPrefix": "S", "graduated": false}, {"name": "守屋麗奈", "nameEn": "Moriya Rena", "idPrefix": "S", "graduated": false}, {"name": "山﨑天", "nameEn": "Yamasaki Ten", "idPrefix": "S", "graduated": false}, {"name": "石森璃花", "nameEn": "Ishimori Rika", "idPrefix": "S", "graduated": false}, {"name": "遠藤理子", "nameEn": "Endō Riko", "idPrefix": "S", "graduated": false}, {"name": "小田倉麗奈", "nameEn": "Odakura Reina", "idPrefix": "S", "graduated": false}, {"name": "小島凪紗", "nameEn": "Kojima Nagisa", "idPrefix": "S", "graduated": false}, {"name": "谷口愛季", "nameEn": "Taniguchi Airi", "idPrefix": "S", "graduated": false}, {"name": "中嶋優月", "nameEn": "Nakashima Yuzuki", "idPrefix": "S", "graduated": false}, {"name": "的野美青", "nameEn": "Matono Mio", "idPrefix": "S", "graduated": false}, {"name": "向井純葉", "nameEn": "Mukai Itoha", "idPrefix": "S", "graduated": false}, {"name": "村井優", "nameEn": "Murai Yū", "idPrefix": "S", "graduated": false}, {"name": "村山美羽", "nameEn": "Murayama Miu", "idPrefix": "S", "graduated": false}, {"name": "山下瞳月", "nameEn": "Yamashita Shizuki", "idPrefix": "S", "graduated": false}, {"name": "浅井恋乃未", "nameEn": "Asai Konomi", "idPrefix": "S", "graduated": false}, {"name": "稲熊ひな", "nameEn": "Inaguma Hina", "idPrefix": "S", "graduated": false}, {"name": "勝又春", "nameEn": "Katsumata Haru", "idPrefix": "S", "graduated": false}, {"name": "佐藤愛桜", "nameEn": "Satō Neo", "idPrefix": "S", "graduated": false}, {"name": "中川智尋", "nameEn": "Nakagawa Chihiro", "idPrefix": "S", "graduated": false}, {"name": "松本和子", "nameEn": "Matsumoto Wako", "idPrefix": "S", "graduated": false}, {"name": "目黒陽色", "nameEn": "Meguro Hīro", "idPrefix": "S", "graduated": false}, {"name": "山川宇衣", "nameEn": "Yamakawa Ui", "idPrefix": "S", "graduated": false}, {"name": "山田桃実", "nameEn": "Yamada Momomi", "idPrefix": "S", "graduated": false}, {"name": "石森虹花", "nameEn": "Ishimori Nijika", "idPrefix": "K", "graduated": true}, {"name": "上村莉菜", "nameEn": "Uemura Rina", "idPrefix": "S", "graduated": true}, {"name": "尾関梨香", "nameEn": "Ozeki Rika", "idPrefix": "S", "graduated": true}, {"name": "織田奈那", "nameEn": "Oda Nana", "idPrefix": "K", "graduated": true}, {"name": "小池美波", "nameEn": "Koike Minami", "idPrefix": "S", "graduated": true}, {"name": "小林由依", "nameEn": "Kobayashi Yui", "idPrefix": "S", "graduated": true}, {"name": "齋藤冬優花", "nameEn": "Saitō Fuyuka", "idPrefix": "S", "graduated": true}, {"name": "佐藤詩織", "nameEn": "Satō Shiori", "idPrefix": "K", "graduated": true}, {"name": "菅井友香", "nameEn": "Sugai Yūka", "idPrefix": "S", "graduated": true}, {"name": "鈴本美愉", "nameEn": "Suzumoto Miyu", "idPrefix": "K", "graduated": true}, {"name": "長沢菜々香", "nameEn": "Nagasawa Nanako", "idPrefix": "K", "graduated": true}, {"name": "土生瑞穂", "nameEn": "Habu Mizuho", "idPrefix": "S", "graduated": true}, {"name": "原田葵", "nameEn": "Harada Aoi", "idPrefix": "S", "graduated": true}, {"name": "平手友梨奈", "nameEn": "Hirate Yurina", "idPrefix": "K", "graduated": true}, {"name": "守屋茜", "nameEn": "Moriya Akane", "idPrefix": "S", "graduated": true}, {"name": "渡辺梨加", "nameEn": "Watanabe Rika", "idPrefix": "S", "graduated": true}, {"name": "渡邉理佐", "nameEn": "Watanabe Risa", "idPrefix": "S", "graduated": true}, {"name": "井上梨名", "nameEn": "Inoue Rina", "idPrefix": "S", "graduated": true}, {"name": "関有美子", "nameEn": "Seki Yumiko", "idPrefix": "S", "graduated": true}, {"name": "武元唯衣", "nameEn": "Takemoto Yui", "idPrefix": "S", "graduated": true}, {"name": "松平璃子", "nameEn": "Matsudaira Riko", "idPrefix": "S", "graduated": true}], "HINATA": [{"name": "金村美玖", "nameEn": "Kanemura Miku", "idPrefix": "H", "graduated": false}, {"name": "小坂菜緒", "nameEn": "Kosaka Nao", "idPrefix": "H", "graduated": false}, {"name": "上村ひなの", "nameEn": "Kamimura Hinano", "idPrefix": "H", "graduated": false}, {"name": "髙橋未来虹", "nameEn": "Takahashi Mikuni", "idPrefix": "H", "graduated": false}, {"name": "森本茉莉", "nameEn": "Morimoto Marie", "idPrefix": "H", "graduated": false}, {"name": "山口陽世", "nameEn": "Yamaguchi Haruyo", "idPrefix": "H", "graduated": false}, {"name": "石塚瑶季", "nameEn": "Ishizuka Tamaki", "idPrefix": "H", "graduated": false}, {"name": "小西夏菜実", "nameEn": "Konishi Nanami", "idPrefix": "H", "graduated": false}, {"name": "清水理央", "nameEn": "Shimizu Rio", "idPrefix": "H", "graduated": false}, {"name": "正源司陽子", "nameEn": "Shōgenji Yōko", "idPrefix": "H", "graduated": false}, {"name": "竹内希来里", "nameEn": "Takeuchi Kirari", "idPrefix": "H", "graduated": false}, {"name": "平尾帆夏", "nameEn": "Hirao Honoka", "idPrefix": "H", "graduated": false}, {"name": "平岡海月", "nameEn": "Hiraoka Mitsuki", "idPrefix": "H", "graduated": false}, {"name": "藤嶌果歩", "nameEn": "Fujishima Kaho", "idPrefix": "H", "graduated": false}, {"name": "宮地すみれ", "nameEn": "Miyachi Sumire", "idPrefix": "H", "graduated": false}, {"name": "山下葉留花", "nameEn": "Yamashita Haruka", "idPrefix": "H", "graduated": false}, {"name": "渡辺莉奈", "nameEn": "Watanabe Rina", "idPrefix": "H", "graduated": false}, {"name": "大田美月", "nameEn": "Ōta Mizuki", "idPrefix": "H", "graduated": false}, {"name": "大野愛実", "nameEn": "Ōno Manami", "idPrefix": "H", "graduated": false}, {"name": "片山紗希", "nameEn": "Katayama Saki", "idPrefix": "H", "graduated": false}, {"name": "蔵盛妃那乃", "nameEn": "Kuramori Hinano", "idPrefix": "H", "graduated": false}, {"name": "坂井新奈", "nameEn": "Sakai Nīna", "idPrefix": "H", "graduated": false}, {"name": "佐藤優羽", "nameEn": "Satō Yū", "idPrefix": "H", "graduated": false}, {"name": "下田衣珠季", "nameEn": "Shimoda Izuki", "idPrefix": "H", "graduated": false}, {"name": "高井俐香", "nameEn": "Takai Rika", "idPrefix": "H", "graduated": false}, {"name": "鶴崎仁香", "nameEn": "Tsurusaki Niko", "idPrefix": "H", "graduated": false}, {"name": "松尾桜", "nameEn": "Matsuo Sakura", "idPrefix": "H", "graduated": false}, {"name": "井口眞緒", "nameEn": "Iguchi Mao", "idPrefix": "H", "graduated": true}, {"name": "潮紗理菜", "nameEn": "Ushio Sarina", "idPrefix": "H", "graduated": true}, {"name": "影山優佳", "nameEn": "Kageyama Yūka", "idPrefix": "H", "graduated": true}, {"name": "加藤史帆", "nameEn": "Katō Shiho", "idPrefix": "H", "graduated": true}, {"name": "齊藤京子", "nameEn": "Saitō Kyōko", "idPrefix": "H", "graduated": true}, {"name": "佐々木久美", "nameEn": "Sasaki Kumi", "idPrefix": "H", "graduated": true}, {"name": "佐々木美玲", "nameEn": "Sasaki Mirei", "idPrefix": "H", "graduated": true}, {"name": "高瀬愛奈", "nameEn": "Takase Mana", "idPrefix": "H", "graduated": true}, {"name": "高本彩花", "nameEn": "Takamoto Ayaka", "idPrefix": "H", "graduated": true}, {"name": "東村芽依", "nameEn": "Higashimura Mei", "idPrefix": "H", "graduated": true}, {"name": "河田陽菜", "nameEn": "Kawata Hina", "idPrefix": "H", "graduated": true}, {"name": "富田鈴花", "nameEn": "Tomita Suzuka", "idPrefix": "H", "graduated": true}, {"name": "丹生明里", "nameEn": "Nibu Akari", "idPrefix": "H", "graduated": true}, {"name": "濱岸ひより", "nameEn": "Hamagishi Hiyori", "idPrefix": "H", "graduated": true}, {"name": "松田好花", "nameEn": "Matsuda Konoka", "idPrefix": "H", "graduated": true}, {"name": "宮田愛萌", "nameEn": "Miyata Manamo", "idPrefix": "H", "graduated": true}, {"name": "渡邉美穂", "nameEn": "Watanabe Miho", "idPrefix": "H", "graduated": true}, {"name": "岸帆夏", "nameEn": "Kishi Honoka", "idPrefix": "H", "graduated": true}]};
+const VERSION = "v61-2026-08-02";
+const STORAGE_KEY = 'uniair_public_kizuna_v1';
+const FOREIGN_KEY = 'uniair_public_kizuna_foreign_v1';
+
+function loadOverrides() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch (e) { return {}; }
+}
+function saveOverrides(ov) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(ov));
+  var note = document.getElementById('save-note');
+  note.textContent = 'Saved ' + new Date().toLocaleTimeString();
+  clearTimeout(saveOverrides._t);
+  saveOverrides._t = setTimeout(function() { note.textContent = '\u00a0'; }, 2000);
+}
+function loadForeign() {
+  try { return JSON.parse(localStorage.getItem(FOREIGN_KEY)) || {}; }
+  catch (e) { return {}; }
+}
+function saveForeign(obj) { localStorage.setItem(FOREIGN_KEY, JSON.stringify(obj)); }
+function loadBondShape(data) {
+  if (data.bond && (data.bond.SAKURA || data.bond.HINATA)) return data.bond;
+  if (data.values && (data.values.SAKURA || data.values.HINATA)) return data.values;
+  return null;
+}
+
+var overrides = loadOverrides();
+var groupsEl = document.getElementById('groups');
+var tabBarEl = document.getElementById('group-tab-bar');
+var GROUP_LABELS = {
+  JP: {SAKURA: '櫻坂', HINATA: '日向坂'},
+  EN: {SAKURA: 'SAKURAZAKA46', HINATA: 'HINATAZAKA46'}
+};
+var currentLang = 'JP';
+var groupColors = {SAKURA: '#F19DB5', HINATA: '#7CC7E8'};
+var GROUP_ORDER = ['HINATA', 'SAKURA'];
+
+function currentValue(groupName, name) {
+  var key = groupName + '::' + name;
+  return (key in overrides) ? overrides[key] : 0;
+}
+
+function firstChar(s) { return s ? s[0] : '?'; }
+
+function setActiveGroup(groupName) {
+  document.querySelectorAll('.group-tab-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.group === groupName);
+  });
+  document.querySelectorAll('.group').forEach(function(g) {
+    g.classList.toggle('active', g.dataset.group === groupName);
+  });
+}
+
+function refreshTileState(tile, input) {
+  var val = parseInt(input.value, 10) || 0;
+  tile.classList.toggle('edited', val !== 0);
+}
+
+GROUP_ORDER.forEach(function(groupName, idx) {
+  var members = DATA[groupName] || [];
+
+  var tabBtn = document.createElement('button');
+  tabBtn.className = 'group-tab-btn' + (idx === 0 ? ' active' : '');
+  tabBtn.dataset.group = groupName;
+  tabBtn.style.setProperty('--tc', groupColors[groupName]);
+  tabBtn.textContent = GROUP_LABELS[currentLang][groupName];
+  tabBtn.addEventListener('click', function() { setActiveGroup(groupName); });
+  tabBarEl.appendChild(tabBtn);
+
+  var groupDiv = document.createElement('div');
+  groupDiv.className = 'group' + (idx === 0 ? ' active' : '');
+  groupDiv.dataset.group = groupName;
+
+  var grid = document.createElement('div');
+  grid.className = 'tile-grid';
+
+  members.forEach(function(m) {
+    var tile = document.createElement('div');
+    var extraClasses = '';
+    if (groupName === 'SAKURA' && m.idPrefix === 'K') extraClasses += ' k-member';
+    if (m.graduated) extraClasses += ' graduated';
+    tile.className = 'tile' + extraClasses;
+    tile.dataset.name = m.name;
+    tile.dataset.nameEn = m.nameEn;
+    tile.dataset.group = groupName;
+    if (m.graduated) tile.title = m.name + ' (graduated)';
+
+    var diamondWrap = document.createElement('div');
+    diamondWrap.className = 'diamond-wrap';
+    var diamond = document.createElement('div');
+    diamond.className = 'diamond';
+    diamondWrap.appendChild(diamond);
+    var diamondLabel = document.createElement('div');
+    diamondLabel.className = 'diamond-label';
+    diamondLabel.textContent = firstChar(m.name);
+    diamondWrap.appendChild(diamondLabel);
+    tile.appendChild(diamondWrap);
+
+    var nameEl = document.createElement('div');
+    nameEl.className = 'name';
+    nameEl.textContent = m.name;
+    tile.appendChild(nameEl);
+
+    var input = document.createElement('input');
+    input.type = 'number';
+    input.min = '0';
+    input.className = 'kizuna-input';
+    input.value = currentValue(groupName, m.name);
+    input.addEventListener('input', function() {
+      var key = groupName + '::' + m.name;
+      var val = parseInt(input.value, 10);
+      if (isNaN(val) || val < 0) val = 0;
+      overrides[key] = val;
+      saveOverrides(overrides);
+      refreshTileState(tile, input);
+    });
+    tile.appendChild(input);
+
+    refreshTileState(tile, input);
+    grid.appendChild(tile);
+  });
+
+  groupDiv.appendChild(grid);
+  groupsEl.appendChild(groupDiv);
+});
+
+function applyLanguage(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.group-tab-btn').forEach(function(btn) {
+    btn.textContent = GROUP_LABELS[lang][btn.dataset.group];
+  });
+  document.querySelectorAll('.tile').forEach(function(tile) {
+    var displayName = (lang === 'EN') ? tile.dataset.nameEn : tile.dataset.name;
+    var nameEl = tile.querySelector('.name');
+    var diamond = tile.querySelector('.diamond-label');
+    if (nameEl) nameEl.textContent = displayName;
+    if (diamond) diamond.textContent = firstChar(displayName);
+  });
+}
+
+window.addEventListener('message', function(e) {
+  if (e.data && e.data.type === 'uniair-lang' && (e.data.lang === 'JP' || e.data.lang === 'EN')) {
+    applyLanguage(e.data.lang);
+  }
+});
+
+// Show set only (toggle) - "set" = you've typed a nonzero value
+var showingEditedOnly = false;
+document.getElementById('show-edited').addEventListener('click', function(e) {
+  showingEditedOnly = !showingEditedOnly;
+  e.target.textContent = showingEditedOnly ? 'Show all' : 'Show set only';
+  document.querySelectorAll('.tile').forEach(function(tile) {
+    if (showingEditedOnly) {
+      tile.classList.toggle('hidden', !tile.classList.contains('edited'));
+    } else {
+      tile.classList.remove('hidden');
+    }
+  });
+});
+
+// Export: downloads a JSON backup of every member's current value,
+// independent of localStorage. Top-level shape matches Scott's personal
+// Kizuna tracker ({savedAt, sources, bond}) so files round-trip between
+// the two tools.
+document.getElementById('export-btn').addEventListener('click', function() {
+  var snapshot = { savedAt: new Date().toISOString(), sources: { kizuna: VERSION }, bond: {} };
+  GROUP_ORDER.forEach(function(groupName) {
+    var members = DATA[groupName] || [];
+    var groupValues = {};
+    members.forEach(function(m) {
+      groupValues[m.name] = currentValue(groupName, m.name);
+    });
+    snapshot.bond[groupName] = groupValues;
+  });
+  var foreign = loadForeign();
+  for (var k in foreign) { snapshot[k] = foreign[k]; }
+
+  var stamp = new Date().toISOString().slice(0, 10);
+  var filename = 'uniair_public_kizuna_' + stamp + '.json';
+  var blob = new Blob([JSON.stringify(snapshot, null, 2)], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  var note = document.getElementById('save-note');
+  note.textContent = 'Saved to ' + filename;
+  clearTimeout(saveOverrides._t);
+  saveOverrides._t = setTimeout(function() { note.textContent = '\u00a0'; }, 3500);
+});
+
+// Import: restores values from a previously-exported backup. Overwrites
+// current values (and localStorage) for every member present in the file.
+document.getElementById('import-btn').addEventListener('click', function() {
+  document.getElementById('import-file-input').click();
+});
+document.getElementById('import-file-input').addEventListener('change', function(e) {
+  var file = e.target.files[0];
+  e.target.value = '';
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function() {
+    var data;
+    try { data = JSON.parse(reader.result); }
+    catch (err) {
+      window.alert('That file is not valid JSON - could not load.');
+      return;
+    }
+    var bondShape = loadBondShape(data);
+    var foreign = {};
+    for (var key in data || {}) { if (key !== 'bond' && key !== 'values' && key !== 'savedAt' && key !== 'sources') foreign[key] = data[key]; }
+    if (Object.keys(foreign).length) saveForeign(foreign);
+
+    if (!data || !bondShape) {
+      if (Object.keys(foreign).length) {
+        window.alert('No bond/kizuna values found in "' + file.name + '", but its other data was kept for the next Export.');
+      } else {
+        window.alert('That file does not look like a UNI\'S ON AIR save file.');
+      }
+      return;
+    }
+    if (!window.confirm('Import values from "' + file.name + '"? This overwrites your current values for every member listed in the file.')) return;
+
+    GROUP_ORDER.forEach(function(groupName) {
+      var groupValues = bondShape[groupName];
+      if (!groupValues) return;
+      var members = DATA[groupName] || [];
+      members.forEach(function(m) {
+        if (!(m.name in groupValues)) return;
+        var val = parseInt(groupValues[m.name], 10);
+        if (isNaN(val)) return;
+        overrides[groupName + '::' + m.name] = val;
+      });
+    });
+    saveOverrides(overrides);
+
+    document.querySelectorAll('.tile').forEach(function(tile) {
+      var input = tile.querySelector('.kizuna-input');
+      if (!input) return;
+      var groupName = tile.dataset.group;
+      var name = tile.dataset.name;
+      input.value = currentValue(groupName, name);
+      refreshTileState(tile, input);
+    });
+
+    var note = document.getElementById('save-note');
+    note.textContent = 'Loaded ' + file.name;
+    clearTimeout(saveOverrides._t);
+    saveOverrides._t = setTimeout(function() { note.textContent = '\u00a0'; }, 3500);
+  };
+  reader.readAsText(file);
+});
+</script>
+</body>
+</html>

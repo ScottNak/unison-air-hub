@@ -456,6 +456,34 @@
      translucent-white treatment - same colors as the Grid tab's active
      state, for the same contrast reason documented above. */
   .group-half h3 .grid-group-sum { background: rgba(255,255,255,0.55); color: #2d2d42; }
+
+  /* Grid view tab bar restyled to match public_kizuna.html's tab look/feel
+     (2026-08-02, per user consistency request) - full-width paired tabs
+     that sit flush against the panel below (no gap, square top corners
+     meeting the panel's own now-square top edge) instead of
+     disco_upgrade_live.html's original small floating pill tabs. Kept here
+     in _EXTRA_STYLE rather than dul._STYLE so the personal tool keeps its
+     original pill tabs untouched - same policy as every other override in
+     this block. Inactive fill uses a translucent DARK tint (not kizuna's
+     literal rgba(255,255,255,.55)) since this tab bar sits inside a light
+     .section-card, not directly on the page's dark gradient background the
+     way kizuna's toolbar does - translucent white would be invisible here;
+     the structural look (full-width flush pair, colored active fill) is
+     what's being matched, not the literal color value. Active-tab text is
+     dark (#23233a, matching kizuna) rather than dul._STYLE's white, which
+     also happens to resolve the same low-contrast complaint noted above for
+     the sum badge (HINATA/SAKURA's pastel --tc colors fail contrast with
+     white text either way). */
+  .grid-group-tabs { margin-bottom: -1px; }
+  .grid-group-btn {
+    flex: 1 1 0; text-align: center; border: none;
+    font-weight: 800; font-size: 14px; padding: 12px 22px; border-radius: 12px 12px 0 0;
+    background: rgba(45,45,66,0.06); color: #2d2d42;
+    transition: background .12s ease, color .12s ease;
+  }
+  .grid-group-btn:hover { background: rgba(45,45,66,0.12); }
+  .grid-group-btn.active { background: var(--tc, #6a4fc9); color: #23233a; }
+  .grid-scroll { border-radius: 0 0 10px 10px; border-top: 1px solid #ececf4; }
 </style>
 </head>
 <body>
@@ -11607,7 +11635,7 @@
     </div>
   </div>
 <script>
-const SOURCE_FILE = "v61-2026-08-01";
+const SOURCE_FILE = "v61-2026-08-02";
 </script>
 <script>
 (function() {
