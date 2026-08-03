@@ -1,5 +1,5 @@
 {
- "version": "v62-2026-08-02",
+ "version": "v65-2026-08-02",
  "cardCount": 5433,
  "cards": [
   {
@@ -30238,8 +30238,8 @@
    "vo": 3606,
    "da": 3633,
    "pe": 3621,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": true
   },
   {
@@ -30508,8 +30508,8 @@
    "vo": 3629,
    "da": 3603,
    "pe": 3632,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -33268,8 +33268,8 @@
    "vo": 3646,
    "da": 3699,
    "pe": 3596,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": true
   },
   {
@@ -33418,8 +33418,8 @@
    "vo": 3661,
    "da": 3696,
    "pe": 3605,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": true
   },
   {
@@ -35233,8 +35233,8 @@
    "vo": 3652,
    "da": 3699,
    "pe": 3654,
-   "cs": "ALL35%",
-   "csBase": "ALL35%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": true
   },
   {
@@ -35668,8 +35668,8 @@
    "vo": 3667,
    "da": 3720,
    "pe": 3620,
-   "cs": "ALL35%",
-   "csBase": "ALL35%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": true
   },
   {
@@ -37528,8 +37528,8 @@
    "vo": 3596,
    "da": 3617,
    "pe": 3523,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -37708,8 +37708,8 @@
    "vo": 3618,
    "da": 3656,
    "pe": 3565,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": true
   },
   {
@@ -40153,8 +40153,8 @@
    "vo": 3612,
    "da": 3579,
    "pe": 3600,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -40858,8 +40858,8 @@
    "vo": 3510,
    "da": 3521,
    "pe": 3530,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -42943,8 +42943,8 @@
    "vo": 3598,
    "da": 3659,
    "pe": 3568,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -43003,8 +43003,8 @@
    "vo": 3669,
    "da": 3680,
    "pe": 3610,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": true
   },
   {
@@ -43198,8 +43198,8 @@
    "vo": 3675,
    "da": 3680,
    "pe": 3613,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -44848,8 +44848,8 @@
    "vo": 3686,
    "da": 3718,
    "pe": 3683,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -45538,8 +45538,8 @@
    "vo": 3690,
    "da": 3722,
    "pe": 3646,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -48658,8 +48658,8 @@
    "vo": 3704,
    "da": 3749,
    "pe": 3627,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -48943,8 +48943,8 @@
    "vo": 3703,
    "da": 3744,
    "pe": 3643,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": true
   },
   {
@@ -49063,8 +49063,8 @@
    "vo": 3699,
    "da": 3747,
    "pe": 3643,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -49228,8 +49228,8 @@
    "vo": 3777,
    "da": 3740,
    "pe": 3765,
-   "cs": "ALL40%+自身と同じタイプのセンタースキルのうち、Vo・Da・Peアップ効果を全て合算し、0.5倍（ALLで0.8倍）で発動",
-   "csBase": "ALL40%",
+   "cs": "ALL45%+自身と同じタイプのセンタースキルのうち、Vo・Da・Peアップ効果を全て合算し、0.5倍（ALLで0.8倍）で発動",
+   "csBase": "ALL45%",
    "grad": true
   },
   {
@@ -49498,8 +49498,8 @@
    "vo": 4132,
    "da": 4180,
    "pe": 4095,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -50113,8 +50113,8 @@
    "vo": 4111,
    "da": 4155,
    "pe": 4027,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": true
   },
   {
@@ -50533,8 +50533,8 @@
    "vo": 3690,
    "da": 3693,
    "pe": 3681,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": true
   },
   {
@@ -51088,8 +51088,8 @@
    "vo": 3664,
    "da": 3661,
    "pe": 3713,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -51343,8 +51343,8 @@
    "vo": 3753,
    "da": 3750,
    "pe": 3784,
-   "cs": "ALL40%+自身と同じタイプのセンタースキルのうち、Vo・Da・Peアップ効果を全て合算し、0.5倍（ALLで0.8倍）で発動",
-   "csBase": "ALL40%",
+   "cs": "ALL45%+自身と同じタイプのセンタースキルのうち、Vo・Da・Peアップ効果を全て合算し、0.5倍（ALLで0.8倍）で発動",
+   "csBase": "ALL45%",
    "grad": true
   },
   {
@@ -52213,8 +52213,8 @@
    "vo": 3686,
    "da": 3702,
    "pe": 3674,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": true
   },
   {
@@ -52408,8 +52408,8 @@
    "vo": 3875,
    "da": 3880,
    "pe": 3921,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -52618,8 +52618,8 @@
    "vo": 3898,
    "da": 3879,
    "pe": 3882,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -53158,8 +53158,8 @@
    "vo": 3689,
    "da": 3699,
    "pe": 3665,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -53683,8 +53683,8 @@
    "vo": 3682,
    "da": 3676,
    "pe": 3691,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": true
   },
   {
@@ -53953,8 +53953,8 @@
    "vo": 3745,
    "da": 3775,
    "pe": 3763,
-   "cs": "ALL40%+自身と同じタイプのセンタースキルのうち、Vo・Da・Peアップ効果を全て合算し、0.5倍（ALLで0.8倍）で発動",
-   "csBase": "ALL40%",
+   "cs": "ALL45%+自身と同じタイプのセンタースキルのうち、Vo・Da・Peアップ効果を全て合算し、0.5倍（ALLで0.8倍）で発動",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -54733,8 +54733,8 @@
    "vo": 4131,
    "da": 4151,
    "pe": 4102,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -55228,8 +55228,8 @@
    "vo": 3739,
    "da": 3730,
    "pe": 3787,
-   "cs": "ALL40%+自身と同じタイプのセンタースキルのうち、Vo・Da・Peアップ効果を全て合算し、0.5倍（ALLで0.8倍）で発動",
-   "csBase": "ALL40%",
+   "cs": "ALL45%+自身と同じタイプのセンタースキルのうち、Vo・Da・Peアップ効果を全て合算し、0.5倍（ALLで0.8倍）で発動",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -56998,8 +56998,8 @@
    "vo": 3749,
    "da": 3777,
    "pe": 3761,
-   "cs": "ALL40%+自身と同じタイプのセンタースキルのうち、Vo・Da・Peアップ効果を全て合算し、0.5倍（ALLで0.8倍）で発動",
-   "csBase": "ALL40%",
+   "cs": "ALL45%+自身と同じタイプのセンタースキルのうち、Vo・Da・Peアップ効果を全て合算し、0.5倍（ALLで0.8倍）で発動",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -57868,8 +57868,8 @@
    "vo": 4146,
    "da": 4128,
    "pe": 4101,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -58078,8 +58078,8 @@
    "vo": 4168,
    "da": 4132,
    "pe": 4104,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -58288,8 +58288,8 @@
    "vo": 4146,
    "da": 4137,
    "pe": 4119,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -58453,8 +58453,8 @@
    "vo": 4165,
    "da": 4116,
    "pe": 4104,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -58513,8 +58513,8 @@
    "vo": 3737,
    "da": 3782,
    "pe": 3761,
-   "cs": "ALL40%+自身と同じタイプのセンタースキルのうち、Vo・Da・Peアップ効果を全て合算し、0.5倍（ALLで0.8倍）で発動",
-   "csBase": "ALL40%",
+   "cs": "ALL45%+自身と同じタイプのセンタースキルのうち、Vo・Da・Peアップ効果を全て合算し、0.5倍（ALLで0.8倍）で発動",
+   "csBase": "ALL45%",
    "grad": true
   },
   {
@@ -58618,8 +58618,8 @@
    "vo": 3752,
    "da": 3758,
    "pe": 3767,
-   "cs": "ALL40%+自身と同じタイプのセンタースキルのうち、Vo・Da・Peアップ効果を全て合算し、0.5倍（ALLで0.8倍）で発動",
-   "csBase": "ALL40%",
+   "cs": "ALL45%+自身と同じタイプのセンタースキルのうち、Vo・Da・Peアップ効果を全て合算し、0.5倍（ALLで0.8倍）で発動",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -60868,8 +60868,8 @@
    "vo": 4165,
    "da": 4137,
    "pe": 4144,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -61183,8 +61183,8 @@
    "vo": 4136,
    "da": 4148,
    "pe": 4133,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -61408,8 +61408,8 @@
    "vo": 3801,
    "da": 3817,
    "pe": 3820,
-   "cs": "All40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -61483,8 +61483,8 @@
    "vo": 3800,
    "da": 3813,
    "pe": 3813,
-   "cs": "All40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -62323,8 +62323,8 @@
    "vo": 3713,
    "da": 3729,
    "pe": 3684,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -62548,8 +62548,8 @@
    "vo": 3714,
    "da": 3730,
    "pe": 3679,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -63343,8 +63343,8 @@
    "vo": 4156,
    "da": 4126,
    "pe": 4147,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -63823,8 +63823,8 @@
    "vo": 4184,
    "da": 4147,
    "pe": 4126,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -64423,8 +64423,8 @@
    "vo": 3464,
    "da": 3483,
    "pe": 3462,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -64528,8 +64528,8 @@
    "vo": 3461,
    "da": 3460,
    "pe": 3465,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": true
   },
   {
@@ -65818,8 +65818,8 @@
    "vo": 3826,
    "da": 3796,
    "pe": 3799,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -65878,8 +65878,8 @@
    "vo": 3792,
    "da": 3811,
    "pe": 3811,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -66058,8 +66058,8 @@
    "vo": 3367,
    "da": 3424,
    "pe": 3463,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -66298,8 +66298,8 @@
    "vo": 4146,
    "da": 4197,
    "pe": 4109,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -66568,8 +66568,8 @@
    "vo": 4151,
    "da": 4180,
    "pe": 4117,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -68368,8 +68368,8 @@
    "vo": 4152,
    "da": 4165,
    "pe": 4108,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -70618,8 +70618,8 @@
    "vo": 4138,
    "da": 4183,
    "pe": 4067,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": true
   },
   {
@@ -80248,8 +80248,8 @@
    "vo": 4299,
    "da": 4302,
    "pe": 4277,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {
@@ -81163,8 +81163,8 @@
    "vo": 4296,
    "da": 4280,
    "pe": 4319,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": true
   },
   {
