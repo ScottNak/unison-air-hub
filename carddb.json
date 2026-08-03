@@ -1,6 +1,6 @@
 {
- "version": "v66-2026-08-02",
- "cardCount": 5433,
+ "version": "v68-2026-08-03",
+ "cardCount": 5435,
  "cards": [
   {
    "id": 1,
@@ -81495,6 +81495,36 @@
    "pe": 4055,
    "cs": "Pe70%",
    "csBase": "Pe70%",
+   "grad": false
+  },
+  {
+   "id": 6428,
+   "color": "Y",
+   "title": "HAPPY 19th BIRTHDAY",
+   "member": "高井俐香",
+   "memberEn": "Rika Takai",
+   "tot": 10518,
+   "sk": 0.0163,
+   "vo": 3338,
+   "da": 3411,
+   "pe": 3339,
+   "cs": "All35%",
+   "csBase": "ALL35%",
+   "grad": false
+  },
+  {
+   "id": 6429,
+   "color": "P",
+   "title": "HAPPY 18th BIRTHDAY",
+   "member": "山田桃実",
+   "memberEn": "Momomi Yamada",
+   "tot": 10535,
+   "sk": 0.0163,
+   "vo": 3337,
+   "da": 3430,
+   "pe": 3338,
+   "cs": "All35%",
+   "csBase": "ALL35%",
    "grad": false
   }
  ]
