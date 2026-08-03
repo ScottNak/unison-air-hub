@@ -61,6 +61,36 @@
     position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: none;
   }
   iframe.active { display: block; }
+
+  /* Birthday notification (top left) */
+  .bday-box {
+    position: fixed; top: 14px; left: 16px; z-index: 20;
+    max-width: 270px; padding: 10px 14px; border-radius: 12px;
+    font-size: 12px; line-height: 1.45; color: #2d2d42;
+    background: rgba(255,255,255,0.88);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+  }
+  .bday-box:empty { display: none; }
+  .bday-entry + .bday-entry {
+    margin-top: 8px; padding-top: 8px; border-top: 1px dashed rgba(45,45,66,0.25);
+  }
+  .bday-name.sakura { color: #c2185b; font-weight: 700; }
+  .bday-name.hinata { color: #0d6fa8; font-weight: 700; }
+  .bday-code {
+    display: inline-block; margin-top: 3px; font-family: Consolas, 'SFMono-Regular', monospace;
+    font-weight: 700; font-size: 11.5px; text-decoration: none; padding: 2px 8px; border-radius: 6px;
+    border: 1px solid transparent; cursor: pointer;
+    transition: transform .1s ease, box-shadow .1s ease, background .1s ease;
+  }
+  .bday-code::after { content: ' \2197'; font-weight: 400; }
+  .bday-code:hover {
+    text-decoration: underline; transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  .bday-code.sakura { background: #ffe1ec; color: #c2185b; border-color: #f7b3cd; }
+  .bday-code.sakura:hover { background: #ffc9dd; }
+  .bday-code.hinata { background: #dcf0fd; color: #0d6fa8; border-color: #a8dbf5; }
+  .bday-code.hinata:hover { background: #c3e6fb; }
 </style>
 </head>
 <body>
@@ -75,9 +105,115 @@
   </div>
 </header>
 
+<div class="bday-box" id="bday-box"></div>
+
 <div class="tabs" id="tabs"></div>
 <div class="frame-wrap" id="frame-wrap"></div>
 
+<script src="member_profiles.js"></script>
+<script>
+  // --- Birthday notification (top left, JST) -------------------------------
+  // window.UNIAIR_MEMBER_PROFILES (member_profiles.js) holds all 97 members
+  // keyed by Japanese name: {english:{family,given}, birthday, group,
+  // graduated, gen, order}. Filtered here to the active roster
+  // (graduated === false - this also naturally excludes every K-group
+  // member, since all 6 are already graduated) and reshaped into the
+  // {jp, given, family, birthdate, group} array this widget already works
+  // with (previously precomputed into a separate birthdays.js by
+  // generate_birthdays_js.py - folded in here 2026-08-04 since it was just a
+  // filtered view of the same source, no separate file needed). "Today" is
+  // computed in Japan time regardless of the visitor's local timezone. Ties
+  // (two+ members sharing a date) are shown stacked, each with its own
+  // line/code. No lang toggle on this public hub, so names are always shown
+  // romanized (Given Family).
+  (function () {
+    function renderBday() {
+      var box = document.getElementById('bday-box');
+      var profiles = (typeof window.UNIAIR_MEMBER_PROFILES !== 'undefined') ? window.UNIAIR_MEMBER_PROFILES : null;
+      var BD = null;
+      if (profiles) {
+        BD = [];
+        for (var jp in profiles) {
+          if (!profiles.hasOwnProperty(jp)) continue;
+          var e = profiles[jp];
+          if (e.graduated) continue;
+          BD.push({ jp: jp, given: e.english.given, family: e.english.family, birthdate: e.birthday, group: e.group });
+        }
+      }
+      if (!box) return;
+      box.innerHTML = '';
+      if (!BD || !BD.length) return;
+
+      var jstFmt = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Tokyo', year: 'numeric', month: '2-digit', day: '2-digit' });
+      var todayParts = jstFmt.format(new Date()).split('-'); // en-CA => YYYY-MM-DD
+      var todayY = +todayParts[0], todayM = +todayParts[1], todayD = +todayParts[2];
+
+      function pad2(n) { return (n < 10 ? '0' : '') + n; }
+      function mmdd(m, d) { return pad2(m) + pad2(d); }
+      function ordinal(n) {
+        var rem100 = n % 100;
+        if (rem100 >= 11 && rem100 <= 13) return n + 'TH';
+        if (n % 10 === 1) return n + 'ST';
+        if (n % 10 === 2) return n + 'ND';
+        if (n % 10 === 3) return n + 'RD';
+        return n + 'TH';
+      }
+      function initials(e) { return (e.given.charAt(0) + e.family.charAt(0)).toUpperCase(); }
+      function displayName(e) { return e.given + ' ' + e.family; }
+      function groupClass(e) { return e.group === 'S' ? 'sakura' : 'hinata'; }
+      // Days from today to (m, d), ignoring year, using a fixed non-leap
+      // reference year so the diff is stable (0 = today, wraps to next year).
+      function daysUntil(m, d) {
+        var ref = 2001;
+        var t0 = Date.UTC(ref, todayM - 1, todayD);
+        var t1 = Date.UTC(ref, m - 1, d);
+        var diff = Math.round((t1 - t0) / 86400000);
+        if (diff < 0) diff += 365;
+        return diff;
+      }
+
+      var todayKey = mmdd(todayM, todayD);
+      var todays = BD.filter(function (e) {
+        var p = e.birthdate.split('-');
+        return mmdd(+p[1], +p[2]) === todayKey;
+      });
+
+      if (todays.length) {
+        todays.forEach(function (e) {
+          var p = e.birthdate.split('-');
+          var age = todayY - (+p[0]);
+          var code = 'HBD' + ordinal(age) + mmdd(+p[1], +p[2]) + initials(e);
+          var gc = groupClass(e);
+          var div = document.createElement('div');
+          div.className = 'bday-entry';
+          div.innerHTML = '🎂 Happy Birthday to <span class="bday-name ' + gc + '">' + displayName(e) + '</span>!<br>' +
+            '<a class="bday-code ' + gc + '" href="https://app-pay.jp/checkout/present" target="_blank" rel="noopener">' + code + '</a>';
+          box.appendChild(div);
+        });
+      } else {
+        var bestDiff = Infinity, upcoming = [];
+        BD.forEach(function (e) {
+          var p = e.birthdate.split('-');
+          var diff = daysUntil(+p[1], +p[2]);
+          if (diff < bestDiff) { bestDiff = diff; upcoming = [e]; }
+          else if (diff === bestDiff) { upcoming.push(e); }
+        });
+        upcoming.forEach(function (e) {
+          var p = e.birthdate.split('-');
+          var gc = groupClass(e);
+          var div = document.createElement('div');
+          div.className = 'bday-entry';
+          div.innerHTML = 'Next Birthday is ' + mmdd(+p[1], +p[2]) + ': <span class="bday-name ' + gc + '">' + displayName(e) + '</span>';
+          box.appendChild(div);
+        });
+      }
+    }
+
+    renderBday();
+    // Refresh hourly so a page left open overnight rolls to the new JST day.
+    setInterval(renderBday, 60 * 60 * 1000);
+  })();
+</script>
 <script>
   // Public hub pages. Update the "file" field here if a page is renamed/replaced.
   var pages = [
