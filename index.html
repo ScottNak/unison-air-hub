@@ -84,7 +84,8 @@
     { id: "catalog", label: "Card Database", file: "catalog.html" },
     { id: "songs", label: "Discography", file: "song_overview.html" },
     { id: "kizuna", label: "Kizuna Bond", file: "kizuna.html" },
-    { id: "bestteams", label: "Best Teams", file: "best_teams.html" }
+    { id: "bestteams", label: "Best Teams", file: "best_teams.html" },
+    { id: "spotlight", label: "Spotlight", file: "spotlight.html" }
   ];
 
   var tabsEl = document.getElementById('tabs');
@@ -181,10 +182,14 @@
   }
 
   function missingLabels(replies) {
-    // best_teams.html never answers (it has no snapshot of its own) -
-    // don't report it as "missing".
+    // best_teams.html and spotlight.html never answer (neither owns a
+    // snapshot of its own - both are pure readers of the other tabs'
+    // localStorage, plus spotlight.html's own member-picker/bonus-list
+    // settings, which aren't part of this Export/Import) - don't report
+    // them as "missing".
+    var silent = { bestteams: true, spotlight: true };
     return pages
-      .filter(function (p) { return p.id !== 'bestteams' && !(p.id in replies); })
+      .filter(function (p) { return !silent[p.id] && !(p.id in replies); })
       .map(function (p) { return p.label; });
   }
 

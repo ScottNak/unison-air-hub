@@ -1,5 +1,5 @@
 {
- "version": "v65-2026-08-02",
+ "version": "v66-2026-08-02",
  "cardCount": 5433,
  "cards": [
   {
@@ -76070,7 +76070,7 @@
   {
    "id": 6066,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "遠藤光莉",
    "memberEn": "Hikari Endō",
    "tot": 10274,
@@ -76085,7 +76085,7 @@
   {
    "id": 6067,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 24th BIRTHDAY",
    "member": "遠藤光莉",
    "memberEn": "Hikari Endō",
    "tot": 10425,
@@ -76100,7 +76100,7 @@
   {
    "id": 6068,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 25th BIRTHDAY",
    "member": "遠藤光莉",
    "memberEn": "Hikari Endō",
    "tot": 10511,
@@ -76115,7 +76115,7 @@
   {
    "id": 6069,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 26th BIRTHDAY",
    "member": "遠藤光莉",
    "memberEn": "Hikari Endō",
    "tot": 11817,
@@ -76130,7 +76130,7 @@
   {
    "id": 6070,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 27th BIRTHDAY",
    "member": "遠藤光莉",
    "memberEn": "Hikari Endō",
    "tot": 11858,
@@ -76145,7 +76145,7 @@
   {
    "id": 6071,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "大園玲",
    "memberEn": "Rei Ōzono",
    "tot": 10274,
@@ -76160,7 +76160,7 @@
   {
    "id": 6072,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "大園玲",
    "memberEn": "Rei Ōzono",
    "tot": 10425,
@@ -76175,7 +76175,7 @@
   {
    "id": 6073,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 24th BIRTHDAY",
    "member": "大園玲",
    "memberEn": "Rei Ōzono",
    "tot": 10511,
@@ -76190,7 +76190,7 @@
   {
    "id": 6074,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 25th BIRTHDAY",
    "member": "大園玲",
    "memberEn": "Rei Ōzono",
    "tot": 11817,
@@ -76205,7 +76205,7 @@
   {
    "id": 6075,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 26th BIRTHDAY",
    "member": "大園玲",
    "memberEn": "Rei Ōzono",
    "tot": 11858,
@@ -76220,7 +76220,7 @@
   {
    "id": 6076,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "大沼晶保",
    "memberEn": "Akiho Ōnuma",
    "tot": 10274,
@@ -76235,7 +76235,7 @@
   {
    "id": 6077,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "大沼晶保",
    "memberEn": "Akiho Ōnuma",
    "tot": 10425,
@@ -76250,7 +76250,7 @@
   {
    "id": 6078,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 24th BIRTHDAY",
    "member": "大沼晶保",
    "memberEn": "Akiho Ōnuma",
    "tot": 10511,
@@ -76265,7 +76265,7 @@
   {
    "id": 6079,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 25th BIRTHDAY",
    "member": "大沼晶保",
    "memberEn": "Akiho Ōnuma",
    "tot": 11817,
@@ -76280,7 +76280,7 @@
   {
    "id": 6080,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 26th BIRTHDAY",
    "member": "大沼晶保",
    "memberEn": "Akiho Ōnuma",
    "tot": 11858,
@@ -76295,7 +76295,7 @@
   {
    "id": 6081,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "幸阪茉里乃",
    "memberEn": "Marino Kōsaka",
    "tot": 10280,
@@ -76310,7 +76310,7 @@
   {
    "id": 6082,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "幸阪茉里乃",
    "memberEn": "Marino Kōsaka",
    "tot": 10431,
@@ -76325,7 +76325,7 @@
   {
    "id": 6083,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "幸阪茉里乃",
    "memberEn": "Marino Kōsaka",
    "tot": 10517,
@@ -76340,7 +76340,7 @@
   {
    "id": 6084,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "幸阪茉里乃",
    "memberEn": "Marino Kōsaka",
    "tot": 11823,
@@ -76355,7 +76355,7 @@
   {
    "id": 6085,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "幸阪茉里乃",
    "memberEn": "Marino Kōsaka",
    "tot": 11864,
@@ -76370,7 +76370,7 @@
   {
    "id": 6086,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "武元唯衣",
    "memberEn": "Yui Takemoto",
    "tot": 10276,
@@ -76385,7 +76385,7 @@
   {
    "id": 6087,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "武元唯衣",
    "memberEn": "Yui Takemoto",
    "tot": 10427,
@@ -76430,7 +76430,7 @@
   {
    "id": 6090,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 24th BIRTHDAY",
    "member": "武元唯衣",
    "memberEn": "Yui Takemoto",
    "tot": 11860,
@@ -76445,7 +76445,7 @@
   {
    "id": 6091,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "田村保乃",
    "memberEn": "Hono Tamura",
    "tot": 10284,
@@ -76460,7 +76460,7 @@
   {
    "id": 6092,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 24th BIRTHDAY",
    "member": "田村保乃",
    "memberEn": "Hono Tamura",
    "tot": 10435,
@@ -76475,7 +76475,7 @@
   {
    "id": 6093,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 25th BIRTHDAY",
    "member": "田村保乃",
    "memberEn": "Hono Tamura",
    "tot": 10521,
@@ -76490,7 +76490,7 @@
   {
    "id": 6094,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 26th BIRTHDAY",
    "member": "田村保乃",
    "memberEn": "Hono Tamura",
    "tot": 11827,
@@ -76505,7 +76505,7 @@
   {
    "id": 6095,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 27th BIRTHDAY",
    "member": "田村保乃",
    "memberEn": "Hono Tamura",
    "tot": 11868,
@@ -76520,7 +76520,7 @@
   {
    "id": 6096,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "藤吉夏鈴",
    "memberEn": "Karin Fujiyoshi",
    "tot": 10288,
@@ -76535,7 +76535,7 @@
   {
    "id": 6097,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "藤吉夏鈴",
    "memberEn": "Karin Fujiyoshi",
    "tot": 10439,
@@ -76550,7 +76550,7 @@
   {
    "id": 6098,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "藤吉夏鈴",
    "memberEn": "Karin Fujiyoshi",
    "tot": 10522,
@@ -76580,7 +76580,7 @@
   {
    "id": 6100,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "増本綺良",
    "memberEn": "Kira Masumoto",
    "tot": 10263,
@@ -76595,7 +76595,7 @@
   {
    "id": 6101,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "増本綺良",
    "memberEn": "Kira Masumoto",
    "tot": 10414,
@@ -76610,7 +76610,7 @@
   {
    "id": 6102,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "増本綺良",
    "memberEn": "Kira Masumoto",
    "tot": 10500,
@@ -76625,7 +76625,7 @@
   {
    "id": 6103,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "増本綺良",
    "memberEn": "Kira Masumoto",
    "tot": 11806,
@@ -76640,7 +76640,7 @@
   {
    "id": 6104,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 24th BIRTHDAY",
    "member": "増本綺良",
    "memberEn": "Kira Masumoto",
    "tot": 11847,
@@ -76655,7 +76655,7 @@
   {
    "id": 6105,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "松田里奈",
    "memberEn": "Rina Matsuda",
    "tot": 10275,
@@ -76670,7 +76670,7 @@
   {
    "id": 6106,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "松田里奈",
    "memberEn": "Rina Matsuda",
    "tot": 10426,
@@ -76685,7 +76685,7 @@
   {
    "id": 6107,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 24th BIRTHDAY",
    "member": "松田里奈",
    "memberEn": "Rina Matsuda",
    "tot": 10512,
@@ -76700,7 +76700,7 @@
   {
    "id": 6108,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 25th BIRTHDAY",
    "member": "松田里奈",
    "memberEn": "Rina Matsuda",
    "tot": 11818,
@@ -76715,7 +76715,7 @@
   {
    "id": 6109,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 26th BIRTHDAY",
    "member": "松田里奈",
    "memberEn": "Rina Matsuda",
    "tot": 11859,
@@ -76730,7 +76730,7 @@
   {
    "id": 6110,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "森田ひかる",
    "memberEn": "Hikaru Morita",
    "tot": 10268,
@@ -76745,7 +76745,7 @@
   {
    "id": 6111,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "森田ひかる",
    "memberEn": "Hikaru Morita",
    "tot": 10419,
@@ -76760,7 +76760,7 @@
   {
    "id": 6112,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "森田ひかる",
    "memberEn": "Hikaru Morita",
    "tot": 10505,
@@ -76790,7 +76790,7 @@
   {
    "id": 6114,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "守屋麗奈",
    "memberEn": "Rena Moriya",
    "tot": 10255,
@@ -76805,7 +76805,7 @@
   {
    "id": 6115,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "守屋麗奈",
    "memberEn": "Rena Moriya",
    "tot": 10406,
@@ -76820,7 +76820,7 @@
   {
    "id": 6116,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 24th BIRTHDAY",
    "member": "守屋麗奈",
    "memberEn": "Rena Moriya",
    "tot": 10492,
@@ -76835,7 +76835,7 @@
   {
    "id": 6117,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 25th BIRTHDAY",
    "member": "守屋麗奈",
    "memberEn": "Rena Moriya",
    "tot": 11798,
@@ -76850,7 +76850,7 @@
   {
    "id": 6118,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 26th BIRTHDAY",
    "member": "守屋麗奈",
    "memberEn": "Rena Moriya",
    "tot": 11839,
@@ -76865,7 +76865,7 @@
   {
    "id": 6119,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 16th BIRTHDAY",
    "member": "山﨑天",
    "memberEn": "Ten Yamasaki",
    "tot": 10283,
@@ -76880,7 +76880,7 @@
   {
    "id": 6120,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 17th BIRTHDAY",
    "member": "山﨑天",
    "memberEn": "Ten Yamasaki",
    "tot": 10434,
@@ -76895,7 +76895,7 @@
   {
    "id": 6121,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 18th BIRTHDAY",
    "member": "山﨑天",
    "memberEn": "Ten Yamasaki",
    "tot": 10520,
@@ -76910,7 +76910,7 @@
   {
    "id": 6122,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "山﨑天",
    "memberEn": "Ten Yamasaki",
    "tot": 11826,
@@ -76925,7 +76925,7 @@
   {
    "id": 6123,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "山﨑天",
    "memberEn": "Ten Yamasaki",
    "tot": 11867,
@@ -76940,7 +76940,7 @@
   {
    "id": 6124,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "石森璃花",
    "memberEn": "Rika Ishimori",
    "tot": 10501,
@@ -76955,7 +76955,7 @@
   {
    "id": 6125,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "石森璃花",
    "memberEn": "Rika Ishimori",
    "tot": 11807,
@@ -76970,7 +76970,7 @@
   {
    "id": 6126,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 24th BIRTHDAY",
    "member": "石森璃花",
    "memberEn": "Rika Ishimori",
    "tot": 11848,
@@ -76985,7 +76985,7 @@
   {
    "id": 6127,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 18th BIRTHDAY",
    "member": "遠藤理子",
    "memberEn": "Riko Endō",
    "tot": 10493,
@@ -77000,7 +77000,7 @@
   {
    "id": 6128,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "遠藤理子",
    "memberEn": "Riko Endō",
    "tot": 11799,
@@ -77015,7 +77015,7 @@
   {
    "id": 6129,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "遠藤理子",
    "memberEn": "Riko Endō",
    "tot": 11840,
@@ -77030,7 +77030,7 @@
   {
    "id": 6130,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "小田倉麗奈",
    "memberEn": "Reina Odakura",
    "tot": 10517,
@@ -77045,7 +77045,7 @@
   {
    "id": 6131,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "小田倉麗奈",
    "memberEn": "Reina Odakura",
    "tot": 11823,
@@ -77060,7 +77060,7 @@
   {
    "id": 6132,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "小島凪紗",
    "memberEn": "Nagisa Kojima",
    "tot": 10498,
@@ -77075,7 +77075,7 @@
   {
    "id": 6133,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "小島凪紗",
    "memberEn": "Nagisa Kojima",
    "tot": 11804,
@@ -77090,7 +77090,7 @@
   {
    "id": 6134,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "谷口愛季",
    "memberEn": "Airi Taniguchi",
    "tot": 10500,
@@ -77105,7 +77105,7 @@
   {
    "id": 6135,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "谷口愛季",
    "memberEn": "Airi Taniguchi",
    "tot": 11806,
@@ -77120,7 +77120,7 @@
   {
    "id": 6136,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "谷口愛季",
    "memberEn": "Airi Taniguchi",
    "tot": 11847,
@@ -77135,7 +77135,7 @@
   {
    "id": 6137,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "中嶋優月",
    "memberEn": "Yuzuki Nakashima",
    "tot": 10505,
@@ -77150,7 +77150,7 @@
   {
    "id": 6138,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "中嶋優月",
    "memberEn": "Yuzuki Nakashima",
    "tot": 11811,
@@ -77165,7 +77165,7 @@
   {
    "id": 6139,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "中嶋優月",
    "memberEn": "Yuzuki Nakashima",
    "tot": 11852,
@@ -77180,7 +77180,7 @@
   {
    "id": 6140,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 17th BIRTHDAY",
    "member": "的野美青",
    "memberEn": "Mio Matono",
    "tot": 10501,
@@ -77195,7 +77195,7 @@
   {
    "id": 6141,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 18th BIRTHDAY",
    "member": "的野美青",
    "memberEn": "Mio Matono",
    "tot": 11807,
@@ -77210,7 +77210,7 @@
   {
    "id": 6142,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "的野美青",
    "memberEn": "Mio Matono",
    "tot": 11848,
@@ -77225,7 +77225,7 @@
   {
    "id": 6143,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 18th BIRTHDAY",
    "member": "向井純葉",
    "memberEn": "Itoha Mukai",
    "tot": 10497,
@@ -77240,7 +77240,7 @@
   {
    "id": 6144,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "向井純葉",
    "memberEn": "Itoha Mukai",
    "tot": 11803,
@@ -77255,7 +77255,7 @@
   {
    "id": 6145,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "向井純葉",
    "memberEn": "Itoha Mukai",
    "tot": 11844,
@@ -77270,7 +77270,7 @@
   {
    "id": 6146,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "村井優",
    "memberEn": "Yū Murai",
    "tot": 10511,
@@ -77285,7 +77285,7 @@
   {
    "id": 6147,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "村井優",
    "memberEn": "Yū Murai",
    "tot": 11817,
@@ -77300,7 +77300,7 @@
   {
    "id": 6148,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "村山美羽",
    "memberEn": "Miu Murayama",
    "tot": 10501,
@@ -77315,7 +77315,7 @@
   {
    "id": 6149,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "村山美羽",
    "memberEn": "Miu Murayama",
    "tot": 11807,
@@ -77330,7 +77330,7 @@
   {
    "id": 6150,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "村山美羽",
    "memberEn": "Miu Murayama",
    "tot": 11848,
@@ -77345,7 +77345,7 @@
   {
    "id": 6151,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "山下瞳月",
    "memberEn": "Shizuki Yamashita",
    "tot": 10507,
@@ -77360,7 +77360,7 @@
   {
    "id": 6152,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "山下瞳月",
    "memberEn": "Shizuki Yamashita",
    "tot": 11813,
@@ -77375,7 +77375,7 @@
   {
    "id": 6153,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "山下瞳月",
    "memberEn": "Shizuki Yamashita",
    "tot": 11854,
@@ -77390,7 +77390,7 @@
   {
    "id": 6154,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "浅井恋乃未",
    "memberEn": "Konomi Asai",
    "tot": 11865,
@@ -77405,7 +77405,7 @@
   {
    "id": 6155,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "稲熊ひな",
    "memberEn": "Hina Inaguma",
    "tot": 11842,
@@ -77420,7 +77420,7 @@
   {
    "id": 6156,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "勝又春",
    "memberEn": "Haru Katsumata",
    "tot": 11857,
@@ -77435,7 +77435,7 @@
   {
    "id": 6157,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "佐藤愛桜",
    "memberEn": "Neo Satō",
    "tot": 11842,
@@ -77450,7 +77450,7 @@
   {
    "id": 6158,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "松本和子",
    "memberEn": "Wako Matsumoto",
    "tot": 11839,
@@ -77465,7 +77465,7 @@
   {
    "id": 6159,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "目黒陽色",
    "memberEn": "Hīro Meguro",
    "tot": 11855,
@@ -77555,7 +77555,7 @@
   {
    "id": 6165,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "小池美波",
    "memberEn": "Minami Koike",
    "tot": 10278,
@@ -77570,7 +77570,7 @@
   {
    "id": 6166,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 24th BIRTHDAY",
    "member": "小池美波",
    "memberEn": "Minami Koike",
    "tot": 10429,
@@ -77585,7 +77585,7 @@
   {
    "id": 6167,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 25th BIRTHDAY",
    "member": "小池美波",
    "memberEn": "Minami Koike",
    "tot": 10515,
@@ -77600,7 +77600,7 @@
   {
    "id": 6168,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 26th BIRTHDAY",
    "member": "小池美波",
    "memberEn": "Minami Koike",
    "tot": 11821,
@@ -77660,7 +77660,7 @@
   {
    "id": 6172,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 24th BIRTHDAY",
    "member": "齋藤冬優花",
    "memberEn": "Fuyuka Saitō",
    "tot": 10271,
@@ -77675,7 +77675,7 @@
   {
    "id": 6173,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 25th BIRTHDAY",
    "member": "齋藤冬優花",
    "memberEn": "Fuyuka Saitō",
    "tot": 10422,
@@ -77690,7 +77690,7 @@
   {
    "id": 6174,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 26th BIRTHDAY",
    "member": "齋藤冬優花",
    "memberEn": "Fuyuka Saitō",
    "tot": 10508,
@@ -77705,7 +77705,7 @@
   {
    "id": 6175,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 26th BIRTHDAY",
    "member": "菅井友香",
    "memberEn": "Yūka Sugai",
    "tot": 10296,
@@ -77720,7 +77720,7 @@
   {
    "id": 6176,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 25th BIRTHDAY",
    "member": "土生瑞穂",
    "memberEn": "Mizuho Habu",
    "tot": 10269,
@@ -77735,7 +77735,7 @@
   {
    "id": 6177,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 26th BIRTHDAY",
    "member": "土生瑞穂",
    "memberEn": "Mizuho Habu",
    "tot": 10420,
@@ -77750,7 +77750,7 @@
   {
    "id": 6178,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "原田葵",
    "memberEn": "Aoi Harada",
    "tot": 10264,
@@ -77765,7 +77765,7 @@
   {
    "id": 6179,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 24th BIRTHDAY",
    "member": "守屋茜",
    "memberEn": "Akane Moriya",
    "tot": 10277,
@@ -77780,7 +77780,7 @@
   {
    "id": 6180,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "井上梨名",
    "memberEn": "Rina Inoue",
    "tot": 10281,
@@ -77795,7 +77795,7 @@
   {
    "id": 6181,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "井上梨名",
    "memberEn": "Rina Inoue",
    "tot": 10432,
@@ -77810,7 +77810,7 @@
   {
    "id": 6182,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "井上梨名",
    "memberEn": "Rina Inoue",
    "tot": 10518,
@@ -77825,7 +77825,7 @@
   {
    "id": 6183,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 24th BIRTHDAY",
    "member": "井上梨名",
    "memberEn": "Rina Inoue",
    "tot": 11824,
@@ -77840,7 +77840,7 @@
   {
    "id": 6184,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 24th BIRTHDAY",
    "member": "関有美子",
    "memberEn": "Yumiko Seki",
    "tot": 10289,
@@ -77870,7 +77870,7 @@
   {
    "id": 6186,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "金村美玖",
    "memberEn": "Miku Kanemura",
    "tot": 10420,
@@ -77885,7 +77885,7 @@
   {
    "id": 6187,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "金村美玖",
    "memberEn": "Miku Kanemura",
    "tot": 10506,
@@ -77900,7 +77900,7 @@
   {
    "id": 6188,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "金村美玖",
    "memberEn": "Miku Kanemura",
    "tot": 11812,
@@ -77930,7 +77930,7 @@
   {
    "id": 6190,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "小坂菜緒",
    "memberEn": "Nao Kosaka",
    "tot": 10417,
@@ -77960,7 +77960,7 @@
   {
    "id": 6192,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "小坂菜緒",
    "memberEn": "Nao Kosaka",
    "tot": 11809,
@@ -77975,7 +77975,7 @@
   {
    "id": 6193,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 18th BIRTHDAY",
    "member": "上村ひなの",
    "memberEn": "Hinano Kamimura",
    "tot": 10264,
@@ -77990,7 +77990,7 @@
   {
    "id": 6194,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "上村ひなの",
    "memberEn": "Hinano Kamimura",
    "tot": 10415,
@@ -78005,7 +78005,7 @@
   {
    "id": 6195,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "上村ひなの",
    "memberEn": "Hinano Kamimura",
    "tot": 10501,
@@ -78020,7 +78020,7 @@
   {
    "id": 6196,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "上村ひなの",
    "memberEn": "Hinano Kamimura",
    "tot": 11807,
@@ -78035,7 +78035,7 @@
   {
    "id": 6197,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "上村ひなの",
    "memberEn": "Hinano Kamimura",
    "tot": 11848,
@@ -78050,7 +78050,7 @@
   {
    "id": 6198,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 18th BIRTHDAY",
    "member": "髙橋未来虹",
    "memberEn": "Mikuni Takahashi",
    "tot": 10284,
@@ -78065,7 +78065,7 @@
   {
    "id": 6199,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "髙橋未来虹",
    "memberEn": "Mikuni Takahashi",
    "tot": 10435,
@@ -78080,7 +78080,7 @@
   {
    "id": 6200,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "髙橋未来虹",
    "memberEn": "Mikuni Takahashi",
    "tot": 10521,
@@ -78095,7 +78095,7 @@
   {
    "id": 6201,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "髙橋未来虹",
    "memberEn": "Mikuni Takahashi",
    "tot": 11827,
@@ -78110,7 +78110,7 @@
   {
    "id": 6202,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "髙橋未来虹",
    "memberEn": "Mikuni Takahashi",
    "tot": 11868,
@@ -78125,7 +78125,7 @@
   {
    "id": 6203,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 18th BIRTHDAY",
    "member": "森本茉莉",
    "memberEn": "Marie Morimoto",
    "tot": 10273,
@@ -78140,7 +78140,7 @@
   {
    "id": 6204,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "森本茉莉",
    "memberEn": "Marie Morimoto",
    "tot": 10424,
@@ -78155,7 +78155,7 @@
   {
    "id": 6205,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "森本茉莉",
    "memberEn": "Marie Morimoto",
    "tot": 10495,
@@ -78275,7 +78275,7 @@
   {
    "id": 6213,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "石塚瑶季",
    "memberEn": "Tamaki Ishizuka",
    "tot": 10499,
@@ -78290,7 +78290,7 @@
   {
    "id": 6214,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "石塚瑶季",
    "memberEn": "Tamaki Ishizuka",
    "tot": 11805,
@@ -78305,7 +78305,7 @@
   {
    "id": 6215,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "小西夏菜実",
    "memberEn": "Nanami Konishi",
    "tot": 10497,
@@ -78320,7 +78320,7 @@
   {
    "id": 6216,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "小西夏菜実",
    "memberEn": "Nanami Konishi",
    "tot": 11803,
@@ -78335,7 +78335,7 @@
   {
    "id": 6217,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "小西夏菜実",
    "memberEn": "Nanami Konishi",
    "tot": 11844,
@@ -78350,7 +78350,7 @@
   {
    "id": 6218,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "清水理央",
    "memberEn": "Rio Shimizu",
    "tot": 10500,
@@ -78365,7 +78365,7 @@
   {
    "id": 6219,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "清水理央",
    "memberEn": "Rio Shimizu",
    "tot": 11806,
@@ -78380,7 +78380,7 @@
   {
    "id": 6220,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "清水理央",
    "memberEn": "Rio Shimizu",
    "tot": 11847,
@@ -78395,7 +78395,7 @@
   {
    "id": 6221,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 17th BIRTHDAY",
    "member": "正源司陽子",
    "memberEn": "Yōko Shōgenji",
    "tot": 10498,
@@ -78410,7 +78410,7 @@
   {
    "id": 6222,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 18th BIRTHDAY",
    "member": "正源司陽子",
    "memberEn": "Yōko Shōgenji",
    "tot": 11804,
@@ -78425,7 +78425,7 @@
   {
    "id": 6223,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "正源司陽子",
    "memberEn": "Yōko Shōgenji",
    "tot": 11845,
@@ -78440,7 +78440,7 @@
   {
    "id": 6224,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 18th BIRTHDAY",
    "member": "竹内希来里",
    "memberEn": "Kirari Takeuchi",
    "tot": 10505,
@@ -78455,7 +78455,7 @@
   {
    "id": 6225,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "竹内希来里",
    "memberEn": "Kirari Takeuchi",
    "tot": 11811,
@@ -78470,7 +78470,7 @@
   {
    "id": 6226,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "竹内希来里",
    "memberEn": "Kirari Takeuchi",
    "tot": 11852,
@@ -78485,7 +78485,7 @@
   {
    "id": 6227,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "平尾帆夏",
    "memberEn": "Honoka Hirao",
    "tot": 10524,
@@ -78500,7 +78500,7 @@
   {
    "id": 6228,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "平尾帆夏",
    "memberEn": "Honoka Hirao",
    "tot": 11830,
@@ -78515,7 +78515,7 @@
   {
    "id": 6229,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "平岡海月",
    "memberEn": "Mitsuki Hiraoka",
    "tot": 10500,
@@ -78530,7 +78530,7 @@
   {
    "id": 6230,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "平岡海月",
    "memberEn": "Mitsuki Hiraoka",
    "tot": 11806,
@@ -78545,7 +78545,7 @@
   {
    "id": 6231,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 24th BIRTHDAY",
    "member": "平岡海月",
    "memberEn": "Mitsuki Hiraoka",
    "tot": 11847,
@@ -78560,7 +78560,7 @@
   {
    "id": 6232,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 18th BIRTHDAY",
    "member": "藤嶌果歩",
    "memberEn": "Kaho Fujishima",
    "tot": 10498,
@@ -78575,7 +78575,7 @@
   {
    "id": 6233,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "藤嶌果歩",
    "memberEn": "Kaho Fujishima",
    "tot": 11804,
@@ -78590,7 +78590,7 @@
   {
    "id": 6234,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 18th BIRTHDAY",
    "member": "宮地すみれ",
    "memberEn": "Sumire Miyachi",
    "tot": 10526,
@@ -78605,7 +78605,7 @@
   {
    "id": 6235,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "宮地すみれ",
    "memberEn": "Sumire Miyachi",
    "tot": 11832,
@@ -78620,7 +78620,7 @@
   {
    "id": 6236,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "宮地すみれ",
    "memberEn": "Sumire Miyachi",
    "tot": 11873,
@@ -78635,7 +78635,7 @@
   {
    "id": 6237,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "山下葉留花",
    "memberEn": "Haruka Yamashita",
    "tot": 10521,
@@ -78650,7 +78650,7 @@
   {
    "id": 6238,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "山下葉留花",
    "memberEn": "Haruka Yamashita",
    "tot": 11817,
@@ -78665,7 +78665,7 @@
   {
    "id": 6239,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "山下葉留花",
    "memberEn": "Haruka Yamashita",
    "tot": 11858,
@@ -78680,7 +78680,7 @@
   {
    "id": 6240,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 15th BIRTHDAY",
    "member": "渡辺莉奈",
    "memberEn": "Rina Watanabe",
    "tot": 10489,
@@ -78695,7 +78695,7 @@
   {
    "id": 6241,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 16th BIRTHDAY",
    "member": "渡辺莉奈",
    "memberEn": "Rina Watanabe",
    "tot": 11795,
@@ -78710,7 +78710,7 @@
   {
    "id": 6242,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 17th BIRTHDAY",
    "member": "渡辺莉奈",
    "memberEn": "Rina Watanabe",
    "tot": 11836,
@@ -78725,7 +78725,7 @@
   {
    "id": 6243,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "大田美月",
    "memberEn": "Mizuki Ōta",
    "tot": 11848,
@@ -78740,7 +78740,7 @@
   {
    "id": 6244,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "大野愛実",
    "memberEn": "Manami Ōno",
    "tot": 11839,
@@ -78755,7 +78755,7 @@
   {
    "id": 6245,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "片山紗希",
    "memberEn": "Saki Katayama",
    "tot": 11867,
@@ -78785,7 +78785,7 @@
   {
    "id": 6247,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 17th BIRTHDAY",
    "member": "坂井新奈",
    "memberEn": "Nīna Sakai",
    "tot": 11844,
@@ -78800,7 +78800,7 @@
   {
    "id": 6248,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "下田衣珠季",
    "memberEn": "Izuki Shimoda",
    "tot": 11867,
@@ -78815,7 +78815,7 @@
   {
    "id": 6249,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "鶴崎仁香",
    "memberEn": "Niko Tsurusaki",
    "tot": 11862,
@@ -78830,7 +78830,7 @@
   {
    "id": 6250,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 5",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "松尾桜",
    "memberEn": "Sakura Matsuo",
    "tot": 11845,
@@ -78845,7 +78845,7 @@
   {
    "id": 6251,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 24th BIRTHDAY",
    "member": "潮紗理菜",
    "memberEn": "Sarina Ushio",
    "tot": 10292,
@@ -78860,7 +78860,7 @@
   {
    "id": 6252,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 25th BIRTHDAY",
    "member": "潮紗理菜",
    "memberEn": "Sarina Ushio",
    "tot": 10443,
@@ -78875,7 +78875,7 @@
   {
    "id": 6253,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 26th BIRTHDAY",
    "member": "潮紗理菜",
    "memberEn": "Sarina Ushio",
    "tot": 10529,
@@ -78890,7 +78890,7 @@
   {
    "id": 6254,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "影山優佳",
    "memberEn": "Yūka Kageyama",
    "tot": 10264,
@@ -78995,7 +78995,7 @@
   {
    "id": 6261,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 26th BIRTHDAY",
    "member": "佐々木久美",
    "memberEn": "Kumi Sasaki",
    "tot": 10279,
@@ -79010,7 +79010,7 @@
   {
    "id": 6262,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 27th BIRTHDAY",
    "member": "佐々木久美",
    "memberEn": "Kumi Sasaki",
    "tot": 10430,
@@ -79025,7 +79025,7 @@
   {
    "id": 6263,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 28th BIRTHDAY",
    "member": "佐々木久美",
    "memberEn": "Kumi Sasaki",
    "tot": 10516,
@@ -79040,7 +79040,7 @@
   {
    "id": 6264,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 29th BIRTHDAY",
    "member": "佐々木久美",
    "memberEn": "Kumi Sasaki",
    "tot": 11822,
@@ -79070,7 +79070,7 @@
   {
    "id": 6266,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "佐々木美玲",
    "memberEn": "Mirei Sasaki",
    "tot": 10432,
@@ -79085,7 +79085,7 @@
   {
    "id": 6267,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 24th BIRTHDAY",
    "member": "佐々木美玲",
    "memberEn": "Mirei Sasaki",
    "tot": 10518,
@@ -79100,7 +79100,7 @@
   {
    "id": 6268,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 25th BIRTHDAY",
    "member": "佐々木美玲",
    "memberEn": "Mirei Sasaki",
    "tot": 11824,
@@ -79115,7 +79115,7 @@
   {
    "id": 6269,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 24th BIRTHDAY",
    "member": "高瀬愛奈",
    "memberEn": "Mana Takase",
    "tot": 10283,
@@ -79130,7 +79130,7 @@
   {
    "id": 6270,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 25th BIRTHDAY",
    "member": "高瀬愛奈",
    "memberEn": "Mana Takase",
    "tot": 10434,
@@ -79145,7 +79145,7 @@
   {
    "id": 6271,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 26th BIRTHDAY",
    "member": "高瀬愛奈",
    "memberEn": "Mana Takase",
    "tot": 10520,
@@ -79190,7 +79190,7 @@
   {
    "id": 6274,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 25th BIRTHDAY",
    "member": "高本彩花",
    "memberEn": "Ayaka Takamoto",
    "tot": 10503,
@@ -79205,7 +79205,7 @@
   {
    "id": 6275,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 24th BIRTHDAY",
    "member": "東村芽依",
    "memberEn": "Mei Higashimura",
    "tot": 10285,
@@ -79235,7 +79235,7 @@
   {
    "id": 6277,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 26th BIRTHDAY",
    "member": "東村芽依",
    "memberEn": "Mei Higashimura",
    "tot": 10525,
@@ -79250,7 +79250,7 @@
   {
    "id": 6278,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "河田陽菜",
    "memberEn": "Hina Kawata",
    "tot": 10281,
@@ -79265,7 +79265,7 @@
   {
    "id": 6279,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "河田陽菜",
    "memberEn": "Hina Kawata",
    "tot": 10432,
@@ -79280,7 +79280,7 @@
   {
    "id": 6280,
    "color": "B",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "河田陽菜",
    "memberEn": "Hina Kawata",
    "tot": 10518,
@@ -79295,7 +79295,7 @@
   {
    "id": 6281,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 24th BIRTHDAY",
    "member": "河田陽菜",
    "memberEn": "Hina Kawata",
    "tot": 11824,
@@ -79400,7 +79400,7 @@
   {
    "id": 6288,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "丹生明里",
    "memberEn": "Akari Nibu",
    "tot": 10505,
@@ -79415,7 +79415,7 @@
   {
    "id": 6289,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 19th BIRTHDAY",
    "member": "濱岸ひより",
    "memberEn": "Hiyori Hamagishi",
    "tot": 10286,
@@ -79430,7 +79430,7 @@
   {
    "id": 6290,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 2",
+   "title": "HAPPY 20th BIRTHDAY",
    "member": "濱岸ひより",
    "memberEn": "Hiyori Hamagishi",
    "tot": 10437,
@@ -79445,7 +79445,7 @@
   {
    "id": 6291,
    "color": "R",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 21st BIRTHDAY",
    "member": "濱岸ひより",
    "memberEn": "Hiyori Hamagishi",
    "tot": 10523,
@@ -79460,7 +79460,7 @@
   {
    "id": 6292,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 22nd BIRTHDAY",
    "member": "濱岸ひより",
    "memberEn": "Hiyori Hamagishi",
    "tot": 11829,
@@ -79475,7 +79475,7 @@
   {
    "id": 6293,
    "color": "G",
-   "title": "HAPPY BIRTHDAY 1",
+   "title": "HAPPY 23rd BIRTHDAY",
    "member": "松田好花",
    "memberEn": "Konoka Matsuda",
    "tot": 10284,
@@ -79505,7 +79505,7 @@
   {
    "id": 6295,
    "color": "Y",
-   "title": "HAPPY BIRTHDAY 3",
+   "title": "HAPPY 25th BIRTHDAY",
    "member": "松田好花",
    "memberEn": "Konoka Matsuda",
    "tot": 10521,
@@ -79520,7 +79520,7 @@
   {
    "id": 6296,
    "color": "P",
-   "title": "HAPPY BIRTHDAY 4",
+   "title": "HAPPY 26th BIRTHDAY",
    "member": "松田好花",
    "memberEn": "Konoka Matsuda",
    "tot": 11827,
