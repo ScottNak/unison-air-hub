@@ -91,6 +91,7 @@
   .bday-code.sakura:hover { background: #ffc9dd; }
   .bday-code.hinata { background: #dcf0fd; color: #0d6fa8; border-color: #a8dbf5; }
   .bday-code.hinata:hover { background: #c3e6fb; }
+  .bday-code.copied { background: #d7f5df; color: #1b7a3c; border-color: #9fe0b1; }
 </style>
 </head>
 <body>
@@ -187,7 +188,7 @@
           var div = document.createElement('div');
           div.className = 'bday-entry';
           div.innerHTML = '🎂 Happy Birthday to <span class="bday-name ' + gc + '">' + displayName(e) + '</span>!<br>' +
-            '<a class="bday-code ' + gc + '" href="https://app-pay.jp/app/unisonair" target="_blank" rel="noopener">' + code + '</a>';
+            '<a class="bday-code ' + gc + '" data-code="' + code + '" href="https://app-pay.jp/app/unisonair" target="_blank" rel="noopener">' + code + '</a>';
           box.appendChild(div);
         });
       } else {
@@ -212,6 +213,44 @@
     renderBday();
     // Refresh hourly so a page left open overnight rolls to the new JST day.
     setInterval(renderBday, 60 * 60 * 1000);
+
+    // Clicking an HBD code copies it to the clipboard (in addition to the
+    // link opening app-pay.jp in a new tab, unaffected). Delegated on the
+    // box itself since renderBday() rebuilds its children on every render.
+    function copyToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).catch(function () { fallbackCopy(text); });
+      } else {
+        fallbackCopy(text);
+      }
+    }
+    function fallbackCopy(text) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (err) { /* ignore */ }
+      document.body.removeChild(ta);
+    }
+    var bdayBox = document.getElementById('bday-box');
+    if (bdayBox) {
+      bdayBox.addEventListener('click', function (ev) {
+        var t = ev.target.closest && ev.target.closest('.bday-code');
+        if (!t) return;
+        var codeVal = t.getAttribute('data-code');
+        if (!codeVal) return;
+        copyToClipboard(codeVal);
+        var original = t.textContent;
+        t.textContent = 'Copied!';
+        t.classList.add('copied');
+        setTimeout(function () {
+          t.textContent = original;
+          t.classList.remove('copied');
+        }, 1200);
+      });
+    }
   })();
 </script>
 <script>
