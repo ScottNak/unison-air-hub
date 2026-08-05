@@ -92,6 +92,7 @@
   .bday-code.hinata { background: #dcf0fd; color: #0d6fa8; border-color: #a8dbf5; }
   .bday-code.hinata:hover { background: #c3e6fb; }
   .bday-code.copied { background: #d7f5df; color: #1b7a3c; border-color: #9fe0b1; }
+  .bday-hint { display: block; margin-top: 3px; font-size: 10px; color: rgba(45,45,66,0.6); }
 </style>
 </head>
 <body>
@@ -188,7 +189,8 @@
           var div = document.createElement('div');
           div.className = 'bday-entry';
           div.innerHTML = '🎂 Happy Birthday to <span class="bday-name ' + gc + '">' + displayName(e) + '</span>!<br>' +
-            '<a class="bday-code ' + gc + '" data-code="' + code + '" href="https://app-pay.jp/app/unisonair" target="_blank" rel="noopener">' + code + '</a>';
+            '<a class="bday-code ' + gc + '" data-code="' + code + '" href="https://app-pay.jp/app/unisonair" target="_blank" rel="noopener" title="Opens app-pay.jp & copies code to clipboard">' + code + '</a>' +
+            '<span class="bday-hint">Opens app-pay.jp & copies code to clipboard</span>';
           box.appendChild(div);
         });
       } else {
