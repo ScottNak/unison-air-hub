@@ -1,6 +1,6 @@
 {
- "version": "v73-2026-08-04",
- "cardCount": 5440,
+ "version": "v75-2026-08-06",
+ "cardCount": 5442,
  "cards": [
   {
    "id": 1,
@@ -4805,7 +4805,7 @@
   {
    "id": 321,
    "color": "G",
-   "title": "FL 3rdYAL",
+   "title": "3rd YAL FL 二人セゾン",
    "member": "森田ひかる",
    "memberEn": "Hikaru Morita",
    "tot": 10902,
@@ -4835,7 +4835,7 @@
   {
    "id": 323,
    "color": "Y",
-   "title": "FL 3rdYAL",
+   "title": "3rd YAL FL Nobody",
    "member": "小池美波",
    "memberEn": "Minami Koike",
    "tot": 10822,
@@ -7535,7 +7535,7 @@
   {
    "id": 503,
    "color": "B",
-   "title": "FL 3rdYAL",
+   "title": "3rd YAL FL 東京タワーはどこから見える?",
    "member": "田村保乃",
    "memberEn": "Hono Tamura",
    "tot": 10792,
@@ -7580,7 +7580,7 @@
   {
    "id": 506,
    "color": "P",
-   "title": "FL 3rdYAL",
+   "title": "3rd YAL FL 手を繋いで帰ろうか",
    "member": "井上梨名",
    "memberEn": "Rina Inoue",
    "tot": 10822,
@@ -7595,7 +7595,7 @@
   {
    "id": 507,
    "color": "Y",
-   "title": "FL 3rdYAL",
+   "title": "3rd YAL FL 手を繋いで帰ろうか",
    "member": "山﨑天",
    "memberEn": "Ten Yamasaki",
    "tot": 10828,
@@ -45665,7 +45665,7 @@
   {
    "id": 3045,
    "color": "G",
-   "title": "3rd TOUR",
+   "title": "3rd TOUR FL 夏の近道",
    "member": "谷口愛季",
    "memberEn": "Airi Taniguchi",
    "tot": 11106,
@@ -51455,11 +51455,11 @@
   {
    "id": 3431,
    "color": "G",
-   "title": "3rd YAL FL",
+   "title": "3rd YAL FL 条件反射で泣けて来る",
    "member": "山﨑天",
    "memberEn": "Ten Yamasaki",
    "tot": 10963,
-   "sk": 0.0078,
+   "sk": 0,
    "vo": 3234,
    "da": 3258,
    "pe": 4041,
@@ -51470,7 +51470,7 @@
   {
    "id": 3432,
    "color": "R",
-   "title": "3rd YAL FL",
+   "title": "3rd YAL FL 僕たちの La vie en rose",
    "member": "田村保乃",
    "memberEn": "Hono Tamura",
    "tot": 11088,
@@ -70715,7 +70715,7 @@
   {
    "id": 5556,
    "color": "B",
-   "title": "3rd YAL",
+   "title": "3rd YAL Anthem time",
    "member": "中嶋優月",
    "memberEn": "Yuzuki Nakashima",
    "tot": 11071,
@@ -70745,7 +70745,7 @@
   {
    "id": 5558,
    "color": "P",
-   "title": "3rd YAL",
+   "title": "3rd YAL Nobody's Fault",
    "member": "大沼晶保",
    "memberEn": "Akiho Ōnuma",
    "tot": 11030,
@@ -70760,7 +70760,7 @@
   {
    "id": 5559,
    "color": "R",
-   "title": "3rd YAL",
+   "title": "3rd YAL Nobody's Fault",
    "member": "松田里奈",
    "memberEn": "Rina Matsuda",
    "tot": 11091,
@@ -71045,7 +71045,7 @@
   {
    "id": 5607,
    "color": "B",
-   "title": "8th Single BACKS LIVE!!",
+   "title": "8th Single BACKS LIVE!! FL 断絶",
    "member": "村山美羽",
    "memberEn": "Miu Murayama",
    "tot": 10970,
@@ -71255,7 +71255,7 @@
   {
    "id": 5678,
    "color": "Y",
-   "title": "4th ARENA TOUR 2024",
+   "title": "4th ARENA TOUR 2024 FL 何度 LOVE SONGの歌詞を読み返しただろう",
    "member": "村山美羽",
    "memberEn": "Miu Murayama",
    "tot": 11078,
@@ -71270,7 +71270,7 @@
   {
    "id": 5679,
    "color": "G",
-   "title": "4th ARENA TOUR 2024",
+   "title": "4th ARENA TOUR 2024 FL 何歳の頃に戻りたいのか？",
    "member": "山﨑天",
    "memberEn": "Ten Yamasaki",
    "tot": 11076,
@@ -71285,7 +71285,7 @@
   {
    "id": 5680,
    "color": "P",
-   "title": "4th ARENA TOUR 2024",
+   "title": "4th ARENA TOUR 2024 FL 何歳の頃に戻りたいのか？",
    "member": "森田ひかる",
    "memberEn": "Hikaru Morita",
    "tot": 11085,
@@ -71300,7 +71300,7 @@
   {
    "id": 5681,
    "color": "B",
-   "title": "8th Single backs live!!",
+   "title": "8th Single BACKS LIVE!! FL 油を注せ！",
    "member": "武元唯衣",
    "memberEn": "Yui Takemoto",
    "tot": 10932,
@@ -71493,24 +71493,9 @@
    "grad": false
   },
   {
-   "id": 5762,
-   "color": "B",
-   "title": "I want tomarrow to come",
-   "member": "村山美羽",
-   "memberEn": "Miu Murayama",
-   "tot": 10691,
-   "sk": 0.0078,
-   "vo": 3901,
-   "da": 3186,
-   "pe": 3174,
-   "cs": "Vo70%",
-   "csBase": "Vo70%",
-   "grad": false
-  },
-  {
    "id": 5765,
    "color": "P",
-   "title": "4th YAL",
+   "title": "4th YAL FL On my way",
    "member": "井上梨名",
    "memberEn": "Rina Inoue",
    "tot": 11103,
@@ -71525,7 +71510,7 @@
   {
    "id": 5770,
    "color": "R",
-   "title": "4th YAL ",
+   "title": "4th YAL FL On my way",
    "member": "松田里奈",
    "memberEn": "Rina Matsuda",
    "tot": 11045,
@@ -72560,7 +72545,7 @@
   {
    "id": 5845,
    "color": "Y",
-   "title": "8th Single BACKS LIVE!!",
+   "title": "8th Single BACKS LIVE!! FL 僕たちの La vie en rose",
    "member": "小田倉麗奈",
    "memberEn": "Reina Odakura",
    "tot": 11097,
@@ -72575,7 +72560,7 @@
   {
    "id": 5846,
    "color": "P",
-   "title": "8th Single BACKS LIVE!!",
+   "title": "8th Single BACKS LIVE!! FL 僕たちの La vie en rose",
    "member": "小島凪紗",
    "memberEn": "Nagisa Kojima",
    "tot": 10985,
@@ -72590,7 +72575,7 @@
   {
    "id": 5847,
    "color": "P",
-   "title": "5th TOUR 2025 \"Addiction\"",
+   "title": "5th TOUR 2025 \"Addiction\" FL 紋白蝶が確か飛んでた",
    "member": "松田里奈",
    "memberEn": "Rina Matsuda",
    "tot": 11196,
@@ -72605,7 +72590,7 @@
   {
    "id": 5848,
    "color": "G",
-   "title": "5th TOUR 2025 \"Addiction\"",
+   "title": "5th TOUR 2025 \"Addiction\" FL UDAGAWA GENERATION",
    "member": "藤吉夏鈴",
    "memberEn": "Karin Fujiyoshi",
    "tot": 11081,
@@ -72620,7 +72605,7 @@
   {
    "id": 5849,
    "color": "B",
-   "title": "5th TOUR 2025 \"Addiction\"",
+   "title": "5th TOUR 2025 \"Addiction\" FL UDAGAWA GENERATION",
    "member": "森田ひかる",
    "memberEn": "Hikaru Morita",
    "tot": 11038,
@@ -72635,7 +72620,7 @@
   {
    "id": 5850,
    "color": "R",
-   "title": "5th TOUR 2025 \"Addiction\"",
+   "title": "5th TOUR 2025 \"Addiction\" FL もう一曲欲しいのかい?",
    "member": "山下瞳月",
    "memberEn": "Shizuki Yamashita",
    "tot": 11084,
@@ -79475,7 +79460,7 @@
   {
    "id": 6307,
    "color": "B",
-   "title": "3rdYAL FL 危なっかしい計画",
+   "title": "3rd YAL FL 危なっかしい計画",
    "member": "松田里奈",
    "memberEn": "Rina Matsuda",
    "tot": 10759,
@@ -81600,6 +81585,51 @@
    "pe": 6603,
    "cs": "Pe85%",
    "csBase": "Pe85%",
+   "grad": false
+  },
+  {
+   "id": 6449,
+   "color": "B",
+   "title": "3rd YAL FL 静寂の暴力",
+   "member": "村山美羽",
+   "memberEn": "Miu Murayama",
+   "tot": 11074,
+   "sk": 0.0232,
+   "vo": 3088,
+   "da": 4413,
+   "pe": 3143,
+   "cs": "Da70%",
+   "csBase": "Da70%",
+   "grad": false
+  },
+  {
+   "id": 6450,
+   "color": "Y",
+   "title": "3rd YAL FL 静寂の暴力",
+   "member": "山下瞳月",
+   "memberEn": "Shizuki Yamashita",
+   "tot": 11019,
+   "sk": 0.0067,
+   "vo": 3259,
+   "da": 3294,
+   "pe": 4036,
+   "cs": "Pe70%",
+   "csBase": "Pe70%",
+   "grad": false
+  },
+  {
+   "id": 6451,
+   "color": "B",
+   "title": "3rd YAL FL 危なっかしい計画",
+   "member": "松田里奈",
+   "memberEn": "Rina Matsuda",
+   "tot": 10759,
+   "sk": 0,
+   "vo": 3215,
+   "da": 3221,
+   "pe": 3893,
+   "cs": "Pe70%",
+   "csBase": "Pe70%",
    "grad": false
   }
  ]

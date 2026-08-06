@@ -3,15 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UNIAIR - Bulk Import</title>
+<title>UNIAIR - Bulk Import (by Song)</title>
 <style>
   :root { --bg:#15151f; --panel:#1d1d2a; --line:#2c2c3c; --text:#e8e8f0; --muted:#8a8aa0; }
   * { box-sizing: border-box; }
-  /* overflow:hidden on the outer page so the ONLY scrollbar is
-     .grid-scroll's own - without this, body could grow a hair taller than
-     one viewport (header wrap, borders, etc.) and the page itself would
-     also become scrollable alongside the grid's internal scroll area
-     (Scott 2026-08-05: "make sure there is only one"). */
   html, body { height:100%; overflow:hidden; }
   body { margin:0; font-family: -apple-system, "Segoe UI", sans-serif; background:var(--bg); color:var(--text); display:flex; flex-direction:column; }
   .top-sticky { position: sticky; top:0; z-index: 50; }
@@ -28,26 +23,9 @@
     background:var(--panel); color:var(--muted); transition: background .08s ease, color .08s ease;
     white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
   }
-  .jump-wrap { position: relative; }
-  #jump-box { background:#0e0e16; border:1px solid var(--line); color:var(--text); padding:6px 10px; font-size:12px; border-radius:4px; width:220px; }
-  #jump-list { position:absolute; top:100%; left:0; right:0; background:#0e0e16; border:1px solid var(--line); border-top:none; max-height:260px; overflow-y:auto; z-index:60; display:none; }
-  #jump-list div { padding:5px 10px; font-size:12px; cursor:pointer; }
-  #jump-list div:hover, #jump-list div.active { background:#2a2a3e; }
   .tabs { display:flex; gap:6px; }
   .tab-btn { background:#0e0e16; border:1px solid var(--line); color:var(--muted); padding:6px 12px; font-size:12px; border-radius:4px; cursor:pointer; }
   .tab-btn.active { color:var(--text); border-color:#4a90d9; }
-  /* 2026-08-05: grid fills all remaining viewport height below the sticky
-     header (Scott: "expand to the entire space available") instead of a
-     fixed max-height:76vh that left dead space under the table - main and
-     the active section are flex containers so .grid-scroll's flex:1 grows
-     to fill whatever room is actually left, on any window size. */
-  /* min-width:0 alongside min-height:0 at every level - a flex item's
-     automatic minimum size defaults to its content's min-content size on
-     BOTH axes, so without this the ~170-column table's intrinsic width
-     forces section/main wider instead of staying put and letting
-     .grid-scroll's own overflow:auto handle it, which combined with
-     overflow:hidden on the page meant horizontal scroll silently couldn't
-     happen at all (Scott 2026-08-05: "can't seem to scroll horizontally"). */
   main { padding: 0; flex: 1 1 auto; display:flex; min-height:0; min-width:0; }
   section.grid-section { display:none; }
   section.grid-section.active { display:flex; flex-direction:column; flex:1; min-height:0; min-width:0; }
@@ -59,44 +37,40 @@
     padding: 0;
   }
 
-  td.rowhead, th.corner {
+  /* Song name is now the sticky LEFT column (readable horizontally, full
+     width instead of vertical-text columns) - same role import.html's
+     member rowhead played, just wider since song titles run longer. */
+  td.song-head, th.corner {
     position: sticky; left:0; background:var(--panel); border-right:1px solid var(--line);
-    padding:3px 10px 3px 6px; font-size:11px; white-space:nowrap; z-index:5; min-width:130px; max-width:130px;
+    padding:3px 10px; font-size:11px; white-space:nowrap; z-index:5; min-width:230px; max-width:230px;
     overflow:hidden; text-overflow:ellipsis; text-align:left;
   }
   th.corner { z-index: 8; top: 0; background:#22222f; }
-  td.rowhead .en { display:block; color:var(--muted); font-size:9px; }
-  td.rowhead.grad .jp::after { content:" \1F393"; font-size:9px; }
-  td.rowhead.hl, th.song-header.hl { background:#3a5a8a; color:#fff; }
+  td.song-head.hl, th.member-header.hl { background:#3a5a8a; color:#fff; }
 
-  /* table.grid-prefixed so these reliably beat the base border rule above
-     on specificity - a plain "tr.row-boundary td" / "td.col-boundary" was
-     the same or lower specificity than "table.grid td", so it silently
-     lost the cascade and never rendered (caught 2026-08-03: "i dont see
-     the borders for the song sections"). */
-  table.grid tr.row-boundary td, table.grid tr.row-boundary th { border-top: 3px solid #6a6a8a; }
   table.grid th.col-boundary, table.grid td.col-boundary { border-left: 3px solid #6a6a8a; }
 
-  /* 2026-08-05: group header row above the song names (Scott: "add a group
-     header for the column sections") - one labeled th per non-empty tier
-     ("SSR+ Discography Songs" / "General Songs" / "Happy Nth Birthday" /
-     "FL Songs"), spanning that tier's columns. th.corner gets rowspan=2 in
-     the JS below to cover both header rows; th.song-header's sticky top
-     offset shifts down by this row's own height so the two rows stack
-     correctly while scrolling instead of overlapping. */
-  th.tier-header {
-    background:#26263a; padding:3px 4px; text-align:center; font-size:10px; font-weight:700;
-    color:#b8b8cc; letter-spacing:.02em; position: sticky; top:0; z-index:7; height:20px;
-    box-sizing:border-box; border-bottom:1px solid var(--line);
-    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-  }
-  th.song-header {
+  /* Member name is now the sticky TOP row header - narrow columns, but
+     member names are short (<=5 kanji) so vertical text holds up much
+     better here than song titles did. */
+  th.member-header {
     background:#22222f; padding:4px 2px; vertical-align:top; text-align:center;
-    position: sticky; top:20px; z-index:6; height:118px; box-sizing:border-box; width:26px;
+    position: sticky; top:0; z-index:6; height:86px; box-sizing:border-box; width:26px;
   }
-  th.song-header .sh-name {
-    writing-mode: vertical-rl; text-orientation: upright; font-size:9.5px; font-weight:700;
-    color:#aaa; white-space:nowrap; display:inline-block; height:108px; overflow:hidden; text-overflow:ellipsis;
+  th.member-header .mh-name {
+    writing-mode: vertical-rl; text-orientation: upright; font-size:10px; font-weight:700;
+    color:#aaa; white-space:nowrap; display:inline-block; height:78px; overflow:hidden; text-overflow:ellipsis;
+  }
+  th.member-header.grad .mh-name::after { content:" \1F393"; font-size:9px; }
+
+  /* Tier divider rows - full-width label row inserted before each tier's
+     first song (SSR+ Discography Songs / General Songs / Happy Nth
+     Birthday / FL Songs), the row-based equivalent of import.html's
+     spanning column-header row (2026-08-05, same request applied to this
+     axis: "add a group header for the column sections"). */
+  tr.tier-divider td {
+    background:#26263a; color:#b8b8cc; font-size:10px; font-weight:700; letter-spacing:.02em;
+    padding:3px 10px; text-align:left; position:sticky; left:0; border-top:3px solid #6a6a8a;
   }
 
   td.cell-none { background:#1a1a24; }
@@ -105,21 +79,17 @@
   td.cell-slot.state-plus { box-shadow: inset 0 0 0 2px #ffd23f; }
   td.cell-slot.state-plus::after { content:"+"; }
 
-  tr.flash td.rowhead { animation: flashRow 1.4s ease; }
+  tr.flash td.song-head { animation: flashRow 1.4s ease; }
   @keyframes flashRow { 0%,100% { background:var(--panel);} 30% { background:#3a5a8a; } }
 </style>
 </head>
 <body>
 <div class="top-sticky">
   <header>
-    <h1>UNIAIR Bulk Import</h1>
+    <h1>UNIAIR Bulk Import (by Song)</h1>
     <span class="sub">Click a cell: empty &rarr; owned &rarr; owned+ &rarr; empty.</span>
-    <a class="alt-link" href="import_by_song.html">Switch to by-song layout</a>
+    <a class="alt-link" href="import.html">Switch to by-member layout</a>
     <div class="tabs" id="tabs"></div>
-    <div class="jump-wrap">
-      <input id="jump-box" type="text" placeholder="Jump to member...">
-      <div id="jump-list"></div>
-    </div>
     <div id="progress">Owned: <b id="owned-count">0</b> / <span id="total-count">0</span></div>
   </header>
   <div id="hover-info">Hover a cell to see its member &amp; song</div>
@@ -147,18 +117,16 @@ const OWNED_KEY = 'uniair_public_owned';
 function cardKey(member, title) { return member + '|' + title; }
 function loadOwned() { try { return JSON.parse(localStorage.getItem(OWNED_KEY) || '{}'); } catch (e) { return {}; } }
 function saveOwned(o) { localStorage.setItem(OWNED_KEY, JSON.stringify(o)); }
-// Real cross-page owned store - written to on every click, but
-// deliberately never read to seed the grid's own display state (this page
-// always starts blank; see module docstring for why).
+// Real cross-page owned store (same key import.html/catalog.html use) -
+// written to on every click, never read to seed display state (blank start,
+// same rationale as import.html - see that page's docstring).
 let ownedSet = loadOwned();
 
-// Total = clickable cells (a real card exists for that member+song combo).
 let totalCells = 0;
 SECTIONS.forEach(s => s.rows.forEach(r => r.slots.forEach(sl => { if (sl) totalCells++; })));
 document.getElementById('total-count').textContent = totalCells;
 
-// This page's own blank-start cell states, keyed "sectionId|member|song".
-// '0' = empty, '1' = check (base owned), '2' = plus (upgrade owned).
+// Keyed "sectionId|memberIdx|songIdx" - '0' empty, '1' check, '2' plus.
 const cellState = {};
 
 function updateProgress() {
@@ -183,73 +151,72 @@ function buildSection(sec) {
   const table = document.createElement('table');
   table.className = 'grid';
 
+  // Header row: corner + one th per MEMBER (columns), vertical name text.
+  // col-boundary marks each member-generation boundary (import.html's old
+  // per-member rowBoundary, reused here as a column boundary instead).
   const thead = document.createElement('thead');
-  const boundaryCols = new Set(sec.songGroupBoundaries || []);
-
-  // Row 1: tier group headers ("SSR+ Discography Songs" / "General Songs" /
-  // "Happy Nth Birthday" / "FL Songs"), each spanning its own tier's
-  // columns - the corner cell rowspans both header rows instead of
-  // appearing twice.
-  const tierRow = document.createElement('tr');
+  const headRow = document.createElement('tr');
   const corner = document.createElement('th');
   corner.className = 'corner';
-  corner.rowSpan = 2;
-  tierRow.appendChild(corner);
-  (sec.tierGroups || []).forEach((tg, i) => {
+  headRow.appendChild(corner);
+  const memberHeaderCells = [];
+  sec.rows.forEach((row, i) => {
     const th = document.createElement('th');
-    th.className = 'tier-header' + (i > 0 ? ' col-boundary' : '');
-    th.colSpan = tg.count;
-    th.textContent = tg.label;
-    th.title = tg.label;
-    tierRow.appendChild(th);
-  });
-  thead.appendChild(tierRow);
-
-  // Row 2: individual song-name headers (unchanged from before, just no
-  // longer carrying its own corner cell).
-  const songRow = document.createElement('tr');
-  const songHeaderCells = [];
-  sec.songs.forEach((song, i) => {
-    const th = document.createElement('th');
-    th.className = 'song-header' + (boundaryCols.has(i) ? ' col-boundary' : '');
+    th.className = 'member-header' + (row.graduated ? ' grad' : '') + (row.rowBoundary ? ' col-boundary' : '');
     th.dataset.col = i;
     const inner = document.createElement('span');
-    inner.className = 'sh-name';
-    inner.textContent = (sec.songsDisplay && sec.songsDisplay[i]) || song;
-    inner.title = song;
+    inner.className = 'mh-name';
+    inner.textContent = row.member;
+    inner.title = row.member + (row.memberEn ? ' (' + row.memberEn + ')' : '');
     th.appendChild(inner);
-    songRow.appendChild(th);
-    songHeaderCells.push(th);
+    headRow.appendChild(th);
+    memberHeaderCells.push(th);
   });
-  thead.appendChild(songRow);
+  thead.appendChild(headRow);
   table.appendChild(thead);
 
+  // Body: one tier-divider row + one row per SONG within that tier, in
+  // the same tier order/boundaries as import.html's columns used.
   const tbody = document.createElement('tbody');
-  sec.rows.forEach(row => {
-    const tr = document.createElement('tr');
-    tr.className = 'member-row' + (row.rowBoundary ? ' row-boundary' : '');
-    tr.id = 'm-' + sec.id + '-' + encodeURIComponent(row.member);
-    const head = document.createElement('td');
-    head.className = 'rowhead' + (row.graduated ? ' grad' : '');
-    head.dataset.member = row.member;
-    head.innerHTML = '<span class="jp">' + row.member + '</span><span class="en">' + row.memberEn + '</span>';
-    tr.appendChild(head);
+  const boundaries = sec.songGroupBoundaries || [];
+  const tierStarts = new Set(boundaries);
+  tierStarts.add(0);
+  const tierLabelByStart = {};
+  { let pos = 0; (sec.tierGroups || []).forEach(tg => { tierLabelByStart[pos] = tg.label; pos += tg.count; }); }
 
-    row.slots.forEach((slot, i) => {
+  const songHeadCells = [];
+  sec.songs.forEach((song, j) => {
+    if (tierLabelByStart[j] !== undefined) {
+      const divTr = document.createElement('tr');
+      divTr.className = 'tier-divider';
+      const divTd = document.createElement('td');
+      divTd.colSpan = sec.rows.length + 1;
+      divTd.textContent = tierLabelByStart[j];
+      divTr.appendChild(divTd);
+      tbody.appendChild(divTr);
+    }
+
+    const tr = document.createElement('tr');
+    tr.className = 'song-row';
+    tr.id = 's-' + sec.id + '-' + j;
+    const head = document.createElement('td');
+    head.className = 'song-head';
+    head.dataset.col = j;
+    head.textContent = song;
+    head.title = song;
+    tr.appendChild(head);
+    songHeadCells.push(head);
+
+    sec.rows.forEach((row, i) => {
+      const slot = row.slots[j];
       const td = document.createElement('td');
-      td.dataset.col = i;
-      const boundaryCls = boundaryCols.has(i) ? ' col-boundary' : '';
+      td.dataset.row = i;
       if (!slot) {
-        td.className = 'cell-none' + boundaryCls;
+        td.className = 'cell-none';
       } else {
-        td.className = 'cell-slot state-empty' + boundaryCls;
+        td.className = 'cell-slot state-empty';
         td.dataset.color = slot.color;
         td.style.background = PALE_COLOR_HEX[slot.color] || '#999';
-        // slot.title is THIS MEMBER'S own exact CardDB3 title - used for
-        // the real localStorage key (and shown on hover), which may differ
-        // from the column's merged/normalized display label (sec.songs[i])
-        // for the handful of known title-typo variants grouped together
-        // (see normalize_for_grouping() in the generator).
         const realTitle = slot.title;
         td.title = row.member + ' - ' + realTitle;
         td.dataset.member = row.member;
@@ -257,7 +224,7 @@ function buildSection(sec) {
         td.dataset.song = realTitle;
         td.dataset.hasPlus = slot.hasPlus ? '1' : '0';
         td.dataset.hasBase = slot.hasBase ? '1' : '0';
-        const key = sec.id + '|' + row.member + '|' + i;
+        const key = sec.id + '|' + i + '|' + j;
         cellState[key] = 0;
         td.dataset.stateKey = key;
       }
@@ -269,21 +236,20 @@ function buildSection(sec) {
   scrollWrap.appendChild(table);
   wrap.appendChild(scrollWrap);
 
-  // Hover highlight - just the row header + column header, not the whole
-  // row/column (per Scott's clarification).
-  let lastHeadCell = null, lastColCell = null;
+  // Hover highlight - just the row header (song) + column header (member).
+  let lastRowCell = null, lastColCell = null;
   tbody.addEventListener('mouseover', (e) => {
     const td = e.target.closest('td');
-    if (!td) return;
+    if (!td || !td.closest('tr.song-row')) return;
     const tr = td.closest('tr');
-    const headCell = tr.querySelector('td.rowhead');
-    if (headCell !== lastHeadCell) {
-      if (lastHeadCell) lastHeadCell.classList.remove('hl');
-      headCell.classList.add('hl');
-      lastHeadCell = headCell;
+    const rowCell = tr.querySelector('td.song-head');
+    if (rowCell !== lastRowCell) {
+      if (lastRowCell) lastRowCell.classList.remove('hl');
+      rowCell.classList.add('hl');
+      lastRowCell = rowCell;
     }
-    const col = td.dataset.col;
-    const colCell = col !== undefined ? songHeaderCells[+col] : null;
+    const col = td.dataset.row;
+    const colCell = col !== undefined ? memberHeaderCells[+col] : null;
     if (colCell !== lastColCell) {
       if (lastColCell) lastColCell.classList.remove('hl');
       if (colCell) colCell.classList.add('hl');
@@ -296,9 +262,9 @@ function buildSection(sec) {
     }
   });
   tbody.addEventListener('mouseleave', () => {
-    if (lastHeadCell) lastHeadCell.classList.remove('hl');
+    if (lastRowCell) lastRowCell.classList.remove('hl');
     if (lastColCell) lastColCell.classList.remove('hl');
-    lastHeadCell = null; lastColCell = null;
+    lastRowCell = null; lastColCell = null;
     clearHoverInfo();
   });
 
@@ -312,9 +278,6 @@ function buildSection(sec) {
     cellState[key] = next;
     applyCellVisual(td, next);
 
-    // Resolve + persist the real owned keys for this member+song so the
-    // shared store always matches what's currently displayed, regardless
-    // of what it held before this page loaded blank.
     const baseKey = cardKey(td.dataset.member, td.dataset.song);
     const plusKey = cardKey(td.dataset.member, td.dataset.song + '+');
     delete ownedSet[baseKey];
@@ -349,52 +312,7 @@ SECTIONS.forEach((sec, i) => {
 });
 updateProgress();
 
-// Jump-to-member search.
-const jumpBox = document.getElementById('jump-box');
-const jumpList = document.getElementById('jump-list');
-const ALL_MEMBERS = [];
-SECTIONS.forEach(sec => sec.rows.forEach(r => ALL_MEMBERS.push({ member: r.member, memberEn: r.memberEn, sectionId: sec.id })));
-
-// Strips macrons/diacritics (Endō -> Endo) so a plain-ASCII search still
-// matches romanized names, which almost nobody types with the macron.
-function foldDiacritics(s) { return s.normalize('NFD').replace(/[̀-ͯ]/g, ''); }
-
-function renderJumpList(q) {
-  const ql = foldDiacritics(q.trim().toLowerCase());
-  if (!ql) { jumpList.style.display = 'none'; jumpList.innerHTML = ''; return; }
-  const matches = ALL_MEMBERS.filter(m => m.member.includes(q) || foldDiacritics(m.memberEn.toLowerCase()).includes(ql)).slice(0, 20);
-  jumpList.innerHTML = '';
-  matches.forEach(m => {
-    const div = document.createElement('div');
-    div.textContent = m.member + ' (' + m.memberEn + ')';
-    div.addEventListener('mousedown', () => jumpTo(m));
-    jumpList.appendChild(div);
-  });
-  jumpList.style.display = matches.length ? 'block' : 'none';
-}
-function jumpTo(m) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('section.grid-section').forEach(s => s.classList.remove('active'));
-  const idx = SECTIONS.findIndex(s => s.id === m.sectionId);
-  tabsEl.children[idx].classList.add('active');
-  document.querySelector('section.grid-section[data-id="' + m.sectionId + '"]').classList.add('active');
-  const row = document.getElementById('m-' + m.sectionId + '-' + encodeURIComponent(m.member));
-  if (row) {
-    row.scrollIntoView({ block: 'center', behavior: 'smooth' });
-    row.classList.add('flash');
-    setTimeout(() => row.classList.remove('flash'), 1450);
-  }
-  jumpBox.value = '';
-  jumpList.style.display = 'none';
-}
-jumpBox.addEventListener('input', () => renderJumpList(jumpBox.value));
-jumpBox.addEventListener('blur', () => setTimeout(() => jumpList.style.display = 'none', 150));
-
-// Same cross-tab snapshot/import protocol catalog.html answers, so this
-// page can be wired into hub.html's Export/Import broadcast later without
-// changes here. Note this answers from the real (persisted) ownedSet, not
-// from this page's blank-start cellState - a snapshot request should
-// reflect the true cross-page store, same as catalog.html's does.
+// Same cross-tab snapshot/import protocol import.html/catalog.html answer.
 window.addEventListener('message', (e) => {
   const msg = e.data;
   if (!msg || typeof msg !== 'object') return;
@@ -415,7 +333,7 @@ window.addEventListener('message', (e) => {
       });
       if (added) saveOwned(ownedSet);
     }
-    e.source.postMessage({ type: 'uniair-import-ack', id: msg.id, page: 'import', changed: added }, '*');
+    e.source.postMessage({ type: 'uniair-import-ack', id: msg.id, page: 'import_by_song', changed: added }, '*');
   }
 });
 </script>
