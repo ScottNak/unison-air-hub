@@ -171,14 +171,16 @@
      is (top matches .diamond-badge's own top, offset by roughly the
      badge's half-height so the buttons sit centered on the band).
 
-     Two different visibility rules depending on hover support:
+     Two different visibility triggers depending on hover support:
        - Mouse/trackpad (hover: hover) - hidden until the diamond is
          hovered, matching the literal ask ("show up... as we hover").
-       - Touch (hover: none) - there's no hover to trigger on, so they're
-         simply always visible (smaller, so they don't dominate the tile).
-     Press-and-hold (mousedown/touchstart, see attachStepper() in JS) repeats
-     the step so reaching real bond values (hundreds-thousands) doesn't
-     require literally thousands of individual taps. */
+       - Touch (hover: none) - there's no hover to trigger on. Originally
+         always-visible here, but per 2026-08-06 user feedback that's
+         cluttered/unintuitive next to a whole grid of photos - tapping the
+         diamond now toggles a '.controls-open' class (see the
+         diamondWrap click handler in JS) that reveals them instead, same
+         "tap a thing to reveal its controls" pattern as most mobile UIs.
+         Tapping anywhere outside an open diamond closes it again. */
   .step-btn {
     position: absolute; top: 116px; transform: translateY(-50%);
     width: 30px; height: 30px; border-radius: 50%; border: none; cursor: pointer;
@@ -195,7 +197,8 @@
     .diamond-wrap:hover .step-btn { opacity: 1; pointer-events: auto; }
   }
   @media (hover: none) {
-    .step-btn { opacity: 1; pointer-events: auto; width: 26px; height: 26px; font-size: 15px; }
+    .step-btn { width: 26px; height: 26px; font-size: 15px; }
+    .diamond-wrap.controls-open .step-btn { opacity: 1; pointer-events: auto; }
   }
 
   .tile.hidden { display: none; }
@@ -352,6 +355,18 @@ GROUP_ORDER.forEach(function(groupName, idx) {
     plusBtn.setAttribute('aria-label', 'Increase ' + m.name + ' bond');
     diamondWrap.appendChild(minusBtn);
     diamondWrap.appendChild(plusBtn);
+    // Tap-to-reveal (2026-08-06, touch devices only - see .diamond-wrap's
+    // "hover: none" CSS rule above). A tap on the photo/diamond itself
+    // toggles the buttons open; a tap on a button (which only exists once
+    // already open) is left alone here so it just runs its own step. A
+    // single document-level listener (added once, after this loop) closes
+    // any open diamond when the visitor taps elsewhere. Harmless no-op on
+    // mouse/trackpad devices - the class this toggles has no effect there,
+    // :hover already controls visibility.
+    diamondWrap.addEventListener('click', function(e) {
+      if (e.target.closest('.step-btn')) return;
+      diamondWrap.classList.toggle('controls-open');
+    });
     tile.appendChild(diamondWrap);
 
     var nameEl = document.createElement('div');
@@ -376,6 +391,14 @@ GROUP_ORDER.forEach(function(groupName, idx) {
 
   groupDiv.appendChild(grid);
   groupsEl.appendChild(groupDiv);
+});
+
+// Closes any tap-opened diamond (see diamondWrap's click handler above)
+// when the visitor taps/clicks anywhere outside it.
+document.addEventListener('click', function(e) {
+  document.querySelectorAll('.diamond-wrap.controls-open').forEach(function(dw) {
+    if (!dw.contains(e.target)) dw.classList.remove('controls-open');
+  });
 });
 
 function applyLanguage(lang) {
