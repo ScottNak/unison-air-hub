@@ -62,15 +62,51 @@
   }
   iframe.active { display: block; }
 
-  /* Birthday notification (top left) */
+  /* Bulk Import full-page takeover (2026-08-06) - shown instead of the
+     normal tabs+frame-wrap when a first-time visitor has zero owned cards,
+     or on demand via the gear menu's "Bulk Import" button. Sized/styled to
+     match .frame-wrap's slot exactly (same margin/radius/shadow) so it
+     reads as "the main focus" of the page rather than a popup. */
+  .import-overlay { display: none; flex: 1 1 auto; margin: 0 16px 16px; border-radius: 12px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.35); overflow: hidden; position: relative; background: #15151f; }
+  .import-overlay iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: block; }
+  body.import-mode .tabs, body.import-mode .frame-wrap { display: none; }
+  body.import-mode .import-overlay { display: block; }
+
+  /* Birthday notification (top left). Collapsible (2026-08-07): collapsed
+     shows just a cake-emoji toggle; expanded swaps that for an × close
+     button at top-right instead. State remembered in localStorage so it
+     stays how the visitor left it, but a new JST day always forces it back
+     open (2026-08-07) since the message itself has changed. */
   .bday-box {
     position: fixed; top: 14px; left: 16px; z-index: 20;
-    max-width: 270px; padding: 10px 14px; border-radius: 12px;
-    font-size: 12px; line-height: 1.45; color: #2d2d42;
+    border-radius: 12px; color: #2d2d42;
     background: rgba(255,255,255,0.88);
     box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+    overflow: hidden;
   }
   .bday-box:empty { display: none; }
+  .bday-toggle {
+    appearance: none; border: none; cursor: pointer; background: transparent; color: inherit;
+    display: block; width: 100%; padding: 9px 13px; font-size: 19px; line-height: 1; text-align: left;
+  }
+  .bday-toggle:hover { background: rgba(0,0,0,0.06); }
+  .bday-box.open .bday-toggle { display: none; }
+  .bday-close {
+    /* Absolutely positioned (anchored to .bday-box, the nearest positioned
+       ancestor) rather than floated (2026-08-07) - a float reserved space
+       in the text flow and pushed the greeting line down to clear it,
+       leaving an empty gap above it. Overlaying instead means the first
+       line starts at the very top with nothing pushing it down. */
+    display: none; position: absolute; top: 8px; right: 8px; z-index: 1;
+    appearance: none; border: none; cursor: pointer; background: transparent; color: inherit;
+    font-size: 16px; line-height: 1; padding: 2px;
+  }
+  .bday-close:hover { opacity: 0.6; }
+  .bday-box.open .bday-close { display: block; }
+  .bday-content { display: none; max-width: 290px; padding: 10px 14px; font-size: 12px; line-height: 1.45; }
+  .bday-box.open .bday-content { display: block; }
+  .bday-greet { white-space: nowrap; }
   .bday-entry + .bday-entry {
     margin-top: 8px; padding-top: 8px; border-top: 1px dashed rgba(45,45,66,0.25);
   }
@@ -102,6 +138,7 @@
   <div class="gear-menu" id="hub-gear-menu">
     <button class="save-btn" id="hub-export-btn">&#11015; Export all</button>
     <button class="save-btn" id="hub-import-btn">&#11014; Import all</button>
+    <button class="save-btn" id="hub-bulk-import-btn">&#9638; Bulk Add</button>
     <input type="file" id="hub-import-file" accept="application/json" style="display:none">
     <span class="save-note" id="hub-save-note">&nbsp;</span>
   </div>
@@ -111,6 +148,7 @@
 
 <div class="tabs" id="tabs"></div>
 <div class="frame-wrap" id="frame-wrap"></div>
+<div class="import-overlay" id="import-overlay"><iframe id="import-overlay-frame" title="Bulk Import"></iframe></div>
 
 <script src="member_profiles.js"></script>
 <script>
@@ -128,6 +166,17 @@
   // (two+ members sharing a date) are shown stacked, each with its own
   // line/code. No lang toggle on this public hub, so names are always shown
   // romanized (Given Family).
+  var BDAY_COLLAPSE_KEY = 'uniair_bday_collapsed';
+  var BDAY_DAY_KEY = 'uniair_bday_last_seen_day';
+  function isBdayOpen() {
+    // Default open (matches the box's pre-2026-08-07 always-expanded
+    // behavior) unless the visitor has explicitly collapsed it before.
+    try {
+      var v = localStorage.getItem(BDAY_COLLAPSE_KEY);
+      if (v === '1') return false;
+    } catch (err) { /* storage disabled */ }
+    return true;
+  }
   (function () {
     function renderBday() {
       var box = document.getElementById('bday-box');
@@ -144,13 +193,56 @@
       }
       if (!box) return;
       box.innerHTML = '';
+      box.classList.remove('open');
       if (!BD || !BD.length) return;
 
       var jstFmt = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Tokyo', year: 'numeric', month: '2-digit', day: '2-digit' });
       var todayParts = jstFmt.format(new Date()).split('-'); // en-CA => YYYY-MM-DD
       var todayY = +todayParts[0], todayM = +todayParts[1], todayD = +todayParts[2];
-
       function pad2(n) { return (n < 10 ? '0' : '') + n; }
+      var todayISO = todayY + '-' + pad2(todayM) + '-' + pad2(todayD);
+
+      // New JST day => the message content is different from whatever was
+      // last shown, so re-open even if the visitor had collapsed it
+      // yesterday (2026-08-07). First-ever visit (nothing stored yet) also
+      // counts as "new", which is what keeps the pre-existing
+      // default-open-on-first-visit behavior.
+      var lastSeenDay = null;
+      try { lastSeenDay = localStorage.getItem(BDAY_DAY_KEY); } catch (err) { /* storage disabled */ }
+      if (lastSeenDay !== todayISO) {
+        try {
+          localStorage.setItem(BDAY_DAY_KEY, todayISO);
+          localStorage.setItem(BDAY_COLLAPSE_KEY, '0');
+        } catch (err) { /* storage disabled */ }
+      }
+
+      var outerBox = box; // the fixed-position chip; stays visible collapsed or open
+      var toggle = document.createElement('button');
+      toggle.type = 'button';
+      toggle.className = 'bday-toggle';
+      toggle.setAttribute('aria-label', 'Show birthday notice');
+      toggle.title = 'Show birthday notice';
+      toggle.textContent = '🎂';
+      outerBox.appendChild(toggle);
+
+      if (isBdayOpen()) outerBox.classList.add('open');
+
+      // Everything below still appends to `box` as before - reassigned here
+      // to the new inner content div so the entry-building code doesn't
+      // need to change. The close button is the first child of that content
+      // div (not the outer box) and floats right, so the text wraps around
+      // it instead of leaving a reserved blank line above the message.
+      box = document.createElement('div');
+      box.className = 'bday-content';
+      var closeBtn = document.createElement('button');
+      closeBtn.type = 'button';
+      closeBtn.className = 'bday-close';
+      closeBtn.setAttribute('aria-label', 'Hide birthday notice');
+      closeBtn.title = 'Hide birthday notice';
+      closeBtn.textContent = '×';
+      box.appendChild(closeBtn);
+      outerBox.appendChild(box);
+
       function mmdd(m, d) { return pad2(m) + pad2(d); }
       function ordinal(n) {
         var rem100 = n % 100;
@@ -188,7 +280,7 @@
           var gc = groupClass(e);
           var div = document.createElement('div');
           div.className = 'bday-entry';
-          div.innerHTML = '🎂 Happy Birthday to <span class="bday-name ' + gc + '">' + displayName(e) + '</span>!<br>' +
+          div.innerHTML = '<span class="bday-greet">🎂 Happy Birthday <span class="bday-name ' + gc + '">' + displayName(e) + '</span>!</span><br>' +
             '<a class="bday-code ' + gc + '" data-code="' + code + '" href="https://app-pay.jp/app/unisonair" target="_blank" rel="noopener" title="Opens app-pay.jp & copies code to clipboard">' + code + '</a>' +
             '<span class="bday-hint">Opens app-pay.jp & copies code to clipboard</span>';
           box.appendChild(div);
@@ -239,6 +331,18 @@
     var bdayBox = document.getElementById('bday-box');
     if (bdayBox) {
       bdayBox.addEventListener('click', function (ev) {
+        // .bday-toggle (cake icon) only shows while collapsed and opens it;
+        // .bday-close (×, top-right) only shows while open and closes it.
+        if (ev.target.closest && ev.target.closest('.bday-toggle')) {
+          bdayBox.classList.add('open');
+          try { localStorage.setItem(BDAY_COLLAPSE_KEY, '0'); } catch (err) { /* storage disabled */ }
+          return;
+        }
+        if (ev.target.closest && ev.target.closest('.bday-close')) {
+          bdayBox.classList.remove('open');
+          try { localStorage.setItem(BDAY_COLLAPSE_KEY, '1'); } catch (err) { /* storage disabled */ }
+          return;
+        }
         var t = ev.target.closest && ev.target.closest('.bday-code');
         if (!t) return;
         var codeVal = t.getAttribute('data-code');
@@ -464,6 +568,89 @@
       });
     };
     reader.readAsText(file);
+  });
+
+  // --- Bulk Import full-page takeover (2026-08-06) ---------------------
+  // import.html normally always starts blank (its own deliberate design -
+  // it's meant for a first-time bulk pass, not a synced view). This block
+  // is the hub-side wiring around that page for three things Scott asked
+  // for: (1) auto-show it, full-page, the very first time a visitor has
+  // zero owned cards; (2) a gear-menu button to reopen it any time, which
+  // ALSO seeds it from whatever's already owned (via import.html's own
+  // ?seed=1 query flag) so re-entering doesn't mean re-clicking everything;
+  // (3) wire its "Finished!" button back into the hub as if a normal Import
+  // had happened, then offer (not force) a backup-file save afterward.
+  var importOverlayFrame = document.getElementById('import-overlay-frame');
+
+  function openImportMode(seed) {
+    importOverlayFrame.src = 'import.html?' + (seed ? 'seed=1&' : '') + 'v=' + Date.now();
+    document.body.classList.add('import-mode');
+  }
+  function closeImportMode() {
+    document.body.classList.remove('import-mode');
+    importOverlayFrame.src = 'about:blank';
+  }
+
+  // First-load auto-trigger: only when the shared owned-cards store is
+  // genuinely empty (brand new visitor, or someone who cleared storage).
+  // Reads the same 'uniair_public_owned' key catalog.html/import.html both
+  // use, directly - no need to ask any iframe, nothing is loaded yet.
+  (function () {
+    var raw = null;
+    try { raw = localStorage.getItem('uniair_public_owned'); } catch (err) { /* storage disabled */ }
+    var isEmpty = !raw || raw === '{}' || raw === 'null';
+    if (isEmpty) openImportMode(false);
+  })();
+
+  // Gear menu button: toggles the overlay open (seeded from existing owned
+  // cards, since unlike the first-load case there may well be data already)
+  // or closed if it's already showing - doubles as an early-exit affordance.
+  document.getElementById('hub-bulk-import-btn').addEventListener('click', function () {
+    gearBtn.classList.remove('open');
+    gearMenu.classList.remove('open');
+    if (document.body.classList.contains('import-mode')) {
+      closeImportMode();
+    } else {
+      openImportMode(true);
+    }
+  });
+
+  // import.html posts this (to window.parent, unprompted) when its
+  // "Finished!" button is clicked while embedded here. Reuses the exact
+  // same import-and-reload plumbing as a manual file Import, then - once
+  // that's done and the hub is back on a normal tab - offers a backup save
+  // the user is free to decline.
+  window.addEventListener('message', function (e) {
+    var msg = e.data;
+    if (!msg || typeof msg !== 'object' || msg.type !== 'uniair-import-finished') return;
+    if (e.source !== importOverlayFrame.contentWindow) return;
+    var ownedList = Array.isArray(msg.owned) ? msg.owned : [];
+
+    broadcastAndCollect('uniair-import-data', { data: { owned: ownedList } }, 'uniair-import-ack', function (replies) {
+      pages.forEach(function (page, i) { iframes[i].src = page.file + '?v=' + Date.now(); });
+      closeImportMode();
+
+      // Land on the Card Database tab so the result is immediately visible.
+      var catIdx = -1;
+      for (var i = 0; i < pages.length; i++) { if (pages[i].id === 'catalog') { catIdx = i; break; } }
+      if (catIdx !== -1) {
+        document.querySelectorAll('.tab').forEach(function (b) { b.classList.remove('active'); });
+        document.querySelectorAll('.frame-wrap iframe').forEach(function (f) { f.classList.remove('active'); });
+        tabsEl.children[catIdx].classList.add('active');
+        iframes[catIdx].classList.add('active');
+      }
+
+      var missing = missingLabels(replies);
+      var note = 'Imported ' + ownedList.length + ' card(s) from Bulk Import.';
+      if (missing.length) note += ' No reply from: ' + missing.join(', ') + ' (reloaded anyway).';
+      flashNote(note, 9000);
+
+      setTimeout(function () {
+        if (window.confirm('Bulk Import complete. Save a backup of this to your computer too?')) {
+          document.getElementById('hub-export-btn').click();
+        }
+      }, 300);
+    });
   });
 </script>
 </body>
