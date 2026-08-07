@@ -34,7 +34,6 @@
     text-shadow: 0 1px 2px rgba(0,0,0,0.35); box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   }
   .cletter { font-size: 13px; font-weight: 800; letter-spacing: .03em; }
-  .cscore { font-size: 10px; font-weight: 600; opacity: .92; margin-top: 1px; }
   .cbadge-btn { cursor: pointer; transition: transform .12s, box-shadow .12s; }
   .cbadge-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
   .cbadge-btn.selected { box-shadow: 0 0 0 2px #fff, 0 0 0 4px #2d2d42, 0 4px 10px rgba(0,0,0,0.3); transform: translateY(-2px); }
@@ -62,6 +61,15 @@
   .suggest-box h3 { font-size: 12px; margin: 0 0 8px; color: #6a4fc9; text-transform: uppercase; letter-spacing: .03em; }
   .suggest-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
   .suggest-table td { padding: 6px 8px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+  .suggest-table .ev { text-align: right; font-weight: 700; font-size: 11.5px; color: #2d2d42; white-space: nowrap; }
+  .acq-cell { width: 96px; }
+  .acq-tag {
+    display: inline-block; width: 92px; text-align: center; padding: 3px 4px; border-radius: 999px;
+    font-weight: 800; font-size: 10.5px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .acq-tag.pull { background: #3a5bc7; }
+  .acq-tag.upgrade { background: #1c7a2e; }
+  .acq-tag.pull-upgrade { background: #a05fc9; }
   .chips { white-space: nowrap; }
   .mchip {
     display: inline-flex; align-items: center; justify-content: center;
@@ -801,12 +809,22 @@ var WARN_TIER_TITLES = {
   dropped: ' — falls off this team entirely once the current Starlight bonus ends'
 };
 
+// Same acquisition classification as best_teams.html's worth-getting section:
+// tags an unowned candidate as a fresh Pull, an in-game Upgrade (base already
+// owned), or Pull + Upgrade (base not owned either).
+var ACQ_TAG_CLASS = {'Pull': 'pull', 'Upgrade': 'upgrade', 'Pull + Upgrade': 'pull-upgrade'};
+function classifyAcquisition(card, ownedKeySet) {
+  if (!card.song || card.song.slice(-1) !== '+') return {tag: 'Pull'};
+  var baseKey = card.member + '|' + card.song.slice(0, -1);
+  if (ownedKeySet[baseKey]) return {tag: 'Upgrade'};
+  return {tag: 'Pull + Upgrade'};
+}
+
 function colorScoreBadge(songColor, total) {
   var letter = COLOR_LETTERS[songColor];
   var bg = songColor === 'ALL' ? RAINBOW_GRADIENT : COLOR_HEX_SL[songColor];
   return '<div class="cbadge cbadge-btn" style="background:' + bg + '" title="Show ' + esc(COLOR_NAMES[songColor]) +
-    ' team" data-color="' + esc(songColor) + '"><span class="cletter">' + letter + '</span>' +
-    '<span class="cscore">' + fmtNum(total) + '</span></div>';
+    ' team" data-color="' + esc(songColor) + '"><span class="cletter">' + letter + '</span></div>';
 }
 
 function miniChip(songColor, isCenter, extraText, warnTier) {
@@ -822,6 +840,8 @@ function miniChip(songColor, isCenter, extraText, warnTier) {
 }
 
 function buildMemberContentHtml(member, memberCardsAll, starlightSongs, results, ctx) {
+  var ownedKeySet = {};
+  memberCardsAll.forEach(function(c) { if (c.owned) ownedKeySet[c.key] = true; });
   var groups = {};
   var unresolved = [];
   SONG_COLORS.forEach(function(songColor) {
@@ -979,26 +999,29 @@ function buildMemberContentHtml(member, memberCardsAll, starlightSongs, results,
     var byColor = Object.keys(entry.byColor).sort(function(a, b) { return SONG_COLORS.indexOf(a) - SONG_COLORS.indexOf(b); });
     function chip(sc) {
       var rec = entry.byColor[sc];
-      var d = rec[0], tier = rec[2];
+      var tier = rec[2];
       var cls = 'mchip';
       var title = esc(COLOR_NAMES[sc]);
       if (tier === 'shrink') { cls += ' mchip-demoted'; title += ' — still worth it, but for less than shown once the current Starlight bonus ends'; }
       else if (tier === 'oneoff') { cls += ' mchip-dropped'; title += ' — not an improvement once the current Starlight bonus ends'; }
       var bg = sc === 'ALL' ? RAINBOW_GRADIENT : COLOR_HEX_SL[sc];
       var ltr = COLOR_LETTERS[sc];
-      return '<span class="' + cls + '" style="background:' + bg + '" title="' + title + '">' + ltr + ' +' + fmtNum(d) + '</span>';
+      return '<span class="' + cls + '" style="background:' + bg + '" title="' + title + '">' + ltr + '</span>';
     }
     var chips = byColor.map(chip).join('');
-    return '<tr><td class="color-cell"><span class="color-sq" style="background:' + (COLOR_HEX_SL[card.color] || '#999') + '">' + letter + '</span></td>' +
+    var acq = classifyAcquisition(card, ownedKeySet);
+    return '<tr><td class="acq-cell"><span class="acq-tag ' + (ACQ_TAG_CLASS[acq.tag] || 'pull') + '">' + esc(acq.tag) + '</span></td>' +
+      '<td class="color-cell"><span class="color-sq" style="background:' + (COLOR_HEX_SL[card.color] || '#999') + '">' + letter + '</span></td>' +
       '<td class="song">' + esc(card.song) + '</td>' +
       '<td class="skill">' + esc(card.centerSkill || '') + '</td>' +
+      '<td class="ev">' + esc(skDisplay(card.sk)) + '</td>' +
       '<td class="chips">' + chips + '</td></tr>';
   }
 
   var suggestionsHtml = '';
   if (suggestionEntries.length) {
     var sugRows = suggestionEntries.map(suggestionRow).join('');
-    suggestionsHtml = '<div class="suggest-box"><h3>🎯 Worth pulling for</h3><table class="suggest-table"><tbody>' + sugRows + '</tbody></table></div>';
+    suggestionsHtml = '<div class="suggest-box"><h3>Cards worth looking at</h3><table class="suggest-table"><tbody>' + sugRows + '</tbody></table></div>';
   }
 
   var emptyHtml = '';
