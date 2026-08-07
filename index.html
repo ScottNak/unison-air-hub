@@ -408,6 +408,20 @@
   var tabsEl = document.getElementById('tabs');
   var frameWrap = document.getElementById('frame-wrap');
   var iframes = []; // parallel array to `pages`, filled below
+  var tabButtons = []; // parallel array to `pages`, filled below
+
+  // Shared by the tab-button click handlers below and by the
+  // "uniair-switch-tab" postMessage listener (2026-08-07) - lets a page
+  // embedded in one tab (e.g. best_teams.html's "see it in the Card
+  // Database" link) ask the hub to switch to another tab instead of
+  // navigating the whole hub away via target="_top".
+  function activateTab(i) {
+    if (i < 0 || i >= pages.length) return;
+    tabButtons.forEach(function (b) { b.classList.remove('active'); });
+    iframes.forEach(function (f) { f.classList.remove('active'); });
+    tabButtons[i].classList.add('active');
+    iframes[i].classList.add('active');
+  }
 
   // Cache-busting query param (2026-08-06, per user report of a phone stuck
   // on a stale kizuna.html despite refreshing, well after the update was
@@ -426,6 +440,7 @@
     tab.className = 'tab' + (i === 0 ? ' active' : '');
     tab.textContent = page.label;
     tabsEl.appendChild(tab);
+    tabButtons.push(tab);
 
     var iframe = document.createElement('iframe');
     iframe.className = i === 0 ? 'active' : '';
@@ -434,12 +449,21 @@
     frameWrap.appendChild(iframe);
     iframes.push(iframe);
 
-    tab.addEventListener('click', function () {
-      document.querySelectorAll('.tab').forEach(function (b) { b.classList.remove('active'); });
-      document.querySelectorAll('iframe').forEach(function (f) { f.classList.remove('active'); });
-      tab.classList.add('active');
-      iframe.classList.add('active');
-    });
+    tab.addEventListener('click', function () { activateTab(i); });
+  });
+
+  // A tab's own content can ask the hub to switch to another tab instead of
+  // navigating away with target="_top" (2026-08-07) - e.g. best_teams.html's
+  // "Card Database" / "Kizuna Bond" / "Discography" links. Matched by file
+  // name so the embedded page doesn't need to know the hub's tab order/ids.
+  window.addEventListener('message', function (e) {
+    var msg = e.data;
+    if (!msg || typeof msg !== 'object' || msg.type !== 'uniair-switch-tab') return;
+    var idx = -1;
+    for (var i = 0; i < pages.length; i++) {
+      if (pages[i].file === msg.file || pages[i].id === msg.id) { idx = i; break; }
+    }
+    if (idx !== -1) activateTab(idx);
   });
 
   // --- Combined Export/Import -----------------------------------------

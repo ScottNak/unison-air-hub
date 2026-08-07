@@ -91,11 +91,12 @@
      vertical text holds up fine here. */
   th.member-header {
     background:#22222f; padding:4px 2px; vertical-align:top; text-align:center;
-    position: sticky; top:0; z-index:6; height:92px; box-sizing:border-box; width:26px;
+    position: sticky; top:0; z-index:6; height:104px; box-sizing:border-box; width:28px;
   }
   th.member-header .mh-name {
-    writing-mode: vertical-rl; text-orientation: upright; font-size:11px; font-weight:700;
-    color:#aaa; white-space:nowrap; display:inline-block; height:84px; overflow:hidden; text-overflow:ellipsis;
+    writing-mode: vertical-rl; text-orientation: upright; font-size:12.5px; font-weight:700;
+    letter-spacing: 2px;
+    color:#aaa; white-space:nowrap; display:inline-block; height:96px; overflow:hidden; text-overflow:ellipsis;
   }
 
   /* Tier divider rows - full-width label row inserted before each tier's
@@ -121,7 +122,7 @@
   tr.song-row.tier-row-hidden { display:none; }
 
   td.cell-none { background:#1a1a24; }
-  td.cell-slot { width:26px; height:26px; cursor:pointer; text-align:center; font-weight:900; font-size:12px; color:#12121a; }
+  td.cell-slot { width:28px; height:26px; cursor:pointer; text-align:center; font-weight:900; font-size:12px; color:#12121a; }
   td.cell-slot.state-check::after { content:"\2713"; }
   td.cell-slot.state-plus::after { content:"+"; }
   /* Intersecting data cell gets the same per-group border as the row/column

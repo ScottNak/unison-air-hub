@@ -56,7 +56,7 @@
     display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px;
     border-radius: 8px; margin-right: 4px; white-space: nowrap;
   }
-  .badge.star { background: #ffe27a; color: #7a5c00; }
+  .badge.star { background: #ffe27a; color: #7a5c00; border: 1px solid #000; }
   .suggest-box { margin-top: 18px; padding-top: 14px; border-top: 1px dashed #ddd; }
   .suggest-box h3 { font-size: 12px; margin: 0 0 8px; color: #6a4fc9; text-transform: uppercase; letter-spacing: .03em; }
   .suggest-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
@@ -81,18 +81,27 @@
   .mchip-demoted { outline: 2px dashed #e0a030; outline-offset: 1px; }
   .mchip-dropped { outline: 2px dashed #d9534f; outline-offset: 1px; }
   .warn-icon { cursor: help; margin-left: 3px; font-size: 13px; }
-  .member-tabs { background: rgba(255,255,255,0.92); border-radius: 14px 14px 0 0;
-                 overflow: hidden; box-shadow: 0 8px 28px rgba(0,0,0,0.35); margin-bottom: 0; }
+  .member-tabs { background: transparent; box-shadow: none; margin-bottom: 0; }
   .member-tab-input { display: none; }
-  .member-tab-bar { display: flex; flex-wrap: wrap; background: #10101c; }
+  /* Same segmented-pill tab look as kizuna.html's group-tab-bar (HINATA/
+     SAKURA toggle) and best_teams.html's color-tab-bar - rounded top
+     corners, translucent-white idle state, solid accent when active
+     (2026-08-07, per user request to match kizuna's tab style). Member
+     count varies (whoever's selected in ⚙ Members & Bonus List), so
+     flex-wrap still applies same as before - unlike kizuna's fixed 2 tabs. */
+  .member-tab-bar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
   .member-tab-label {
-    flex: 1; text-align: center; padding: 14px 10px; font-size: 14px; font-weight: 700;
-    color: #aaa; cursor: pointer; border-bottom: 3px solid transparent; user-select: none;
+    flex: 1 1 0; text-align: center; cursor: pointer; user-select: none;
+    padding: 12px 14px; border-radius: 12px 12px 0 0;
+    font-size: 14px; font-weight: 800; color: #2d2d42;
+    background: rgba(255,255,255,0.55);
+    transition: background .12s ease, color .12s ease;
   }
+  .member-tab-label:hover { background: rgba(255,255,255,0.75); }
   .member-tab-input:checked + .member-tab-label {
-    color: #fff; border-color: #7a6bff; background: rgba(255,255,255,0.06);
+    background: var(--tc, #7a6bff); color: #23233a; box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
   }
-  .member-panel { display: none; background: rgba(255,255,255,0.0); padding: 22px 20px 6px; }
+  .member-panel { display: none; }
   .member-panel.member-panel-first-visible { display: block; }
 
   .top-bar { display: flex; justify-content: center; gap: 10px; margin: 0 0 14px; flex-wrap: wrap; }
@@ -1048,7 +1057,7 @@ function buildMemberContentHtml(member, memberCardsAll, starlightSongs, results,
     : '<li class="none">(none this run)</li>';
 
   return '<p class="subtitle">Best owned-card team per song color · mono-member (only ' + esc(member) + '\'s cards)</p>' +
-    '<div class="starlight-box"><h2>Starlight-bonus cards this run (+50% Vo/Da/Pe)</h2><ul>' + starlightListHtml + '</ul></div>' +
+    '<div class="starlight-box"><h2><span class="badge star">★</span>Starlight-bonus cards this run (+50% Vo/Da/Pe)</h2><ul>' + starlightListHtml + '</ul></div>' +
     '<div class="team-card"><div class="badge-row">' + summaryBadges + '</div>' +
     '<table class="team-table"><thead><tr><th>Color</th><th>Card / Song</th><th>Leader Skill</th><th>Score Skill</th><th>Plays in</th></tr></thead>' +
     '<tbody>' + rosterHtml + '</tbody></table>' + suggestionsHtml + '</div>' + emptyHtml;
@@ -1088,6 +1097,19 @@ function runAll() {
     if (allMembersSet[m]) byMember[m] = computeMemberResults(m, pool, ownedSet, bonusList, ctx);
   });
   return {byMember: byMember, ctx: ctx};
+}
+
+// Same group colors as kizuna.html's groupColors - skyblue for HINATA, pink
+// for SAKURA (2026-08-07, per user request to color-match member tabs to
+// their group the same way kizuna.html colors its HINATA/SAKURA toggle).
+var GROUP_TAB_COLORS = {HINATA: '#7CC7E8', SAKURA: '#F19DB5'};
+var _memberGroup = null;
+function memberGroup(member) {
+  if (!_memberGroup) {
+    _memberGroup = {};
+    ROSTER.forEach(function(m) { _memberGroup[m.name] = m.group; });
+  }
+  return _memberGroup[member] || null;
 }
 
 var lastActiveMemberIdx = 0;
@@ -1131,6 +1153,8 @@ function renderAll() {
     input.id = 'mtab-' + i; input.checked = isActive;
     var label = document.createElement('label');
     label.htmlFor = 'mtab-' + i; label.className = 'member-tab-label'; label.textContent = member;
+    var groupColor = GROUP_TAB_COLORS[memberGroup(member)];
+    if (groupColor) label.style.setProperty('--tc', groupColor);
     tabBar.appendChild(input); tabBar.appendChild(label);
     input.addEventListener('change', function() { lastActiveMemberIdx = i; syncPanels(); });
 
@@ -1140,6 +1164,14 @@ function renderAll() {
     var md = data.byMember[member];
     panel.innerHTML = buildMemberContentHtml(member, md.memberCardsAll, md.starlightSongs, md.results, data.ctx);
     panelsEl.appendChild(panel);
+    // Pre-select the "ALL" color badge by default (2026-08-07, per user
+    // request) - fires the same click handler used for a manual click, now
+    // that the badge-row markup is in the DOM. document's click listener is
+    // already registered by init() before renderAll ever runs (renderAll is
+    // itself deferred via setTimeout), so a synthetic click here behaves
+    // identically to a real one.
+    var allBadge = panel.querySelector('.cbadge-btn[data-color="ALL"]');
+    if (allBadge) allBadge.click();
   });
 
   function syncPanels() {
