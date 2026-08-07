@@ -72,6 +72,34 @@
   .import-overlay iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: block; }
   body.import-mode .tabs, body.import-mode .frame-wrap { display: none; }
   body.import-mode .import-overlay { display: block; }
+  /* Hide the birthday chip while Bulk Add (or its welcome dialog) has the
+     page, so it stays the full focus per the earlier request (2026-08-07). */
+  body.import-mode .bday-box, body.welcome-mode .bday-box { display: none; }
+
+  /* First-entry welcome dialog (2026-08-07) - shown once, before the
+     first-time auto-open of Bulk Add, so a brand-new visitor knows what
+     the grid is for and where to go after. Not shown on the gear menu's
+     Bulk Add re-entry (that's a returning visitor, not a first entry). */
+  .welcome-overlay {
+    display: none; position: fixed; inset: 0; z-index: 30;
+    background: rgba(10,10,20,0.72);
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .welcome-overlay.open { display: flex; }
+  .welcome-card {
+    background: #fff; border-radius: 16px; padding: 28px 26px; max-width: 420px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  }
+  .welcome-card h2 { margin: 0 0 14px; font-size: 22px; color: #2d2d42; text-align: center; }
+  .welcome-card p { margin: 0 0 14px; font-size: 14px; line-height: 1.55; color: #444; }
+  .welcome-card p:last-of-type { margin-bottom: 20px; }
+  .welcome-ready-btn {
+    display: block; margin: 0 auto; appearance: none; border: none; cursor: pointer;
+    font-weight: 800; font-size: 14px; padding: 12px 30px; border-radius: 999px;
+    background: #4a90d9; color: #fff; box-shadow: 0 4px 14px rgba(74,144,217,0.4);
+    transition: background .12s ease;
+  }
+  .welcome-ready-btn:hover { background: #5aa0e8; }
 
   /* Birthday notification (top left). Collapsible (2026-08-07): collapsed
      shows just a cake-emoji toggle; expanded swaps that for an × close
@@ -149,6 +177,14 @@
 <div class="tabs" id="tabs"></div>
 <div class="frame-wrap" id="frame-wrap"></div>
 <div class="import-overlay" id="import-overlay"><iframe id="import-overlay-frame" title="Bulk Import"></iframe></div>
+<div class="welcome-overlay" id="welcome-overlay">
+  <div class="welcome-card">
+    <h2>Welcome!</h2>
+    <p>To get started, please input the cards you own in the game. This will help figure out the best teams you can make with the cards you have.</p>
+    <p>When you're done with this, click "Finished!" and make your way to the Discography and Kizuna section to further make the teams align with the members you've put extra effort into!</p>
+    <button class="welcome-ready-btn" id="welcome-ready-btn" type="button">I'm ready!</button>
+  </div>
+</div>
 
 <script src="member_profiles.js"></script>
 <script>
@@ -594,12 +630,23 @@
   // First-load auto-trigger: only when the shared owned-cards store is
   // genuinely empty (brand new visitor, or someone who cleared storage).
   // Reads the same 'uniair_public_owned' key catalog.html/import.html both
-  // use, directly - no need to ask any iframe, nothing is loaded yet.
+  // use, directly - no need to ask any iframe, nothing is loaded yet. Shows
+  // a one-time welcome dialog first (2026-08-07) explaining what Bulk Add
+  // is for and where to go afterward - Bulk Add itself only opens once
+  // the visitor clicks through it, not before.
   (function () {
     var raw = null;
     try { raw = localStorage.getItem('uniair_public_owned'); } catch (err) { /* storage disabled */ }
     var isEmpty = !raw || raw === '{}' || raw === 'null';
-    if (isEmpty) openImportMode(false);
+    if (!isEmpty) return;
+    var welcomeOverlay = document.getElementById('welcome-overlay');
+    welcomeOverlay.classList.add('open');
+    document.body.classList.add('welcome-mode');
+    document.getElementById('welcome-ready-btn').addEventListener('click', function () {
+      welcomeOverlay.classList.remove('open');
+      document.body.classList.remove('welcome-mode');
+      openImportMode(false);
+    });
   })();
 
   // Gear menu button: toggles the overlay open (seeded from existing owned
