@@ -269,6 +269,18 @@
   var frameWrap = document.getElementById('frame-wrap');
   var iframes = []; // parallel array to `pages`, filled below
 
+  // Cache-busting query param (2026-08-06, per user report of a phone stuck
+  // on a stale kizuna.html despite refreshing, well after the update was
+  // confirmed live on GitHub - i.e. the deploy was fine, the phone's own
+  // HTTP cache just wasn't revalidating on a plain reload). One timestamp
+  // per hub page-load, shared by every tab, appended to each iframe's src
+  // so the browser treats it as a brand-new URL and always fetches over the
+  // network instead of possibly serving a cached copy. Slight cost: tabs
+  // can never be served from cache anymore (always a real fetch), which is
+  // the right trade for a page that changes often and where staleness is a
+  // real recurring problem, not a hypothetical one.
+  var cacheBust = 'v=' + Date.now();
+
   pages.forEach(function (page, i) {
     var tab = document.createElement('button');
     tab.className = 'tab' + (i === 0 ? ' active' : '');
@@ -277,7 +289,7 @@
 
     var iframe = document.createElement('iframe');
     iframe.className = i === 0 ? 'active' : '';
-    iframe.src = page.file;
+    iframe.src = page.file + '?' + cacheBust;
     iframe.title = page.label;
     frameWrap.appendChild(iframe);
     iframes.push(iframe);
@@ -438,8 +450,12 @@
         // Reload every tab so it re-reads localStorage fresh - the safety
         // net that makes this reliable even if a tab's ack got lost, and
         // the only way best_teams.html (a pure reader) ever picks up the
-        // change, since it computes everything once at load time.
-        iframes.forEach(function (f) { f.src = f.src; });
+        // change, since it computes everything once at load time. Uses a
+        // fresh cache-bust value (not just `f.src = f.src`) so this is a
+        // real network fetch, not a same-URL no-op some browsers apply.
+        pages.forEach(function (page, i) {
+          iframes[i].src = page.file + '?v=' + Date.now();
+        });
 
         var missing = missingLabels(replies);
         var note = summary.length ? ('Imported: ' + summary.join(', ') + '.') : 'Imported.';
