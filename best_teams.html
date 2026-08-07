@@ -65,14 +65,14 @@
   .worth-getting { margin-top: 16px; padding-top: 14px; border-top: 1px solid #eee; }
   .worth-getting h3 { margin: 0 0 8px; font-size: 11px; text-transform: uppercase;
                        letter-spacing: .03em; color: #6a6f8a; }
-  .worth-getting ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
-  .worth-getting li { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: #333; }
-  .worth-getting .card-label { flex: 1 1 38%; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .worth-getting .card-skill { flex: 1 1 38%; min-width: 0; overflow: hidden; text-overflow: ellipsis;
-                                white-space: nowrap; color: #666; font-size: 11.5px; }
-  .worth-getting .card-ev { flex: none; width: 58px; text-align: right; font-weight: 700; font-size: 11.5px; color: #2d2d42; }
+  .worth-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .worth-table td { padding: 6px 8px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+  .worth-table .name { color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .worth-table .skill { color: #666; font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .worth-table .ev { text-align: right; font-weight: 700; font-size: 11.5px; color: #2d2d42; white-space: nowrap; }
+  .acq-cell { width: 96px; }
   .acq-tag {
-    flex: none; display: inline-block; width: 96px; text-align: center; padding: 3px 4px; border-radius: 999px;
+    display: inline-block; width: 92px; text-align: center; padding: 3px 4px; border-radius: 999px;
     font-weight: 800; font-size: 10.5px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
   .acq-tag.pull { background: #3a5bc7; }
@@ -80,9 +80,11 @@
   .acq-tag.pull-upgrade { background: #a05fc9; }
 
   .empty-state {
+    display: none;
     background: rgba(255,255,255,0.96); border-radius: 0 0 14px 14px; padding: 34px 24px;
     text-align: center; color: #555; box-shadow: 0 8px 28px rgba(0,0,0,0.32);
   }
+  .empty-state.active { display: block; }
   .empty-state a { color: #2e49a3; font-weight: 700; }
 
   .loading { text-align: center; color: #cfd8ff; padding: 40px 0; font-size: 14px; }
@@ -101,10 +103,10 @@
   <div class="note">
     <div class="note-text">
       Builds each color's strongest 5-card team from cards you've marked owned
-      in the <a href="catalog.html" target="_top">Card Database</a>.
+      in the <a href="catalog.html" data-hub-nav="catalog.html">Card Database</a>.
       <br><br>
-      Accuracy depends on your <a href="kizuna.html" target="_top">Kizuna Bond</a> and
-      <a href="song_overview.html" target="_top">Discography</a> data too -
+      Accuracy depends on your <a href="kizuna.html" data-hub-nav="kizuna.html">Kizuna Bond</a> and
+      <a href="song_overview.html" data-hub-nav="song_overview.html">Discography</a> data too -
       keep those up to date for the most accurate scores.
     </div>
     <button id="recalc-btn" title="This page only computes once on load - use this after changing ownership/kizuna/discography elsewhere.">&#8635; Recalculate</button>
@@ -650,13 +652,18 @@ function skPctText(sk) {
 // this actually IS a steller-coded skill (has a non-null .code) - a plain
 // skill text that happens to contain "+" for an unrelated reason (there are
 // none currently, but be defensive) is left alone.
+// S.teller/Veaut (and other compound-mechanic) cards store their center
+// skill as "<short shape>+<full mechanic explanation>" (verified against
+// public_catalog.py's csBase field, which every one of the DB's 38 distinct
+// "+"-containing cs values splits the same way - no card's cs legitimately
+// uses "+" for anything else, e.g. to join multiple stats). Truncating at
+// the first "+" for ANY centerSkill is therefore always safe, not just for
+// cards recognized in STELLER_INFO - the old STELLER_INFO-gated check missed
+// Veaut and other compound skills entirely (2026-08-07 fix, per user report).
 function shortSkillText(cs) {
-  var info = STELLER_INFO[cs];
-  if (info && info.code) {
-    var idx = cs.indexOf('+');
-    if (idx !== -1) return cs.slice(0, idx);
-  }
-  return cs;
+  if (!cs) return cs;
+  var idx = cs.indexOf('+');
+  return idx !== -1 ? cs.slice(0, idx) : cs;
 }
 
 // Ported from unison_best_teams.py's effective_skill_label() - the TEAM's
@@ -884,9 +891,10 @@ function hexTint(hex, alpha) {
 function renderPanel(color, result) {
   var inner = document.getElementById('panel-inner-' + color);
   if (!result) {
-    inner.parentElement.outerHTML = '<div class="empty-state" id="panel-' + color + '">' +
+    var wasActive = inner.parentElement.classList.contains('active');
+    inner.parentElement.outerHTML = '<div class="empty-state' + (wasActive ? ' active' : '') + '" id="panel-' + color + '">' +
       'No owned cards in ' + COLOR_LABEL[color] + ' yet. Mark some as owned on the ' +
-      '<a href="catalog.html" target="_top">Card Database</a> to see a team here.</div>';
+      '<a href="catalog.html" data-hub-nav="catalog.html">Card Database</a> to see a team here.</div>';
     return;
   }
   inner.style.setProperty('--tc-tint', hexTint(COLOR_HEX[color], 0.16));
@@ -905,12 +913,12 @@ function renderPanel(color, result) {
     var items = result.recommended.map(function(rec) {
       var label = esc(rec.member) + ' — ' + esc(rec.song);
       var skill = esc(rec.centerSkill || '');
-      return '<li><span class="acq-tag ' + (tagClass[rec.tag] || 'pull') + '">' + esc(rec.tag) + '</span>' +
-        '<span class="card-label" title="' + label + '">' + label + '</span>' +
-        '<span class="card-skill" title="' + skill + '">' + skill + '</span>' +
-        '<span class="card-ev">' + esc(rec.sk) + '</span></li>';
+      return '<tr><td class="acq-cell"><span class="acq-tag ' + (tagClass[rec.tag] || 'pull') + '">' + esc(rec.tag) + '</span></td>' +
+        '<td class="name" title="' + label + '">' + label + '</td>' +
+        '<td class="skill" title="' + skill + '">' + skill + '</td>' +
+        '<td class="ev">' + esc(rec.sk) + '</td></tr>';
     }).join('');
-    worthGettingHtml = '<div class="worth-getting"><h3>Cards worth looking at</h3><ul>' + items + '</ul></div>';
+    worthGettingHtml = '<div class="worth-getting"><h3>Cards worth looking at</h3><table class="worth-table"><tbody>' + items + '</tbody></table></div>';
   }
   // Fixed column widths via <colgroup> (paired with table-layout:fixed in
   // CSS) so the table's proportions stay identical across every color tab.
@@ -1018,6 +1026,21 @@ document.getElementById('recalc-btn').addEventListener('click', function() {
 // Deferred one tick so the "Computing..." message actually paints before
 // the (synchronous, CPU-bound) optimizer runs.
 setTimeout(init, 0);
+
+// Cross-tab links (Card Database / Kizuna Bond / Discography) used to use
+// target="_top", which broke out of the public hub entirely and loaded the
+// target page as its own standalone page (2026-08-07 report - the tabs
+// should only ever switch which hub tab is visible, never navigate away).
+// When embedded in the hub, ask it to switch tabs via postMessage instead;
+// when this page is opened standalone (no parent hub), fall through to the
+// normal href so the link still works.
+document.addEventListener('click', function(e) {
+  var a = e.target.closest && e.target.closest('a[data-hub-nav]');
+  if (!a) return;
+  if (window.parent === window) return; // standalone - let the normal link work
+  e.preventDefault();
+  window.parent.postMessage({type: 'uniair-switch-tab', file: a.getAttribute('data-hub-nav')}, '*');
+});
 </script>
 </body>
 </html>

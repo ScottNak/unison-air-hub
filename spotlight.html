@@ -302,9 +302,9 @@ function loadOwnedSet() {
 function loadSelectedMembers() {
   try {
     var v = JSON.parse(localStorage.getItem(MEMBERS_KEY));
-    if (Array.isArray(v) && v.length) return v;
+    if (Array.isArray(v)) return v;
   } catch (e) {}
-  return DEFAULT_MEMBERS.slice();
+  return [];
 }
 function saveSelectedMembers(list) { localStorage.setItem(MEMBERS_KEY, JSON.stringify(list)); }
 
@@ -770,6 +770,18 @@ function skDisplay(sk) {
   return String(sk);
 }
 
+// S.teller/Veaut (and other compound-mechanic) cards store their center
+// skill as "<short shape>+<full mechanic explanation>" - truncating at the
+// first "+" is always safe (verified against every "+"-containing cs value
+// in carddb.json; none legitimately use "+" to join multiple stats). Ported
+// from best_teams.html's shortSkillText so both pages truncate identically
+// (2026-08-07, per user report that spotlight wasn't truncating at all).
+function shortSkillText(cs) {
+  if (!cs) return cs;
+  var idx = cs.indexOf('+');
+  return idx !== -1 ? cs.slice(0, idx) : cs;
+}
+
 function teamSignature(winner) {
   var supportKeys = winner.supports.map(function(s) { return s[1].key; }).slice().sort();
   return winner.kind + '|' + winner.center[1].key + '|' + supportKeys.join(',');
@@ -947,7 +959,7 @@ function buildMemberContentHtml(member, memberCardsAll, starlightSongs, results,
     return '<tr class="' + rowClass + '" data-colors="' + esc(colorsCsv) + '" data-center-colors="' + esc(centerColorsCsv) + '" data-idx="' + idx + '">' +
       '<td class="color-cell"><span class="color-sq" style="background:' + (COLOR_HEX_SL[card.color] || '#999') + '">' + letter + '</span></td>' +
       '<td class="song">' + esc(card.song) + star + '</td>' +
-      '<td class="skill">' + esc(card.centerSkill || '') + '</td>' +
+      '<td class="skill">' + esc(shortSkillText(card.centerSkill) || '') + '</td>' +
       '<td class="sk">' + esc(skDisplay(card.sk)) + '</td>' +
       '<td class="chips">' + chips + '</td>' +
       '</tr>';
@@ -1013,7 +1025,7 @@ function buildMemberContentHtml(member, memberCardsAll, starlightSongs, results,
     return '<tr><td class="acq-cell"><span class="acq-tag ' + (ACQ_TAG_CLASS[acq.tag] || 'pull') + '">' + esc(acq.tag) + '</span></td>' +
       '<td class="color-cell"><span class="color-sq" style="background:' + (COLOR_HEX_SL[card.color] || '#999') + '">' + letter + '</span></td>' +
       '<td class="song">' + esc(card.song) + '</td>' +
-      '<td class="skill">' + esc(card.centerSkill || '') + '</td>' +
+      '<td class="skill">' + esc(shortSkillText(card.centerSkill) || '') + '</td>' +
       '<td class="ev">' + esc(skDisplay(card.sk)) + '</td>' +
       '<td class="chips">' + chips + '</td></tr>';
   }
@@ -1263,9 +1275,14 @@ function recomputeAndRender() {
 }
 
 function initSettingsPanel() {
-  renderMemberChecklist(loadSelectedMembers());
+  var selectedMembers = loadSelectedMembers();
+  renderMemberChecklist(selectedMembers);
   renderBonusChips(loadBonusList());
   wireBonusSearch();
+
+  if (!selectedMembers.length) {
+    document.getElementById('settings-panel').style.display = '';
+  }
 
   document.getElementById('settings-btn').addEventListener('click', function() {
     var panel = document.getElementById('settings-panel');
