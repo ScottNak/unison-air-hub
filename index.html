@@ -132,7 +132,7 @@
   }
   .bday-close:hover { opacity: 0.6; }
   .bday-box.open .bday-close { display: block; }
-  .bday-content { display: none; max-width: 290px; padding: 10px 14px; font-size: 12px; line-height: 1.45; }
+  .bday-content { display: none; max-width: 290px; padding: 10px 34px 10px 14px; font-size: 12px; line-height: 1.45; }
   .bday-box.open .bday-content { display: block; }
   .bday-greet { white-space: nowrap; }
   .bday-entry + .bday-entry {
@@ -280,6 +280,8 @@
       outerBox.appendChild(box);
 
       function mmdd(m, d) { return pad2(m) + pad2(d); }
+      var MONTH_ABBR = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      function fmtMonthDay(m, d) { return MONTH_ABBR[m - 1] + ' ' + d; }
       function ordinal(n) {
         var rem100 = n % 100;
         if (rem100 >= 11 && rem100 <= 13) return n + 'TH';
@@ -334,7 +336,7 @@
           var gc = groupClass(e);
           var div = document.createElement('div');
           div.className = 'bday-entry';
-          div.innerHTML = 'Next Birthday is ' + mmdd(+p[1], +p[2]) + ': <span class="bday-name ' + gc + '">' + displayName(e) + '</span>';
+          div.innerHTML = 'Next Birthday: ' + fmtMonthDay(+p[1], +p[2]) + ' - <span class="bday-name ' + gc + '">' + displayName(e) + '</span>';
           box.appendChild(div);
         });
       }
