@@ -62,24 +62,16 @@
   }
   iframe.active { display: block; }
 
-  /* Bulk Import full-page takeover (2026-08-06) - shown instead of the
-     normal tabs+frame-wrap when a first-time visitor has zero owned cards,
-     or on demand via the gear menu's "Bulk Import" button. Sized/styled to
-     match .frame-wrap's slot exactly (same margin/radius/shadow) so it
-     reads as "the main focus" of the page rather than a popup. */
+  
   .import-overlay { display: none; flex: 1 1 auto; margin: 0 16px 16px; border-radius: 12px;
     box-shadow: 0 8px 28px rgba(0,0,0,0.35); overflow: hidden; position: relative; background: #15151f; }
   .import-overlay iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: block; }
   body.import-mode .tabs, body.import-mode .frame-wrap { display: none; }
   body.import-mode .import-overlay { display: block; }
-  /* Hide the birthday chip while Bulk Add (or its welcome dialog) has the
-     page, so it stays the full focus per the earlier request (2026-08-07). */
+  
   body.import-mode .bday-box, body.welcome-mode .bday-box { display: none; }
 
-  /* First-entry welcome dialog (2026-08-07) - shown once, before the
-     first-time auto-open of Bulk Add, so a brand-new visitor knows what
-     the grid is for and where to go after. Not shown on the gear menu's
-     Bulk Add re-entry (that's a returning visitor, not a first entry). */
+  
   .welcome-overlay {
     display: none; position: fixed; inset: 0; z-index: 30;
     background: rgba(10,10,20,0.72);
@@ -101,11 +93,7 @@
   }
   .welcome-ready-btn:hover { background: #5aa0e8; }
 
-  /* Birthday notification (top left). Collapsible (2026-08-07): collapsed
-     shows just a cake-emoji toggle; expanded swaps that for an × close
-     button at top-right instead. State remembered in localStorage so it
-     stays how the visitor left it, but a new JST day always forces it back
-     open (2026-08-07) since the message itself has changed. */
+  
   .bday-box {
     position: fixed; top: 14px; left: 16px; z-index: 20;
     border-radius: 12px; color: #2d2d42;
@@ -121,11 +109,7 @@
   .bday-toggle:hover { background: rgba(0,0,0,0.06); }
   .bday-box.open .bday-toggle { display: none; }
   .bday-close {
-    /* Absolutely positioned (anchored to .bday-box, the nearest positioned
-       ancestor) rather than floated (2026-08-07) - a float reserved space
-       in the text flow and pushed the greeting line down to clear it,
-       leaving an empty gap above it. Overlaying instead means the first
-       line starts at the very top with nothing pushing it down. */
+    
     display: none; position: absolute; top: 8px; right: 8px; z-index: 1;
     appearance: none; border: none; cursor: pointer; background: transparent; color: inherit;
     font-size: 16px; line-height: 1; padding: 2px;
@@ -157,6 +141,12 @@
   .bday-code.hinata:hover { background: #c3e6fb; }
   .bday-code.copied { background: #d7f5df; color: #1b7a3c; border-color: #9fe0b1; }
   .bday-hint { display: block; margin-top: 3px; font-size: 10px; color: rgba(45,45,66,0.6); }
+
+  .page-version-badge {
+    position: absolute; top: 50px; right: 16px; width: 34px; z-index: 15;
+    color: rgba(255,255,255,0.5); font: 9px/1 -apple-system, sans-serif;
+    text-align: center; pointer-events: none;
+  }
 </style>
 </head>
 <body>
@@ -170,6 +160,7 @@
     <input type="file" id="hub-import-file" accept="application/json" style="display:none">
     <span class="save-note" id="hub-save-note">&nbsp;</span>
   </div>
+  <div class="page-version-badge">v1</div>
 </header>
 
 <div class="bday-box" id="bday-box"></div>

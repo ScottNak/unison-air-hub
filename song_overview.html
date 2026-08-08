@@ -49,12 +49,7 @@
   .dm-row { display: flex; align-items: center; gap: 8px; padding: 6px 2px; }
   .dm-row.hidden { display: none; }
   .dm-row.dm-edited { background: #fffaf0; border-radius: 6px; box-shadow: inset 0 0 0 1px #ffd23f; }
-  /* Coaching in Tiles view (2026-07-23) - same amber convention as Grid
-     view's .grid-cell-coached, adapted to a row layout: a tinted
-     background (visible at rest; .dm-edited's background wins if the row
-     is also edited, which is fine - the badge below is the signal that
-     persists either way) plus an explicit "COACH" badge, since Tiles view
-     has room for text and a badge reads more clearly than color alone. */
+  
   .dm-row.dm-row-coached { background: #4a3a10; border-radius: 6px; }
   .dm-row-coached .dm-name { color: #e8c468; }
   .mini-badge.coach { background: #4a3a10; color: #e8c468; }
@@ -103,38 +98,28 @@
     border: 1.5px solid var(--tc, #ccc);
   }
   .grid-group-btn.active { background: var(--tc, #6a4fc9); color: #fff; }
-  /* Bounded, independently-scrollable grid pane (2026-07-22, per user
-     request for the header row(s) and name/total columns to stay put while
-     scrolling) - overflow:auto (not overflow-x-only) sets both axes
-     explicitly so the sticky headers below stick relative to THIS box
-     rather than the whole page. */
+  
   .grid-scroll {
     overflow: auto; max-height: 68vh; border: 1px solid #ececf4;
     border-top: 3px solid var(--tc, #ececf4); border-radius: 10px;
   }
+  
   .grid-scroll.hidden { display: none; }
   table.disco-grid { border-collapse: collapse; font-size: 11px; }
-  /* Full internal borders - every header and body cell boundary visible,
-     not just the outer container (2026-07-22, per user request to try this
-     look). Slightly darker than the earlier near-invisible #f0f0f4. */
+  
   table.disco-grid th, table.disco-grid td { border: 1px solid #d6d6e0; padding: 0; }
   .grid-member-col {
     position: sticky; left: 0; background: #fbfbfd; z-index: 1;
     text-align: left; padding: 5px 8px !important; font-weight: 600; color: #2d2d42;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100px;
   }
-  /* Total column (2026-07-22, per user request: sum of a member's owned
-     discography levels across the row) - a second frozen column right
-     after the name, so both stay visible while scrolling horizontally. */
+  
   .grid-total-col {
     position: sticky; left: 100px; background: #fbfbfd; z-index: 1;
     text-align: center; font-weight: 700; color: #2d2d42; width: 46px;
   }
   thead .grid-member-col, thead .grid-total-col { background: #f6f6fa; }
-  /* Corner cells (member/total column headers) need to stick on BOTH axes
-     at once - they're always the top-left anchor no matter how far you've
-     scrolled in either direction. z-index above the song/count headers
-     (which only stick on one axis) so they render on top at the corner. */
+  
   .grid-corner { z-index: 4; }
   .grid-corner-row1 { top: 0; height: 170px; box-sizing: border-box; }
   .grid-corner-row2 { top: 170px; }
@@ -146,26 +131,14 @@
     display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 4px 0;
   }
   .grid-song-name {
-    /* vertical-rl alone already reads top-to-bottom; the rotate(180deg)
-       this used to have flipped it upside-down (2026-07-22 user report:
-       "make it readable top to bottom rather than being upsidedown").
-       Fixed height + overflow hidden + ellipsis (not max-height, which is a
-       no-op on an inline span and let long titles overflow past the header
-       row into the grid body below - the "titles bleed into the grid" bug)
-       so every header column is the same height regardless of title length,
-       which also keeps the Da/Pe/Vo dots aligned along the top row
-       (2026-07-22, per user request). Titles that still get cut off need a
-       shorter display name - see SONG_ABBR below. */
+    
     writing-mode: vertical-rl; text-orientation: upright; font-size: 10px; font-weight: 700;
     color: #555; white-space: nowrap; display: inline-block; height: 128px;
     overflow: hidden; text-overflow: ellipsis;
   }
-  /* A handful of titles the user chose to keep full-length but shrink
-     instead of abbreviating (SONG_SMALL_FONT, 2026-07-22). */
+  
   .grid-song-name.small-font { font-size: 8px; }
-  /* Second header row: per-song owned/total counts (2026-07-22, per user
-     request), sitting right below the song-name row and sticking directly
-     under it (top offset = row1's fixed height). */
+  
   .grid-counts-header {
     background: #f6f6fa; padding: 3px 2px !important; text-align: center;
     font-size: 10px; color: #777; font-weight: 700; white-space: nowrap;
@@ -184,13 +157,7 @@
   .grid-cell-owned.gc-l4 { background: #7a5bc9; }
   .grid-cell-owned.gc-l5 { background: #6a4fc9; }
   .grid-cell-owned.gc-edited { box-shadow: inset 0 0 0 2px #ffd23f; }
-  /* Amber/gold - a coaching-eligible cell (no real card, but this member
-     can unlock the song's discography level anyway per coaching_plan.md,
-     2026-07-23). Same click-to-cycle interaction as a real owned cell
-     (shares the .grid-cell-owned base class) - just visually distinct from
-     owned=purple, unowned=dark red, and none=near-black, per user request.
-     Compound selectors here out-specificity the plain .gc-lN purple rules
-     above regardless of stylesheet order. */
+  
   .grid-cell-owned.grid-cell-coached { background: #4a3a10; color: #e8c468; }
   .grid-cell-owned.grid-cell-coached[data-level="0"] { color: #a68a4a; background: #3a2f10; }
   .grid-cell-owned.grid-cell-coached.gc-l1 { background: #6b5416; }
@@ -198,15 +165,9 @@
   .grid-cell-owned.grid-cell-coached.gc-l3 { background: #ab8720; }
   .grid-cell-owned.grid-cell-coached.gc-l4 { background: #cc9f24; color: #2b2410; }
   .grid-cell-owned.grid-cell-coached.gc-l5 { background: #e8b628; color: #2b2410; }
-  /* Dark reddish - a real card exists but hasn't been pulled yet
-     (2026-07-23, per user request), as opposed to grid-cell-none (no card
-     was ever made for this member+song combo at all - see below). */
+  
   .grid-cell-unowned { background: #3d1a1e; color: #c9898f; }
-  /* Blackened out - a card was never made for this member+song combo at
-     all, as opposed to grid-cell-unowned (a real card exists, you just
-     don't have it yet). These looked nearly identical before (both faint
-     light gray) - 2026-07-22, per user request to make the distinction
-     obvious at a glance. */
+  
   .grid-cell-none { background: #2b2b38; color: #55556a; }
 
   .song-box { border: 1px solid #ececf4; border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
@@ -247,86 +208,40 @@
   .delta { color: #1e8a3d; font-weight: 700; font-size: 11.5px; }
   .empty-note { text-align: center; color: #888; font-style: italic; padding: 16px 0; }
 
-  /* Tighten the top gap under the hub's tab bar (2026-08-07) - this page
-     has no <h1>/title of its own, so dul._STYLE's body padding-top: 32px
-     (tuned for the private tool, which stacks its own header above this)
-     just reads as dead space here. Overridden here rather than in
-     dul._STYLE itself so disco_upgrade_live.html (the private tool) keeps
-     its own spacing untouched. */
+  .page-version-badge {
+    position: fixed; bottom: 8px; right: 10px; z-index: 9999;
+    background: rgba(0,0,0,0.55); color: #fff; font: 11px/1 -apple-system, sans-serif;
+    padding: 3px 7px; border-radius: 6px; pointer-events: none; opacity: 0.5;
+  }
+  
   body { padding-top: 8px; }
   .dm-row.dm-row-coached { border-radius: 0; }
   .dm-row-coached .dm-value { color: #6b5416; }
-  /* Tiles has no per-level ramp like the Grid view's gc-l1..l5 (a coached
-     row is one flat highlight regardless of pip level) - lightened here
-     (2026-08-01, per user request) to sit in the same pale-to-bright
-     yellow family as the Grid ramp below, instead of dul._STYLE's dark
-     #4a3a10 bg / #e8c468 text. Picked the ramp's ~level-100 shade rather
-     than its palest (level-0) or brightest (level-500) tone, since this
-     row has to read clearly on its own with no level to anchor it. */
+  
   .dm-row.dm-row-coached { background: #fbedb0; }
   .dm-row-coached .dm-name { color: #6b5416; }
-  /* Extend the coached-row highlight edge-to-edge in the expanded tile
-     (2026-07-31, per user request) - .dm-list has 12px of left/right
-     padding the row otherwise sits inside, leaving the amber background
-     short of the tile's actual edges. Negative margin cancels that padding
-     for just this row; matching extra padding keeps the name/pips sitting
-     at the same visual x-position as an uncoached row. .song-tile's own
-     overflow:hidden + rounded corners already clip this cleanly at the
-     tile's top/bottom edges, so no separate radius handling is needed
-     here. */
+  
   .dm-row.dm-row-coached { margin: 0 -12px; padding: 6px 14px; }
   .dm-row.dm-edited { border-radius: 0; }
 
-  /* The public generator always bakes data-baseline="0" for every cell/row
-     (see the module docstring - real progress is deliberately never baked
-     in, only the visitor's own browser-local levels exist here). That
-     means dul._DISCO_JS's edited = (level !== baseline) check reads
-     "differs from 0", not "differs from what the page last shipped with" -
-     so the private tool's intentional yellow .dm-edited/.gc-edited
-     highlight (meant to flag genuinely unsaved changes since the workbook
-     was last regenerated) instead lit up permanently on every nonzero
-     level, on every reload, whether set by a click or by Import
-     (2026-08-02, per user report: "everything" has yellow borders after
-     reloading). There's no substitute signal worth showing in its place -
-     every level here is already persisted to localStorage the instant
-     it's set, so there's no real "unsaved" state to flag. Grid has no
-     conflicting background rule to preserve, so box-shadow alone is
-     enough; Tiles' coached/unowned rows DO set their own background
-     (#fbedb0 / #3d1a1e) that dul._STYLE's plain .dm-edited background
-     would otherwise clobber via later source order, so those two combos
-     get their own box-shadow-only override instead of the general one. */
+  
   .grid-cell-owned.gc-edited { box-shadow: none; }
   .dm-row.dm-edited:not(.dm-row-coached):not(.dm-row-unowned) { background: transparent; box-shadow: none; }
   .dm-row-coached.dm-edited { box-shadow: none; }
   .dm-row-unowned.dm-edited { box-shadow: none; }
 
-  /* Ported from public_catalog.py's catalog.html (2026-07-31, per user
-     request to keep the two public pages consistent) - the utility row
-     that pairs a mode-switch pill on the left with small text-link actions
-     on the right, and the reset-link/mode-switch styles themselves, none
-     of which exist in disco_upgrade_live.py's stylesheet since its own
-     Tiles/Grid toggle used plain tab buttons instead. */
+  
   .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
   .utility-row { justify-content: space-between; margin-top: -2px; }
   .utility-row-right { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-  /* Save-note moved in line with the view toggle (2026-08-07, per user
-     request) - was its own centered line below .controls (dul._STYLE's
-     .save-note: text-align:center, margin:0 0 14px). Sitting inside
-     .utility-row-right instead, so it needs the block-level defaults
-     cancelled (no bottom margin holding open a now-empty line, no
-     min-height forcing a blank row of its own) and right-alignment to read
-     naturally next to the Tiles/Grid pill. */
+  
   .utility-row-right .save-note { margin: 0; min-height: 0; text-align: right; }
   .reset-link {
     appearance: none; border: none; background: none; cursor: pointer;
     font-size: 12px; font-weight: 700; color: #6a4fc9; padding: 4px;
   }
   .reset-link:hover { color: #2d2d42; }
-  /* Border/shadow on the switch itself, plus a small "View" caption
-     (2026-07-31, per user: make it read more obviously as a togglable
-     control rather than two plain labels) - catalog.html's version relies
-     on the surrounding "Owned marks mode" context to read as a switch,
-     which this page doesn't have. */
+  
   .mode-switch-wrap { display: inline-flex; align-items: center; gap: 8px; }
   .mode-switch-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: #888; }
   .mode-switch {
@@ -340,39 +255,17 @@
   .mode-switch-btn.active { background: #2d2d42; color: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.25); }
   .mode-switch-btn:hover:not(.active) { color: #333; }
 
-  /* Wider content area (2026-07-31, per user request - "longer" meant
-     horizontally wider, not taller; the earlier 80vh Grid-scroll height
-     change was a misread and is reverted here back to the base style's
-     68vh by simply not overriding it). Widened further 2026-08-07 (per
-     user request: "extend the width of the grid area to try and avoid hrz
-     scrolling") - a fixed 1400px cap left the Grid view's ~45-52 member
-     columns scrolling on most screens; viewport-relative width instead of
-     a bigger fixed px number so it actually uses whatever room the
-     visitor's own window has, on any screen size, rather than just raising
-     the cap to another number that's still eventually too small. */
+  
   .wrap { max-width: 97vw; }
 
-  /* Colored banner look for the Hinatazaka/Sakurazaka group headers
-     (2026-07-31, per user request), replacing the base style's plain
-     colored-text .group-half h3. */
+  
   .group-half h3 {
     background: var(--tc, #6a4fc9); color: #fff; margin: 0 0 10px;
     padding: 9px 14px; border-radius: 8px; text-align: center;
     font-size: 12px; text-transform: uppercase; letter-spacing: .04em;
   }
 
-  /* Locked Tiles row for a real card the visitor hasn't marked owned in the
-     Card Database tab (2026-08-01, per user request) - same dark-red/muted
-     palette as the Grid view's .grid-cell-unowned, so the two views read as
-     the same "locked" state. The 5 .pip circles stay in the DOM (dul's
-     reused JS expects them) but go invisible, as does the "0" .dm-value -
-     pointer-events:none on .pips keeps dul._DISCO_JS's click listener from
-     ever firing. Unlike the Grid view's cramped single-character cell,
-     a Tiles row has room to spare after the pips/value, so the label reads
-     "Not Owned" in full (2026-08-01, per user request) rather than just an
-     "x" - added as ::after on the row itself (a flex item, not the narrow
-     .pips box) with margin-left:auto to push it flush right into that
-     spare space. */
+  
   .dm-row.dm-row-unowned { background: #3d1a1e; border-radius: 6px; }
   .dm-row-unowned .dm-name { color: #c9898f; }
   .dm-row-unowned .pips { pointer-events: none; }
@@ -383,16 +276,7 @@
     color: #c9898f; font-weight: 700; font-size: 11.5px; white-space: nowrap;
   }
 
-  /* Grid view coaching ramp, public page only (2026-08-01, per user
-     request) - overrides dul._STYLE's dark amber-to-gold .grid-cell-coached
-     ramp (level 0 near-black #3a2f10 up to #e8b628 at 500) with a pale-to-
-     bright yellow ramp instead: level 0 starts light (no more near-black
-     "coaching not started" look) and gets steadily more saturated, never
-     dark again, ending at a bright #f0b400 gold at 500. Selectors/specificity
-     match dul._STYLE's originals exactly so these simply win by appearing
-     later in the same concatenated <style> block ({dul._STYLE}{_EXTRA_STYLE}
-     in render_html) - disco_upgrade_live.html (the private tool) is
-     untouched since it only loads dul._STYLE on its own. */
+  
   .grid-cell-owned.grid-cell-coached { background: #f0b400; color: #4a3a10; }
   .grid-cell-owned.grid-cell-coached[data-level="0"] { color: #8a6d1a; background: #fdf6d8; }
   .grid-cell-owned.grid-cell-coached.gc-l1 { background: #fbedb0; color: #8a6d1a; }
@@ -401,23 +285,7 @@
   .grid-cell-owned.grid-cell-coached.gc-l4 { background: #f0c020; color: #4a3a10; }
   .grid-cell-owned.grid-cell-coached.gc-l5 { background: #f0b400; color: #4a3a10; }
 
-  /* Grid view standard-cell ramp, per group (2026-08-02, per user request:
-     "gradually to skyblue for hinata, pink for sakura, matching the color
-     of the tab"). Replaces dul._STYLE's single fixed purple ramp with two
-     group-specific ramps, each ending exactly at that group's own tab
-     accent color at level 500 (HINATA #7CC7E8, SAKURA #F19DB5) and fading
-     to a pale tint of the same hue at level 0, rather than the base
-     style's neutral gray-to-purple. Scoped via the .grid-scroll ancestor's
-     data-grid-group attribute (every real cell sits inside one) rather
-     than editing dul._STYLE directly, so disco_upgrade_live.html (the
-     private tool) keeps its original purple ramp untouched.
-     :not(.grid-cell-coached) on every rule is required, not decorative -
-     without it these would tie in specificity with the coaching-ramp rules
-     above and win by source order, silently overwriting the amber/yellow
-     coached cells with blue/pink. Text stays a dark shade of the same hue
-     the whole way (not the base style's white) since these are pale tab
-     colors even at their most saturated (level 500) - checked contrast
-     stays >=3.6:1 across every step of both ramps. */
+  
   .grid-scroll[data-grid-group="HINATA"] .grid-cell-owned:not(.grid-cell-coached) { color: #0c5a80; }
   .grid-scroll[data-grid-group="HINATA"] .grid-cell-owned:not(.grid-cell-coached)[data-level="0"] { color: #0c5a80; background: #f2f9fd; }
   .grid-scroll[data-grid-group="HINATA"] .grid-cell-owned:not(.grid-cell-coached).gc-l1 { background: #d8eef8; color: #0c5a80; }
@@ -433,68 +301,21 @@
   .grid-scroll[data-grid-group="SAKURA"] .grid-cell-owned:not(.grid-cell-coached).gc-l4 { background: #f3acc0; color: #99295a; }
   .grid-scroll[data-grid-group="SAKURA"] .grid-cell-owned:not(.grid-cell-coached).gc-l5 { background: #f19db5; color: #99295a; }
 
-  /* Tiles view pip color, matching the same per-group recolor as the Grid
-     ramp above (2026-08-02, per user request: "update the circle colors in
-     the tile view from purple to the similar color changes as well").
-     Pips don't have a per-level ramp (only their COUNT indicates level, all
-     filled pips are one flat color) so this just swaps that one flat color
-     - no need for six hardcoded shades here like the Grid ramp needed:
-     .group-half already carries --tc inline (set once, same custom
-     property the h3 banner and grid-group-sum badge both already read),
-     and custom properties inherit straight down to these pips with no
-     extra selector work. :not(.dm-row-coached), same reasoning as the
-     Grid ramp's :not(.grid-cell-coached) - leaves coached rows' pips on
-     the original purple rather than reassigning them a color that would
-     visually contradict their amber row background. The border was a
-     darker shade of the fixed purple fill before (#58419e under #6a4fc9);
-     rgba(0,0,0,0.22) reproduces that same "slightly darker ring" look
-     without needing a second hardcoded color per group. */
+  
   .dm-row:not(.dm-row-coached) .pip.filled { background: var(--tc, #6a4fc9); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.22); }
   .dm-row:not(.dm-row-coached) .pip:hover { background: var(--tc, #a99be0); }
 
-  /* Grand-total badge in the Grid group tabs (2026-08-02, per user request:
-     "sum of all totals in the upper tab area"). Sits next to the
-     日向坂/Sakurazaka label as a small pill. White text was the original
-     choice here (matching .grid-group-btn.active's own white-on-color
-     text), but both group colors are pale pastels (HINATA #7CC7E8,
-     SAKURA #F19DB5) - white-on-pastel measures under 2:1 contrast either
-     way (checked both the solid-color inactive badge and the translucent-
-     white-over-color active badge), nowhere near the ~4.5:1 WCAG floor for
-     small text. Dark ink text (#2d2d42, the same color the rest of the
-     page uses for body text) clears 6.5:1+ against both badge backgrounds
-     in both states instead (2026-08-02, per user report: "white on light
-     blue is a bit hard to read"). */
+  
   .grid-group-sum {
     margin-left: 6px; padding: 1px 7px; border-radius: 999px; font-size: 10.5px;
     font-weight: 700; background: var(--tc, #6a4fc9); color: #2d2d42;
   }
   .grid-group-btn.active .grid-group-sum { background: rgba(255,255,255,0.55); color: #2d2d42; }
 
-  /* Same grand-total badge, also in the Tiles view's group headers
-     (2026-08-02, per user request: "the total pill on the tiles side as
-     well"). .group-half h3 is always a solid --tc banner (never toggles
-     white/colored the way .grid-group-btn does), so it only needs the one
-     translucent-white treatment - same colors as the Grid tab's active
-     state, for the same contrast reason documented above. */
+  
   .group-half h3 .grid-group-sum { background: rgba(255,255,255,0.55); color: #2d2d42; }
 
-  /* Grid view tab bar restyled to match public_kizuna.html's tab look/feel
-     (2026-08-02, per user consistency request) - full-width paired tabs
-     that sit flush against the panel below (no gap, square top corners
-     meeting the panel's own now-square top edge) instead of
-     disco_upgrade_live.html's original small floating pill tabs. Kept here
-     in _EXTRA_STYLE rather than dul._STYLE so the personal tool keeps its
-     original pill tabs untouched - same policy as every other override in
-     this block. Inactive fill uses a translucent DARK tint (not kizuna's
-     literal rgba(255,255,255,.55)) since this tab bar sits inside a light
-     .section-card, not directly on the page's dark gradient background the
-     way kizuna's toolbar does - translucent white would be invisible here;
-     the structural look (full-width flush pair, colored active fill) is
-     what's being matched, not the literal color value. Active-tab text is
-     dark (#23233a, matching kizuna) rather than dul._STYLE's white, which
-     also happens to resolve the same low-contrast complaint noted above for
-     the sum badge (HINATA/SAKURA's pastel --tc colors fail contrast with
-     white text either way). */
+  
   .grid-group-tabs { margin-bottom: -1px; }
   .grid-group-btn {
     flex: 1 1 0; text-align: center; border: none;
@@ -506,38 +327,14 @@
   .grid-group-btn.active { background: var(--tc, #6a4fc9); color: #23233a; }
   .grid-scroll { border-radius: 0 0 10px 10px; border-top: 1px solid #ececf4; }
 
-  /* Grid view axis flip (2026-08-07) - see _render_grid_group's docstring
-     comment for why these are new gf- prefixed classes rather than reusing
-     dul._STYLE's .grid-song-header/.grid-member-col/.grid-total-col names.
-     .grid-cell/.grid-cell-owned/etc. (the actual data cells) are reused
-     completely unchanged from dul._STYLE - only the header row and the
-     song row-label/count columns are new here. Sizing below (song-head
-     width, member-head font) was brought in line with public_import.py's
-     more recent "songs as rows" layout (2026-08-07, per user request) -
-     that file went through the same design problem earlier and settled on
-     full (non-abbreviated) titles and a bigger vertical member-name font;
-     matching it here instead of the smaller values carried over from the
-     now-retired public_import_by_song.py this was first modeled on. */
-  /* border-collapse: separate (not collapse) - 2026-08-07, needed for the
-     column-boundary fix below. Each cell now owns its own independent
-     border box instead of merging shared edges with its neighbors;
-     border-spacing:0 keeps cells touching with no visible gap, so the grid
-     still reads as one dense table exactly like collapse did, just built
-     differently underneath. Slightly thicker ordinary grid lines as a side
-     effect (an cell's own right border + the next cell's left border no
-     longer merge into one shared 1px line, so ordinary column dividers are
-     now up to ~2px instead of 1px) - a minor, acceptable tradeoff for
-     making the thick boundary border actually render (see below). */
+  
+  
   table.disco-grid-flip { border-collapse: separate; border-spacing: 0; font-size: 11px; }
   table.disco-grid-flip th, table.disco-grid-flip td { border: 1px solid #d6d6e0; padding: 0; }
   .gf-corner {
     position: sticky; left: 0; top: 0; z-index: 5; background: #f6f6fa;
   }
-  /* Member name - sticky TOP column header, vertical text (member names
-     are short, <=5 kanji, so this reads fine rotated). Width matches
-     .grid-cell's own 34px so the numeric cell values line up under it.
-     Font/height bumped 2026-08-07 to match public_import.py's .mh-name
-     (12.5px + letter-spacing, was 10px here before). */
+  
   .gf-member-head {
     position: sticky; top: 0; z-index: 3; background: #f6f6fa;
     padding: 4px 2px !important; vertical-align: top; text-align: center;
@@ -549,13 +346,7 @@
     color: #444; white-space: nowrap; display: inline-block; height: 92px;
     overflow: hidden; text-overflow: ellipsis;
   }
-  /* Song name - sticky LEFT row header, horizontal (song titles are long
-     and were the whole reason for this flip - they read normally now
-     instead of being squeezed into a rotated column). No more abbreviation
-     (2026-08-07, per user request - SONG_ABBR/SONG_SMALL_FONT dropped) -
-     a fixed width (was min/max before) so the "# of cards" column next to
-     it has a stable left offset to stick at; long titles fall back to the
-     ellipsis + title="" tooltip, same as public_import.py's own row header. */
+  
   .gf-song-head {
     position: sticky; left: 0; z-index: 2; background: #fbfbfd;
     padding: 4px 10px !important; text-align: left; white-space: nowrap;
@@ -563,49 +354,18 @@
     font-weight: 600; color: #2d2d42; font-size: 12.5px;
   }
   .gf-song-name { margin: 0 6px; }
-  /* "# of cards" column (2026-08-07, per user request: "put the # of cards
-     into a column and change it to 'x/y'") - sticky right next to the song
-     name column (left offset = that column's own fixed 230px width) so
-     both stay visible while scrolling horizontally through members. */
+  
   .gf-count-head, .gf-count-col {
     position: sticky; left: 230px; z-index: 2; background: #f6f6fa;
     width: 52px; text-align: center; font-size: 10.5px; font-weight: 700; color: #666;
   }
   .gf-count-head { z-index: 4; top: 0; }
-  /* Thicker column border wherever the member's gen/graduated bucket
-     changes from their neighbor (2026-08-07, per user request, "like we
-     did for the mass import"). Applies to the member header th AND every
-     data td in that member's column, so it runs the full height of the
-     grid, header included.
-
-     ACTUAL ROOT CAUSE, found 2026-08-07 after 2 wrong guesses (box-shadow-
-     under-collapse, then a contrast theory) - Scott inspected a real cell
-     in DevTools and reported "x"/"—" cells (grid-cell-unowned/-none) keep
-     the boundary marker but cells showing a NUMBER (grid-cell-owned, real
-     or coached) don't. Cause: dul._DISCO_JS's refreshPair() does
-     `gridCell.className = 'grid-cell grid-cell-owned' + coachedClass +
-     lvlClass + ...` for every .grid-cell-owned cell at page load (to sync
-     the displayed level) - a wholesale className REPLACEMENT, which
-     silently drops any class not in that hardcoded string. gf-col-boundary
-     was exactly such a class - present in the server-rendered HTML
-     (verified programmatically on all 27 HINATA rows, identical to the
-     header), then stripped by this JS pass on every real-card/coached cell
-     specifically (never-owned "none"/"unowned" cells are excluded from
-     dul._DISCO_JS's `pairs` entirely, so refreshPair() never touches them -
-     exactly the split Scott observed). Fixed by moving the marker off the
-     class list entirely, onto a `data-col-boundary="1"` ATTRIBUTE instead
-     (see _grid_cell_html/_render_grid_group) - className reassignment only
-     ever touches the `class` attribute, so a data-* attribute survives
-     refreshPair() untouched regardless of cell state. The width/color churn
-     across the earlier attempts (5px #2d2d42, then 6px #000000) was chasing
-     a contrast theory for a bug that was never about contrast - confirmed
-     once the real fix landed and Scott could actually see the border, back
-     down to the original 3px #6a6a8a (same weight/color public_import.py's
-     own column-boundary rule uses). */
+  
   table.disco-grid-flip th[data-col-boundary], table.disco-grid-flip td[data-col-boundary] { border-left: 3px solid #6a6a8a; }
 </style>
 </head>
 <body>
+  <div class="page-version-badge">v1</div>
   <div class="wrap">
     
     <div class="section-card">
@@ -12051,7 +11811,7 @@
     </div>
   </div>
 <script>
-const SOURCE_FILE = "v76-2026-08-07";
+const SOURCE_FILE = "v81-2026-08-07";
 </script>
 <script>
 (function() {
@@ -12118,6 +11878,13 @@ const SOURCE_FILE = "v76-2026-08-07";
   var overrides = loadOwn();
   function keyOf(song, member) { return song + '::' + member; }
 
+  
+  
+  
+  
+  
+  
+  
   var pairs = {};
   document.querySelectorAll('.dm-row').forEach(function(row) {
     var key = keyOf(row.dataset.song, row.dataset.member);
@@ -12128,9 +11895,17 @@ const SOURCE_FILE = "v76-2026-08-07";
     var key = keyOf(cell.dataset.song, cell.dataset.member);
     pairs[key] = pairs[key] || { baseline: parseInt(cell.dataset.baseline, 10) };
     pairs[key].gridCell = cell;
+    
+    
+    
+    
     pairs[key].coached = cell.classList.contains('grid-cell-coached');
   });
 
+  
+  
+  
+  
   var rowTotals = {};
   document.querySelectorAll('.grid-total-col[data-member]').forEach(function(cell) {
     var tr = cell.closest('tr');
@@ -12190,6 +11965,8 @@ const SOURCE_FILE = "v76-2026-08-07";
   Object.keys(pairs).forEach(refreshPair);
   Object.keys(rowTotals).forEach(refreshRowTotal);
 
+  
+  
   document.querySelectorAll('.dm-row').forEach(function(row) {
     var key = keyOf(row.dataset.song, row.dataset.member);
     row.querySelector('.pips').addEventListener('click', function(ev) {
@@ -12200,6 +11977,8 @@ const SOURCE_FILE = "v76-2026-08-07";
     });
   });
 
+  
+  
   document.querySelectorAll('.grid-cell-owned').forEach(function(cell) {
     var key = keyOf(cell.dataset.song, cell.dataset.member);
     cell.addEventListener('click', function() {
@@ -12208,6 +11987,7 @@ const SOURCE_FILE = "v76-2026-08-07";
     });
   });
 
+  
   document.querySelectorAll('.mode-switch-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       document.querySelectorAll('.mode-switch-btn').forEach(function(b) { b.classList.remove('active'); });
@@ -12216,9 +11996,11 @@ const SOURCE_FILE = "v76-2026-08-07";
       document.querySelectorAll('.view-panel').forEach(function(panel) {
         panel.classList.toggle('active', panel.dataset.viewPanel === view);
       });
+      fitGridScroll();
     });
   });
 
+  
   document.querySelectorAll('.grid-group-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       document.querySelectorAll('.grid-group-btn').forEach(function(b) { b.classList.remove('active'); });
@@ -12227,9 +12009,39 @@ const SOURCE_FILE = "v76-2026-08-07";
       document.querySelectorAll('.grid-scroll').forEach(function(gs) {
         gs.classList.toggle('hidden', gs.dataset.gridGroup !== group);
       });
+      fitGridScroll();
     });
   });
 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  function fitGridScroll() {
+    var gs = document.querySelector('.grid-scroll:not(.hidden)');
+    if (!gs || gs.offsetParent === null) return; 
+    var top = gs.getBoundingClientRect().top;
+    var avail = window.innerHeight - top - 24;
+    gs.style.maxHeight = Math.max(200, avail) + 'px';
+  }
+  window.addEventListener('resize', fitGridScroll);
+  fitGridScroll();
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
   function applyLanguage(lang) {
     document.querySelectorAll('[data-name-en]').forEach(function(el) {
       el.textContent = (lang === 'EN') ? el.dataset.nameEn : el.dataset.nameJp;
@@ -12245,6 +12057,7 @@ const SOURCE_FILE = "v76-2026-08-07";
     }
   });
 
+  
   var filterEl = document.getElementById('disco-filter');
   if (filterEl) {
     filterEl.addEventListener('input', function(e) {
@@ -12260,6 +12073,7 @@ const SOURCE_FILE = "v76-2026-08-07";
     });
   }
 
+  
   var showingEditedOnly = false;
   var showEditedBtn = document.getElementById('disco-show-edited');
   if (showEditedBtn) {
@@ -12278,6 +12092,8 @@ const SOURCE_FILE = "v76-2026-08-07";
     });
   }
 
+  
+  
   var saveBaselineBtn = document.getElementById('disco-save-baseline');
   if (saveBaselineBtn) {
     saveBaselineBtn.addEventListener('click', function() {
@@ -12327,6 +12143,12 @@ const SOURCE_FILE = "v76-2026-08-07";
         var data;
         try { data = JSON.parse(reader.result); }
         catch (err) { window.alert('That file is not valid JSON - could not load.'); return; }
+        
+        
+        
+        
+        
+        
         var foreign = {};
         for (var key in (data || {})) { if (key !== 'discography' && key !== 'savedAt' && key !== 'sources') foreign[key] = data[key]; }
         if (Object.keys(foreign).length) saveForeign(foreign);

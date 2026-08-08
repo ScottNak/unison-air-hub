@@ -157,9 +157,7 @@
   }
   .multi-select:focus { border-color: #4a90d9; }
   #song-filter { width: 340px; }
-  /* cs-filter's group has no search-within box above it (song's does),
-     so its select gets extra height to make both filter-group cards line
-     up at the same overall height instead of the CS one looking short. */
+  
   #cs-filter { height: 144px; }
   .sk-input {
     width: 90px; padding: 8px 10px; border-radius: 8px; border: 1px solid #d8d8e0; font-size: 13px;
@@ -172,9 +170,15 @@
   .note-list { margin: 0; padding-left: 18px; }
   .note-list li { margin-bottom: 6px; }
   .note-list li:last-child { margin-bottom: 0; }
+  .page-version-badge {
+    position: fixed; bottom: 8px; right: 10px; z-index: 9999;
+    background: rgba(0,0,0,0.55); color: #fff; font: 11px/1 -apple-system, sans-serif;
+    padding: 3px 7px; border-radius: 6px; pointer-events: none; opacity: 0.5;
+  }
 </style>
 </head>
 <body>
+  <div class="page-version-badge">v1</div>
   <div class="wrap">
     <div class="version-row">
       <span id="db-version"></span>
@@ -290,7 +294,7 @@ let DB_VERSION = BAKED.version;
       CARDS = cached.cards;
       DB_VERSION = cached.version;
     }
-  } catch (e) { /* ignore corrupt cache */ }
+  } catch (e) {  }
 })();
 
 function updateVersionLabel() {
@@ -319,10 +323,10 @@ document.getElementById('check-update-btn').addEventListener('click', async () =
       buildFilterOptions();
       render();
       statusEl.textContent = 'Updated to ' + DB_VERSION + '.';
-      // The live re-render above already reflects the new card data, but
-      // this page's own HTML/JS (catalog.html) may also have changed since
-      // it was loaded - a data-only fetch can't pick that up. Offer a
-      // refresh so the page code itself is current too, without forcing it.
+      
+      
+      
+      
       if (confirm('Updated to ' + DB_VERSION + '. Refresh the page now to make sure you also have the latest version of the page itself?')) {
         location.reload();
       }
@@ -335,39 +339,39 @@ document.getElementById('check-update-btn').addEventListener('click', async () =
 });
 
 let sortKey = 'tot';
-let sortDir = -1; // 1 asc, -1 desc
-let selectedColors = new Set(); // empty = no color filter (show all)
-let memberTerms = []; // whitespace-split search words, matched AND/any-order (see render())
+let sortDir = -1; 
+let selectedColors = new Set(); 
+let memberTerms = []; 
 let selectedSongs = new Set();
 let selectedCsBases = new Set();
 let skMinVal = 0;
-let ownedFilter = 'all'; // 'all' | 'owned' | 'unowned'
+let ownedFilter = 'all'; 
 let excludeGrads = false;
-let hasPlusOnly = false; // "Has SSR+" filter - any row with a '+' pair, owned or not
-let editOwned = false; // View/Add mode switch - View (default) shows a quiet
-// badge instead of a +Owned/Remove button on every one of 5433 rows; Add
-// switches to the editable buttons. Resets to View on reload (in-memory
-// only, not persisted to localStorage).
+let hasPlusOnly = false; 
+let editOwned = false; 
+
+
+
 
 const tbody = document.getElementById('tbody');
 const colorFiltersEl = document.getElementById('color-filters');
 
-// --- Base/+ pairing (2026-07-31) ------------------------------------------
-// In-game you never own both a card and its '+' (discography-upgraded)
-// version at once - upgrading consumes the base. displayRows collapses
-// each base/+ pair (970 of them, verified 2026-07-31: every '+' card has a
-// matching base, always +750 Vo/Da/Pe) into ONE row with 3 states (Not
-// owned / Owned / Upgraded), instead of two independent rows that could
-// both be marked owned at the same time, which can't really happen.
-// Standalone cards (no pair) get a row with plus: null and behave exactly
-// like before. Rebuilt whenever CARDS changes (initial load, Check for
-// update) since pairing depends on the current card list.
+
+
+
+
+
+
+
+
+
+
 let displayRows = [];
 
 function buildDisplayRows() {
   const byKey = {};
   CARDS.forEach(c => { byKey[c.member + '|' + c.title] = c; });
-  const consumed = new Set(); // '+' cards already attached to a base below
+  const consumed = new Set(); 
   CARDS.forEach(c => {
     if (!c.title.endsWith('+')) return;
     const baseKey = c.member + '|' + c.title.slice(0, -1);
@@ -376,11 +380,11 @@ function buildDisplayRows() {
   const rows = [];
   CARDS.forEach(c => {
     const key = c.member + '|' + c.title;
-    if (consumed.has(key)) return; // attached to its base below, not its own row
+    if (consumed.has(key)) return; 
     if (c.title.endsWith('+')) {
-      // Orphan '+' with no base (none exist as of 2026-07-31, but handled
-      // defensively in case a future card import creates one) - shown as
-      // its own standalone row.
+      
+      
+      
       rows.push({ base: c, plus: null });
       return;
     }
@@ -392,9 +396,9 @@ function buildDisplayRows() {
   buildMemberList();
 }
 
-// Deduped member list for the search-box autocomplete dropdown - rebuilt
-// alongside displayRows whenever CARDS changes (initial load, Check for
-// update), so it can't drift out of sync with what's actually searchable.
+
+
+
 let MEMBERS = [];
 function buildMemberList() {
   const seen = new Set();
@@ -408,10 +412,10 @@ function buildMemberList() {
   MEMBERS = list;
 }
 
-// A row is "upgraded" if its '+' card is marked owned - that's the only
-// state that matters even if (from stale/hand-edited localStorage) the
-// base key also happens to be set; reconcileOwnedSet() cleans that up so
-// it shouldn't normally happen.
+
+
+
+
 function rowState(row) {
   if (row.plus && ownedSet[cardKey(row.plus)]) return 'upgraded';
   if (ownedSet[cardKey(row.base)]) return 'owned';
@@ -424,10 +428,10 @@ function rowOwned(row) {
   return rowState(row) !== 'none';
 }
 
-// Enforces "never both at once": if some ownedSet ever has both a base and
-// its '+' marked (shouldn't happen via the UI below, but a hand-edited
-// import file could do it), keep the '+' (the stronger/later state) and
-// drop the base mark. Safe to call anytime displayRows is rebuilt.
+
+
+
+
 function reconcileOwnedSet() {
   let changed = false;
   displayRows.forEach(row => {
@@ -442,14 +446,14 @@ function reconcileOwnedSet() {
   if (changed) saveOwned(ownedSet);
 }
 
-// --- Owned tracking (Phase 1: local marker + filter + Export/Import) -----
-// Purely visitor-local - stored in this browser's own localStorage, never
-// uploaded or synced anywhere. Not the same key/shape as Scott's personal
-// owned.json workflow; this is a separate, unrelated feature for visitors
-// of the public catalog. Export/Import (below) is the backup/transfer
-// mechanism, added 2026-07-31 so visitors can't silently lose marks to a
-// cleared cache - still no scoring, just a mark + filter so a visitor can
-// browse their own collection.
+
+
+
+
+
+
+
+
 const OWNED_KEY = 'uniair_public_owned';
 
 function cardKey(c) { return c.member + '|' + c.title; }
@@ -471,9 +475,9 @@ function unmarkOwned(key) {
   saveOwned(ownedSet);
   render();
 }
-// Upgrading a base card to '+' is one atomic action, not two: unmark the
-// base and mark the '+' together so a row is never briefly in the
-// impossible "both owned" state between the two.
+
+
+
 function upgradeCard(baseKey, plusKey) {
   delete ownedSet[baseKey];
   ownedSet[plusKey] = true;
@@ -485,9 +489,9 @@ function skDisplay(sk) {
   return sk === 'FLEEK!' ? 'FLEEK!' : ((sk || 0) * 100).toFixed(2) + '%';
 }
 
-// Every real base/+ pair adds a flat +750 to Vo/Da/Pe (verified 2026-07-31
-// across all 970 pairs, no exceptions) - SK% also changes for some pairs
-// (355 of 970), so that part is shown only when it actually differs.
+
+
+
 function upgradeBonusText(row) {
   let text = '+750 Vo / +750 Da / +750 Pe (+2250 Tot)';
   if (row.plus && row.base.sk !== row.plus.sk) {
@@ -501,10 +505,10 @@ function ownedCell(row) {
   const baseKey = encodeURIComponent(cardKey(row.base));
 
   if (!editOwned) {
-    // View mode (default): a quiet badge for most rows, except one
-    // deliberate exception - an owned base card that's upgradable gets the
-    // "↑ Upgrade" button right here, so that one-click opportunity doesn't
-    // require switching to Add mode to notice or act on.
+    
+    
+    
+    
     if (state === 'owned' && row.plus) {
       const plusKey = encodeURIComponent(cardKey(row.plus));
       return '<button class="upgrade-btn" data-base-key="' + baseKey + '" data-plus-key="' + plusKey
@@ -514,8 +518,8 @@ function ownedCell(row) {
     return '';
   }
 
-  // Add mode: just Add/Remove, no Upgrade button here - upgrading is
-  // available straight from View mode above instead.
+  
+  
   if (state === 'none') {
     return '<button class="owned-btn" data-key="' + baseKey + '">Add</button>';
   }
@@ -549,16 +553,16 @@ document.getElementById('has-plus-filter').addEventListener('change', (e) => {
   render();
 });
 
-// Export/Import used to be per-page buttons here. As of 2026-08 they live
-// one level up, in the hub (index.html) - it broadcasts postMessage
-// requests to every tab's iframe so a visitor only has to Export/Import
-// once instead of per-tab, and this page just answers those requests.
-// ownedSet only lives in this browser's localStorage (see the Phase 1
-// comment above), so this round-trip is still the one way to back it up
-// or move it to another device/browser. Import MERGES into whatever is
-// already marked on this browser rather than replacing it (never unmarks,
-// no confirmation needed) - same behavior the old per-page Import button
-// had, so re-importing an old backup can never lose marks made since.
+
+
+
+
+
+
+
+
+
+
 window.addEventListener('message', (e) => {
   const msg = e.data;
   if (!msg || typeof msg !== 'object') return;
@@ -579,7 +583,7 @@ window.addEventListener('message', (e) => {
       });
       if (added) {
         saveOwned(ownedSet);
-        reconcileOwnedSet(); // in case the file marks both a base and its '+'
+        reconcileOwnedSet(); 
         render();
       }
     }
@@ -597,9 +601,9 @@ tbody.addEventListener('click', (e) => {
   else if (unownBtn) { unmarkOwned(decodeURIComponent(unownBtn.dataset.key)); }
 });
 
-// Colors are multi-select (toggle any combination on); "All" is not one of
-// the toggles - it's a dedicated clear button that empties the selection,
-// and shows itself as active whenever nothing else is selected.
+
+
+
 const COLORS = ['all', 'R', 'B', 'G', 'Y', 'P'];
 const COLOR_LABEL = { all: 'All', R: 'Red', B: 'Blue', G: 'Green', Y: 'Yellow', P: 'Purple' };
 const colorChipEls = {};
@@ -642,20 +646,20 @@ COLORS.forEach(c => {
 updateColorChipStyles();
 
 function render() {
-  // Every filter/sort/display field below reads from effectiveCard(row) -
-  // the base card's stats normally, or the '+' card's once upgraded - so
-  // the table always reflects what a row's owner actually has. The one
-  // exception is the Song filter, which matches row.base.title (the
-  // pair's stable identity) instead - see buildFilterOptions().
+  
+  
+  
+  
+  
   let rows = displayRows.filter(row => {
     const c = effectiveCard(row);
     if (selectedColors.size && !selectedColors.has(c.color)) return false;
     if (memberTerms.length) {
-      // Each typed word must appear somewhere in the name, but words can be
-      // in any order - member_romaji.json stores English names as "Given
-      // Family" (e.g. "Kyōko Saitō"), so a family-given search like "saito
-      // kyoko" wouldn't match a single-substring check, even though it's a
-      // completely reasonable way to type the name.
+      
+      
+      
+      
+      
       const jp = c.member.toLowerCase();
       const en = stripDiacritics((c.memberEn || '').toLowerCase());
       const matchesJp = memberTerms.every(t => jp.includes(t));
@@ -697,10 +701,10 @@ function render() {
     const tr = document.createElement('tr');
     if (c.grad) tr.classList.add('grad-row');
     const hex = COLOR_HEX[c.color] || '#999';
-    // While not yet upgraded, a differing '+' SK% is previewed inline
-    // ("2.52% → 3.10%") so you can see the upgrade's skill impact without
-    // owning it - once actually upgraded, effectiveCard already shows the
-    // '+' value directly, so there's nothing left to preview.
+    
+    
+    
+    
     const skHint = (row.plus && rowState(row) !== 'upgraded' && row.base.sk !== row.plus.sk)
       ? '<span class="sk-hint">&#8594; ' + skDisplay(row.plus.sk) + '</span>' : '';
     tr.innerHTML =
@@ -724,11 +728,11 @@ function esc(s) {
   return String(s).replace(/[&<>"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
 }
 
-// Strips macrons/diacritics (ō, ū, ā, ī, ē, etc.) so English-name search
-// isn't case/accent-sensitive - member_romaji.json uses real macrons (e.g.
-// "Katō", "Ōno"), but most people type plain "o" when searching. Applied to
-// both the search term and memberEn, so it works regardless of which side
-// has the macron typed.
+
+
+
+
+
 function stripDiacritics(s) {
   return String(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
@@ -769,9 +773,9 @@ function showSuggestions(terms) {
 
 function selectMember(jp) {
   memberSearchInput.value = jp;
-  // A member's own full Japanese name is effectively a unique key - using
-  // it as the (single-token) search term reuses the normal fuzzy filter
-  // instead of adding a separate "exact match" code path.
+  
+  
+  
   memberTerms = [jp.toLowerCase()];
   closeSuggestions();
   render();
@@ -808,13 +812,13 @@ document.addEventListener('click', (e) => {
   if (!e.target.closest('.member-search-wrap')) closeSuggestions();
 });
 
-// --- Song / Center Skill multi-selects -----------------------------------
-// Populated from whatever's currently in CARDS (357 unique songs / ~30
-// unique CS-base categories as of this writing - small enough for a plain
-// <select multiple>, no extra library needed). Rebuilt whenever CARDS
-// changes (initial load AND after a successful "Check for update"), and
-// preserves the visitor's current selection across a rebuild where
-// possible so an update doesn't silently clear their filters.
+
+
+
+
+
+
+
 function selectedValues(sel) {
   return Array.from(sel.selectedOptions).map(o => o.value);
 }
@@ -822,9 +826,9 @@ function selectedValues(sel) {
 function buildFilterOptions() {
   const songSel = document.getElementById('song-filter');
   const prevSongs = new Set(selectedValues(songSel));
-  // Song options use row.base.title (the pair's stable identity), not
-  // effectiveCard - a paired song shows one entry ("キュン") regardless of
-  // whether any given visitor has upgraded it to "キュン+" or not.
+  
+  
+  
   const titles = Array.from(new Set(displayRows.map(row => row.base.title))).sort((a, b) => a.localeCompare(b, 'ja'));
   songSel.innerHTML = '';
   titles.forEach(t => {
@@ -846,9 +850,9 @@ function buildFilterOptions() {
     csSel.appendChild(opt);
   });
 
-  // Selections may have referenced songs/CS-bases no longer present after
-  // an update (rare, but possible) - resync the filter Sets to what the
-  // rebuilt <select> elements actually have selected.
+  
+  
+  
   selectedSongs = new Set(selectedValues(songSel));
   selectedCsBases = new Set(selectedValues(csSel));
 }
