@@ -264,12 +264,6 @@ function refreshTileState(tile, groupName, name) {
   if (badge) badge.textContent = val;
 }
 
-// Press-and-hold repeat for the +/- steppers (2026-08-06) - a single
-// click/tap always fires once immediately; holding down repeats after a
-// short initial delay so reaching real bond values (hundreds to
-// thousands) doesn't take literally thousands of individual taps. Works
-// for both mouse and touch since kizuna.html has no way to know in advance
-// which the visitor has.
 function attachStepper(btn, fn) {
   var repeatTimer = null, startTimer = null;
   function start(e) {
@@ -336,9 +330,6 @@ GROUP_ORDER.forEach(function(groupName, idx) {
       diamondLabel.textContent = firstChar(m.name);
       diamondWrap.appendChild(diamondLabel);
     }
-    // Badge always created now (2026-08-06) - it's the ONLY place the value
-    // is shown anymore, so even the rare member with no photo (falls back
-    // to the plain letter-diamond above) still needs it.
     var diamondBadge = document.createElement('div');
     diamondBadge.className = 'diamond-badge';
     diamondWrap.appendChild(diamondBadge);
@@ -355,14 +346,6 @@ GROUP_ORDER.forEach(function(groupName, idx) {
     plusBtn.setAttribute('aria-label', 'Increase ' + m.name + ' bond');
     diamondWrap.appendChild(minusBtn);
     diamondWrap.appendChild(plusBtn);
-    // Tap-to-reveal (2026-08-06, touch devices only - see .diamond-wrap's
-    // "hover: none" CSS rule above). A tap on the photo/diamond itself
-    // toggles the buttons open; a tap on a button (which only exists once
-    // already open) is left alone here so it just runs its own step. A
-    // single document-level listener (added once, after this loop) closes
-    // any open diamond when the visitor taps elsewhere. Harmless no-op on
-    // mouse/trackpad devices - the class this toggles has no effect there,
-    // :hover already controls visibility.
     diamondWrap.addEventListener('click', function(e) {
       if (e.target.closest('.step-btn')) return;
       diamondWrap.classList.toggle('controls-open');
@@ -393,8 +376,6 @@ GROUP_ORDER.forEach(function(groupName, idx) {
   groupsEl.appendChild(groupDiv);
 });
 
-// Closes any tap-opened diamond (see diamondWrap's click handler above)
-// when the visitor taps/clicks anywhere outside it.
 document.addEventListener('click', function(e) {
   document.querySelectorAll('.diamond-wrap.controls-open').forEach(function(dw) {
     if (!dw.contains(e.target)) dw.classList.remove('controls-open');
@@ -421,13 +402,6 @@ window.addEventListener('message', function(e) {
   }
 });
 
-// Export/Import used to be per-page buttons here. As of 2026-08 they live
-// one level up, in the hub (index.html) - it broadcasts postMessage
-// requests to every tab's iframe so a visitor only has to Export/Import
-// once instead of per-tab, and this page just answers those requests.
-// The "bond" shape below still matches Scott's personal Kizuna tracker
-// ({savedAt, sources, bond}) so a hub-exported file still round-trips
-// with that tool, unchanged from before.
 function buildBondSnapshot() {
   var bond = {};
   GROUP_ORDER.forEach(function(groupName) {

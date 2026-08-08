@@ -188,29 +188,13 @@
 
 <script src="member_profiles.js"></script>
 <script>
-  // --- Birthday notification (top left, JST) -------------------------------
-  // window.UNIAIR_MEMBER_PROFILES (member_profiles.js) holds all 97 members
-  // keyed by Japanese name: {english:{family,given}, birthday, group,
-  // graduated, gen, order}. Filtered here to the active roster
-  // (graduated === false - this also naturally excludes every K-group
-  // member, since all 6 are already graduated) and reshaped into the
-  // {jp, given, family, birthdate, group} array this widget already works
-  // with (previously precomputed into a separate birthdays.js by
-  // generate_birthdays_js.py - folded in here 2026-08-04 since it was just a
-  // filtered view of the same source, no separate file needed). "Today" is
-  // computed in Japan time regardless of the visitor's local timezone. Ties
-  // (two+ members sharing a date) are shown stacked, each with its own
-  // line/code. No lang toggle on this public hub, so names are always shown
-  // romanized (Given Family).
   var BDAY_COLLAPSE_KEY = 'uniair_bday_collapsed';
   var BDAY_DAY_KEY = 'uniair_bday_last_seen_day';
   function isBdayOpen() {
-    // Default open (matches the box's pre-2026-08-07 always-expanded
-    // behavior) unless the visitor has explicitly collapsed it before.
     try {
       var v = localStorage.getItem(BDAY_COLLAPSE_KEY);
       if (v === '1') return false;
-    } catch (err) { /* storage disabled */ }
+    } catch (err) { }
     return true;
   }
   (function () {
@@ -233,26 +217,21 @@
       if (!BD || !BD.length) return;
 
       var jstFmt = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Tokyo', year: 'numeric', month: '2-digit', day: '2-digit' });
-      var todayParts = jstFmt.format(new Date()).split('-'); // en-CA => YYYY-MM-DD
+      var todayParts = jstFmt.format(new Date()).split('-'); 
       var todayY = +todayParts[0], todayM = +todayParts[1], todayD = +todayParts[2];
       function pad2(n) { return (n < 10 ? '0' : '') + n; }
       var todayISO = todayY + '-' + pad2(todayM) + '-' + pad2(todayD);
 
-      // New JST day => the message content is different from whatever was
-      // last shown, so re-open even if the visitor had collapsed it
-      // yesterday (2026-08-07). First-ever visit (nothing stored yet) also
-      // counts as "new", which is what keeps the pre-existing
-      // default-open-on-first-visit behavior.
       var lastSeenDay = null;
-      try { lastSeenDay = localStorage.getItem(BDAY_DAY_KEY); } catch (err) { /* storage disabled */ }
+      try { lastSeenDay = localStorage.getItem(BDAY_DAY_KEY); } catch (err) { }
       if (lastSeenDay !== todayISO) {
         try {
           localStorage.setItem(BDAY_DAY_KEY, todayISO);
           localStorage.setItem(BDAY_COLLAPSE_KEY, '0');
-        } catch (err) { /* storage disabled */ }
+        } catch (err) { }
       }
 
-      var outerBox = box; // the fixed-position chip; stays visible collapsed or open
+      var outerBox = box; 
       var toggle = document.createElement('button');
       toggle.type = 'button';
       toggle.className = 'bday-toggle';
@@ -263,11 +242,6 @@
 
       if (isBdayOpen()) outerBox.classList.add('open');
 
-      // Everything below still appends to `box` as before - reassigned here
-      // to the new inner content div so the entry-building code doesn't
-      // need to change. The close button is the first child of that content
-      // div (not the outer box) and floats right, so the text wraps around
-      // it instead of leaving a reserved blank line above the message.
       box = document.createElement('div');
       box.className = 'bday-content';
       var closeBtn = document.createElement('button');
@@ -293,8 +267,6 @@
       function initials(e) { return (e.given.charAt(0) + e.family.charAt(0)).toUpperCase(); }
       function displayName(e) { return e.given + ' ' + e.family; }
       function groupClass(e) { return e.group === 'S' ? 'sakura' : 'hinata'; }
-      // Days from today to (m, d), ignoring year, using a fixed non-leap
-      // reference year so the diff is stable (0 = today, wraps to next year).
       function daysUntil(m, d) {
         var ref = 2001;
         var t0 = Date.UTC(ref, todayM - 1, todayD);
@@ -343,12 +315,8 @@
     }
 
     renderBday();
-    // Refresh hourly so a page left open overnight rolls to the new JST day.
     setInterval(renderBday, 60 * 60 * 1000);
 
-    // Clicking an HBD code copies it to the clipboard (in addition to the
-    // link opening app-pay.jp in a new tab, unaffected). Delegated on the
-    // box itself since renderBday() rebuilds its children on every render.
     function copyToClipboard(text) {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).catch(function () { fallbackCopy(text); });
@@ -363,22 +331,20 @@
       ta.style.left = '-9999px';
       document.body.appendChild(ta);
       ta.select();
-      try { document.execCommand('copy'); } catch (err) { /* ignore */ }
+      try { document.execCommand('copy'); } catch (err) { }
       document.body.removeChild(ta);
     }
     var bdayBox = document.getElementById('bday-box');
     if (bdayBox) {
       bdayBox.addEventListener('click', function (ev) {
-        // .bday-toggle (cake icon) only shows while collapsed and opens it;
-        // .bday-close (×, top-right) only shows while open and closes it.
         if (ev.target.closest && ev.target.closest('.bday-toggle')) {
           bdayBox.classList.add('open');
-          try { localStorage.setItem(BDAY_COLLAPSE_KEY, '0'); } catch (err) { /* storage disabled */ }
+          try { localStorage.setItem(BDAY_COLLAPSE_KEY, '0'); } catch (err) { }
           return;
         }
         if (ev.target.closest && ev.target.closest('.bday-close')) {
           bdayBox.classList.remove('open');
-          try { localStorage.setItem(BDAY_COLLAPSE_KEY, '1'); } catch (err) { /* storage disabled */ }
+          try { localStorage.setItem(BDAY_COLLAPSE_KEY, '1'); } catch (err) { }
           return;
         }
         var t = ev.target.closest && ev.target.closest('.bday-code');
@@ -398,7 +364,6 @@
   })();
 </script>
 <script>
-  // Public hub pages. Update the "file" field here if a page is renamed/replaced.
   var pages = [
     { id: "catalog", label: "Card Database", file: "catalog.html" },
     { id: "songs", label: "Discography", file: "song_overview.html" },
@@ -409,14 +374,9 @@
 
   var tabsEl = document.getElementById('tabs');
   var frameWrap = document.getElementById('frame-wrap');
-  var iframes = []; // parallel array to `pages`, filled below
-  var tabButtons = []; // parallel array to `pages`, filled below
+  var iframes = []; 
+  var tabButtons = []; 
 
-  // Shared by the tab-button click handlers below and by the
-  // "uniair-switch-tab" postMessage listener (2026-08-07) - lets a page
-  // embedded in one tab (e.g. best_teams.html's "see it in the Card
-  // Database" link) ask the hub to switch to another tab instead of
-  // navigating the whole hub away via target="_top".
   function activateTab(i) {
     if (i < 0 || i >= pages.length) return;
     tabButtons.forEach(function (b) { b.classList.remove('active'); });
@@ -425,16 +385,6 @@
     iframes[i].classList.add('active');
   }
 
-  // Cache-busting query param (2026-08-06, per user report of a phone stuck
-  // on a stale kizuna.html despite refreshing, well after the update was
-  // confirmed live on GitHub - i.e. the deploy was fine, the phone's own
-  // HTTP cache just wasn't revalidating on a plain reload). One timestamp
-  // per hub page-load, shared by every tab, appended to each iframe's src
-  // so the browser treats it as a brand-new URL and always fetches over the
-  // network instead of possibly serving a cached copy. Slight cost: tabs
-  // can never be served from cache anymore (always a real fetch), which is
-  // the right trade for a page that changes often and where staleness is a
-  // real recurring problem, not a hypothetical one.
   var cacheBust = 'v=' + Date.now();
 
   pages.forEach(function (page, i) {
@@ -454,10 +404,6 @@
     tab.addEventListener('click', function () { activateTab(i); });
   });
 
-  // A tab's own content can ask the hub to switch to another tab instead of
-  // navigating away with target="_top" (2026-08-07) - e.g. best_teams.html's
-  // "Card Database" / "Kizuna Bond" / "Discography" links. Matched by file
-  // name so the embedded page doesn't need to know the hub's tab order/ids.
   window.addEventListener('message', function (e) {
     var msg = e.data;
     if (!msg || typeof msg !== 'object' || msg.type !== 'uniair-switch-tab') return;
@@ -468,23 +414,6 @@
     if (idx !== -1) activateTab(idx);
   });
 
-  // --- Combined Export/Import -----------------------------------------
-  // Each tab (catalog/songs/kizuna) used to have its own Export/Import
-  // button and file. As of 2026-08 that's consolidated here: the hub
-  // broadcasts a postMessage request to every tab's iframe (all 4 are
-  // already loaded above, not lazy-loaded on tab click, so every tab can
-  // answer immediately regardless of which one is currently visible),
-  // collects the replies, and reads/writes the SAME localStorage keys +
-  // file shapes each tab always used (owned/bond/discography) - so a file
-  // saved here still round-trips with Scott's personal Kizuna/Discography
-  // tools, and an old single-tab export/import file still loads fine here
-  // too. best_teams.html doesn't own any data itself (it only reads the
-  // other three tabs' localStorage), so it's not part of the message
-  // protocol - it just gets reloaded after an Import like the other tabs,
-  // so it re-reads the fresh values.
-  // Gear menu: Export/Import used to sit as always-visible buttons in the
-  // header, tucked behind this icon per Scott's request so the header stays
-  // clean. Pure show/hide, no framework needed.
   var gearBtn = document.getElementById('hub-gear-btn');
   var gearMenu = document.getElementById('hub-gear-menu');
   gearBtn.addEventListener('click', function (e) {
@@ -513,8 +442,6 @@
     return -1;
   }
 
-  // Broadcasts {type, id, ...extra} to every iframe and collects replies of
-  // the given replyType that carry a matching id, keyed by page id.
   function broadcastAndCollect(type, extra, replyType, cb) {
     var id = type + '-' + Date.now() + '-' + Math.random().toString(36).slice(2);
     var replies = {};
@@ -528,7 +455,7 @@
     window.addEventListener('message', onMessage);
     var payload = Object.assign({ type: type, id: id }, extra || {});
     iframes.forEach(function (f) {
-      try { f.contentWindow.postMessage(payload, '*'); } catch (err) { /* not loaded yet */ }
+      try { f.contentWindow.postMessage(payload, '*'); } catch (err) { }
     });
     setTimeout(function () {
       window.removeEventListener('message', onMessage);
@@ -537,11 +464,6 @@
   }
 
   function missingLabels(replies) {
-    // best_teams.html and spotlight.html never answer (neither owns a
-    // snapshot of its own - both are pure readers of the other tabs'
-    // localStorage, plus spotlight.html's own member-picker/bonus-list
-    // settings, which aren't part of this Export/Import) - don't report
-    // them as "missing".
     var silent = { bestteams: true, spotlight: true };
     return pages
       .filter(function (p) { return !silent[p.id] && !(p.id in replies); })
@@ -588,8 +510,6 @@
       try { data = JSON.parse(reader.result); }
       catch (err) { window.alert('That file is not valid JSON - could not load.'); return; }
 
-      // Backward-compat: catalog.html's old standalone export was a bare
-      // array of {member, title}, not wrapped in {owned: [...]}.
       if (Array.isArray(data)) data = { owned: data };
 
       var hasOwned = Array.isArray(data.owned) && data.owned.length > 0;
@@ -613,12 +533,6 @@
         if (replies.kizuna) summary.push('Kizuna ' + (replies.kizuna.changed || 0) + ' updated');
         if (replies.songs) summary.push('Discography ' + (replies.songs.changed || 0) + ' updated');
 
-        // Reload every tab so it re-reads localStorage fresh - the safety
-        // net that makes this reliable even if a tab's ack got lost, and
-        // the only way best_teams.html (a pure reader) ever picks up the
-        // change, since it computes everything once at load time. Uses a
-        // fresh cache-bust value (not just `f.src = f.src`) so this is a
-        // real network fetch, not a same-URL no-op some browsers apply.
         pages.forEach(function (page, i) {
           iframes[i].src = page.file + '?v=' + Date.now();
         });
@@ -632,16 +546,6 @@
     reader.readAsText(file);
   });
 
-  // --- Bulk Import full-page takeover (2026-08-06) ---------------------
-  // import.html normally always starts blank (its own deliberate design -
-  // it's meant for a first-time bulk pass, not a synced view). This block
-  // is the hub-side wiring around that page for three things Scott asked
-  // for: (1) auto-show it, full-page, the very first time a visitor has
-  // zero owned cards; (2) a gear-menu button to reopen it any time, which
-  // ALSO seeds it from whatever's already owned (via import.html's own
-  // ?seed=1 query flag) so re-entering doesn't mean re-clicking everything;
-  // (3) wire its "Finished!" button back into the hub as if a normal Import
-  // had happened, then offer (not force) a backup-file save afterward.
   var importOverlayFrame = document.getElementById('import-overlay-frame');
 
   function openImportMode(seed) {
@@ -653,16 +557,9 @@
     importOverlayFrame.src = 'about:blank';
   }
 
-  // First-load auto-trigger: only when the shared owned-cards store is
-  // genuinely empty (brand new visitor, or someone who cleared storage).
-  // Reads the same 'uniair_public_owned' key catalog.html/import.html both
-  // use, directly - no need to ask any iframe, nothing is loaded yet. Shows
-  // a one-time welcome dialog first (2026-08-07) explaining what Bulk Add
-  // is for and where to go afterward - Bulk Add itself only opens once
-  // the visitor clicks through it, not before.
   (function () {
     var raw = null;
-    try { raw = localStorage.getItem('uniair_public_owned'); } catch (err) { /* storage disabled */ }
+    try { raw = localStorage.getItem('uniair_public_owned'); } catch (err) { }
     var isEmpty = !raw || raw === '{}' || raw === 'null';
     if (!isEmpty) return;
     var welcomeOverlay = document.getElementById('welcome-overlay');
@@ -675,9 +572,6 @@
     });
   })();
 
-  // Gear menu button: toggles the overlay open (seeded from existing owned
-  // cards, since unlike the first-load case there may well be data already)
-  // or closed if it's already showing - doubles as an early-exit affordance.
   document.getElementById('hub-bulk-import-btn').addEventListener('click', function () {
     gearBtn.classList.remove('open');
     gearMenu.classList.remove('open');
@@ -688,11 +582,6 @@
     }
   });
 
-  // import.html posts this (to window.parent, unprompted) when its
-  // "Finished!" button is clicked while embedded here. Reuses the exact
-  // same import-and-reload plumbing as a manual file Import, then - once
-  // that's done and the hub is back on a normal tab - offers a backup save
-  // the user is free to decline.
   window.addEventListener('message', function (e) {
     var msg = e.data;
     if (!msg || typeof msg !== 'object' || msg.type !== 'uniair-import-finished') return;
@@ -703,7 +592,6 @@
       pages.forEach(function (page, i) { iframes[i].src = page.file + '?v=' + Date.now(); });
       closeImportMode();
 
-      // Land on the Card Database tab so the result is immediately visible.
       var catIdx = -1;
       for (var i = 0; i < pages.length; i++) { if (pages[i].id === 'catalog') { catIdx = i; break; } }
       if (catIdx !== -1) {

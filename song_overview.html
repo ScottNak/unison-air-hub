@@ -12118,13 +12118,6 @@ const SOURCE_FILE = "v76-2026-08-07";
   var overrides = loadOwn();
   function keyOf(song, member) { return song + '::' + member; }
 
-  // Every (song, member) pair can appear in up to two representations - the
-  // Tiles view's .dm-row (with its 5 pips) and the Grid view's single
-  // .grid-cell (2026-07-22, per user's Grid view request: "shows everything
-  // at once"). Both read/write the SAME overrides store, keyed the same
-  // way, so editing either one updates the other immediately if it's also
-  // on the page (grid cells only exist for 'owned'-state pairs - the same
-  // set of pairs the tile view already restricts to).
   var pairs = {};
   document.querySelectorAll('.dm-row').forEach(function(row) {
     var key = keyOf(row.dataset.song, row.dataset.member);
@@ -12135,17 +12128,9 @@ const SOURCE_FILE = "v76-2026-08-07";
     var key = keyOf(cell.dataset.song, cell.dataset.member);
     pairs[key] = pairs[key] || { baseline: parseInt(cell.dataset.baseline, 10) };
     pairs[key].gridCell = cell;
-    // Coached cells share the .grid-cell-owned class (same interaction),
-    // but refreshPair() rebuilds className from scratch on every edit - it
-    // needs to know to re-add grid-cell-coached or the amber styling would
-    // be lost after the first click (2026-07-23).
     pairs[key].coached = cell.classList.contains('grid-cell-coached');
   });
 
-  // Total column (2026-07-22, per user request): sum of a member's owned
-  // levels across their row, kept live as cells are edited rather than
-  // frozen at the page's baseline snapshot. Built from each row's actual
-  // .grid-cell-owned children so it always matches what's on screen.
   var rowTotals = {};
   document.querySelectorAll('.grid-total-col[data-member]').forEach(function(cell) {
     var tr = cell.closest('tr');
@@ -12205,8 +12190,6 @@ const SOURCE_FILE = "v76-2026-08-07";
   Object.keys(pairs).forEach(refreshPair);
   Object.keys(rowTotals).forEach(refreshRowTotal);
 
-  // Tiles view: click a pip to jump straight to that level (click the
-  // already-active pip again to clear to 0).
   document.querySelectorAll('.dm-row').forEach(function(row) {
     var key = keyOf(row.dataset.song, row.dataset.member);
     row.querySelector('.pips').addEventListener('click', function(ev) {
@@ -12217,8 +12200,6 @@ const SOURCE_FILE = "v76-2026-08-07";
     });
   });
 
-  // Grid view: a cell has no room for 5 pips, so a click just cycles the
-  // level up by one step (100), wrapping from 500 back to 0.
   document.querySelectorAll('.grid-cell-owned').forEach(function(cell) {
     var key = keyOf(cell.dataset.song, cell.dataset.member);
     cell.addEventListener('click', function() {
@@ -12227,7 +12208,6 @@ const SOURCE_FILE = "v76-2026-08-07";
     });
   });
 
-  // Tiles <-> Grid view toggle
   document.querySelectorAll('.mode-switch-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       document.querySelectorAll('.mode-switch-btn').forEach(function(b) { b.classList.remove('active'); });
@@ -12239,7 +12219,6 @@ const SOURCE_FILE = "v76-2026-08-07";
     });
   });
 
-  // Grid view: Hinatazaka <-> Sakurazaka sub-tabs
   document.querySelectorAll('.grid-group-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       document.querySelectorAll('.grid-group-btn').forEach(function(b) { b.classList.remove('active'); });
@@ -12251,15 +12230,6 @@ const SOURCE_FILE = "v76-2026-08-07";
     });
   });
 
-  // JP/EN toggle - driven by hub.html via postMessage (top-right 日本|EN
-  // toggle there), same mechanism kizuna_live.py uses. Every element that
-  // has a language-swappable label carries both data-*-jp and data-*-en
-  // (member names via data-name-jp/-en, group labels via
-  // data-label-jp/-en) so one generic pass handles the Tiles view's
-  // .dm-name spans, the Grid view's member-column cells, and both views'
-  // Hinatazaka/Sakurazaka headers at once (2026-07-22, per user request).
-  // Defaults to JP, matching hub.html's default and kizuna_live.py, so the
-  // page also looks right opened standalone (no message ever arrives then).
   function applyLanguage(lang) {
     document.querySelectorAll('[data-name-en]').forEach(function(el) {
       el.textContent = (lang === 'EN') ? el.dataset.nameEn : el.dataset.nameJp;
@@ -12275,7 +12245,6 @@ const SOURCE_FILE = "v76-2026-08-07";
     }
   });
 
-  // Filter by song or member name (Tiles view only)
   var filterEl = document.getElementById('disco-filter');
   if (filterEl) {
     filterEl.addEventListener('input', function(e) {
@@ -12291,7 +12260,6 @@ const SOURCE_FILE = "v76-2026-08-07";
     });
   }
 
-  // Show edited only (Tiles view only)
   var showingEditedOnly = false;
   var showEditedBtn = document.getElementById('disco-show-edited');
   if (showEditedBtn) {
@@ -12310,8 +12278,6 @@ const SOURCE_FILE = "v76-2026-08-07";
     });
   }
 
-  // Save: commit every pair's current value as the new baseline (clears the
-  // gold ring in both views) without downloading anything.
   var saveBaselineBtn = document.getElementById('disco-save-baseline');
   if (saveBaselineBtn) {
     saveBaselineBtn.addEventListener('click', function() {
@@ -12361,12 +12327,6 @@ const SOURCE_FILE = "v76-2026-08-07";
         var data;
         try { data = JSON.parse(reader.result); }
         catch (err) { window.alert('That file is not valid JSON - could not load.'); return; }
-        // Preserve any other top-level key (bond, or a legacy Kizuna-only
-        // "values" key) verbatim for the next "Save to file", done BEFORE
-        // the discography-specific checks below so a file that's entirely
-        // foreign to this page (e.g. a Kizuna-only save with no
-        // discography key at all) still gets cached for pass-through
-        // instead of being rejected outright.
         var foreign = {};
         for (var key in (data || {})) { if (key !== 'discography' && key !== 'savedAt' && key !== 'sources') foreign[key] = data[key]; }
         if (Object.keys(foreign).length) saveForeign(foreign);
