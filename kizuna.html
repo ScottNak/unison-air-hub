@@ -90,8 +90,11 @@
   .diamond-badge {
     position: absolute; left: 50%; top: 100px; transform: translateX(-50%);
     width: 136px; text-align: center; font-size: 20px; font-weight: 800;
-    color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.5); pointer-events: none;
+    color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.5); cursor: text;
+    border-radius: 4px; outline: none;
   }
+  .diamond-badge:hover { background: rgba(0,0,0,0.18); }
+  .diamond-badge:focus { background: rgba(0,0,0,0.32); box-shadow: 0 0 0 2px rgba(255,255,255,0.85); }
   
 
   .name {
@@ -134,7 +137,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v1</div>
+<div class="page-version-badge">v2</div>
 <div class="wrap">
   <div class="group-tab-bar" id="group-tab-bar"></div>
   <div id="groups"></div>
@@ -269,17 +272,24 @@ GROUP_ORDER.forEach(function(groupName, idx) {
     
     var diamondBadge = document.createElement('div');
     diamondBadge.className = 'diamond-badge';
+    diamondBadge.contentEditable = 'true';
+    diamondBadge.spellcheck = false;
+    diamondBadge.setAttribute('inputmode', 'numeric');
+    diamondBadge.setAttribute('role', 'textbox');
+    diamondBadge.setAttribute('aria-label', 'Bond value for ' + m.name);
     diamondWrap.appendChild(diamondBadge);
 
     var minusBtn = document.createElement('button');
     minusBtn.type = 'button';
     minusBtn.className = 'step-btn step-minus';
     minusBtn.textContent = '−';
+    minusBtn.tabIndex = -1;
     minusBtn.setAttribute('aria-label', 'Decrease ' + m.name + ' bond');
     var plusBtn = document.createElement('button');
     plusBtn.type = 'button';
     plusBtn.className = 'step-btn step-plus';
     plusBtn.textContent = '+';
+    plusBtn.tabIndex = -1;
     plusBtn.setAttribute('aria-label', 'Increase ' + m.name + ' bond');
     diamondWrap.appendChild(minusBtn);
     diamondWrap.appendChild(plusBtn);
@@ -292,7 +302,7 @@ GROUP_ORDER.forEach(function(groupName, idx) {
     
     
     diamondWrap.addEventListener('click', function(e) {
-      if (e.target.closest('.step-btn')) return;
+      if (e.target.closest('.step-btn') || e.target.closest('.diamond-badge')) return;
       diamondWrap.classList.toggle('controls-open');
     });
     tile.appendChild(diamondWrap);
@@ -312,6 +322,40 @@ GROUP_ORDER.forEach(function(groupName, idx) {
     }
     attachStepper(minusBtn, function() { applyDelta(-1); });
     attachStepper(plusBtn, function() { applyDelta(1); });
+
+    function commitBadgeEdit() {
+      var digits = diamondBadge.textContent.replace(/\D/g, '');
+      var val = digits === '' ? 0 : parseInt(digits, 10);
+      if (isNaN(val) || val < 0) val = 0;
+      var key = groupName + '::' + m.name;
+      overrides[key] = val;
+      saveOverrides(overrides);
+      refreshTileState(tile, groupName, m.name);
+    }
+    diamondBadge.addEventListener('click', function(e) { e.stopPropagation(); });
+    diamondBadge.addEventListener('focus', function() {
+      var range = document.createRange();
+      range.selectNodeContents(diamondBadge);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    });
+    diamondBadge.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        diamondBadge.blur();
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        refreshTileState(tile, groupName, m.name);
+        diamondBadge.blur();
+      } else if (e.metaKey || e.ctrlKey) {
+        
+      } else if (!/^[0-9]$/.test(e.key) &&
+                  ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'].indexOf(e.key) === -1) {
+        e.preventDefault();
+      }
+    });
+    diamondBadge.addEventListener('blur', commitBadgeEdit);
 
     refreshTileState(tile, groupName, m.name);
     grid.appendChild(tile);

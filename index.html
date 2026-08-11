@@ -164,7 +164,7 @@
     <input type="file" id="hub-import-file" accept="application/json" style="display:none">
     <span class="save-note" id="hub-save-note">&nbsp;</span>
   </div>
-  <div class="page-version-badge">v1</div>
+  <div class="page-version-badge">v2</div>
 </header>
 
 <div class="bday-box" id="bday-box"></div>
@@ -358,6 +358,7 @@
     }
   })();
 </script>
+<script src="page_versions.js"></script>
 <script>
   var pages = [
     { id: "catalog", label: "Card Database", file: "catalog.html" },
@@ -380,7 +381,7 @@
     iframes[i].classList.add('active');
   }
 
-  var cacheBust = 'v=' + Date.now();
+  var pageVersions = window.UNIAIR_PAGE_VERSIONS || {};
 
   pages.forEach(function (page, i) {
     var tab = document.createElement('button');
@@ -391,7 +392,8 @@
 
     var iframe = document.createElement('iframe');
     iframe.className = i === 0 ? 'active' : '';
-    iframe.src = page.file + '?' + cacheBust;
+    var pv = pageVersions[page.id];
+    iframe.src = page.file + '?v=' + (pv || Date.now());
     iframe.title = page.label;
     frameWrap.appendChild(iframe);
     iframes.push(iframe);
@@ -579,8 +581,20 @@
 
   window.addEventListener('message', function (e) {
     var msg = e.data;
-    if (!msg || typeof msg !== 'object' || msg.type !== 'uniair-import-finished') return;
+    if (!msg || typeof msg !== 'object') return;
     if (e.source !== importOverlayFrame.contentWindow) return;
+
+    // "Close without saving" (2026-08-10) - import.html has already
+    // reverted its own two localStorage stores to their pre-session state
+    // by the time this arrives; the hub just needs to close the overlay,
+    // with none of uniair-import-finished's broadcast/reload/backup-prompt
+    // dance below (there's nothing new to hand off - it was discarded).
+    if (msg.type === 'uniair-import-cancel') {
+      closeImportMode();
+      return;
+    }
+
+    if (msg.type !== 'uniair-import-finished') return;
     var ownedList = Array.isArray(msg.owned) ? msg.owned : [];
 
     broadcastAndCollect('uniair-import-data', { data: { owned: ownedList } }, 'uniair-import-ack', function (replies) {
