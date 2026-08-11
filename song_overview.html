@@ -213,6 +213,9 @@
     background: rgba(0,0,0,0.55); color: #fff; font: 11px/1 -apple-system, sans-serif;
     padding: 3px 7px; border-radius: 6px; pointer-events: none; opacity: 0.5;
   }
+  .page-version-badge.testing {
+    background: #ffeb3b; color: #c62828; font-weight: 800; opacity: 0.95;
+  }
   
   body { padding-top: 8px; }
   .dm-row.dm-row-coached { border-radius: 0; }
@@ -254,6 +257,20 @@
   }
   .mode-switch-btn.active { background: #2d2d42; color: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.25); }
   .mode-switch-btn:hover:not(.active) { color: #333; }
+
+  
+  .show-switch-wrap { display: inline-flex; align-items: center; gap: 8px; }
+  .show-switch-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: #888; }
+  .show-switch {
+    display: inline-flex; background: #eceef4; border-radius: 999px; padding: 3px; gap: 2px;
+    border: 1px solid #d3d5e0; box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .show-switch .show-switch-btn {
+    appearance: none; border: none; cursor: pointer; font-size: 12px; font-weight: 700;
+    padding: 6px 18px; border-radius: 999px; background: transparent; color: #666;
+  }
+  .show-switch .show-switch-btn.active { background: #2d2d42; color: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.25); }
+  .show-switch .show-switch-btn:hover:not(.active) { color: #333; }
 
   
   .wrap { max-width: 97vw; }
@@ -306,20 +323,10 @@
   .dm-row:not(.dm-row-coached) .pip:hover { background: var(--tc, #a99be0); }
 
   
-  .grid-group-sum {
-    margin-left: 6px; padding: 1px 7px; border-radius: 999px; font-size: 10.5px;
-    font-weight: 700; background: var(--tc, #6a4fc9); color: #2d2d42;
-  }
-  .grid-group-btn.active .grid-group-sum { background: rgba(255,255,255,0.55); color: #2d2d42; }
-
-  
-  .group-half h3 .grid-group-sum { background: rgba(255,255,255,0.55); color: #2d2d42; }
-
-  
   .grid-group-tabs { margin-bottom: -1px; }
   .grid-group-btn {
     flex: 1 1 0; text-align: center; border: none;
-    font-weight: 800; font-size: 14px; padding: 12px 22px; border-radius: 12px 12px 0 0;
+    font-weight: 800; font-size: 18px; padding: 12px 22px; border-radius: 12px 12px 0 0;
     background: rgba(45,45,66,0.06); color: #2d2d42;
     transition: background .12s ease, color .12s ease;
   }
@@ -362,10 +369,14 @@
   .gf-count-head { z-index: 4; top: 0; }
   
   table.disco-grid-flip th[data-col-boundary], table.disco-grid-flip td[data-col-boundary] { border-left: 3px solid #6a6a8a; }
+
+  
+  .gf-song-head.hl, .gf-member-head.hl { box-shadow: inset 0 0 0 2px var(--tc, #4a90d9); }
+  td.grid-cell.hl { box-shadow: inset 0 0 0 2px var(--tc, #4a90d9); }
 </style>
 </head>
 <body>
-  <div class="page-version-badge">v1</div>
+  <div class="page-version-badge">v2</div>
   <div class="wrap">
     
     <div class="section-card">
@@ -386,11 +397,17 @@
         <div class="toolbar">
           <button class="secondary" id="disco-expand-all">Expand all</button>
           <button class="secondary" id="disco-collapse-all">Collapse all</button>
-          <button class="secondary" id="disco-show-edited">Show edited only</button>
+          <div class="show-switch-wrap">
+            <span class="show-switch-label">Show</span>
+            <div class="show-switch" role="group" aria-label="Show mode">
+              <button type="button" class="show-switch-btn active" id="disco-show-all">All</button>
+              <button type="button" class="show-switch-btn" id="disco-show-incomplete">Incomplete</button>
+            </div>
+          </div>
         </div>
         <div class="group-halves">
           <div class="group-half" style="--tc:#7CC7E8">
-            <h3><span data-label-jp="日向坂" data-label-en="Hinatazaka">日向坂</span><span class="grid-group-sum" data-grid-group-sum="HINATA">0</span></h3>
+            <h3><span data-label-jp="日向坂" data-label-en="Hinatazaka">日向坂</span></h3>
             <div class="song-grid">
         <details class="song-tile">
           <summary class="song-tile-head">
@@ -5959,7 +5976,7 @@
         </details></div>
           </div>
           <div class="group-half" style="--tc:#F19DB5">
-            <h3><span data-label-jp="櫻坂" data-label-en="Sakurazaka">櫻坂</span><span class="grid-group-sum" data-grid-group-sum="SAKURA">0</span></h3>
+            <h3><span data-label-jp="櫻坂" data-label-en="Sakurazaka">櫻坂</span></h3>
             <div class="song-grid">
         <details class="song-tile">
           <summary class="song-tile-head">
@@ -11774,11 +11791,9 @@
       <div class="grid-group-tabs">
         <button class="grid-group-btn active" data-grid-group-btn="HINATA" style="--tc:#7CC7E8">
           <span data-label-jp="日向坂" data-label-en="Hinatazaka">日向坂</span>
-          <span class="grid-group-sum" data-grid-group-sum="HINATA">0</span>
         </button>
         <button class="grid-group-btn" data-grid-group-btn="SAKURA" style="--tc:#F19DB5">
           <span data-label-jp="櫻坂" data-label-en="Sakurazaka">櫻坂</span>
-          <span class="grid-group-sum" data-grid-group-sum="SAKURA">0</span>
         </button>
       </div>
       
@@ -11811,7 +11826,7 @@
     </div>
   </div>
 <script>
-const SOURCE_FILE = "v81-2026-08-07";
+const SOURCE_FILE = "v81-2026-08-10";
 </script>
 <script>
 (function() {
@@ -12216,26 +12231,48 @@ const SOURCE_FILE = "v81-2026-08-07";
 </script>
 <script>
 (function() {
+  var showIncompleteOnly = false;
+  var showAllBtn = document.getElementById('disco-show-all');
+  var showIncompleteBtn = document.getElementById('disco-show-incomplete');
+
   function refreshSongCounts() {
     document.querySelectorAll('.song-tile').forEach(function(tile) {
       var notMaxed = 0, coachable = 0;
       tile.querySelectorAll('.dm-row').forEach(function(row) {
         var valEl = row.querySelector('.dm-value');
         var level = valEl ? (parseInt(valEl.textContent, 10) || 0) : 0;
-        if (level >= 500) return;
-        if (row.classList.contains('dm-row-coached')) {
-          coachable++;
-        } else if (!row.classList.contains('dm-row-unowned')) {
-          notMaxed++;
+        var coached = row.classList.contains('dm-row-coached');
+        var unowned = row.classList.contains('dm-row-unowned');
+        var incomplete = !coached && !unowned && level < 500;
+        if (level < 500) {
+          if (coached) coachable++;
+          else if (!unowned) notMaxed++;
         }
+        row.classList.toggle('hidden', showIncompleteOnly && !incomplete);
       });
       var countsEl = tile.querySelector('.song-counts');
       if (countsEl) {
-        countsEl.innerHTML = '<b>' + notMaxed + '</b> not maxed yet (<b>' + coachable + '</b> coachable)';
+        countsEl.innerHTML = showIncompleteOnly
+          ? '<b>' + notMaxed + '</b> not maxed yet'
+          : '<b>' + notMaxed + '</b> not maxed yet (<b>' + coachable + '</b> coachable)';
+      }
+      if (showIncompleteOnly) {
+        tile.classList.toggle('hidden', notMaxed === 0);
+      } else {
+        tile.classList.remove('hidden');
       }
     });
   }
   refreshSongCounts();
+
+  function setShowMode(incomplete) {
+    showIncompleteOnly = incomplete;
+    if (showAllBtn) showAllBtn.classList.toggle('active', !incomplete);
+    if (showIncompleteBtn) showIncompleteBtn.classList.toggle('active', incomplete);
+    refreshSongCounts();
+  }
+  if (showAllBtn) showAllBtn.addEventListener('click', function() { setShowMode(false); });
+  if (showIncompleteBtn) showIncompleteBtn.addEventListener('click', function() { setShowMode(true); });
 
   var pending = false;
   function scheduleRefresh() {
@@ -12246,39 +12283,6 @@ const SOURCE_FILE = "v81-2026-08-07";
   var observer = new MutationObserver(scheduleRefresh);
   document.querySelectorAll('.dm-list').forEach(function(list) {
     observer.observe(list, { characterData: true, childList: true, subtree: true });
-  });
-})();
-</script>
-<script>
-(function() {
-  function sumGroup(group) {
-    var scroll = document.querySelector('.grid-scroll[data-grid-group="' + group + '"]');
-    if (!scroll) return 0;
-    var total = 0;
-    scroll.querySelectorAll('td.grid-cell-owned[data-level]').forEach(function(cell) {
-      total += parseInt(cell.dataset.level, 10) || 0;
-    });
-    return total;
-  }
-  function refreshGroupSums() {
-    ['HINATA', 'SAKURA'].forEach(function(group) {
-      var text = sumGroup(group).toLocaleString();
-      document.querySelectorAll('.grid-group-sum[data-grid-group-sum="' + group + '"]').forEach(function(el) {
-        el.textContent = text;
-      });
-    });
-  }
-  refreshGroupSums();
-
-  var pending = false;
-  function scheduleRefresh() {
-    if (pending) return;
-    pending = true;
-    requestAnimationFrame(function() { pending = false; refreshGroupSums(); });
-  }
-  var observer = new MutationObserver(scheduleRefresh);
-  document.querySelectorAll('td.grid-cell-owned').forEach(function(cell) {
-    observer.observe(cell, { attributes: true, attributeFilter: ['data-level'] });
   });
 })();
 </script>
@@ -12296,6 +12300,55 @@ const SOURCE_FILE = "v81-2026-08-07";
       document.querySelectorAll('.song-tile').forEach(function(t) { t.removeAttribute('open'); });
     });
   }
+})();
+</script>
+<script>
+(function() {
+  document.querySelectorAll('.grid-scroll').forEach(function(scroll) {
+    var table = scroll.querySelector('table.disco-grid-flip');
+    if (!table) return;
+    var tbody = table.querySelector('tbody');
+    var memberHeaders = Array.prototype.slice.call(table.querySelectorAll('thead th.gf-member-head'));
+    var lastRow = null, lastCol = null, lastCell = null;
+
+    tbody.addEventListener('mouseover', function(e) {
+      var td = e.target.closest('td');
+      if (!td || !tbody.contains(td)) return;
+      var tr = td.closest('tr');
+
+      var rowCell = tr.querySelector('td.gf-song-head');
+      if (rowCell !== lastRow) {
+        if (lastRow) lastRow.classList.remove('hl');
+        if (rowCell) rowCell.classList.add('hl');
+        lastRow = rowCell;
+      }
+
+      var idx = td.cellIndex - 2;
+      var colCell = idx >= 0 ? memberHeaders[idx] : null;
+      if (colCell !== lastCol) {
+        if (lastCol) lastCol.classList.remove('hl');
+        if (colCell) colCell.classList.add('hl');
+        lastCol = colCell;
+      }
+
+      var isDataCell = td.classList.contains('grid-cell');
+      if (isDataCell && td !== lastCell) {
+        if (lastCell) lastCell.classList.remove('hl');
+        td.classList.add('hl');
+        lastCell = td;
+      } else if (!isDataCell && lastCell) {
+        lastCell.classList.remove('hl');
+        lastCell = null;
+      }
+    });
+
+    tbody.addEventListener('mouseleave', function() {
+      if (lastRow) lastRow.classList.remove('hl');
+      if (lastCol) lastCol.classList.remove('hl');
+      if (lastCell) lastCell.classList.remove('hl');
+      lastRow = null; lastCol = null; lastCell = null;
+    });
+  });
 })();
 </script>
 </body>
