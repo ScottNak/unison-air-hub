@@ -1,0 +1,546 @@
+[
+ {
+  "name": "ALL25%",
+  "lsvo": 0.25,
+  "lsda": 0.25,
+  "lspe": 0.25,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "ALL35%",
+  "lsvo": 0.35,
+  "lsda": 0.35,
+  "lspe": 0.35,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "ALL40%",
+  "lsvo": 0.4,
+  "lsda": 0.4,
+  "lspe": 0.4,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "ALL40%+スキル発動率1.8倍",
+  "lsvo": 0.4,
+  "lsda": 0.4,
+  "lspe": 0.4,
+  "skHatsu": 1.8,
+  "stellerCode": null
+ },
+ {
+  "name": "ALL40%+自身と同じタイプのセンタースキルのうち、Vo・Da・Peアップ効果を全て合算し、0.5倍（ALLで0.8倍）で発動",
+  "lsvo": 0.4,
+  "lsda": 0.4,
+  "lspe": 0.4,
+  "skHatsu": 0,
+  "stellerCode": "AT"
+ },
+ {
+  "name": "ALL45%",
+  "lsvo": 0.45,
+  "lsda": 0.45,
+  "lspe": 0.45,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Center Skill",
+  "lsvo": 0,
+  "lsda": 0,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Da70%",
+  "lsvo": 0,
+  "lsda": 0.7,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Da70%+仕上50%アップ",
+  "lsvo": 0,
+  "lsda": 0.7,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Da70%+仕上がり度25%",
+  "lsvo": 0,
+  "lsda": 0.7,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Da70%+仕上がり度50%",
+  "lsvo": 0,
+  "lsda": 0.7,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Da70%+全タイプ Vo40%",
+  "lsvo": 0.4,
+  "lsda": 0.7,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Da85%",
+  "lsvo": 0,
+  "lsda": 0.85,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Da85%+自身と同じタイプのセンタースキルのうち、Daアップ効果のみを合算して0.7倍（ALLで0.8倍）で発動、VoとPeの値を0にする",
+  "lsvo": 0,
+  "lsda": 0.85,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": "D"
+ },
+ {
+  "name": "Da85%+自身と同じタイプのセンタースキルのうち、Daアップ効果のみを合算して0.7倍（ALLで0.8倍）で発動&VoとPeの値を0にする",
+  "lsvo": 0,
+  "lsda": 0.85,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": "D"
+ },
+ {
+  "name": "Da85%+自身と同じタイプのセンタースキルのうち、各パラメータの最も高い効果をそれぞれ0.65倍（ALLで0.8倍）で発動",
+  "lsvo": 0,
+  "lsda": 0.85,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": "AB"
+ },
+ {
+  "name": "Da90%",
+  "lsvo": 0,
+  "lsda": 0.9,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Da90%+スキル発動率1.8倍",
+  "lsvo": 0,
+  "lsda": 0.9,
+  "lspe": 0,
+  "skHatsu": 1.8,
+  "stellerCode": null
+ },
+ {
+  "name": "DaPe40%",
+  "lsvo": 0,
+  "lsda": 0.4,
+  "lspe": 0.4,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "DaPe50%",
+  "lsvo": 0,
+  "lsda": 0.5,
+  "lspe": 0.5,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "DaPe50%+全タイプ Vo15%",
+  "lsvo": 0.15,
+  "lsda": 0.5,
+  "lspe": 0.5,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "DaPe55%",
+  "lsvo": 0,
+  "lsda": 0.55,
+  "lspe": 0.55,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "DaPe55%+スキル発動率1.8倍",
+  "lsvo": 0,
+  "lsda": 0.55,
+  "lspe": 0.55,
+  "skHatsu": 1.8,
+  "stellerCode": null
+ },
+ {
+  "name": "DaPe55%+自身と同じタイプのセンタースキルのうち、DaとPeのアップ効果のみを合算して0.6倍（ALLで0.8倍）で発動、Voの値を0にする",
+  "lsvo": 0,
+  "lsda": 0.55,
+  "lspe": 0.55,
+  "skHatsu": 0,
+  "stellerCode": "DP"
+ },
+ {
+  "name": "DaPe55%+自身と同じタイプのセンタースキルのうち、DaとPeのアップ効果のみを合算して0.6倍（ALLで0.8倍）で発動&Voの値を0にする",
+  "lsvo": 0,
+  "lsda": 0.55,
+  "lspe": 0.55,
+  "skHatsu": 0,
+  "stellerCode": "DP"
+ },
+ {
+  "name": "Pe70%",
+  "lsvo": 0,
+  "lsda": 0,
+  "lspe": 0.7,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Pe70%+仕上がり度25%",
+  "lsvo": 0,
+  "lsda": 0,
+  "lspe": 0.7,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Pe70%+仕上がり度50%",
+  "lsvo": 0,
+  "lsda": 0,
+  "lspe": 0.7,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Pe70%+全タイプ Da40%",
+  "lsvo": 0,
+  "lsda": 0.4,
+  "lspe": 0.7,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Pe70%+全タイプ Vo40%",
+  "lsvo": 0.4,
+  "lsda": 0,
+  "lspe": 0.7,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Pe85%",
+  "lsvo": 0,
+  "lsda": 0,
+  "lspe": 0.85,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Pe85%+自身と同じタイプのセンタースキルのうち、Peアップ効果のみを合算して0.7倍（ALLで0.8倍）で発動、VoとDaの値を0にする",
+  "lsvo": 0,
+  "lsda": 0,
+  "lspe": 0.85,
+  "skHatsu": 0,
+  "stellerCode": "P"
+ },
+ {
+  "name": "Pe85%+自身と同じタイプのセンタースキルのうち、Vo・Da・Peアップ効果を全て合算し、0.5倍（ALLで0.8倍）で発動",
+  "lsvo": 0,
+  "lsda": 0,
+  "lspe": 0.85,
+  "skHatsu": 0,
+  "stellerCode": "AT"
+ },
+ {
+  "name": "Pe85%+自身と同じタイプのセンタースキルのうち、各パラメータの最も高い効果をそれぞれ0.65倍（ALLで0.8倍）で発動",
+  "lsvo": 0,
+  "lsda": 0,
+  "lspe": 0.85,
+  "skHatsu": 0,
+  "stellerCode": "AB"
+ },
+ {
+  "name": "Pe90%",
+  "lsvo": 0,
+  "lsda": 0,
+  "lspe": 0.9,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Pe90%+スキル発動率1.8倍",
+  "lsvo": 0,
+  "lsda": 0,
+  "lspe": 0.9,
+  "skHatsu": 1.8,
+  "stellerCode": null
+ },
+ {
+  "name": "Vo70%",
+  "lsvo": 0.7,
+  "lsda": 0,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Vo70%+仕上がり度25%",
+  "lsvo": 0.7,
+  "lsda": 0,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Vo70%+仕上がり度50%",
+  "lsvo": 0.7,
+  "lsda": 0,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Vo70%+全タイプ Da40%",
+  "lsvo": 0.7,
+  "lsda": 0.4,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Vo70%+全タイプ Pe40%",
+  "lsvo": 0.7,
+  "lsda": 0,
+  "lspe": 0.4,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Vo85%",
+  "lsvo": 0.85,
+  "lsda": 0,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Vo85%+自身と同じタイプのセンタースキルのうち、Vo・Da・Peアップ効果を全て合算し、0.5倍（ALLで0.8倍）で発動",
+  "lsvo": 0.85,
+  "lsda": 0,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": "AT"
+ },
+ {
+  "name": "Vo85%+自身と同じタイプのセンタースキルのうち、Voアップ効果のみを合算して0.7倍（ALLで0.8倍）で発動、DaとPeの値を0にする",
+  "lsvo": 0.85,
+  "lsda": 0,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": "V"
+ },
+ {
+  "name": "Vo85%+自身と同じタイプのセンタースキルのうち、Voアップ効果のみを合算して0.7倍（ALLで0.8倍）で発動&DaとPeの値を0にする",
+  "lsvo": 0.85,
+  "lsda": 0,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": "V"
+ },
+ {
+  "name": "Vo85%+自身と同じタイプのセンタースキルのうち、各パラメータの最も高い効果をそれぞれ0.65倍（ALLで0.8倍）で発動",
+  "lsvo": 0.85,
+  "lsda": 0,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": "AB"
+ },
+ {
+  "name": "Vo90%",
+  "lsvo": 0.9,
+  "lsda": 0,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "Vo90%+スキル発動率1.8倍",
+  "lsvo": 0.9,
+  "lsda": 0,
+  "lspe": 0,
+  "skHatsu": 1.8,
+  "stellerCode": null
+ },
+ {
+  "name": "VoDa40%",
+  "lsvo": 0.4,
+  "lsda": 0.4,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "VoDa50%",
+  "lsvo": 0.5,
+  "lsda": 0.5,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "VoDa50%+全タイプ Pe15%",
+  "lsvo": 0.5,
+  "lsda": 0.5,
+  "lspe": 0.15,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "VoDa55%",
+  "lsvo": 0.55,
+  "lsda": 0.55,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "VoDa55%+スキル発動率1.8倍",
+  "lsvo": 0.55,
+  "lsda": 0.55,
+  "lspe": 0,
+  "skHatsu": 1.8,
+  "stellerCode": null
+ },
+ {
+  "name": "VoDa55%+自身と同じタイプのセンタースキルのうち、VoとDaのアップ効果のみを合算して0.6倍（ALLで0.8倍）で発動、Peの値を0にする",
+  "lsvo": 0.55,
+  "lsda": 0.55,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": "VD"
+ },
+ {
+  "name": "VoPe40%",
+  "lsvo": 0.4,
+  "lsda": 0,
+  "lspe": 0.4,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "VoPe50%",
+  "lsvo": 0.5,
+  "lsda": 0,
+  "lspe": 0.5,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "VoPe50%+全タイプ Da15%",
+  "lsvo": 0.5,
+  "lsda": 0.15,
+  "lspe": 0.5,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "VoPe55%",
+  "lsvo": 0.55,
+  "lsda": 0,
+  "lspe": 0.55,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "VoPe55%+スキル発動率1.8倍",
+  "lsvo": 0.55,
+  "lsda": 0,
+  "lspe": 0.55,
+  "skHatsu": 1.8,
+  "stellerCode": null
+ },
+ {
+  "name": "VoPe55%+自身と同じタイプのセンタースキルのうち、VoとPeのアップ効果のみを合算して0.6倍（ALLで0.8倍）で発動、Daの値を0にする",
+  "lsvo": 0.55,
+  "lsda": 0,
+  "lspe": 0.55,
+  "skHatsu": 0,
+  "stellerCode": "VP"
+ },
+ {
+  "name": "スキル発動率2.25倍",
+  "lsvo": 0,
+  "lsda": 0,
+  "lspe": 0,
+  "skHatsu": 2.25,
+  "stellerCode": null
+ },
+ {
+  "name": "スキル発動率2.25倍+自身と同じタイプのセンタースキルのうち、各パラメータの最も高い効果をそれぞれ0.65倍（ALLで0.8倍）で発動",
+  "lsvo": 0,
+  "lsda": 0,
+  "lspe": 0,
+  "skHatsu": 2.25,
+  "stellerCode": "AB"
+ },
+ {
+  "name": "全タイプ Da70%",
+  "lsvo": 0,
+  "lsda": 0.7,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "全タイプ Da85%",
+  "lsvo": 0,
+  "lsda": 0.85,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "全タイプ Pe70%",
+  "lsvo": 0,
+  "lsda": 0,
+  "lspe": 0.7,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "全タイプ Pe85%",
+  "lsvo": 0,
+  "lsda": 0,
+  "lspe": 0.85,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "全タイプ Vo70%",
+  "lsvo": 0.7,
+  "lsda": 0,
+  "lspe": 0,
+  "skHatsu": 0,
+  "stellerCode": null
+ },
+ {
+  "name": "ALL45%+自身と同じタイプのセンタースキルのうち、Vo・Da・Peアップ効果を全て合算し、0.5倍（ALLで0.8倍）で発動",
+  "lsvo": 0.45,
+  "lsda": 0.45,
+  "lspe": 0.45,
+  "skHatsu": 0,
+  "stellerCode": "AT"
+ }
+]

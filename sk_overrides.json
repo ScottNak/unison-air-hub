@@ -1,0 +1,105 @@
+{
+ "note": "Cards whose SK value collides with another parameter row in score_bonus.json and which belong to the row the readers would otherwise discard. Resolved from zawa raw skill text by export_sk_overrides.py - see that script for the full story.",
+ "overrides": [
+  {
+   "member": "上村ひなの",
+   "title": "月と星が踊るMidnight+",
+   "sk": 0.025,
+   "s": 4,
+   "p": 35,
+   "t": 3,
+   "X": 12,
+   "Y": null
+  },
+  {
+   "member": "中嶋優月",
+   "title": "夏の近道+",
+   "sk": 0.025,
+   "s": 4,
+   "p": 35,
+   "t": 3,
+   "X": 12,
+   "Y": null
+  },
+  {
+   "member": "宮田愛萌",
+   "title": "ハッピーオーラ+",
+   "sk": 0.025,
+   "s": 4,
+   "p": 35,
+   "t": 3,
+   "X": 12,
+   "Y": null
+  },
+  {
+   "member": "東村芽依",
+   "title": "ってか+",
+   "sk": 0.025,
+   "s": 4,
+   "p": 35,
+   "t": 3,
+   "X": 12,
+   "Y": null
+  },
+  {
+   "member": "森田ひかる",
+   "title": "桜月+",
+   "sk": 0.025,
+   "s": 4,
+   "p": 35,
+   "t": 3,
+   "X": 12,
+   "Y": null
+  },
+  {
+   "member": "石森璃花",
+   "title": "MV マモリビト",
+   "sk": 0.025,
+   "s": 4,
+   "p": 35,
+   "t": 3,
+   "X": 12,
+   "Y": null
+  },
+  {
+   "member": "金村美玖",
+   "title": "期待していない自分+",
+   "sk": 0.025,
+   "s": 4,
+   "p": 35,
+   "t": 3,
+   "X": 12,
+   "Y": null
+  },
+  {
+   "member": "齋藤冬優花",
+   "title": "ガラスを割れ！+",
+   "sk": 0.025,
+   "s": 4,
+   "p": 35,
+   "t": 3,
+   "X": 12,
+   "Y": null
+  },
+  {
+   "member": "東村芽依",
+   "title": "MV 真夜中の懺悔大会",
+   "sk": 0.0334,
+   "s": 9,
+   "p": 55,
+   "t": 4,
+   "X": 0,
+   "Y": 51
+  },
+  {
+   "member": "齋藤冬優花",
+   "title": "MV 車間距離",
+   "sk": 0.0334,
+   "s": 9,
+   "p": 55,
+   "t": 4,
+   "X": 0,
+   "Y": 51
+  }
+ ]
+}
