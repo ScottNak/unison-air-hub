@@ -1,0 +1,166 @@
+{
+ "note": "Which variant a card really uses, for songs on a colliding SK value that is not covered. Checked in-game by Scott. The two variants of every colliding SK differ in kind (score bonus vs combo bonus), so a single glance settles it, and the variant is constant across all cards of a song (verified: 204 resolved song-groups, zero exceptions).",
+ "confirmed": [
+  {
+   "song": "11th Single ひなた坂46 LIVE FL 錆つかない剣を持て！",
+   "sk": 0.0173,
+   "kind": "SCORE",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  },
+  {
+   "song": "2nd TOUR",
+   "sk": 0.0173,
+   "kind": "SCORE",
+   "variant": 1,
+   "source": "assumed (no info found) - Scott 2026-08-14"
+  },
+  {
+   "song": "BAN",
+   "sk": 0.0173,
+   "kind": "SCORE",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  },
+  {
+   "song": "Dead end",
+   "sk": 0.0173,
+   "kind": "SCORE",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  },
+  {
+   "song": "Nobody",
+   "sk": 0.0173,
+   "kind": "SCORE",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  },
+  {
+   "song": "ってか",
+   "sk": 0.0173,
+   "kind": "SCORE",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  },
+  {
+   "song": "アザトカワイイ",
+   "sk": 0.0173,
+   "kind": "SCORE",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  },
+  {
+   "song": "サイレントマジョリティー",
+   "sk": 0.0173,
+   "kind": "SCORE",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  },
+  {
+   "song": "セルリアン・フラワーズ'19",
+   "sk": 0.0173,
+   "kind": "SCORE",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  },
+  {
+   "song": "ロッククライミング",
+   "sk": 0.0173,
+   "kind": "SCORE",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  },
+  {
+   "song": "君はハニーデュー",
+   "sk": 0.0173,
+   "kind": "SCORE",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  },
+  {
+   "song": "君は０から１になれ",
+   "sk": 0.0173,
+   "kind": "SCORE",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  },
+  {
+   "song": "思ったよりも寂しくない",
+   "sk": 0.0173,
+   "kind": "SCORE",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  },
+  {
+   "song": "月と星が踊るMidnight",
+   "sk": 0.0173,
+   "kind": "SCORE",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  },
+  {
+   "song": "櫻咲く未来へ、踏み出して",
+   "sk": 0.0173,
+   "kind": "SCORE",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  },
+  {
+   "song": "油を注せ！",
+   "sk": 0.0173,
+   "kind": "SCORE",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  },
+  {
+   "song": "確信的クロワッサン",
+   "sk": 0.0173,
+   "kind": "SCORE",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  },
+  {
+   "song": "錆つかない剣を持て！",
+   "sk": 0.0173,
+   "kind": "SCORE",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  },
+  {
+   "song": "青春の馬",
+   "sk": 0.0173,
+   "kind": "SCORE",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  },
+  {
+   "song": "君は０から１になれ",
+   "sk": 0.025,
+   "kind": "COMBO",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  },
+  {
+   "song": "未来へ、まっすぐに",
+   "sk": 0.025,
+   "kind": "COMBO",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  },
+  {
+   "song": "櫻咲く未来へ、踏み出して",
+   "sk": 0.025,
+   "kind": "COMBO",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  },
+  {
+   "song": "錆つかない剣を持て！",
+   "sk": 0.025,
+   "kind": "COMBO",
+   "variant": 1,
+   "source": "Scott, in-game 2026-08-14"
+  }
+ ]
+}
