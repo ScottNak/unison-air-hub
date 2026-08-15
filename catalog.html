@@ -179,7 +179,7 @@
 </style>
 </head>
 <body>
-  <div class="page-version-badge">v2</div>
+  <div class="page-version-badge">v3</div>
   <div class="wrap">
     <div class="version-row">
       <span id="db-version"></span>
@@ -389,6 +389,7 @@ function buildDisplayRows() {
     rows.push({ base: c, plus: plus || null });
   });
   displayRows = rows;
+  buildCardById();
   reconcileOwnedSet();
   buildMemberList();
 }
@@ -453,7 +454,18 @@ function reconcileOwnedSet() {
 
 const OWNED_KEY = 'uniair_public_owned';
 
-function cardKey(c) { return c.member + '|' + c.title; }
+
+
+
+function cardKey(c) { return c.id; }
+
+
+
+let CARD_BY_ID = {};
+function buildCardById() {
+  CARD_BY_ID = {};
+  CARDS.forEach(c => { CARD_BY_ID[c.id] = c; });
+}
 
 function loadOwned() {
   try { return JSON.parse(localStorage.getItem(OWNED_KEY) || '{}'); } catch (e) { return {}; }
@@ -499,7 +511,7 @@ function upgradeBonusText(row) {
 
 function ownedCell(row) {
   const state = rowState(row);
-  const baseKey = encodeURIComponent(cardKey(row.base));
+  const baseKey = cardKey(row.base);
 
   if (!editOwned) {
     
@@ -507,7 +519,7 @@ function ownedCell(row) {
     
     
     if (state === 'owned' && row.plus) {
-      const plusKey = encodeURIComponent(cardKey(row.plus));
+      const plusKey = cardKey(row.plus);
       return '<button class="upgrade-btn" data-base-key="' + baseKey + '" data-plus-key="' + plusKey
         + '" title="' + esc(upgradeBonusText(row)) + '">&#8593; Upgrade</button>';
     }
@@ -520,7 +532,7 @@ function ownedCell(row) {
   if (state === 'none') {
     return '<button class="owned-btn" data-key="' + baseKey + '">Add</button>';
   }
-  const removeKey = state === 'upgraded' ? encodeURIComponent(cardKey(row.plus)) : baseKey;
+  const removeKey = state === 'upgraded' ? cardKey(row.plus) : baseKey;
   return '<button class="unown-btn" data-key="' + removeKey + '">Remove</button>';
 }
 
@@ -564,9 +576,9 @@ window.addEventListener('message', (e) => {
   const msg = e.data;
   if (!msg || typeof msg !== 'object') return;
   if (msg.type === 'uniair-request-snapshot') {
-    const owned = Object.keys(ownedSet).map(key => {
-      const i = key.indexOf('|');
-      return { member: key.slice(0, i), title: key.slice(i + 1) };
+    const owned = Object.keys(ownedSet).map(id => {
+      const c = CARD_BY_ID[id];
+      return { id: Number(id), member: c ? c.member : null, title: c ? c.title : null };
     });
     e.source.postMessage({ type: 'uniair-snapshot', id: msg.id, owned: owned }, '*');
   } else if (msg.type === 'uniair-import-data') {
@@ -574,8 +586,8 @@ window.addEventListener('message', (e) => {
     let added = 0;
     if (Array.isArray(list)) {
       list.forEach(entry => {
-        if (!entry || !entry.member || !entry.title) return;
-        const key = entry.member + '|' + entry.title;
+        if (!entry || entry.id === undefined || entry.id === null) return;
+        const key = entry.id;
         if (!ownedSet[key]) { ownedSet[key] = true; added++; }
       });
       if (added) {
@@ -593,9 +605,9 @@ tbody.addEventListener('click', (e) => {
   const unownBtn = e.target.closest('.unown-btn');
   const upgradeBtn = e.target.closest('.upgrade-btn');
   if (upgradeBtn) {
-    upgradeCard(decodeURIComponent(upgradeBtn.dataset.baseKey), decodeURIComponent(upgradeBtn.dataset.plusKey));
-  } else if (ownBtn) { markOwned(decodeURIComponent(ownBtn.dataset.key)); }
-  else if (unownBtn) { unmarkOwned(decodeURIComponent(unownBtn.dataset.key)); }
+    upgradeCard(upgradeBtn.dataset.baseKey, upgradeBtn.dataset.plusKey);
+  } else if (ownBtn) { markOwned(ownBtn.dataset.key); }
+  else if (unownBtn) { unmarkOwned(unownBtn.dataset.key); }
 });
 
 
