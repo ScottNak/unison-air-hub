@@ -154,7 +154,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v6</div>
+<div class="page-version-badge">v7</div>
 <div class="wrap">
   <div class="top-bar">
     <button class="settings-btn" id="settings-btn" type="button">⚙ Members &amp; Bonus List</button>
@@ -323,6 +323,25 @@ function loadBonusList() {
   return [];
 }
 function saveBonusList(list) { localStorage.setItem(BONUS_KEY, JSON.stringify(list)); }
+
+window.addEventListener('message', function(e) {
+  var msg = e.data;
+  if (!msg || typeof msg !== 'object') return;
+  if (msg.type === 'uniair-request-snapshot') {
+    e.source.postMessage({ type: 'uniair-snapshot', id: msg.id,
+      spotlightMembers: loadSelectedMembers(), spotlightBonus: loadBonusList() }, '*');
+  } else if (msg.type === 'uniair-import-data') {
+    var data = msg.data || {};
+    var changed = 0;
+    if (Array.isArray(data.spotlightMembers) && data.spotlightMembers.length) {
+      saveSelectedMembers(data.spotlightMembers); changed++;
+    }
+    if (Array.isArray(data.spotlightBonus)) {
+      saveBonusList(data.spotlightBonus); changed++;
+    }
+    e.source.postMessage({ type: 'uniair-import-ack', id: msg.id, page: 'spotlight', changed: changed }, '*');
+  }
+});
 
 
 

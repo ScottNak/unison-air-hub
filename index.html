@@ -164,7 +164,7 @@
     <input type="file" id="hub-import-file" accept="application/json" style="display:none">
     <span class="save-note" id="hub-save-note">&nbsp;</span>
   </div>
-  <div class="page-version-badge">v2</div>
+  <div class="page-version-badge">v3</div>
 </header>
 
 <div class="bday-box" id="bday-box"></div>
@@ -461,7 +461,7 @@
   }
 
   function missingLabels(replies) {
-    var silent = { bestteams: true, spotlight: true };
+    var silent = { bestteams: true };
     return pages
       .filter(function (p) { return !silent[p.id] && !(p.id in replies); })
       .map(function (p) { return p.label; });
@@ -474,6 +474,10 @@
       if (replies.catalog) snapshot.owned = replies.catalog.owned || [];
       if (replies.kizuna) snapshot.bond = replies.kizuna.bond || {};
       if (replies.songs) snapshot.discography = replies.songs.discography || {};
+      if (replies.spotlight) {
+        if (replies.spotlight.spotlightMembers) snapshot.spotlightMembers = replies.spotlight.spotlightMembers;
+        if (replies.spotlight.spotlightBonus) snapshot.spotlightBonus = replies.spotlight.spotlightBonus;
+      }
 
       var stamp = new Date().toISOString().slice(0, 10);
       var filename = 'uniair_public_save_' + stamp + '.json';
@@ -512,7 +516,8 @@
       var hasOwned = Array.isArray(data.owned) && data.owned.length > 0;
       var hasBond = data.bond || data.values;
       var hasDisco = data.discography;
-      if (!hasOwned && !hasBond && !hasDisco) {
+      var hasSpotlight = data.spotlightMembers || data.spotlightBonus;
+      if (!hasOwned && !hasBond && !hasDisco && !hasSpotlight) {
         window.alert('That file does not look like a UNI\'S ON AIR save file.');
         return;
       }
@@ -521,6 +526,7 @@
       if (hasOwned) parts.push('merge in owned-card marks (never unmarks anything)');
       if (hasBond) parts.push('overwrite Kizuna bond values for every member listed');
       if (hasDisco) parts.push('overwrite Discography levels for every song listed');
+      if (hasSpotlight) parts.push('replace the Spotlight member selection and bonus list');
       var msg = 'Import from "' + file.name + '"? This will:\n\n• ' + parts.join('\n• ') + '\n\nEverything not mentioned in the file is left untouched.';
       if (!window.confirm(msg)) return;
 
@@ -529,6 +535,7 @@
         if (replies.catalog) summary.push('Owned +' + (replies.catalog.changed || 0));
         if (replies.kizuna) summary.push('Kizuna ' + (replies.kizuna.changed || 0) + ' updated');
         if (replies.songs) summary.push('Discography ' + (replies.songs.changed || 0) + ' updated');
+        if (replies.spotlight && replies.spotlight.changed) summary.push('Spotlight restored');
 
         pages.forEach(function (page, i) {
           iframes[i].src = page.file + '?v=' + Date.now();
