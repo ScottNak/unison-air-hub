@@ -2,6 +2,66 @@
  "note": "Cards whose SK value collides with another parameter row in score_bonus.json and which belong to the row the readers would otherwise discard. Resolved from zawa raw skill text by export_sk_overrides.py - see that script for the full story.",
  "overrides": [
   {
+   "member": "井上梨名",
+   "title": "流れ弾+",
+   "sk": 0.0057,
+   "s": 9,
+   "p": 23,
+   "t": 8,
+   "X": null,
+   "Y": 10
+  },
+  {
+   "member": "富田鈴花",
+   "title": "ってか+",
+   "sk": 0.0057,
+   "s": 9,
+   "p": 23,
+   "t": 8,
+   "X": null,
+   "Y": 10
+  },
+  {
+   "member": "尾関梨香",
+   "title": "風に吹かれても+",
+   "sk": 0.0057,
+   "s": 9,
+   "p": 23,
+   "t": 8,
+   "X": null,
+   "Y": 10
+  },
+  {
+   "member": "渡邉美穂",
+   "title": "ドレミソラシド+",
+   "sk": 0.0057,
+   "s": 9,
+   "p": 23,
+   "t": 8,
+   "X": null,
+   "Y": 10
+  },
+  {
+   "member": "金村美玖",
+   "title": "JOYFUL LOVE+",
+   "sk": 0.0057,
+   "s": 9,
+   "p": 23,
+   "t": 8,
+   "X": null,
+   "Y": 10
+  },
+  {
+   "member": "髙橋未来虹",
+   "title": "君しか勝たん+",
+   "sk": 0.0057,
+   "s": 9,
+   "p": 23,
+   "t": 8,
+   "X": null,
+   "Y": 10
+  },
+  {
    "member": "上村ひなの",
    "title": "月と星が踊るMidnight+",
    "sk": 0.025,
@@ -62,6 +122,16 @@
    "Y": null
   },
   {
+   "member": "遠藤光莉",
+   "title": "Nobody's Fault+",
+   "sk": 0.025,
+   "s": 4,
+   "p": 35,
+   "t": 3,
+   "X": 12,
+   "Y": null
+  },
+  {
    "member": "金村美玖",
    "title": "期待していない自分+",
    "sk": 0.025,
@@ -100,6 +170,226 @@
    "t": 4,
    "X": 0,
    "Y": 51
+  },
+  {
+   "member": "中嶋優月",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
+  },
+  {
+   "member": "丹生明里",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
+  },
+  {
+   "member": "向井純葉",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
+  },
+  {
+   "member": "土生瑞穂",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
+  },
+  {
+   "member": "大園玲",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
+  },
+  {
+   "member": "小坂菜緒",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
+  },
+  {
+   "member": "山口陽世",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
+  },
+  {
+   "member": "山﨑天",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
+  },
+  {
+   "member": "平尾帆夏",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
+  },
+  {
+   "member": "村井優",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
+  },
+  {
+   "member": "東村芽依",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
+  },
+  {
+   "member": "松田好花",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
+  },
+  {
+   "member": "河田陽菜",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
+  },
+  {
+   "member": "清水理央",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
+  },
+  {
+   "member": "濱岸ひより",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
+  },
+  {
+   "member": "田村保乃",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
+  },
+  {
+   "member": "的野美青",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
+  },
+  {
+   "member": "石塚瑶季",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
+  },
+  {
+   "member": "石森璃花",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
+  },
+  {
+   "member": "谷口愛季",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
+  },
+  {
+   "member": "遠藤理子",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
+  },
+  {
+   "member": "齊藤京子",
+   "title": "S.teller",
+   "sk": 0.0368,
+   "s": 8,
+   "p": 16,
+   "t": 7,
+   "X": 30,
+   "Y": null
   }
  ]
 }
