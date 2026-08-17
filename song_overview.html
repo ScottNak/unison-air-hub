@@ -338,8 +338,18 @@
   
   table.disco-grid-flip { border-collapse: separate; border-spacing: 0; font-size: 11px; }
   table.disco-grid-flip th, table.disco-grid-flip td { border: 1px solid #d6d6e0; padding: 0; }
+  
   .gf-corner {
     position: sticky; left: 0; top: 0; z-index: 5; background: #f6f6fa;
+    padding: 6px 10px !important; text-align: left; vertical-align: bottom;
+  }
+  .gf-corner-name {
+    font-size: 12px; font-weight: 700; color: #555;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .gf-corner-total {
+    font-size: 30px; font-weight: 800; line-height: 1.15;
+    color: var(--tc, #2d2d42); font-variant-numeric: tabular-nums;
   }
   
   .gf-member-head {
@@ -376,7 +386,7 @@
 </style>
 </head>
 <body>
-  <div class="page-version-badge">v3</div>
+  <div class="page-version-badge">v4</div>
   <div class="wrap">
     
     <div class="section-card">
@@ -11801,7 +11811,7 @@
         <table class="disco-grid disco-grid-flip">
           <thead>
             <tr>
-              <th class="gf-corner"></th>
+              <th class="gf-corner"><div class="gf-corner-name"></div><div class="gf-corner-total"></div></th>
               <th class="gf-count-head">Owned</th>
               <th class="gf-member-head" data-col-boundary="1"><span class="gf-member-head-inner" data-name-jp="金村美玖" data-name-en="Kanemura Miku">金村美玖</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="小坂菜緒" data-name-en="Kosaka Nao">小坂菜緒</span></th><th class="gf-member-head" data-col-boundary="1"><span class="gf-member-head-inner" data-name-jp="上村ひなの" data-name-en="Kamimura Hinano">上村ひなの</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="髙橋未来虹" data-name-en="Takahashi Mikuni">髙橋未来虹</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="森本茉莉" data-name-en="Morimoto Marie">森本茉莉</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="山口陽世" data-name-en="Yamaguchi Haruyo">山口陽世</span></th><th class="gf-member-head" data-col-boundary="1"><span class="gf-member-head-inner" data-name-jp="石塚瑶季" data-name-en="Ishizuka Tamaki">石塚瑶季</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="小西夏菜実" data-name-en="Konishi Nanami">小西夏菜実</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="清水理央" data-name-en="Shimizu Rio">清水理央</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="正源司陽子" data-name-en="Shōgenji Yōko">正源司陽子</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="竹内希来里" data-name-en="Takeuchi Kirari">竹内希来里</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="平尾帆夏" data-name-en="Hirao Honoka">平尾帆夏</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="平岡海月" data-name-en="Hiraoka Mitsuki">平岡海月</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="藤嶌果歩" data-name-en="Fujishima Kaho">藤嶌果歩</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="宮地すみれ" data-name-en="Miyachi Sumire">宮地すみれ</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="山下葉留花" data-name-en="Yamashita Haruka">山下葉留花</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="渡辺莉奈" data-name-en="Watanabe Rina">渡辺莉奈</span></th><th class="gf-member-head" data-col-boundary="1"><span class="gf-member-head-inner" data-name-jp="大田美月" data-name-en="Ōta Mizuki">大田美月</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="大野愛実" data-name-en="Ōno Manami">大野愛実</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="片山紗希" data-name-en="Katayama Saki">片山紗希</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="蔵盛妃那乃" data-name-en="Kuramori Hinano">蔵盛妃那乃</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="坂井新奈" data-name-en="Sakai Nīna">坂井新奈</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="佐藤優羽" data-name-en="Satō Yū">佐藤優羽</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="下田衣珠季" data-name-en="Shimoda Izuki">下田衣珠季</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="高井俐香" data-name-en="Takai Rika">高井俐香</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="鶴崎仁香" data-name-en="Tsurusaki Niko">鶴崎仁香</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="松尾桜" data-name-en="Matsuo Sakura">松尾桜</span></th><th class="gf-member-head" data-col-boundary="1"><span class="gf-member-head-inner" data-name-jp="井口眞緒" data-name-en="Iguchi Mao">井口眞緒</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="潮紗理菜" data-name-en="Ushio Sarina">潮紗理菜</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="影山優佳" data-name-en="Kageyama Yūka">影山優佳</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="加藤史帆" data-name-en="Katō Shiho">加藤史帆</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="齊藤京子" data-name-en="Saitō Kyōko">齊藤京子</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="佐々木久美" data-name-en="Sasaki Kumi">佐々木久美</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="佐々木美玲" data-name-en="Sasaki Mirei">佐々木美玲</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="高瀬愛奈" data-name-en="Takase Mana">高瀬愛奈</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="高本彩花" data-name-en="Takamoto Ayaka">高本彩花</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="東村芽依" data-name-en="Higashimura Mei">東村芽依</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="河田陽菜" data-name-en="Kawata Hina">河田陽菜</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="富田鈴花" data-name-en="Tomita Suzuka">富田鈴花</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="丹生明里" data-name-en="Nibu Akari">丹生明里</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="濱岸ひより" data-name-en="Hamagishi Hiyori">濱岸ひより</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="松田好花" data-name-en="Matsuda Konoka">松田好花</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="宮田愛萌" data-name-en="Miyata Manamo">宮田愛萌</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="渡邉美穂" data-name-en="Watanabe Miho">渡邉美穂</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="岸帆夏" data-name-en="Kishi Honoka">岸帆夏</span></th>
             </tr>
@@ -11814,7 +11824,7 @@
         <table class="disco-grid disco-grid-flip">
           <thead>
             <tr>
-              <th class="gf-corner"></th>
+              <th class="gf-corner"><div class="gf-corner-name"></div><div class="gf-corner-total"></div></th>
               <th class="gf-count-head">Owned</th>
               <th class="gf-member-head" data-col-boundary="1"><span class="gf-member-head-inner" data-name-jp="遠藤光莉" data-name-en="Endō Hikari">遠藤光莉</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="大園玲" data-name-en="Ōzono Rei">大園玲</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="大沼晶保" data-name-en="Ōnuma Akiho">大沼晶保</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="幸阪茉里乃" data-name-en="Kōsaka Marino">幸阪茉里乃</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="田村保乃" data-name-en="Tamura Hono">田村保乃</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="藤吉夏鈴" data-name-en="Fujiyoshi Karin">藤吉夏鈴</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="増本綺良" data-name-en="Masumoto Kira">増本綺良</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="松田里奈" data-name-en="Matsuda Rina">松田里奈</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="森田ひかる" data-name-en="Morita Hikaru">森田ひかる</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="守屋麗奈" data-name-en="Moriya Rena">守屋麗奈</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="山﨑天" data-name-en="Yamasaki Ten">山﨑天</span></th><th class="gf-member-head" data-col-boundary="1"><span class="gf-member-head-inner" data-name-jp="石森璃花" data-name-en="Ishimori Rika">石森璃花</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="遠藤理子" data-name-en="Endō Riko">遠藤理子</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="小田倉麗奈" data-name-en="Odakura Reina">小田倉麗奈</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="小島凪紗" data-name-en="Kojima Nagisa">小島凪紗</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="谷口愛季" data-name-en="Taniguchi Airi">谷口愛季</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="中嶋優月" data-name-en="Nakashima Yuzuki">中嶋優月</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="的野美青" data-name-en="Matono Mio">的野美青</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="向井純葉" data-name-en="Mukai Itoha">向井純葉</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="村井優" data-name-en="Murai Yū">村井優</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="村山美羽" data-name-en="Murayama Miu">村山美羽</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="山下瞳月" data-name-en="Yamashita Shizuki">山下瞳月</span></th><th class="gf-member-head" data-col-boundary="1"><span class="gf-member-head-inner" data-name-jp="浅井恋乃未" data-name-en="Asai Konomi">浅井恋乃未</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="稲熊ひな" data-name-en="Inaguma Hina">稲熊ひな</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="勝又春" data-name-en="Katsumata Haru">勝又春</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="佐藤愛桜" data-name-en="Satō Neo">佐藤愛桜</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="中川智尋" data-name-en="Nakagawa Chihiro">中川智尋</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="松本和子" data-name-en="Matsumoto Wako">松本和子</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="目黒陽色" data-name-en="Meguro Hīro">目黒陽色</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="山川宇衣" data-name-en="Yamakawa Ui">山川宇衣</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="山田桃実" data-name-en="Yamada Momomi">山田桃実</span></th><th class="gf-member-head" data-col-boundary="1"><span class="gf-member-head-inner" data-name-jp="石森虹花" data-name-en="Ishimori Nijika">石森虹花</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="上村莉菜" data-name-en="Uemura Rina">上村莉菜</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="尾関梨香" data-name-en="Ozeki Rika">尾関梨香</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="織田奈那" data-name-en="Oda Nana">織田奈那</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="小池美波" data-name-en="Koike Minami">小池美波</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="小林由依" data-name-en="Kobayashi Yui">小林由依</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="齋藤冬優花" data-name-en="Saitō Fuyuka">齋藤冬優花</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="佐藤詩織" data-name-en="Satō Shiori">佐藤詩織</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="菅井友香" data-name-en="Sugai Yūka">菅井友香</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="鈴本美愉" data-name-en="Suzumoto Miyu">鈴本美愉</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="長沢菜々香" data-name-en="Nagasawa Nanako">長沢菜々香</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="土生瑞穂" data-name-en="Habu Mizuho">土生瑞穂</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="原田葵" data-name-en="Harada Aoi">原田葵</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="平手友梨奈" data-name-en="Hirate Yurina">平手友梨奈</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="守屋茜" data-name-en="Moriya Akane">守屋茜</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="渡辺梨加" data-name-en="Watanabe Rika">渡辺梨加</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="渡邉理佐" data-name-en="Watanabe Risa">渡邉理佐</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="井上梨名" data-name-en="Inoue Rina">井上梨名</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="関有美子" data-name-en="Seki Yumiko">関有美子</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="武元唯衣" data-name-en="Takemoto Yui">武元唯衣</span></th><th class="gf-member-head"><span class="gf-member-head-inner" data-name-jp="松平璃子" data-name-en="Matsudaira Riko">松平璃子</span></th>
             </tr>
@@ -12309,7 +12319,29 @@ const SOURCE_FILE = "v85-2026-08-15";
     if (!table) return;
     var tbody = table.querySelector('tbody');
     var memberHeaders = Array.prototype.slice.call(table.querySelectorAll('thead th.gf-member-head'));
-    var lastRow = null, lastCol = null, lastCell = null;
+    var bodyRows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+    var cornerName = table.querySelector('.gf-corner-name');
+    var cornerTotal = table.querySelector('.gf-corner-total');
+    var lastRow = null, lastCol = null, lastCell = null, lastIdx = -1;
+
+    function showMemberTotal(idx) {
+      var th = memberHeaders[idx];
+      if (!cornerName || !cornerTotal || !th) return;
+      var sum = 0;
+      bodyRows.forEach(function(tr) {
+        var td = tr.cells[idx + 2];
+        if (td && td.classList.contains('grid-cell-owned')) {
+          sum += parseInt(td.dataset.level, 10) || 0;
+        }
+      });
+      var inner = th.querySelector('.gf-member-head-inner');
+      cornerName.textContent = inner ? inner.dataset.nameEn : '';
+      cornerTotal.textContent = sum;
+    }
+
+    tbody.addEventListener('click', function() {
+      if (lastIdx >= 0) showMemberTotal(lastIdx);
+    });
 
     tbody.addEventListener('mouseover', function(e) {
       var td = e.target.closest('td');
@@ -12324,6 +12356,10 @@ const SOURCE_FILE = "v85-2026-08-15";
       }
 
       var idx = td.cellIndex - 2;
+      if (idx >= 0) {
+        lastIdx = idx;
+        showMemberTotal(idx);
+      }
       var colCell = idx >= 0 ? memberHeaders[idx] : null;
       if (colCell !== lastCol) {
         if (lastCol) lastCol.classList.remove('hl');
