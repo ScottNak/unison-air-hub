@@ -179,7 +179,7 @@
 </style>
 </head>
 <body>
-  <div class="page-version-badge">v4</div>
+  <div class="page-version-badge">v5</div>
   <div class="wrap">
     <div class="version-row">
       <span id="db-version"></span>
@@ -599,6 +599,13 @@ window.addEventListener('message', (e) => {
       }
     }
     e.source.postMessage({ type: 'uniair-import-ack', id: msg.id, page: 'catalog', changed: added }, '*');
+  } else if (msg.type === 'uniair-filter-member') {
+    
+    
+    
+    
+    
+    if (typeof msg.member === 'string' && msg.member) selectMember(msg.member);
   }
 });
 

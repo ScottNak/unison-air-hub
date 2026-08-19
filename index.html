@@ -164,7 +164,7 @@
     <input type="file" id="hub-import-file" accept="application/json" style="display:none">
     <span class="save-note" id="hub-save-note">&nbsp;</span>
   </div>
-  <div class="page-version-badge">v4</div>
+  <div class="page-version-badge">v5</div>
 </header>
 
 <div class="bday-box" id="bday-box"></div>
@@ -408,7 +408,20 @@
     for (var i = 0; i < pages.length; i++) {
       if (pages[i].file === msg.file || pages[i].id === msg.id) { idx = i; break; }
     }
-    if (idx !== -1) activateTab(idx);
+    if (idx === -1) return;
+    activateTab(idx);
+    // Optional payload (2026-08-19, first sender: kizuna.html's owned-card
+    // chip). A tab switch can carry a member to filter the destination to,
+    // which the hub relays on rather than interpreting - only the target
+    // page knows what filtering means for itself. All 5 frames load at
+    // startup and are shown/hidden by CSS class, so the destination is
+    // already live and needs no reload or ready-handshake here.
+    if (msg.member) {
+      try {
+        iframes[idx].contentWindow.postMessage(
+          { type: 'uniair-filter-member', member: msg.member }, '*');
+      } catch (err) { }
+    }
   });
 
   var gearBtn = document.getElementById('hub-gear-btn');
