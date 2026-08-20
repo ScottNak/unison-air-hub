@@ -1,5 +1,5 @@
 {
- "version": "db2-2026-08-19",
+ "version": "db3-2026-08-20",
  "cardCount": 5469,
  "cards": [
   {
@@ -12440,14 +12440,14 @@
   {
    "id": 830,
    "color": "B",
-   "title": "FL 東京ドーム2019",
+   "title": "東京ドーム2019 FL 避雷針",
    "member": "松平璃子",
    "memberEn": "Riko Matsudaira",
-   "tot": 11013,
+   "tot": 11011,
    "sk": 0.0246,
    "vo": 4044,
    "da": 3280,
-   "pe": 3259,
+   "pe": 3257,
    "cs": "Vo70%",
    "csBase": "Vo70%",
    "grad": true
@@ -45620,7 +45620,7 @@
   {
    "id": 3042,
    "color": "B",
-   "title": "2nd TOUR",
+   "title": "2nd TOUR FL 不協和音",
    "member": "武元唯衣",
    "memberEn": "Yui Takemoto",
    "tot": 11069,
@@ -45635,7 +45635,7 @@
   {
    "id": 3043,
    "color": "G",
-   "title": "2nd TOUR",
+   "title": "2nd TOUR FL 砂塵",
    "member": "増本綺良",
    "memberEn": "Kira Masumoto",
    "tot": 11091,
@@ -45650,7 +45650,7 @@
   {
    "id": 3044,
    "color": "R",
-   "title": "2nd TOUR",
+   "title": "2nd TOUR FL 摩擦係数",
    "member": "山﨑天",
    "memberEn": "Ten Yamasaki",
    "tot": 11102,
@@ -45680,7 +45680,7 @@
   {
    "id": 3046,
    "color": "Y",
-   "title": "2nd TOUR",
+   "title": "2nd TOUR FL 不協和音",
    "member": "大沼晶保",
    "memberEn": "Akiho Ōnuma",
    "tot": 11020,
@@ -45695,7 +45695,7 @@
   {
    "id": 3047,
    "color": "P",
-   "title": "2nd TOUR",
+   "title": "2nd TOUR FL 砂塵",
    "member": "大園玲",
    "memberEn": "Rei Ōzono",
    "tot": 10959,
@@ -53810,7 +53810,7 @@
   {
    "id": 3588,
    "color": "R",
-   "title": "HTT 2023",
+   "title": "HTT 2023 FL シーラカンス",
    "member": "正源司陽子",
    "memberEn": "Yōko Shōgenji",
    "tot": 11104,
@@ -53825,7 +53825,7 @@
   {
    "id": 3589,
    "color": "B",
-   "title": "HTT 2023",
+   "title": "HTT 2023 FL シーラカンス",
    "member": "藤嶌果歩",
    "memberEn": "Kaho Fujishima",
    "tot": 11038,
@@ -70730,7 +70730,7 @@
   {
    "id": 5557,
    "color": "G",
-   "title": "3rd YAL",
+   "title": "3rd YAL FL 隙間風よ",
    "member": "上村莉菜",
    "memberEn": "Rina Uemura",
    "tot": 11089,
@@ -70775,7 +70775,7 @@
   {
    "id": 5560,
    "color": "Y",
-   "title": "3rd YAL",
+   "title": "3rd YAL FL Anthem time",
    "member": "遠藤理子",
    "memberEn": "Riko Endō",
    "tot": 10984,
@@ -71060,7 +71060,7 @@
   {
    "id": 5613,
    "color": "G",
-   "title": "HTT 2023",
+   "title": "HTT 2023 FL 期待していない自分",
    "member": "山下葉留花",
    "memberEn": "Haruka Yamashita",
    "tot": 10986,
@@ -71525,7 +71525,7 @@
   {
    "id": 5777,
    "color": "G",
-   "title": "HMT 2024",
+   "title": "HMT 2024 FL 君はハニーデュー",
    "member": "宮地すみれ",
    "memberEn": "Sumire Miyachi",
    "tot": 11083,
@@ -72635,7 +72635,7 @@
   {
    "id": 5851,
    "color": "Y",
-   "title": "HMT 2024",
+   "title": "HMT 2024 FL 真夜中の懺悔大会",
    "member": "竹内希来里",
    "memberEn": "Kirari Takeuchi",
    "tot": 10936,
@@ -72650,7 +72650,7 @@
   {
    "id": 5852,
    "color": "P",
-   "title": "HMT 2024",
+   "title": "HMT 2024 FL 真夜中の懺悔大会",
    "member": "山下葉留花",
    "memberEn": "Haruka Yamashita",
    "tot": 11105,
@@ -72695,7 +72695,7 @@
   {
    "id": 5855,
    "color": "B",
-   "title": "BNL 2025",
+   "title": "BNL 2025 FL パクチー ピーマン グリーンピース",
    "member": "佐藤優羽",
    "memberEn": "Yū Satō",
    "tot": 11099,
