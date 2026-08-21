@@ -1,5 +1,5 @@
 {
- "version": "db3-2026-08-20",
+ "version": "db4-2026-08-21",
  "cardCount": 5469,
  "cards": [
   {
@@ -7460,7 +7460,7 @@
   {
    "id": 498,
    "color": "R",
-   "title": "全ツ'18 FL 語るなら未来を...",
+   "title": "全ツ'18 FL 語るなら未来を…",
    "member": "守屋茜",
    "memberEn": "Akane Moriya",
    "tot": 10803,
@@ -9620,7 +9620,7 @@
   {
    "id": 642,
    "color": "P",
-   "title": "FL こんなに好きになっちゃっていいの?",
+   "title": "FL こんなに好きになっちゃっていいの？",
    "member": "齊藤京子",
    "memberEn": "Kyōko Saitō",
    "tot": 10994,
@@ -12410,7 +12410,7 @@
   {
    "id": 828,
    "color": "G",
-   "title": "東京ドーム2019 FL 語るなら未来を...",
+   "title": "東京ドーム2019 FL 語るなら未来を…",
    "member": "田村保乃",
    "memberEn": "Hono Tamura",
    "tot": 10877,
@@ -15050,7 +15050,7 @@
   {
    "id": 1004,
    "color": "P",
-   "title": "ひなくり2019 FL まさか 偶然...",
+   "title": "ひなくり2019 FL まさか 偶然…",
    "member": "富田鈴花",
    "memberEn": "Suzuka Tomita",
    "tot": 10884,
@@ -18410,7 +18410,7 @@
   {
    "id": 1228,
    "color": "P",
-   "title": "ひなくり2019 FL 誰よりも高く跳べ!",
+   "title": "ひなくり2019 FL 誰よりも高く跳べ！",
    "member": "小坂菜緒",
    "memberEn": "Nao Kosaka",
    "tot": 10904,
@@ -60230,7 +60230,7 @@
   {
    "id": 4175,
    "color": "Y",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "幸阪茉里乃",
    "memberEn": "Marino Kōsaka",
    "tot": 12808,
@@ -60245,7 +60245,7 @@
   {
    "id": 4176,
    "color": "R",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "山下瞳月",
    "memberEn": "Shizuki Yamashita",
    "tot": 12833,
@@ -60260,7 +60260,7 @@
   {
    "id": 4177,
    "color": "P",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "藤吉夏鈴",
    "memberEn": "Karin Fujiyoshi",
    "tot": 12811,
@@ -60275,7 +60275,7 @@
   {
    "id": 4178,
    "color": "P",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "遠藤理子",
    "memberEn": "Riko Endō",
    "tot": 12809,
@@ -60290,7 +60290,7 @@
   {
    "id": 4179,
    "color": "B",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "中嶋優月",
    "memberEn": "Yuzuki Nakashima",
    "tot": 12736,
@@ -60305,7 +60305,7 @@
   {
    "id": 4180,
    "color": "G",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "村井優",
    "memberEn": "Yū Murai",
    "tot": 12643,
@@ -60320,7 +60320,7 @@
   {
    "id": 4181,
    "color": "B",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "向井純葉",
    "memberEn": "Itoha Mukai",
    "tot": 12595,
@@ -60335,7 +60335,7 @@
   {
    "id": 4182,
    "color": "Y",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "増本綺良",
    "memberEn": "Kira Masumoto",
    "tot": 12618,
@@ -60350,7 +60350,7 @@
   {
    "id": 4184,
    "color": "Y",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "竹内希来里",
    "memberEn": "Kirari Takeuchi",
    "tot": 12842,
@@ -60365,7 +60365,7 @@
   {
    "id": 4185,
    "color": "P",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "森本茉莉",
    "memberEn": "Marie Morimoto",
    "tot": 12825,
@@ -60380,7 +60380,7 @@
   {
    "id": 4186,
    "color": "G",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "富田鈴花",
    "memberEn": "Suzuka Tomita",
    "tot": 12840,
@@ -60395,7 +60395,7 @@
   {
    "id": 4188,
    "color": "B",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "佐々木久美",
    "memberEn": "Kumi Sasaki",
    "tot": 12583,
@@ -60410,7 +60410,7 @@
   {
    "id": 4189,
    "color": "R",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "河田陽菜",
    "memberEn": "Hina Kawata",
    "tot": 12627,
@@ -60425,7 +60425,7 @@
   {
    "id": 4190,
    "color": "P",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "大園玲",
    "memberEn": "Rei Ōzono",
    "tot": 12835,
@@ -60440,7 +60440,7 @@
   {
    "id": 4191,
    "color": "G",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "小田倉麗奈",
    "memberEn": "Reina Odakura",
    "tot": 12812,
@@ -60455,7 +60455,7 @@
   {
    "id": 4192,
    "color": "Y",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "井上梨名",
    "memberEn": "Rina Inoue",
    "tot": 12832,
@@ -60470,7 +60470,7 @@
   {
    "id": 4193,
    "color": "R",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "松田里奈",
    "memberEn": "Rina Matsuda",
    "tot": 12836,
@@ -60485,7 +60485,7 @@
   {
    "id": 4194,
    "color": "B",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "谷口愛季",
    "memberEn": "Airi Taniguchi",
    "tot": 12709,
@@ -60500,7 +60500,7 @@
   {
    "id": 4195,
    "color": "R",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "森田ひかる",
    "memberEn": "Hikaru Morita",
    "tot": 12575,
@@ -60515,7 +60515,7 @@
   {
    "id": 4196,
    "color": "G",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "的野美青",
    "memberEn": "Mio Matono",
    "tot": 12646,
@@ -60530,7 +60530,7 @@
   {
    "id": 4197,
    "color": "P",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "高瀬愛奈",
    "memberEn": "Mana Takase",
    "tot": 12830,
@@ -60545,7 +60545,7 @@
   {
    "id": 4198,
    "color": "R",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "宮地すみれ",
    "memberEn": "Sumire Miyachi",
    "tot": 12806,
@@ -60560,7 +60560,7 @@
   {
    "id": 4199,
    "color": "G",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "藤嶌果歩",
    "memberEn": "Kaho Fujishima",
    "tot": 12835,
@@ -60575,7 +60575,7 @@
   {
    "id": 4200,
    "color": "Y",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "平尾帆夏",
    "memberEn": "Honoka Hirao",
    "tot": 12818,
@@ -60590,7 +60590,7 @@
   {
    "id": 4201,
    "color": "B",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "金村美玖",
    "memberEn": "Miku Kanemura",
    "tot": 12707,
@@ -60605,7 +60605,7 @@
   {
    "id": 4203,
    "color": "R",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "上村ひなの",
    "memberEn": "Hinano Kamimura",
    "tot": 12634,
@@ -70160,7 +70160,7 @@
   {
    "id": 5194,
    "color": "B",
-   "title": "2023年　年末歌唱衣装",
+   "title": "2023年 年末歌唱衣装",
    "member": "山口陽世",
    "memberEn": "Haruyo Yamaguchi",
    "tot": 12828,
