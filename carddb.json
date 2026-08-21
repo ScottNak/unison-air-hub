@@ -1,5 +1,5 @@
 {
- "version": "db4-2026-08-21",
+ "version": "db5-2026-08-21",
  "cardCount": 5469,
  "cards": [
   {
@@ -4805,7 +4805,7 @@
   {
    "id": 321,
    "color": "G",
-   "title": "3rd YAL FL 二人セゾン",
+   "title": "3rdYAL FL 二人セゾン",
    "member": "森田ひかる",
    "memberEn": "Hikaru Morita",
    "tot": 10902,
@@ -4835,7 +4835,7 @@
   {
    "id": 323,
    "color": "Y",
-   "title": "3rd YAL FL Nobody",
+   "title": "3rdYAL FL Nobody",
    "member": "小池美波",
    "memberEn": "Minami Koike",
    "tot": 10822,
@@ -7535,7 +7535,7 @@
   {
    "id": 503,
    "color": "B",
-   "title": "3rd YAL FL 東京タワーはどこから見える?",
+   "title": "3rdYAL FL 東京タワーはどこから見える？",
    "member": "田村保乃",
    "memberEn": "Hono Tamura",
    "tot": 10792,
