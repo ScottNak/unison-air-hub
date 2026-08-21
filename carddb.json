@@ -1,5 +1,5 @@
 {
- "version": "db5-2026-08-21",
+ "version": "db7-2026-08-21",
  "cardCount": 5469,
  "cards": [
   {
@@ -70715,7 +70715,7 @@
   {
    "id": 5556,
    "color": "B",
-   "title": "3rd YAL Anthem time",
+   "title": "3rd YAL FL Anthem time",
    "member": "中嶋優月",
    "memberEn": "Yuzuki Nakashima",
    "tot": 11071,
@@ -70745,7 +70745,7 @@
   {
    "id": 5558,
    "color": "P",
-   "title": "3rd YAL Nobody's Fault",
+   "title": "3rd YAL FL Nobody's Fault",
    "member": "大沼晶保",
    "memberEn": "Akiho Ōnuma",
    "tot": 11030,
@@ -70760,7 +70760,7 @@
   {
    "id": 5559,
    "color": "R",
-   "title": "3rd YAL Nobody's Fault",
+   "title": "3rd YAL FL Nobody's Fault",
    "member": "松田里奈",
    "memberEn": "Rina Matsuda",
    "tot": 11091,
@@ -70779,7 +70779,7 @@
    "member": "遠藤理子",
    "memberEn": "Riko Endō",
    "tot": 10984,
-   "sk": 0.0078,
+   "sk": 0,
    "vo": 3971,
    "da": 3275,
    "pe": 3308,
