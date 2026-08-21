@@ -1,5 +1,5 @@
 {
- "version": "db7-2026-08-21",
+ "version": "db8-2026-08-21",
  "cardCount": 5469,
  "cards": [
   {
@@ -7580,7 +7580,7 @@
   {
    "id": 506,
    "color": "P",
-   "title": "3rd YAL FL 手を繋いで帰ろうか",
+   "title": "3rdYAL FL 手を繋いで帰ろうか",
    "member": "井上梨名",
    "memberEn": "Rina Inoue",
    "tot": 10822,
@@ -7595,7 +7595,7 @@
   {
    "id": 507,
    "color": "Y",
-   "title": "3rd YAL FL 手を繋いで帰ろうか",
+   "title": "3rdYAL FL 手を繋いで帰ろうか",
    "member": "山﨑天",
    "memberEn": "Ten Yamasaki",
    "tot": 10828,
@@ -7610,7 +7610,7 @@
   {
    "id": 508,
    "color": "B",
-   "title": "3rd YAL FL 危なっかしい計画",
+   "title": "3rdYAL FL 危なっかしい計画",
    "member": "松田里奈",
    "memberEn": "Rina Matsuda",
    "tot": 10759,
