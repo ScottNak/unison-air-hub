@@ -164,7 +164,7 @@
     <input type="file" id="hub-import-file" accept="application/json" style="display:none">
     <span class="save-note" id="hub-save-note">&nbsp;</span>
   </div>
-  <div class="page-version-badge">v5</div>
+  <div class="page-version-badge">v6</div>
 </header>
 
 <div class="bday-box" id="bday-box"></div>
@@ -484,7 +484,10 @@
     flashNote('Gathering data from every tab…', 4000);
     broadcastAndCollect('uniair-request-snapshot', null, 'uniair-snapshot', function (replies) {
       var snapshot = { savedAt: new Date().toISOString(), source: 'uniair_public_hub' };
-      if (replies.catalog) snapshot.owned = replies.catalog.owned || [];
+      if (replies.catalog) {
+        snapshot.owned = replies.catalog.owned || [];
+        if (Array.isArray(replies.catalog.pullOrder)) snapshot.pullOrder = replies.catalog.pullOrder;
+      }
       if (replies.kizuna) snapshot.bond = replies.kizuna.bond || {};
       if (replies.songs) snapshot.discography = replies.songs.discography || {};
       if (replies.spotlight) {
@@ -527,16 +530,18 @@
       if (Array.isArray(data)) data = { owned: data };
 
       var hasOwned = Array.isArray(data.owned) && data.owned.length > 0;
+      var hasPullOrder = Array.isArray(data.pullOrder) && data.pullOrder.length > 0;
       var hasBond = data.bond || data.values;
       var hasDisco = data.discography;
       var hasSpotlight = data.spotlightMembers || data.spotlightBonus;
-      if (!hasOwned && !hasBond && !hasDisco && !hasSpotlight) {
+      if (!hasOwned && !hasPullOrder && !hasBond && !hasDisco && !hasSpotlight) {
         window.alert('That file does not look like a UNI\'S ON AIR save file.');
         return;
       }
 
       var parts = [];
       if (hasOwned) parts.push('merge in owned-card marks (never unmarks anything)');
+      if (hasPullOrder) parts.push('replace the pull order (the sequence your owned cards were added in)');
       if (hasBond) parts.push('overwrite Kizuna bond values for every member listed');
       if (hasDisco) parts.push('overwrite Discography levels for every song listed');
       if (hasSpotlight) parts.push('replace the Spotlight member selection and bonus list');
@@ -546,6 +551,7 @@
       broadcastAndCollect('uniair-import-data', { data: data }, 'uniair-import-ack', function (replies) {
         var summary = [];
         if (replies.catalog) summary.push('Owned +' + (replies.catalog.changed || 0));
+        if (replies.catalog && replies.catalog.pullOrder) summary.push('Pull order restored');
         if (replies.kizuna) summary.push('Kizuna ' + (replies.kizuna.changed || 0) + ' updated');
         if (replies.songs) summary.push('Discography ' + (replies.songs.changed || 0) + ' updated');
         if (replies.spotlight && replies.spotlight.changed) summary.push('Spotlight restored');

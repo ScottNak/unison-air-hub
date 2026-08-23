@@ -96,6 +96,87 @@
   .unown-btn:hover { background: #a82f68; }
   .upgrade-btn { background: #3a5bc7; color: #fff; }
   .upgrade-btn:hover { background: #2e49a3; }
+  
+  .pull-num {
+    display: inline-block; box-sizing: border-box; min-width: 64px; text-align: center;
+    background: #eceef4; color: #2d2d42; font-weight: 800; font-size: 11px;
+    padding: 4px 10px; border-radius: 6px; line-height: 1.4;
+    font-variant-numeric: tabular-nums;
+  }
+  .pull-order-btn {
+    appearance: none; border: 1px solid #d8d8e0; background: #fff; cursor: pointer;
+    padding: 7px 12px; border-radius: 999px; font-size: 12px; font-weight: 700; color: #444;
+    white-space: nowrap;
+  }
+  .pull-order-btn:hover { border-color: #b8bad0; color: #222; }
+  .pull-order-btn:disabled { opacity: 0.45; cursor: default; }
+
+  .pd-overlay {
+    position: fixed; inset: 0; z-index: 10000; background: rgba(20,20,32,0.55);
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+  }
+  .pd-overlay[hidden] { display: none; }
+  .pd-modal {
+    background: #fff; border-radius: 14px; width: min(720px, 100%); max-height: 100%;
+    display: flex; flex-direction: column; overflow: hidden;
+    box-shadow: 0 18px 50px rgba(0,0,0,0.3);
+  }
+  .pd-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 14px 18px; background: #2d2d42; color: #fff;
+  }
+  .pd-head h2 { margin: 0; font-size: 14px; letter-spacing: .03em; text-transform: uppercase; }
+  .pd-close {
+    appearance: none; border: none; background: none; color: #fff; cursor: pointer;
+    font-size: 22px; line-height: 1; padding: 0 4px;
+  }
+  .pd-controls {
+    display: flex; align-items: center; gap: 10px; padding: 12px 18px 8px; flex-wrap: wrap;
+  }
+  .pd-controls .search-box { flex: 1; min-width: 180px; }
+  .pd-count { font-size: 11.5px; color: #888; white-space: nowrap; }
+  .pd-hint { padding: 0 18px 8px; font-size: 11.5px; color: #888; }
+  .pd-unplaced {
+    display: flex; align-items: center; gap: 10px; margin: 0 18px 10px;
+    padding: 8px 12px; border-radius: 9px; background: #fff8e1; border: 1px solid #f0e0a8;
+    font-size: 11.5px; color: #7a5c00;
+  }
+  .pd-unplaced[hidden] { display: none; }
+  .pd-unplaced span { flex: 1; }
+  .pd-row.unplaced { background: #fffdf5; }
+  .pd-row.unplaced .pd-pos { border-color: #e2cf85; background: #fff; }
+  .pd-list { overflow-y: auto; padding: 0 18px; flex: 1; min-height: 120px; }
+  .pd-row {
+    display: flex; align-items: center; gap: 10px; padding: 5px 8px;
+    border-top: 1px solid #eee; font-size: 12.5px; background: #fff;
+  }
+  .pd-row:hover { background: #f7f9ff; }
+  .pd-row.dragging { opacity: 0.4; }
+  .pd-row.drop-target { border-top: 2px solid #3a5bc7; }
+  .pd-grip { color: #bbb; cursor: grab; user-select: none; font-size: 13px; }
+  .pd-row.no-drag .pd-grip { cursor: default; opacity: 0.3; }
+  .pd-pos {
+    width: 62px; padding: 4px 6px; border-radius: 6px; border: 1px solid #d8d8e0;
+    font-size: 12px; text-align: right; font-variant-numeric: tabular-nums;
+  }
+  .pd-card { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pd-card .pd-member { font-weight: 700; margin-right: 6px; }
+  .pd-card .pd-title { color: #666; }
+  .pd-empty { padding: 24px 8px; text-align: center; color: #888; font-size: 12.5px; }
+  .pd-foot {
+    display: flex; align-items: center; justify-content: flex-end; gap: 10px;
+    padding: 12px 18px; border-top: 1px solid #eee; background: #fafbff;
+  }
+  .pd-status { flex: 1; font-size: 11.5px; color: #666; }
+  .pd-cancel, .pd-save {
+    appearance: none; cursor: pointer; font-size: 12px; font-weight: 700;
+    padding: 7px 16px; border-radius: 999px;
+  }
+  .pd-cancel { border: 1px solid #d8d8e0; background: #fff; color: #555; }
+  .pd-cancel:hover { border-color: #b8bad0; color: #222; }
+  .pd-save { border: none; background: #1c7a2e; color: #fff; }
+  .pd-save:hover { background: #155e22; }
+
   .filter-toggle-label {
     display: flex; align-items: center; gap: 6px; font-size: 12px; color: #444; cursor: pointer;
     padding: 7px 12px; border-radius: 999px; border: 1px solid #d8d8e0; background: #fff;
@@ -179,7 +260,7 @@
 </style>
 </head>
 <body>
-  <div class="page-version-badge">v5</div>
+  <div class="page-version-badge">v6</div>
   <div class="wrap">
     <div class="version-row">
       <span id="db-version"></span>
@@ -235,6 +316,8 @@
               <div class="filter-row-inner">
                 <label class="filter-toggle-label"><input type="checkbox" id="grad-filter"> Exclude graduated</label>
                 <label class="filter-toggle-label"><input type="checkbox" id="has-plus-filter"> Has SSR+</label>
+                <label class="filter-toggle-label"><input type="checkbox" id="pull-order-filter"> Pull order</label>
+                <button class="pull-order-btn" id="pull-order-edit-btn" type="button">&#9998; Edit pull order</button>
               </div>
             </div>
           </div>
@@ -253,7 +336,7 @@
               <th data-key="pe">Pe</th>
               <th data-key="sk">SK%</th>
               <th data-key="cs">Center Skill</th>
-              <th class="owned-th">Owned</th>
+              <th class="owned-th" id="owned-th" data-key="pull">Owned</th>
             </tr>
           </thead>
           <tbody id="tbody"></tbody>
@@ -271,7 +354,38 @@
         <li>Owned marks are stored only in this browser - nothing is uploaded or synced anywhere.</li>
         <li><b>Warning</b>: clearing your browser data clears this info too. Use the hub's <b>Export</b>/<b>Import</b> buttons (top of the page) to save a backup file covering this and every other tab, and load it back.</li>
         <li>The <b>Center Skill</b> filter groups S.teller/Veaut-style cards by the text before their "+" (e.g. "Da85%+&lt;mechanic text&gt;" filters under "Da85%"), not as one-off categories.</li>
+        <li><b>Pull order</b>: tick it to swap the Owned column for the position each owned card was added in (#1 = first). Click the column header to sort by it. Cards get their number when you mark them owned, so mark a new batch in the order you actually pulled it; an upgraded card keeps its base card's number.</li>
+        <li>An owned card shows <b>&mdash;</b> when no order was ever recorded for it - marks that arrived in bulk, from a save file or the bulk-add grid. Nothing is guessed on your behalf; give it a position in the dialog below.</li>
+        <li><b>Edit pull order</b> opens a dialog where you can fix a sequence - drag rows, or type a new position into a row's number box. Cards with no position wait at the top of that list until you give them one. Nothing is saved until you press <b>Save order</b>.</li>
       </ul>
+    </div>
+  </div>
+
+  <div class="pd-overlay" id="pull-dialog" hidden>
+    <div class="pd-modal" role="dialog" aria-modal="true" aria-labelledby="pd-title">
+      <div class="pd-head">
+        <h2 id="pd-title">Pull order</h2>
+        <button class="pd-close" id="pd-close" type="button" aria-label="Close">&times;</button>
+      </div>
+      <div class="pd-controls">
+        <input type="text" class="search-box small" id="pd-search" placeholder="Search member or title..." autocomplete="off">
+        <div class="mode-switch mode-switch-sm" id="pd-dir" role="group" aria-label="Sort direction">
+          <button type="button" class="mode-switch-btn active" data-dir="new">Newest first</button>
+          <button type="button" class="mode-switch-btn" data-dir="old">Oldest first</button>
+        </div>
+        <span class="pd-count" id="pd-count"></span>
+      </div>
+      <div class="pd-hint" id="pd-hint"></div>
+      <div class="pd-unplaced" id="pd-unplaced" hidden>
+        <span id="pd-unplaced-text"></span>
+        <button class="pull-order-btn" id="pd-place-all" type="button">Place them at the end</button>
+      </div>
+      <div class="pd-list" id="pd-list"></div>
+      <div class="pd-foot">
+        <span class="pd-status" id="pd-status"></span>
+        <button class="pd-cancel" id="pd-cancel" type="button">Cancel</button>
+        <button class="pd-save" id="pd-save" type="button">Save order</button>
+      </div>
     </div>
   </div>
 
@@ -343,6 +457,7 @@ let selectedSongs = new Set();
 let selectedCsBases = new Set();
 let skMinVal = 0;
 let ownedFilter = 'all'; 
+let pullOrderMode = false; 
 let excludeGrads = false;
 let hasPlusOnly = false; 
 let editOwned = false; 
@@ -390,7 +505,11 @@ function buildDisplayRows() {
   });
   displayRows = rows;
   buildCardById();
+  buildPairMap();
   reconcileOwnedSet();
+  
+  
+  reconcilePullOrder();
   buildMemberList();
 }
 
@@ -469,6 +588,18 @@ function buildCardById() {
   CARDS.forEach(c => { CARD_BY_ID[c.id] = c; });
 }
 
+
+
+let PAIR_OF = {};
+function buildPairMap() {
+  PAIR_OF = {};
+  displayRows.forEach(row => {
+    if (!row.plus) return;
+    PAIR_OF[row.base.id] = row.plus.id;
+    PAIR_OF[row.plus.id] = row.base.id;
+  });
+}
+
 function loadOwned() {
   try { return JSON.parse(localStorage.getItem(OWNED_KEY) || '{}'); } catch (e) { return {}; }
 }
@@ -476,16 +607,102 @@ function saveOwned(o) { localStorage.setItem(OWNED_KEY, JSON.stringify(o)); }
 
 let ownedSet = loadOwned();
 
+
+
+
+
+
+
+const PULL_ORDER_KEY = 'uniair_public_pull_order';
+
+function loadPullOrder() {
+  try {
+    const v = JSON.parse(localStorage.getItem(PULL_ORDER_KEY) || '[]');
+    return Array.isArray(v) ? v.map(Number).filter(n => Number.isFinite(n)) : [];
+  } catch (e) { return []; }
+}
+function savePullOrder(list) { localStorage.setItem(PULL_ORDER_KEY, JSON.stringify(list)); }
+
+let pullOrder = loadPullOrder();
+let pullIndex = {};
+function rebuildPullIndex() {
+  pullIndex = {};
+  pullOrder.forEach((id, i) => { pullIndex[id] = i + 1; });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function reconcilePullOrder() {
+  const owned = {};
+  Object.keys(ownedSet).forEach(k => { owned[Number(k)] = true; });
+  const seen = {};
+  const next = [];
+  pullOrder.forEach(id => {
+    if (owned[id]) {
+      if (!seen[id]) { seen[id] = true; next.push(id); }
+      return;
+    }
+    const partner = PAIR_OF[id];
+    if (partner && owned[partner] && !seen[partner]) { seen[partner] = true; next.push(partner); }
+  });
+  const changed = next.length !== pullOrder.length || next.some((id, i) => id !== pullOrder[i]);
+  pullOrder = next;
+  if (changed) savePullOrder(pullOrder);
+  rebuildPullIndex();
+}
+
+
+
+function unplacedIds() {
+  const out = [];
+  Object.keys(ownedSet).map(Number).sort((a, b) => a - b).forEach(id => {
+    if (!pullIndex[id]) out.push(id);
+  });
+  return out;
+}
+
+function pullPos(card) {
+  return card ? (pullIndex[cardKey(card)] || 0) : 0;
+}
+
 function markOwned(key) {
   ownedSet[key] = true;
   saveOwned(ownedSet);
+  const id = Number(key);
+  if (!pullIndex[id]) { pullOrder.push(id); savePullOrder(pullOrder); rebuildPullIndex(); }
   render();
 }
 function unmarkOwned(key) {
   delete ownedSet[key];
   saveOwned(ownedSet);
+  const at = pullOrder.indexOf(Number(key));
+  if (at >= 0) { pullOrder.splice(at, 1); savePullOrder(pullOrder); rebuildPullIndex(); }
   render();
 }
+
+
+
+
+
 
 
 
@@ -493,6 +710,13 @@ function upgradeCard(baseKey, plusKey) {
   delete ownedSet[baseKey];
   ownedSet[plusKey] = true;
   saveOwned(ownedSet);
+  const baseId = Number(baseKey), plusId = Number(plusKey);
+  const at = pullOrder.indexOf(baseId);
+  const already = pullOrder.indexOf(plusId);
+  if (already >= 0) pullOrder.splice(already, 1);
+  if (at >= 0) pullOrder.splice(at, 1, plusId); else pullOrder.push(plusId);
+  savePullOrder(pullOrder);
+  rebuildPullIndex();
   render();
 }
 
@@ -514,6 +738,15 @@ function upgradeBonusText(row) {
 function ownedCell(row) {
   const state = rowState(row);
   const baseKey = cardKey(row.base);
+
+  
+  
+  
+  if (pullOrderMode && !editOwned) {
+    if (state === 'none') return '';
+    const pos = pullPos(effectiveCard(row));
+    return pos ? '<span class="pull-num">#' + pos + '</span>' : '<span class="pull-num">&mdash;</span>';
+  }
 
   if (!editOwned) {
     
@@ -564,6 +797,14 @@ document.getElementById('has-plus-filter').addEventListener('change', (e) => {
   render();
 });
 
+document.getElementById('pull-order-filter').addEventListener('change', (e) => {
+  pullOrderMode = e.target.checked;
+  
+  
+  if (!pullOrderMode && sortKey === 'pull') { sortKey = 'tot'; sortDir = -1; }
+  render();
+});
+
 
 
 
@@ -582,9 +823,10 @@ window.addEventListener('message', (e) => {
       const c = CARD_BY_ID[id];
       return { id: Number(id), member: c ? c.member : null, title: c ? c.title : null };
     });
-    e.source.postMessage({ type: 'uniair-snapshot', id: msg.id, owned: owned }, '*');
+    e.source.postMessage({ type: 'uniair-snapshot', id: msg.id, owned: owned, pullOrder: pullOrder.slice() }, '*');
   } else if (msg.type === 'uniair-import-data') {
     const list = msg.data && msg.data.owned;
+    const incomingPull = msg.data && msg.data.pullOrder;
     let added = 0;
     if (Array.isArray(list)) {
       list.forEach(entry => {
@@ -595,10 +837,24 @@ window.addEventListener('message', (e) => {
       if (added) {
         saveOwned(ownedSet);
         reconcileOwnedSet(); 
-        render();
       }
     }
-    e.source.postMessage({ type: 'uniair-import-ack', id: msg.id, page: 'catalog', changed: added }, '*');
+    
+    
+    
+    
+    
+    let pullChanged = false;
+    if (Array.isArray(incomingPull)) {
+      pullOrder = incomingPull.map(Number).filter(n => Number.isFinite(n));
+      savePullOrder(pullOrder);
+      pullChanged = true;
+    }
+    if (added || pullChanged) {
+      reconcilePullOrder();
+      render();
+    }
+    e.source.postMessage({ type: 'uniair-import-ack', id: msg.id, page: 'catalog', changed: added, pullOrder: pullChanged }, '*');
   } else if (msg.type === 'uniair-filter-member') {
     
     
@@ -699,6 +955,16 @@ function render() {
 
   rows.sort((ra, rb) => {
     const a = effectiveCard(ra), b = effectiveCard(rb);
+    if (sortKey === 'pull') {
+      
+      
+      
+      const ap = pullPos(a) || Infinity, bp = pullPos(b) || Infinity;
+      if (ap === bp) return 0;
+      if (ap === Infinity) return 1;
+      if (bp === Infinity) return -1;
+      return (ap - bp) * sortDir;
+    }
     let av = a[sortKey], bv = b[sortKey];
     if (av === null || av === undefined) av = '';
     if (bv === null || bv === undefined) bv = '';
@@ -707,6 +973,8 @@ function render() {
     if (av > bv) return 1 * sortDir;
     return 0;
   });
+
+  document.getElementById('owned-th').textContent = pullOrderMode ? 'Pull #' : 'Owned';
 
   document.querySelectorAll('thead th').forEach(th => {
     th.classList.toggle('sorted', th.dataset.key === sortKey);
@@ -758,6 +1026,9 @@ function stripDiacritics(s) {
 document.querySelectorAll('thead th').forEach(th => {
   th.addEventListener('click', () => {
     const key = th.dataset.key;
+    
+    
+    if (key === 'pull' && !pullOrderMode) return;
     if (sortKey === key) { sortDir *= -1; } else { sortKey = key; sortDir = 1; }
     render();
   });
@@ -906,6 +1177,221 @@ document.getElementById('filters-toggle').addEventListener('click', () => {
   document.getElementById('filters-toggle').setAttribute('aria-expanded', String(!collapsed));
 });
 
+
+
+
+
+
+
+
+
+
+
+const pdOverlay = document.getElementById('pull-dialog');
+const pdListEl = document.getElementById('pd-list');
+const pdSearchEl = document.getElementById('pd-search');
+const pdCountEl = document.getElementById('pd-count');
+const pdHintEl = document.getElementById('pd-hint');
+const pdStatusEl = document.getElementById('pd-status');
+const pdUnplacedEl = document.getElementById('pd-unplaced');
+
+let pdWorking = [];
+let pdUnplaced = [];
+let pdDir = 'new';
+let pdQuery = '';
+let pdDragId = null;
+let pdDirty = false;
+
+function pdCardLabel(id) {
+  const c = CARD_BY_ID[id];
+  if (!c) return '<span class="pd-title">card id ' + id + '</span>';
+  return '<span class="pd-member">' + esc(c.member) + '</span><span class="pd-title">' + esc(c.title) + '</span>';
+}
+
+function pdMatches(id) {
+  if (!pdQuery) return true;
+  const c = CARD_BY_ID[id];
+  if (!c) return false;
+  const hay = stripDiacritics((c.member + ' ' + c.title + ' ' + (c.memberEn || '')).toLowerCase());
+  return pdQuery.split(/\s+/).every(t => hay.includes(t));
+}
+
+function pdRenderList() {
+  const total = pdWorking.length;
+  let rows = pdWorking.map((id, i) => ({ id: id, pos: i + 1 })).filter(r => pdMatches(r.id));
+  if (pdDir === 'new') rows = rows.slice().reverse();
+
+  
+  
+  const waiting = pdUnplaced.filter(pdMatches).map(id => ({ id: id, pos: null }));
+  const all = waiting.concat(rows);
+
+  pdCountEl.textContent = pdQuery
+    ? (all.length + ' of ' + (total + pdUnplaced.length) + ' shown')
+    : (total + (total === 1 ? ' placed' : ' placed')
+       + (pdUnplaced.length ? ', ' + pdUnplaced.length + ' waiting' : ''));
+  pdHintEl.textContent = pdQuery
+    ? 'Dragging is off while a search is active - type a position instead.'
+    : 'Drag a row to move it, or type a new position. #1 is the first card you pulled.';
+
+  pdUnplacedEl.hidden = !pdUnplaced.length;
+  if (pdUnplaced.length) {
+    document.getElementById('pd-unplaced-text').textContent =
+      pdUnplaced.length + (pdUnplaced.length === 1 ? ' owned card has' : ' owned cards have')
+      + ' no position yet. Type one in, or:';
+  }
+
+  if (!all.length) {
+    pdListEl.innerHTML = '<div class="pd-empty">'
+      + (total ? 'Nothing matches that search.' : 'No owned cards yet.')
+      + '</div>';
+    return;
+  }
+
+  const frag = document.createDocumentFragment();
+  all.forEach(r => {
+    const placed = r.pos !== null;
+    const div = document.createElement('div');
+    div.className = 'pd-row' + (placed ? '' : ' unplaced') + (placed && !pdQuery ? '' : ' no-drag');
+    div.dataset.id = r.id;
+    div.draggable = placed && !pdQuery;
+    div.innerHTML = '<span class="pd-grip">&#8942;&#8942;</span>'
+      + '<input class="pd-pos" type="number" min="1" max="' + (total + 1) + '"'
+      + (placed ? ' value="' + r.pos + '"' : ' value="" placeholder="&mdash;"') + '>'
+      + '<span class="pd-card">' + pdCardLabel(r.id) + '</span>';
+    frag.appendChild(div);
+  });
+  pdListEl.innerHTML = '';
+  pdListEl.appendChild(frag);
+}
+
+function pdMoveTo(id, toPos) {
+  const from = pdWorking.indexOf(id);
+  if (from < 0) return;
+  const to = Math.max(1, Math.min(pdWorking.length, Math.round(toPos))) - 1;
+  if (to === from) return;
+  pdWorking.splice(from, 1);
+  pdWorking.splice(to, 0, id);
+  pdDirty = true;
+  pdStatusEl.textContent = 'Unsaved changes.';
+}
+
+
+
+function pdPlace(id, toPos) {
+  const at = pdUnplaced.indexOf(id);
+  if (at < 0) return;
+  const to = Math.max(1, Math.min(pdWorking.length + 1, Math.round(toPos))) - 1;
+  pdUnplaced.splice(at, 1);
+  pdWorking.splice(to, 0, id);
+  pdDirty = true;
+  pdStatusEl.textContent = 'Unsaved changes.';
+}
+
+pdListEl.addEventListener('change', (e) => {
+  const input = e.target.closest('.pd-pos');
+  if (!input) return;
+  const row = input.closest('.pd-row');
+  const id = Number(row.dataset.id);
+  const val = parseInt(input.value, 10);
+  if (Number.isFinite(val)) {
+    if (row.classList.contains('unplaced')) pdPlace(id, val); else pdMoveTo(id, val);
+  }
+  pdRenderList(); 
+});
+
+document.getElementById('pd-place-all').addEventListener('click', () => {
+  if (!pdUnplaced.length) return;
+  pdWorking = pdWorking.concat(pdUnplaced);
+  pdUnplaced = [];
+  pdDirty = true;
+  pdStatusEl.textContent = 'Unsaved changes.';
+  pdRenderList();
+});
+
+pdListEl.addEventListener('dragstart', (e) => {
+  const row = e.target.closest('.pd-row');
+  if (!row || pdQuery) return;
+  pdDragId = Number(row.dataset.id);
+  row.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+  try { e.dataTransfer.setData('text/plain', String(pdDragId)); } catch (err) { }
+});
+
+pdListEl.addEventListener('dragover', (e) => {
+  if (pdDragId === null) return;
+  e.preventDefault();
+  const row = e.target.closest('.pd-row');
+  pdListEl.querySelectorAll('.pd-row.drop-target').forEach(r => r.classList.remove('drop-target'));
+  if (row) row.classList.add('drop-target');
+});
+
+pdListEl.addEventListener('drop', (e) => {
+  if (pdDragId === null) return;
+  e.preventDefault();
+  const row = e.target.closest('.pd-row');
+  if (row) {
+    const targetPos = pdWorking.indexOf(Number(row.dataset.id)) + 1;
+    if (targetPos > 0) pdMoveTo(pdDragId, targetPos);
+  }
+  pdDragId = null;
+  pdRenderList();
+});
+
+pdListEl.addEventListener('dragend', () => {
+  if (pdDragId === null) return; 
+  pdDragId = null;
+  pdRenderList();
+});
+
+function pdOpen() {
+  pdWorking = pullOrder.slice();
+  pdUnplaced = unplacedIds();
+  pdQuery = '';
+  pdSearchEl.value = '';
+  pdDir = 'new';
+  document.querySelectorAll('#pd-dir .mode-switch-btn').forEach(b => b.classList.toggle('active', b.dataset.dir === 'new'));
+  pdDirty = false;
+  pdStatusEl.textContent = '';
+  pdOverlay.hidden = false;
+  pdRenderList();
+}
+
+function pdClose() {
+  if (pdDirty && !window.confirm('Discard your unsaved pull-order changes?')) return;
+  pdDirty = false;
+  pdDragId = null;
+  pdOverlay.hidden = true;
+}
+
+document.getElementById('pull-order-edit-btn').addEventListener('click', pdOpen);
+document.getElementById('pd-close').addEventListener('click', pdClose);
+document.getElementById('pd-cancel').addEventListener('click', pdClose);
+pdOverlay.addEventListener('click', (e) => { if (e.target === pdOverlay) pdClose(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !pdOverlay.hidden) pdClose(); });
+
+document.getElementById('pd-save').addEventListener('click', () => {
+  pullOrder = pdWorking.slice();
+  savePullOrder(pullOrder);
+  rebuildPullIndex();
+  pdDirty = false;
+  pdOverlay.hidden = true;
+  render();
+});
+
+pdSearchEl.addEventListener('input', () => {
+  pdQuery = pdSearchEl.value.trim().toLowerCase();
+  pdRenderList();
+});
+
+document.querySelectorAll('#pd-dir .mode-switch-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    pdDir = btn.dataset.dir;
+    document.querySelectorAll('#pd-dir .mode-switch-btn').forEach(b => b.classList.toggle('active', b === btn));
+    pdRenderList();
+  });
+});
+
 function resetFilters() {
   memberTerms = [];
   document.getElementById('member-search').value = '';
@@ -933,6 +1419,10 @@ function resetFilters() {
 
   hasPlusOnly = false;
   document.getElementById('has-plus-filter').checked = false;
+
+  pullOrderMode = false;
+  document.getElementById('pull-order-filter').checked = false;
+  if (sortKey === 'pull') { sortKey = 'tot'; sortDir = -1; }
 
   render();
 }
