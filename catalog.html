@@ -260,7 +260,7 @@
 </style>
 </head>
 <body>
-  <div class="page-version-badge">v6</div>
+  <div class="page-version-badge">v7</div>
   <div class="wrap">
     <div class="version-row">
       <span id="db-version"></span>
@@ -378,7 +378,7 @@
       <div class="pd-hint" id="pd-hint"></div>
       <div class="pd-unplaced" id="pd-unplaced" hidden>
         <span id="pd-unplaced-text"></span>
-        <button class="pull-order-btn" id="pd-place-all" type="button">Place them at the end</button>
+        <button class="pull-order-btn" id="pd-place-all" type="button">Place all at the end, in card order</button>
       </div>
       <div class="pd-list" id="pd-list"></div>
       <div class="pd-foot">
@@ -706,6 +706,13 @@ function unmarkOwned(key) {
 
 
 
+
+
+
+
+
+
+
 function upgradeCard(baseKey, plusKey) {
   delete ownedSet[baseKey];
   ownedSet[plusKey] = true;
@@ -714,7 +721,7 @@ function upgradeCard(baseKey, plusKey) {
   const at = pullOrder.indexOf(baseId);
   const already = pullOrder.indexOf(plusId);
   if (already >= 0) pullOrder.splice(already, 1);
-  if (at >= 0) pullOrder.splice(at, 1, plusId); else pullOrder.push(plusId);
+  if (at >= 0) pullOrder.splice(pullOrder.indexOf(baseId), 1, plusId);
   savePullOrder(pullOrder);
   rebuildPullIndex();
   render();
@@ -1238,7 +1245,9 @@ function pdRenderList() {
   if (pdUnplaced.length) {
     document.getElementById('pd-unplaced-text').textContent =
       pdUnplaced.length + (pdUnplaced.length === 1 ? ' owned card has' : ' owned cards have')
-      + ' no position yet. Type one in, or:';
+      + ' no position yet - nothing recorded the order they arrived in. Type a'
+      + ' position in, or place them together (their order within that block'
+      + ' will be arbitrary, but everything you pull later lands after them):';
   }
 
   if (!all.length) {
