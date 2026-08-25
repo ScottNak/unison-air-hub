@@ -1,6 +1,6 @@
 {
- "version": "db9-2026-08-23",
- "cardCount": 5485,
+ "version": "db10-2026-08-25",
+ "cardCount": 5486,
  "cards": [
   {
    "id": 1,
@@ -82275,6 +82275,21 @@
    "pe": 3162,
    "cs": "Vo70%",
    "csBase": "Vo70%",
+   "grad": false
+  },
+  {
+   "id": 6500,
+   "color": "Y",
+   "title": "海風とわがまま",
+   "member": "山口陽世",
+   "memberEn": "Haruyo Yamaguchi",
+   "tot": 10761,
+   "sk": 0.0368,
+   "vo": 2248,
+   "da": 5836,
+   "pe": 2247,
+   "cs": "Da85%",
+   "csBase": "Da85%",
    "grad": false
   }
  ]
