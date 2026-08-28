@@ -293,7 +293,7 @@
     <input type="file" id="hub-import-file" accept="application/json" style="display:none">
     <span class="save-note" id="hub-save-note">&nbsp;</span>
   </div>
-  <div class="page-version-badge">v7</div>
+  <div class="page-version-badge">v8</div>
 </header>
 
 <div class="bday-box" id="bday-box"></div>
@@ -392,7 +392,7 @@
         return n + 'TH';
       }
       function initials(e) { return (e.given.charAt(0) + e.family.charAt(0)).toUpperCase(); }
-      function displayName(e) { return e.given + ' ' + e.family; }
+      function displayName(e) { return e.family + ' ' + e.given; }
       function groupClass(e) { return e.group === 'S' ? 'sakura' : 'hinata'; }
       function daysUntil(m, d) {
         var ref = 2001;
@@ -1077,7 +1077,11 @@
           (isNow ? '<span class="badge-now">UP TO DATE</span>' : '') +
           (n ? '<button class="exp-btn" type="button" data-i="' + i + '">+</button>' : '') +
         '</div>' +
-        '<p class="n">' + dbCards(n) + ' added</p>' +
+        '<p class="n">' +
+          (n === 0 && e.note
+            ? dbEsc(e.note)
+            : dbCards(n) + ' added' + (e.note ? ' - ' + dbEsc(e.note) : '')) +
+          '</p>' +
         (n ? '<div class="cards" data-cards="' + i + '" style="display:none">' +
              cardRowsHtml(e.cards) + '</div>' : '') +
         '</div>';
