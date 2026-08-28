@@ -100,12 +100,11 @@
   .member-panel.member-panel-first-visible { display: block; }
 
   .top-bar { display: flex; justify-content: center; gap: 10px; margin: 0 0 14px; flex-wrap: wrap; }
-  .settings-btn, #recalc-btn {
+  .settings-btn {
     appearance: none; border: none; cursor: pointer; font-weight: 700; font-size: 12.5px;
     padding: 9px 16px; border-radius: 999px; background: rgba(255,255,255,0.85); color: #2d2d42;
   }
-  .settings-btn:hover, #recalc-btn:hover { background: #fff; }
-  #recalc-btn:disabled { opacity: .6; cursor: default; }
+  .settings-btn:hover { background: #fff; }
   .settings-panel {
     background: rgba(255,255,255,0.96); border-radius: 14px; padding: 16px 20px; margin-bottom: 18px;
     box-shadow: 0 8px 28px rgba(0,0,0,0.3); display: flex; flex-wrap: wrap; gap: 24px;
@@ -154,11 +153,10 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v9</div>
+<div class="page-version-badge">v10</div>
 <div class="wrap">
   <div class="top-bar">
     <button class="settings-btn" id="settings-btn" type="button">⚙ Members &amp; Bonus List</button>
-    <button id="recalc-btn" type="button" title="This page only computes once on load - use this after changing ownership on the Card Database.">↻ Recalculate</button>
   </div>
   <div class="settings-panel" id="settings-panel" style="display:none;">
     <div class="settings-col">
@@ -1052,6 +1050,7 @@ function buildMemberContentHtml(member, memberCardsAll, starlightSongs, results,
     }
     var chips = byColor.map(chip).join('');
     var acq = classifyAcquisition(card, ownedIdSet);
+    SUGGESTED.push({id: card.id, tag: acq.tag});
     return '<tr><td class="acq-cell"><span class="acq-tag ' + (ACQ_TAG_CLASS[acq.tag] || 'pull') + '">' + esc(acq.tag) + '</span></td>' +
       '<td class="color-cell"><span class="color-sq" style="background:' + (COLOR_HEX_SL[card.color] || '#999') + '">' + letter + '</span></td>' +
       '<td class="song">' + esc(card.song) + '</td>' +
@@ -1135,13 +1134,33 @@ function memberGroup(member) {
 }
 
 var lastActiveMemberIdx = 0;
+var SUGGESTED = [];
+var NEW_CARD_IDS = null;
+
+function reportNewCards() {
+  if (!NEW_CARD_IDS) return;
+  var want = {};
+  NEW_CARD_IDS.forEach(function(id) { want[id] = true; });
+  var seen = {};
+  var upgradable = 0;
+  var pullable = 0;
+  SUGGESTED.forEach(function(rec) {
+    if (!want[rec.id] || seen[rec.id]) return;
+    seen[rec.id] = true;
+    if (rec.tag === 'Upgrade') upgradable++; else pullable++;
+  });
+  try {
+    parent.postMessage({type: 'uniair-new-cards-report', page: 'spotlight',
+                        upgradable: upgradable, pullable: pullable}, '*');
+  } catch (e) { }
+}
 
 function renderAll() {
   var loadingEl = document.getElementById('loading');
   var tabsWrap = document.getElementById('member-tabs-wrap');
   var tabBar = document.getElementById('member-tab-bar');
   var panelsEl = document.getElementById('member-panels');
-  var recalcBtn = document.getElementById('recalc-btn');
+  SUGGESTED = [];
 
   var data;
   try { data = runAll(); }
@@ -1150,7 +1169,6 @@ function renderAll() {
     loadingEl.style.display = '';
     tabsWrap.style.display = 'none';
     panelsEl.innerHTML = '';
-    if (recalcBtn) recalcBtn.disabled = false;
     return;
   }
 
@@ -1162,7 +1180,7 @@ function renderAll() {
     loadingEl.textContent = 'No members selected — use ⚙ Members & Bonus List above to pick who to show.';
     loadingEl.style.display = '';
     tabsWrap.style.display = 'none';
-    if (recalcBtn) recalcBtn.disabled = false;
+    reportNewCards();
     return;
   }
 
@@ -1205,7 +1223,7 @@ function renderAll() {
 
   loadingEl.style.display = 'none';
   tabsWrap.style.display = '';
-  if (recalcBtn) { recalcBtn.disabled = false; recalcBtn.textContent = '↻ Recalculate'; }
+  reportNewCards();
 }
 
 
@@ -1323,8 +1341,6 @@ function recomputeAndRender() {
   loadingEl.textContent = 'Computing Spotlight teams…';
   loadingEl.style.display = '';
   document.getElementById('member-tabs-wrap').style.display = 'none';
-  var recalcBtn = document.getElementById('recalc-btn');
-  if (recalcBtn) { recalcBtn.disabled = true; recalcBtn.textContent = 'Recalculating…'; }
   setTimeout(renderAll, 0);
 }
 
@@ -1345,9 +1361,18 @@ function initSettingsPanel() {
     recomputeAndRender();
   });
 
-  var recalcBtn = document.getElementById('recalc-btn');
-  if (recalcBtn) recalcBtn.addEventListener('click', recomputeAndRender);
 }
+
+window.addEventListener('message', function(e) {
+  var msg = e.data;
+  if (!msg || typeof msg !== 'object') return;
+  if (msg.type === 'uniair-new-cards') {
+    NEW_CARD_IDS = Array.isArray(msg.ids) ? msg.ids : [];
+    reportNewCards();
+    return;
+  }
+  if (msg.type === 'uniair-recalc') recomputeAndRender();
+});
 
 function init() {
   initSettingsPanel();

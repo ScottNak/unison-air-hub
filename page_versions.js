@@ -1,7 +1,7 @@
 window.UNIAIR_PAGE_VERSIONS = {
-  "catalog": "v7",
+  "catalog": "v8",
   "songs": "v5",
   "kizuna": "v3",
-  "bestteams": "v8",
-  "spotlight": "v9"
+  "bestteams": "v9",
+  "spotlight": "v10"
 };

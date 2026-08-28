@@ -66,7 +66,8 @@
   .import-overlay { display: none; flex: 1 1 auto; margin: 0 16px 16px; border-radius: 12px;
     box-shadow: 0 8px 28px rgba(0,0,0,0.35); overflow: hidden; position: relative; background: #15151f; }
   .import-overlay iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: block; }
-  body.import-mode .tabs, body.import-mode .frame-wrap { display: none; }
+  body.import-mode .tabs, body.import-mode .frame-wrap,
+  body.import-mode .pill-row { display: none; }
   body.import-mode .import-overlay { display: block; }
   
   body.import-mode .bday-box, body.welcome-mode .bday-box { display: none; }
@@ -142,6 +143,134 @@
   .bday-code.copied { background: #d7f5df; color: #1b7a3c; border-color: #9fe0b1; }
   .bday-hint { display: block; margin-top: 3px; font-size: 10px; color: rgba(45,45,66,0.6); }
 
+  .pill-row { display: flex; justify-content: center; padding: 0 16px 14px; }
+  .pill-row.tight { margin-top: -11px; padding-bottom: 8px; }
+  .pill-row.tight .pill.flat { padding: 2px 2px; }
+  .pill, .report {
+    display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    justify-content: center; max-width: 100%;
+    border: none; border-radius: 999px; font-family: inherit; font-weight: 600;
+  }
+  .pill {
+    padding: 6px 7px 6px 15px; font-size: 12.5px;
+    background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.72);
+  }
+  .pill .ver { font-weight: 700; }
+  .pill .when { font-weight: 500; opacity: 0.7; }
+  .pill .act, .info, .rx, .rlink {
+    appearance: none; border: none; font-family: inherit; cursor: pointer;
+  }
+  .pill .act {
+    display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px;
+    background: rgba(255,255,255,0.16); color: #fff;
+    border-radius: 999px; padding: 4px 12px; font-weight: 700;
+  }
+  .info {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 18px; height: 18px; border-radius: 50%; padding: 0;
+    background: rgba(255,255,255,0.18); color: rgba(255,255,255,0.85);
+    font-size: 11px; font-weight: 700; font-style: normal;
+  }
+  .pill.flat { background: transparent; padding: 6px 2px; color: rgba(255,255,255,0.58); }
+  .pill.flat .act {
+    background: transparent; color: rgba(255,255,255,0.9);
+    border: 1px solid rgba(255,255,255,0.3); padding: 3px 11px;
+  }
+  .pill.busy { background: rgba(255,255,255,0.10); color: rgba(255,255,255,0.5); }
+  .pill.busy .act { background: rgba(255,255,255,0.10); color: rgba(255,255,255,0.55); }
+
+  .report {
+    padding: 5px 14px; font-size: 12px;
+    background: rgba(255,255,255,0.10); color: rgba(255,255,255,0.8);
+  }
+  .report .tick { color: #7ddba0; font-weight: 800; }
+  .report .sep2 { opacity: 0.3; }
+  .report.muted { color: rgba(255,255,255,0.5); }
+  .report.muted .tick { color: rgba(255,255,255,0.4); }
+  .rlink {
+    background: none; padding: 0; font: inherit; color: #ffd97d;
+    text-decoration: underline; text-underline-offset: 2px;
+  }
+  .rwait { color: rgba(255,255,255,0.45); font-weight: 500; font-style: italic; }
+  .rmiss { color: rgba(255,255,255,0.45); font-weight: 500; }
+  .rx {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 17px; height: 17px; border-radius: 50%; margin-left: 3px; margin-right: -6px;
+    padding: 0; background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.6);
+    font-size: 11px; font-weight: 700; line-height: 1; flex: none;
+  }
+  .report.hot {
+    background: #ffd97d; color: #3a2f10;
+    box-shadow: 0 0 0 4px rgba(255,217,125,0.16);
+  }
+  .report.hot .tick { color: #2f6f4f; }
+  .report.hot .rlink { color: #2d2d42; }
+  .report.hot .sep2 { opacity: 0.4; }
+  .report.hot .rwait, .report.hot .rmiss { color: rgba(58,47,16,0.6); }
+  .report.hot .rx { background: rgba(58,47,16,0.16); color: #3a2f10; }
+
+  .db-scrim {
+    display: none; position: fixed; inset: 0; z-index: 40;
+    background: rgba(10,10,20,0.72);
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .db-scrim.open { display: flex; }
+  .dlg {
+    width: 100%; max-width: 380px; background: #fff; border-radius: 12px;
+    box-shadow: 0 18px 50px rgba(0,0,0,0.55); color: #2d2d42; overflow: hidden;
+  }
+  .dlg-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 14px 11px; border-bottom: 1px solid #eceef4;
+  }
+  .dlg-head h3 { margin: 0; font-size: 14px; }
+  .dlg-x {
+    appearance: none; border: none; cursor: pointer;
+    width: 26px; height: 26px; border-radius: 50%; padding: 0;
+    background: #eceef4; color: #55576b; font-size: 14px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .dlg-body { padding: 6px 14px 12px; max-height: 60vh; overflow-y: auto; }
+  .entry { padding: 9px 0; border-bottom: 1px solid #f2f3f8; }
+  .entry:last-child { border-bottom: none; }
+  .entry .top {
+    display: flex; align-items: baseline; gap: 8px;
+    position: relative; padding-right: 26px;
+  }
+  .entry .v { font-weight: 800; font-size: 12.5px; }
+  .entry .d { font-size: 11px; color: #9698ac; }
+  .entry .n { margin: 3px 0 0; font-size: 12.5px; color: #55576b; }
+  .entry.now .v { color: #b8860b; }
+  .badge-now {
+    font-size: 9.5px; font-weight: 800; letter-spacing: .04em;
+    background: #ffd97d; color: #3a2f10; border-radius: 4px; padding: 2px 5px;
+  }
+  .exp-btn {
+    appearance: none; cursor: pointer; border: none;
+    position: absolute; right: 0; top: -1px;
+    width: 20px; height: 20px; border-radius: 50%; padding: 0;
+    background: #eceef4; color: #55576b; font-size: 13px; font-weight: 700; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .exp-btn.open { background: #2d2d42; color: #fff; }
+  .cards { margin: 7px 0 2px; border-top: 1px dashed #e8e9f0; padding-top: 6px; }
+  .crow {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 11.5px; color: #55576b; padding: 2.5px 0;
+  }
+  .cdot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .cname { flex: 1 1 auto; }
+  .ccs { color: #7b7d93; font-size: 10.5px; }
+  .cev {
+    font-variant-numeric: tabular-nums; font-weight: 700; color: #2d2d42;
+    min-width: 42px; text-align: right;
+  }
+  .cev.hot { color: #c62828; }
+  .dlg-foot {
+    padding: 9px 14px 11px; border-top: 1px solid #eceef4;
+    font-size: 11.5px; color: #7b7d93; background: #fafbfd;
+  }
+
   .page-version-badge {
     position: absolute; top: 50px; right: 16px; width: 34px; z-index: 15;
     color: rgba(255,255,255,0.5); font: 9px/1 -apple-system, sans-serif;
@@ -164,10 +293,13 @@
     <input type="file" id="hub-import-file" accept="application/json" style="display:none">
     <span class="save-note" id="hub-save-note">&nbsp;</span>
   </div>
-  <div class="page-version-badge">v6</div>
+  <div class="page-version-badge">v7</div>
 </header>
 
 <div class="bday-box" id="bday-box"></div>
+
+<div class="pill-row tight" id="db-pill-row"></div>
+<div class="db-scrim" id="db-scrim"><div class="dlg" id="db-dlg"></div></div>
 
 <div class="tabs" id="tabs"></div>
 <div class="frame-wrap" id="frame-wrap"></div>
@@ -373,12 +505,39 @@
   var iframes = []; 
   var tabButtons = []; 
 
+  var INPUT_KEYS = ['uniair_public_owned', 'uniair_public_kizuna_v1',
+                    'uniair_public_song_overview_overrides_v1'];
+  var RECALC_PAGES = { bestteams: true, spotlight: true };
+  var lastInputSig = {};
+
+  function inputSignature() {
+    var parts = [];
+    for (var i = 0; i < INPUT_KEYS.length; i++) {
+      var v;
+      try { v = localStorage.getItem(INPUT_KEYS[i]); } catch (err) { return null; }
+      parts.push(v == null ? '' : v);
+    }
+    return parts.join(' ');
+  }
+
+  function recalcIfInputsMoved(i) {
+    var id = pages[i].id;
+    if (!RECALC_PAGES[id]) return;
+    var sig = inputSignature();
+    if (sig === null || lastInputSig[id] === undefined || lastInputSig[id] === sig) return;
+    lastInputSig[id] = sig;
+    try {
+      iframes[i].contentWindow.postMessage({ type: 'uniair-recalc' }, '*');
+    } catch (err) { }
+  }
+
   function activateTab(i) {
     if (i < 0 || i >= pages.length) return;
     tabButtons.forEach(function (b) { b.classList.remove('active'); });
     iframes.forEach(function (f) { f.classList.remove('active'); });
     tabButtons[i].classList.add('active');
     iframes[i].classList.add('active');
+    recalcIfInputsMoved(i);
   }
 
   var pageVersions = window.UNIAIR_PAGE_VERSIONS || {};
@@ -392,14 +551,31 @@
 
     var iframe = document.createElement('iframe');
     iframe.className = i === 0 ? 'active' : '';
-    var pv = pageVersions[page.id];
-    iframe.src = page.file + '?v=' + (pv || Date.now());
     iframe.title = page.label;
     frameWrap.appendChild(iframe);
     iframes.push(iframe);
 
+    iframe.addEventListener('load', function () {
+      lastInputSig[page.id] = inputSignature();
+    });
+
     tab.addEventListener('click', function () { activateTab(i); });
   });
+
+  var DB_VERSION = null;
+  var CHANGELOG = null;
+  var framesStarted = false;
+
+  function frameSrc(page) {
+    var pv = pageVersions[page.id] || Date.now();
+    return page.file + '?v=' + pv + (DB_VERSION ? '-' + DB_VERSION : '');
+  }
+
+  function startFrames() {
+    if (framesStarted) return;
+    framesStarted = true;
+    pages.forEach(function (page, i) { iframes[i].src = frameSrc(page); });
+  }
 
   window.addEventListener('message', function (e) {
     var msg = e.data;
@@ -648,6 +824,309 @@
       }, 300);
     });
   });
+
+  var DB_SEEN_KEY = 'uniair_hub_seen_db_version';
+  var DB_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var DB_COLOR_HEX = { R: '#e05a5a', B: '#4a90d9', G: '#5aa85a', Y: '#d9b23a', P: '#9a6bc9' };
+  var DB_REPORT_PAGES = ['bestteams', 'spotlight'];
+  var DB_REPORT_LABELS = { bestteams: 'Best Teams', spotlight: 'Spotlight' };
+  var DB_REPORT_TIMEOUT_MS = 20000;
+
+  var pillRow = document.getElementById('db-pill-row');
+  var dbScrim = document.getElementById('db-scrim');
+  var dbDlg = document.getElementById('db-dlg');
+  var reportState = null;
+
+  function dbEsc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+  function dbVerLabel(v) {
+    var m = /^db(\d+)/.exec(v || '');
+    return m ? 'Ver ' + m[1] : '';
+  }
+  function dbDateLabel(iso, withYear) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
+    if (!m) return '';
+    var s = DB_MONTHS[Number(m[2]) - 1] + ' ' + Number(m[3]);
+    return withYear ? s + " '" + m[1].slice(2) : s;
+  }
+  function dbCards(n) { return n + ' card' + (n === 1 ? '' : 's'); }
+  function readSeenVersion() {
+    try { return localStorage.getItem(DB_SEEN_KEY); } catch (err) { return null; }
+  }
+  function writeSeenVersion(v) {
+    try { localStorage.setItem(DB_SEEN_KEY, v); } catch (err) { }
+  }
+  function pageIndexById(id) {
+    for (var i = 0; i < pages.length; i++) { if (pages[i].id === id) return i; }
+    return -1;
+  }
+
+  function fetchChangelog() {
+    return fetch('db_changelog.json?_=' + Date.now(), { cache: 'no-store' })
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function (d) {
+        if (!d || !Array.isArray(d.entries) || !d.entries.length) {
+          throw new Error('unexpected db_changelog.json shape');
+        }
+        return d;
+      });
+  }
+
+  function renderRestingPill() {
+    reportState = null;
+    pillRow.classList.add('tight');
+    if (!CHANGELOG) {
+      pillRow.innerHTML =
+        '<span class="pill flat">' +
+          '<button class="act" id="db-act" type="button">&#8635; Update</button>' +
+        '</span>';
+    } else {
+      var latest = CHANGELOG.entries[0];
+      var when = dbDateLabel(latest.date);
+      pillRow.innerHTML =
+        '<span class="pill flat">' +
+          '<span class="ver">' + dbEsc(dbVerLabel(latest.version)) + '</span>' +
+          (when ? ' <span class="when">(' + dbEsc(when) + ')</span>' : '') +
+          ' <button class="info" id="db-info" type="button" aria-label="What&#39;s new">i</button>' +
+          ' <button class="act" id="db-act" type="button">&#8635; Update</button>' +
+        '</span>';
+      document.getElementById('db-info').addEventListener('click', openDbDialog);
+    }
+    document.getElementById('db-act').addEventListener('click', onUpdateClick);
+  }
+
+  function renderBusyPill(text) {
+    pillRow.classList.remove('tight');
+    pillRow.innerHTML =
+      '<span class="pill busy">' + dbEsc(text) +
+      ' <span class="act">&#8635; Working&hellip;</span></span>';
+  }
+
+  function renderSimpleReport(text) {
+    reportState = null;
+    pillRow.classList.remove('tight');
+    pillRow.innerHTML =
+      '<span class="report muted"><span class="tick">&#10003;</span> ' + dbEsc(text) +
+      '<button class="rx" type="button" id="db-report-x" aria-label="Dismiss">&times;</button></span>';
+    document.getElementById('db-report-x').addEventListener('click', renderRestingPill);
+  }
+
+  function renderReport() {
+    if (!reportState) return;
+    pillRow.classList.remove('tight');
+    var found = [];
+    var notes = [];
+    var hot = false;
+    DB_REPORT_PAGES.forEach(function (id) {
+      var r = reportState.pages[id];
+      if (!r) return;
+      if (r.status === 'pending') {
+        notes.push('<span class="rwait">checking ' + dbEsc(DB_REPORT_LABELS[id]) + '&hellip;</span>');
+      } else if (r.status === 'missing') {
+        notes.push('<span class="rmiss">' + dbEsc(DB_REPORT_LABELS[id]) + ' didn&rsquo;t report</span>');
+      } else if (r.upgradable + r.pullable > 0) {
+        hot = true;
+        var bits = [];
+        if (r.upgradable) bits.push(r.upgradable + ' upgradable');
+        if (r.pullable) bits.push(r.pullable + ' pullable');
+        found.push('<button class="rlink" type="button" data-page="' + id + '">' +
+          dbEsc(DB_REPORT_LABELS[id]) + ': ' + bits.join(', ') + '</button>');
+      }
+    });
+    var dot = ' <span class="sep2">&middot;</span> ';
+    var line = '<span class="tick">&#10003;</span> <b>' +
+      dbEsc(dbVerLabel(reportState.version)) + '</b>' + dot +
+      dbCards(reportState.added) + ' added' +
+      (found.length ? dot + found.join(', ') + ' &rarr;' : '') +
+      (notes.length ? dot + notes.join(dot) : '');
+    pillRow.innerHTML =
+      '<span class="report ' + (hot ? 'hot' : 'muted') + '">' + line +
+      '<button class="rx" type="button" id="db-report-x" aria-label="Dismiss">&times;</button></span>';
+    document.getElementById('db-report-x').addEventListener('click', renderRestingPill);
+    Array.prototype.forEach.call(pillRow.querySelectorAll('.rlink'), function (b) {
+      b.addEventListener('click', function () {
+        var idx = pageIndexById(b.getAttribute('data-page'));
+        if (idx !== -1) activateTab(idx);
+      });
+    });
+  }
+
+  function collectSince(sinceVersion) {
+    var out = { added: 0, ids: [] };
+    var entries = CHANGELOG ? CHANGELOG.entries : [];
+    for (var i = 0; i < entries.length; i++) {
+      if (entries[i].version === sinceVersion) break;
+      out.added += (entries[i].added || 0);
+      (entries[i].cards || []).forEach(function (c) { out.ids.push(c.id); });
+    }
+    return out;
+  }
+
+  function requestReports() {
+    DB_REPORT_PAGES.forEach(function (id) {
+      var idx = pageIndexById(id);
+      if (idx === -1) return;
+      var ids = reportState.ids;
+      var send = function () {
+        try {
+          iframes[idx].contentWindow.postMessage({ type: 'uniair-new-cards', ids: ids }, '*');
+        } catch (err) { }
+      };
+      send();
+      iframes[idx].addEventListener('load', send);
+      setTimeout(function () {
+        if (reportState && reportState.pages[id] && reportState.pages[id].status === 'pending') {
+          reportState.pages[id] = { status: 'missing' };
+          renderReport();
+        }
+      }, DB_REPORT_TIMEOUT_MS);
+    });
+  }
+
+  function announce(sinceVersion) {
+    if (!CHANGELOG) return;
+    var latest = CHANGELOG.entries[0];
+    if (!sinceVersion || sinceVersion === latest.version) return;
+    var got = collectSince(sinceVersion);
+    reportState = {
+      version: latest.version,
+      added: got.added,
+      ids: got.ids,
+      pages: { bestteams: { status: 'pending' }, spotlight: { status: 'pending' } }
+    };
+    renderReport();
+    requestReports();
+  }
+
+  function recalcActiveTab() {
+    for (var i = 0; i < iframes.length; i++) {
+      if (iframes[i].classList.contains('active')) {
+        try {
+          iframes[i].contentWindow.postMessage({ type: 'uniair-recalc' }, '*');
+        } catch (err) { }
+        lastInputSig[pages[i].id] = inputSignature();
+        break;
+      }
+    }
+    renderSimpleReport('Already on the latest cards');
+  }
+
+  function onUpdateClick() {
+    renderBusyPill('Checking');
+    fetchChangelog().then(function (d) {
+      CHANGELOG = d;
+      var latest = d.entries[0];
+      if (DB_VERSION && latest.version !== DB_VERSION) {
+        var previous = DB_VERSION;
+        DB_VERSION = latest.version;
+        writeSeenVersion(DB_VERSION);
+        renderBusyPill('Updating to ' + dbVerLabel(DB_VERSION));
+        framesStarted = false;
+        startFrames();
+        announce(previous);
+      } else {
+        DB_VERSION = latest.version;
+        recalcActiveTab();
+      }
+    }).catch(function () {
+      recalcActiveTab();
+    });
+  }
+
+  function cardRowsHtml(cards) {
+    return (cards || []).map(function (c) {
+      var ev = (Number(c.sk) || 0) * 100;
+      return '<div class="crow">' +
+        '<span class="cdot" style="background:' + (DB_COLOR_HEX[c.color] || '#9698ac') + '"></span>' +
+        '<span class="cname">' + dbEsc(c.memberEn) + '</span>' +
+        '<span class="ccs">' + dbEsc(c.cs) + '</span>' +
+        '<span class="' + (ev >= 3 ? 'cev hot' : 'cev') + '">' + ev.toFixed(2) + '%</span>' +
+        '</div>';
+    }).join('');
+  }
+
+  function dialogHtml() {
+    var entries = CHANGELOG.entries;
+    var body = entries.map(function (e, i) {
+      var isNow = e.version === DB_VERSION;
+      var n = e.added || 0;
+      return '<div class="entry' + (isNow ? ' now' : '') + '">' +
+        '<div class="top">' +
+          '<span class="v">' + dbEsc(dbVerLabel(e.version)) + '</span>' +
+          '<span class="d">' + dbEsc(dbDateLabel(e.date, true)) + '</span>' +
+          (isNow ? '<span class="badge-now">UP TO DATE</span>' : '') +
+          (n ? '<button class="exp-btn" type="button" data-i="' + i + '">+</button>' : '') +
+        '</div>' +
+        '<p class="n">' + dbCards(n) + ' added</p>' +
+        (n ? '<div class="cards" data-cards="' + i + '" style="display:none">' +
+             cardRowsHtml(e.cards) + '</div>' : '') +
+        '</div>';
+    }).join('');
+    return '<div class="dlg-head"><h3>What&#39;s new</h3>' +
+      '<button class="dlg-x" type="button" id="db-dlg-x" aria-label="Close">&times;</button></div>' +
+      '<div class="dlg-body">' + body + '</div>' +
+      '<div class="dlg-foot">' +
+        Number(entries[0].cardCount || 0).toLocaleString() + ' cards</div>';
+  }
+
+  function closeDbDialog() { dbScrim.classList.remove('open'); }
+
+  function openDbDialog() {
+    if (!CHANGELOG) return;
+    dbDlg.innerHTML = dialogHtml();
+    dbScrim.classList.add('open');
+    document.getElementById('db-dlg-x').addEventListener('click', closeDbDialog);
+    Array.prototype.forEach.call(dbDlg.querySelectorAll('.exp-btn'), function (b) {
+      b.addEventListener('click', function () {
+        var box = dbDlg.querySelector('.cards[data-cards="' + b.getAttribute('data-i') + '"]');
+        if (!box) return;
+        var open = box.style.display !== 'none';
+        box.style.display = open ? 'none' : '';
+        b.classList.toggle('open', !open);
+        b.innerHTML = open ? '+' : '&minus;';
+      });
+    });
+  }
+
+  dbScrim.addEventListener('click', function (e) {
+    if (e.target === dbScrim) closeDbDialog();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && dbScrim.classList.contains('open')) closeDbDialog();
+  });
+
+  window.addEventListener('message', function (e) {
+    var msg = e.data;
+    if (!msg || typeof msg !== 'object' || msg.type !== 'uniair-new-cards-report') return;
+    if (!reportState || !reportState.pages[msg.page]) return;
+    reportState.pages[msg.page] = {
+      status: 'ok',
+      upgradable: Number(msg.upgradable) || 0,
+      pullable: Number(msg.pullable) || 0
+    };
+    renderReport();
+  });
+
+  fetchChangelog().then(function (d) {
+    CHANGELOG = d;
+    DB_VERSION = d.entries[0].version;
+    renderRestingPill();
+    startFrames();
+    var seen = readSeenVersion();
+    writeSeenVersion(DB_VERSION);
+    announce(seen);
+  }).catch(function () {
+    renderRestingPill();
+    startFrames();
+  });
+  setTimeout(startFrames, 3000);
 </script>
 </body>
 </html>

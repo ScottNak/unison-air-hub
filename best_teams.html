@@ -81,13 +81,6 @@
 
   .loading { text-align: center; color: #cfd8ff; padding: 40px 0; font-size: 14px; }
 
-  #recalc-btn {
-    flex: none; appearance: none; border: 1px solid #d8d8e0; background: #fff;
-    color: #333; padding: 7px 16px; border-radius: 999px; cursor: pointer;
-    font-size: 12px; font-weight: 700; white-space: nowrap;
-  }
-  #recalc-btn:hover { border-color: #b8bad0; background: #f5f6fb; }
-  #recalc-btn:disabled { opacity: 0.6; cursor: default; }
   .page-version-badge {
     position: fixed; bottom: 8px; right: 10px; z-index: 9999;
     background: rgba(0,0,0,0.55); color: #fff; font: 11px/1 -apple-system, sans-serif;
@@ -99,7 +92,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v8</div>
+<div class="page-version-badge">v9</div>
 <div class="wrap">
   <div class="note">
     <div class="note-text">
@@ -110,7 +103,6 @@
       <a href="song_overview.html" target="_top">Discography</a> data too -
       keep those up to date for the most accurate scores.
     </div>
-    <button id="recalc-btn" title="This page only computes once on load - use this after changing ownership/kizuna/discography elsewhere.">&#8635; Recalculate</button>
   </div>
   <div id="loading" class="loading">Computing your best teams&hellip;</div>
   <div id="color-tab-bar" class="color-tab-bar" style="display:none;"></div>
@@ -777,8 +769,8 @@ function recommendCardsWorthGetting(mech, leader, actualSupports, fullPool, owne
     if (seenGroups[c.groupKey]) return;
     seenGroups[c.groupKey] = true;
     var info = classifyAcquisition(c, ownedSet);
-    out.push({member: c.member, song: c.song, centerSkill: shortSkillText(c.centerSkill), sk: skPctText(c.sk),
-              tag: info.tag, note: info.note || null});
+    out.push({id: c.id, member: c.member, song: c.song, centerSkill: shortSkillText(c.centerSkill),
+              sk: skPctText(c.sk), tag: info.tag, note: info.note || null});
   });
   return out.slice(0, 4);
 }
@@ -934,12 +926,35 @@ function setActiveColor(color) {
 
 
 var lastActiveColor = null;
+var LAST_RESULTS = null;
+var NEW_CARD_IDS = null;
+
+function reportNewCards() {
+  if (!LAST_RESULTS || !NEW_CARD_IDS) return;
+  var want = {};
+  NEW_CARD_IDS.forEach(function(id) { want[id] = true; });
+  var seen = {};
+  var upgradable = 0;
+  var pullable = 0;
+  Object.keys(LAST_RESULTS).forEach(function(key) {
+    var r = LAST_RESULTS[key];
+    if (!r || !r.recommended) return;
+    r.recommended.forEach(function(rec) {
+      if (!want[rec.id] || seen[rec.id]) return;
+      seen[rec.id] = true;
+      if (rec.tag === 'Upgrade') upgradable++; else pullable++;
+    });
+  });
+  try {
+    parent.postMessage({type: 'uniair-new-cards-report', page: 'bestteams',
+                        upgradable: upgradable, pullable: pullable}, '*');
+  } catch (e) { }
+}
 
 function init() {
   var loadingEl = document.getElementById('loading');
   var tabBar = document.getElementById('color-tab-bar');
   var panelsEl = document.getElementById('panels');
-  var recalcBtn = document.getElementById('recalc-btn');
 
   var results;
   try {
@@ -947,9 +962,9 @@ function init() {
   } catch (e) {
     loadingEl.textContent = 'Something went wrong computing your teams: ' + e.message;
     loadingEl.style.display = '';
-    recalcBtn.disabled = false;
     return;
   }
+  LAST_RESULTS = results;
 
   
   
@@ -987,8 +1002,7 @@ function init() {
   lastActiveColor = activeColor;
   loadingEl.style.display = 'none';
   tabBar.style.display = 'flex';
-  recalcBtn.disabled = false;
-  recalcBtn.textContent = '↻ Recalculate';
+  reportNewCards();
 }
 
 setActiveColor = (function(original) {
@@ -998,11 +1012,16 @@ setActiveColor = (function(original) {
   };
 })(setActiveColor);
 
-document.getElementById('recalc-btn').addEventListener('click', function() {
+window.addEventListener('message', function(e) {
+  var msg = e.data;
+  if (!msg || typeof msg !== 'object') return;
+  if (msg.type === 'uniair-new-cards') {
+    NEW_CARD_IDS = Array.isArray(msg.ids) ? msg.ids : [];
+    reportNewCards();
+    return;
+  }
+  if (msg.type !== 'uniair-recalc') return;
   var loadingEl = document.getElementById('loading');
-  var recalcBtn = document.getElementById('recalc-btn');
-  recalcBtn.disabled = true;
-  recalcBtn.textContent = 'Recalculating…';
   loadingEl.textContent = 'Recalculating your best teams…';
   loadingEl.style.display = '';
   document.getElementById('color-tab-bar').style.display = 'none';
