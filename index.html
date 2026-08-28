@@ -491,6 +491,7 @@
   })();
 </script>
 <script src="page_versions.js"></script>
+<script src="db_changelog.js"></script>
 <script>
   var pages = [
     { id: "catalog", label: "Card Database", file: "catalog.html" },
@@ -562,9 +563,13 @@
     tab.addEventListener('click', function () { activateTab(i); });
   });
 
-  var DB_VERSION = null;
-  var CHANGELOG = null;
+  var BAKED_CHANGELOG = (window.UNIAIR_DB_CHANGELOG &&
+    Array.isArray(window.UNIAIR_DB_CHANGELOG.entries) &&
+    window.UNIAIR_DB_CHANGELOG.entries.length) ? window.UNIAIR_DB_CHANGELOG : null;
+  var CHANGELOG = BAKED_CHANGELOG;
+  var DB_VERSION = CHANGELOG ? CHANGELOG.entries[0].version : null;
   var framesStarted = false;
+  var announcedVersion = null;
 
   function frameSrc(page) {
     var pv = pageVersions[page.id] || Date.now();
@@ -1018,23 +1023,31 @@
     renderSimpleReport('Already on the latest cards');
   }
 
+  function adoptChangelog(d) {
+    var previous = DB_VERSION;
+    var seenBefore = readSeenVersion();
+    var moved = previous !== d.entries[0].version;
+    CHANGELOG = d;
+    DB_VERSION = d.entries[0].version;
+    writeSeenVersion(DB_VERSION);
+    if (moved) framesStarted = false;
+    startFrames();
+    var since = (previous && moved) ? previous : seenBefore;
+    if (since && since !== DB_VERSION && announcedVersion !== DB_VERSION) {
+      announcedVersion = DB_VERSION;
+      renderRestingPill();
+      announce(since);
+    } else if (moved || !reportState) {
+      renderRestingPill();
+    }
+  }
+
   function onUpdateClick() {
     renderBusyPill('Checking');
     fetchChangelog().then(function (d) {
-      CHANGELOG = d;
-      var latest = d.entries[0];
-      if (DB_VERSION && latest.version !== DB_VERSION) {
-        var previous = DB_VERSION;
-        DB_VERSION = latest.version;
-        writeSeenVersion(DB_VERSION);
-        renderBusyPill('Updating to ' + dbVerLabel(DB_VERSION));
-        framesStarted = false;
-        startFrames();
-        announce(previous);
-      } else {
-        DB_VERSION = latest.version;
-        recalcActiveTab();
-      }
+      var wasVersion = DB_VERSION;
+      adoptChangelog(d);
+      if (d.entries[0].version === wasVersion) recalcActiveTab();
     }).catch(function () {
       recalcActiveTab();
     });
@@ -1114,18 +1127,12 @@
     renderReport();
   });
 
-  fetchChangelog().then(function (d) {
-    CHANGELOG = d;
-    DB_VERSION = d.entries[0].version;
+  if (BAKED_CHANGELOG) {
+    adoptChangelog(BAKED_CHANGELOG);
+  } else {
     renderRestingPill();
-    startFrames();
-    var seen = readSeenVersion();
-    writeSeenVersion(DB_VERSION);
-    announce(seen);
-  }).catch(function () {
-    renderRestingPill();
-    startFrames();
-  });
+  }
+  fetchChangelog().then(adoptChangelog).catch(function () { });
   setTimeout(startFrames, 3000);
 </script>
 </body>
