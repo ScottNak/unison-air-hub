@@ -1,6 +1,168 @@
 window.UNIAIR_DB_CHANGELOG = {
  "entries": [
   {
+   "version": "db12-2026-08-29",
+   "date": "2026-08-29",
+   "added": 22,
+   "cardCount": 5508,
+   "cards": [
+    {
+     "id": 6501,
+     "color": "B",
+     "memberEn": "Yamasaki Ten",
+     "cs": "Da85%",
+     "sk": 0.0368
+    },
+    {
+     "id": 6502,
+     "color": "P",
+     "memberEn": "Murayama Miu",
+     "cs": "ALL45%",
+     "sk": 0.0252
+    },
+    {
+     "id": 6503,
+     "color": "Y",
+     "memberEn": "Ōnuma Akiho",
+     "cs": "Vo70%",
+     "sk": 0.0232
+    },
+    {
+     "id": 6504,
+     "color": "G",
+     "memberEn": "Masumoto Kira",
+     "cs": "Da70%",
+     "sk": 0.0173
+    },
+    {
+     "id": 6505,
+     "color": "B",
+     "memberEn": "Mukai Itoha",
+     "cs": "Pe70%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6506,
+     "color": "P",
+     "memberEn": "Matono Mio",
+     "cs": "Vo70%",
+     "sk": 0.0234
+    },
+    {
+     "id": 6507,
+     "color": "R",
+     "memberEn": "Morita Hikaru",
+     "cs": "Pe70%",
+     "sk": 0.0245
+    },
+    {
+     "id": 6508,
+     "color": "P",
+     "memberEn": "Fujiyoshi Karin",
+     "cs": "Vo85%",
+     "sk": 0.0368
+    },
+    {
+     "id": 6509,
+     "color": "G",
+     "memberEn": "Nakashima Yuzuki",
+     "cs": "Da70%",
+     "sk": 0.0252
+    },
+    {
+     "id": 6510,
+     "color": "B",
+     "memberEn": "Kojima Nagisa",
+     "cs": "ALL45%",
+     "sk": 0.0232
+    },
+    {
+     "id": 6511,
+     "color": "P",
+     "memberEn": "Endō Hikari",
+     "cs": "Da70%",
+     "sk": 0.0173
+    },
+    {
+     "id": 6512,
+     "color": "R",
+     "memberEn": "Moriya Rena",
+     "cs": "Vo70%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6513,
+     "color": "Y",
+     "memberEn": "Tamura Hono",
+     "cs": "Pe70%",
+     "sk": 0.0275
+    },
+    {
+     "id": 6514,
+     "color": "B",
+     "memberEn": "Endō Riko",
+     "cs": "Vo70%",
+     "sk": 0.0204
+    },
+    {
+     "id": 6515,
+     "color": "G",
+     "memberEn": "Kōsaka Marino",
+     "cs": "VoPe50%",
+     "sk": 0.034
+    },
+    {
+     "id": 6516,
+     "color": "Y",
+     "memberEn": "Taniguchi Airi",
+     "cs": "Pe70%",
+     "sk": 0.0252
+    },
+    {
+     "id": 6517,
+     "color": "R",
+     "memberEn": "Matsuda Rina",
+     "cs": "Pe70%",
+     "sk": 0.0232
+    },
+    {
+     "id": 6518,
+     "color": "Y",
+     "memberEn": "Murai Yū",
+     "cs": "Da70%",
+     "sk": 0.0173
+    },
+    {
+     "id": 6519,
+     "color": "P",
+     "memberEn": "Ishimori Rika",
+     "cs": "Pe70%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6520,
+     "color": "R",
+     "memberEn": "Odakura Reina",
+     "cs": "Da70%",
+     "sk": 0.0234
+    },
+    {
+     "id": 6521,
+     "color": "G",
+     "memberEn": "Ōzono Rei",
+     "cs": "Vo70%",
+     "sk": 0.0275
+    },
+    {
+     "id": 6522,
+     "color": "B",
+     "memberEn": "Yamashita Shizuki",
+     "cs": "Da70%",
+     "sk": 0.0057
+    }
+   ]
+  },
+  {
    "version": "db11-2026-08-28",
    "date": "2026-08-28",
    "added": 0,
