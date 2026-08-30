@@ -56,6 +56,21 @@
   .team-table tr.leader-row td { background: var(--tc-tint); font-weight: 700; }
   .sk-arrow { color: #1c7a2e; font-weight: 800; }
 
+  .chg-dot {
+    display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+    background: #ffd97d; border: 1px solid rgba(0,0,0,0.35); margin-left: 6px;
+    vertical-align: middle;
+  }
+  .team-table tr.row-in td, .worth-table tr.row-in td { background: var(--tc-in); }
+  .team-table tr.row-in td:first-child, .worth-table tr.row-in td:first-child {
+    box-shadow: inset 3px 0 0 var(--tc);
+  }
+  .team-table tr.row-lead td { background: rgba(217,178,58,0.16); }
+  .team-table tr.row-lead td:first-child { box-shadow: inset 3px 0 0 #c9922a; }
+  .chg-out { font-size: 11.5px; color: #8a5a5a; padding: 7px 10px 0; }
+  .chg-out s { color: #8a5a5a; }
+  .chg-minus { font-weight: 800; color: #b5544f; }
+
   .worth-getting { margin-top: 16px; padding-top: 14px; border-top: 1px solid #eee; }
   .worth-getting h3 { margin: 0 0 8px; font-size: 12px; text-transform: uppercase;
                        letter-spacing: .03em; color: #6a4fc9; }
@@ -92,7 +107,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v9</div>
+<div class="page-version-badge">v10</div>
 <div class="wrap">
   <div class="note">
     <div class="note-text">
@@ -869,7 +884,87 @@ function hexTint(hex, alpha) {
   return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
 }
 
-function renderPanel(color, result) {
+var SNAP_KEY = 'uniair_public_bestteams_last_v1';
+
+function rowKey(m, s) { return m + '|' + s; }
+
+function snapshotOf(results) {
+  var out = {};
+  Object.keys(results).forEach(function(jp) {
+    var r = results[jp];
+    if (!r) { out[jp] = null; return; }
+    var lead = null, team = [];
+    r.rows.forEach(function(row) {
+      var entry = {m: row.member, s: row.song};
+      team.push(entry);
+      if (row.isLeader) lead = entry;
+    });
+    out[jp] = {lead: lead, team: team,
+                recs: (r.recommended || []).map(function(x) { return x.id; })};
+  });
+  return out;
+}
+
+function loadSnapshot() {
+  try { return JSON.parse(localStorage.getItem(SNAP_KEY)) || null; }
+  catch (e) { return null; }
+}
+
+function saveSnapshot(snap) {
+  try { localStorage.setItem(SNAP_KEY, JSON.stringify(snap)); }
+  catch (e) { }
+}
+
+function diffColor(now, prev) {
+  if (!now || !prev || !now.team || !prev.team) return null;
+  var prevKeys = {}, nowKeys = {};
+  prev.team.forEach(function(e) { prevKeys[rowKey(e.m, e.s)] = true; });
+  now.team.forEach(function(e) { nowKeys[rowKey(e.m, e.s)] = true; });
+  var entered = {}, enteredCount = 0, dropped = [];
+  now.team.forEach(function(e) {
+    if (!prevKeys[rowKey(e.m, e.s)]) { entered[rowKey(e.m, e.s)] = true; enteredCount++; }
+  });
+  prev.team.forEach(function(e) { if (!nowKeys[rowKey(e.m, e.s)]) dropped.push(e); });
+  var prevLead = prev.lead ? rowKey(prev.lead.m, prev.lead.s) : null;
+  var nowLead = now.lead ? rowKey(now.lead.m, now.lead.s) : null;
+  var leadMoved = prevLead !== nowLead && !entered[nowLead];
+  var prevRecs = {};
+  (prev.recs || []).forEach(function(id) { prevRecs[id] = true; });
+  var recIn = {}, recCount = 0;
+  (now.recs || []).forEach(function(id) {
+    if (!prevRecs[id]) { recIn[id] = true; recCount++; }
+  });
+  if (!enteredCount && !dropped.length && !leadMoved && !recCount) return null;
+  return {entered: entered, dropped: dropped, leadMoved: leadMoved,
+           prevLead: leadMoved ? prev.lead : null, recIn: recIn};
+}
+
+function diffAll(snap, prev) {
+  var out = {};
+  if (!prev) return out;
+  Object.keys(snap).forEach(function(jp) {
+    var d = diffColor(snap[jp], prev[jp]);
+    if (d) out[jp] = d;
+  });
+  return out;
+}
+
+function droppedNotes(chg) {
+  var lines = [];
+  if (chg.dropped.length) {
+    lines.push('replaced ' + chg.dropped.map(function(e) {
+      return '<s>' + esc(e.m) + ' &mdash; ' + esc(e.s) + '</s>';
+    }).join(', '));
+  }
+  if (chg.leadMoved && chg.prevLead) {
+    lines.push('leader was <s>' + esc(chg.prevLead.m) + ' &mdash; ' + esc(chg.prevLead.s) + '</s>');
+  }
+  return lines.map(function(t) {
+    return '<div class="chg-out"><span class="chg-minus">&minus;</span> ' + t + '</div>';
+  }).join('');
+}
+
+function renderPanel(color, result, chg) {
   var inner = document.getElementById('panel-inner-' + color);
   if (!result) {
     inner.parentElement.outerHTML = '<div class="empty-state" id="panel-' + color + '">' +
@@ -878,9 +973,16 @@ function renderPanel(color, result) {
     return;
   }
   inner.style.setProperty('--tc-tint', hexTint(COLOR_HEX[color], 0.16));
+  inner.style.setProperty('--tc', COLOR_HEX[color]);
+  inner.style.setProperty('--tc-in', hexTint(COLOR_HEX[color], 0.30));
   var rowsHtml = result.rows.map(function(r) {
     var skHtml = esc(r.skBefore) + (r.skAfter ? ' <span class="sk-arrow">&rarr;</span> ' + esc(r.skAfter) : '');
-    return '<tr class="' + (r.isLeader ? 'leader-row' : '') + '">' +
+    var rowCls = r.isLeader ? 'leader-row' : '';
+    if (chg) {
+      if (chg.entered[rowKey(r.member, r.song)]) rowCls += ' row-in';
+      else if (chg.leadMoved && r.isLeader) rowCls += ' row-lead';
+    }
+    return '<tr class="' + rowCls + '">' +
       '<td title="' + esc(r.member) + '">' + esc(r.member) + '</td>' +
       '<td title="' + esc(r.song) + '">' + esc(r.song) + '</td>' +
       '<td title="' + esc(r.centerSkill || '') + '">' + esc(r.centerSkill || '') + '</td>' +
@@ -893,7 +995,8 @@ function renderPanel(color, result) {
     var items = result.recommended.map(function(rec) {
       var label = esc(rec.member) + ' — ' + esc(rec.song);
       var skill = esc(rec.centerSkill || '');
-      return '<tr><td class="acq-cell"><span class="acq-tag ' + (tagClass[rec.tag] || 'pull') + '">' + esc(rec.tag) + '</span></td>' +
+      return '<tr class="' + ((chg && chg.recIn[rec.id]) ? 'row-in' : '') + '">' +
+        '<td class="acq-cell"><span class="acq-tag ' + (tagClass[rec.tag] || 'pull') + '">' + esc(rec.tag) + '</span></td>' +
         '<td class="name" title="' + label + '">' + label + '</td>' +
         '<td class="skill" title="' + skill + '">' + skill + '</td>' +
         '<td class="ev">' + esc(rec.sk) + '</td></tr>';
@@ -911,6 +1014,7 @@ function renderPanel(color, result) {
       '<thead><tr>' +
       '<th>Member</th><th>Card / Song</th><th>Leader Skill</th><th>Score Skill</th>' +
       '</tr></thead><tbody>' + rowsHtml + '</tbody></table>' +
+    (chg ? droppedNotes(chg) : '') +
     worthGettingHtml;
 }
 
@@ -966,6 +1070,14 @@ function init() {
   }
   LAST_RESULTS = results;
 
+  var snap = snapshotOf(results);
+  var changes = diffAll(snap, loadSnapshot());
+  saveSnapshot(snap);
+  var chgByLetter = {};
+  Object.keys(changes).forEach(function(jp) {
+    chgByLetter[JP_TO_LETTER[jp] || jp] = changes[jp];
+  });
+
   
   
   
@@ -987,6 +1099,11 @@ function init() {
     tabBtn.dataset.color = color;
     tabBtn.style.setProperty('--tc', COLOR_HEX[color]);
     tabBtn.textContent = COLOR_LABEL[color];
+    if (chgByLetter[color]) {
+      var dot = document.createElement('span');
+      dot.className = 'chg-dot';
+      tabBtn.appendChild(dot);
+    }
     tabBtn.addEventListener('click', function() { setActiveColor(color); });
     tabBar.appendChild(tabBtn);
 
@@ -996,7 +1113,7 @@ function init() {
     panel.innerHTML = '<div class="panel-inner" id="panel-inner-' + color + '"></div>';
     panelsEl.appendChild(panel);
 
-    renderPanel(color, byLetter[color]);
+    renderPanel(color, byLetter[color], chgByLetter[color]);
   });
 
   lastActiveColor = activeColor;
