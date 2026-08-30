@@ -1,5 +1,5 @@
 {
- "version": "db12-2026-08-29",
+ "version": "db13-2026-08-30",
  "cardCount": 5508,
  "cards": [
   {
@@ -61603,8 +61603,8 @@
    "vo": 3546,
    "da": 3530,
    "pe": 3569,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": true
   },
   {
@@ -61783,8 +61783,8 @@
    "vo": 3549,
    "da": 3552,
    "pe": 3527,
-   "cs": "ALL40%",
-   "csBase": "ALL40%",
+   "cs": "ALL45%",
+   "csBase": "ALL45%",
    "grad": false
   },
   {

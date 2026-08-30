@@ -1,6 +1,14 @@
 window.UNIAIR_DB_CHANGELOG = {
  "entries": [
   {
+   "version": "db13-2026-08-30",
+   "date": "2026-08-30",
+   "added": 0,
+   "cardCount": 5508,
+   "cards": [],
+   "note": "fixed 2 cards that still had all40% as center skill"
+  },
+  {
    "version": "db12-2026-08-29",
    "date": "2026-08-29",
    "added": 22,
