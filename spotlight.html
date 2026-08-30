@@ -12,7 +12,6 @@
     margin: 0; padding: 8px 16px 40px; color: #222;
   }
   .wrap { max-width: 880px; margin: 0 auto; }
-  .subtitle { color: #cfd8ff; text-align: center; margin: 0 0 16px; font-size: 14px; }
   .starlight-box {
     background: rgba(255,255,255,0.92); border-radius: 12px; padding: 14px 20px;
     margin-bottom: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.25);
@@ -75,11 +74,16 @@
     display: inline-flex; align-items: center; justify-content: center;
     min-width: 20px; height: 20px; padding: 0 5px; margin-right: 3px;
     border-radius: 5px; color: #fff; font-weight: 800; font-size: 10px;
-    text-shadow: 0 1px 2px rgba(0,0,0,.35); opacity: .55;
+    text-shadow: 0 1px 2px rgba(0,0,0,.35);
   }
-  .mchip-center { opacity: 1; box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2d2d42; }
+  .mchip-center { box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2d2d42; }
   .mchip-demoted { outline: 2px dashed #e0a030; outline-offset: 1px; }
   .mchip-dropped { outline: 2px dashed #d9534f; outline-offset: 1px; }
+  .mchip-demoted::after, .mchip-dropped::after {
+    font-size: 9px; font-weight: 900; margin-left: 2px;
+  }
+  .mchip-demoted::after { content: '↘'; }
+  .mchip-dropped::after { content: '✕'; }
   .warn-icon { cursor: help; margin-left: 3px; font-size: 13px; }
   .member-tabs { background: transparent; box-shadow: none; margin-bottom: 0; }
   .member-tab-input { display: none; }
@@ -153,7 +157,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v11</div>
+<div class="page-version-badge">v12</div>
 <div class="wrap">
   <div class="top-bar">
     <button class="settings-btn" id="settings-btn" type="button">⚙ Members &amp; Bonus List</button>
@@ -878,7 +882,7 @@ function miniChip(songColor, isCenter, extraText, warnTier) {
   return '<span class="' + cls + '" style="background:' + bg + '" title="' + title + '">' + letter + extraText + '</span>';
 }
 
-function buildMemberContentHtml(member, memberCardsAll, starlightSongs, results, ctx) {
+function buildMemberContentHtml(memberCardsAll, starlightSongs, results, ctx) {
   var ownedIdSet = {};
   memberCardsAll.forEach(function(c) { if (c.owned) ownedIdSet[c.id] = true; });
   var groups = {};
@@ -1016,7 +1020,6 @@ function buildMemberContentHtml(member, memberCardsAll, starlightSongs, results,
           var trial = supports.slice(0, idx).concat([cand]).concat(supports.slice(idx + 1));
           var altDelta = totalFnReduced(trial) - baseReduced;
           if (altDelta <= 0) tier = 'oneoff';
-          else if (altDelta < delta - 1e-6) tier = 'shrink';
         }
         if (!suggestionMap[cand.key]) suggestionMap[cand.key] = {card: cand, byColor: {}};
         var e = suggestionMap[cand.key];
@@ -1041,8 +1044,7 @@ function buildMemberContentHtml(member, memberCardsAll, starlightSongs, results,
       var tier = rec[2];
       var cls = 'mchip';
       var title = esc(COLOR_NAMES[sc]);
-      if (tier === 'shrink') { cls += ' mchip-demoted'; title += ' — still worth it, but for less than shown once the current Starlight bonus ends'; }
-      else if (tier === 'oneoff') { cls += ' mchip-dropped'; title += ' — not an improvement once the current Starlight bonus ends'; }
+      if (tier === 'oneoff') { cls += ' mchip-dropped'; title += ' — not an improvement once the current Starlight bonus ends'; }
       var bg = sc === 'ALL' ? RAINBOW_GRADIENT : COLOR_HEX_SL[sc];
       var ltr = COLOR_LETTERS[sc];
       return '<span class="' + cls + '" style="background:' + bg + '" title="' + title + '">' + ltr + '</span>';
@@ -1075,8 +1077,7 @@ function buildMemberContentHtml(member, memberCardsAll, starlightSongs, results,
     ? starlightArr.map(function(s) { return '<li>' + esc(s) + '</li>'; }).join('')
     : '<li class="none">(none this run)</li>';
 
-  return '<p class="subtitle">Best owned-card team per song color · mono-member (only ' + esc(member) + '\'s cards)</p>' +
-    '<div class="starlight-box"><h2><span class="badge star">★</span>Starlight-bonus cards this run (+50% Vo/Da/Pe)</h2><ul>' + starlightListHtml + '</ul></div>' +
+  return '<div class="starlight-box"><h2><span class="badge star">★</span>Starlight-bonus cards this run (+50% Vo/Da/Pe)</h2><ul>' + starlightListHtml + '</ul></div>' +
     '<div class="team-card"><div class="badge-row">' + summaryBadges + '</div>' +
     '<table class="team-table"><thead><tr><th>Color</th><th>Card / Song</th><th>Leader Skill</th><th>Score Skill</th><th>Plays in</th></tr></thead>' +
     '<tbody>' + rosterHtml + '</tbody></table>' + suggestionsHtml + '</div>' + emptyHtml;
@@ -1201,7 +1202,7 @@ function renderAll() {
     panel.className = 'member-panel' + (isActive ? ' member-panel-first-visible' : '');
     panel.dataset.idx = String(i);
     var md = data.byMember[member];
-    panel.innerHTML = buildMemberContentHtml(member, md.memberCardsAll, md.starlightSongs, md.results, data.ctx);
+    panel.innerHTML = buildMemberContentHtml(md.memberCardsAll, md.starlightSongs, md.results, data.ctx);
     panelsEl.appendChild(panel);
     
     
@@ -1357,6 +1358,7 @@ function initSettingsPanel() {
     var selected = collectSelectedFromChecklist();
     if (!selected.length) { window.alert('Pick at least one member to show.'); return; }
     saveSelectedMembers(selected);
+    document.getElementById('settings-panel').style.display = 'none';
     recomputeAndRender();
   });
 
