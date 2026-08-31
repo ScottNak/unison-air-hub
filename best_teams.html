@@ -88,6 +88,36 @@
   .acq-tag.upgrade { background: #1c7a2e; }
   .acq-tag.pull-upgrade { background: #a05fc9; }
 
+  .note-action { flex: 0 0 auto; text-align: center; }
+  .sweep-btn {
+    appearance: none; cursor: pointer; font-family: inherit; font-weight: 800; font-size: 12px;
+    color: #4a3a8f; background: #fff; border: 1px solid #cfc4ee;
+    border-radius: 999px; padding: 6px 14px; white-space: nowrap;
+  }
+  .sweep-btn:hover { background: #f4f1ff; }
+  .sweep-btn[disabled] { color: #999; border-color: #ddd; cursor: default; background: #fafafa; }
+  .sweep-stamp { font-size: 11px; color: #888; margin-top: 5px; white-space: nowrap; }
+
+  .watch { margin-top: 16px; padding-top: 14px; border-top: 1px solid #eee; }
+  .watch h3 { margin: 0 0 3px; font-size: 12px; text-transform: uppercase;
+               letter-spacing: .03em; color: #b1731f; }
+  .watch .sub { font-size: 11.5px; color: #888; margin: 0 0 9px; line-height: 1.5; }
+  .watch-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .watch-table td { padding: 8px 8px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  .watch-table .gain-cell { width: 68px; text-align: right; padding-top: 7px; padding-right: 12px; }
+  .watch-table .gain { font-weight: 800; font-size: 14px; color: #1c7a2e; white-space: nowrap; }
+  .watch-table .lead { display: flex; align-items: center; gap: 6px;
+                        color: #2d2d42; font-weight: 700; }
+  .watch-table .also { display: flex; align-items: center; gap: 6px;
+                        font-size: 11.5px; color: #777; margin-top: 4px; }
+  .watch-table .also .plus { color: #999; font-weight: 800; }
+  .watch-table .nm { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .watch-table .also-note { font-size: 11.5px; color: #777; margin-top: 4px; line-height: 1.5; }
+  .watch-table .also-note .solo { color: #1c7a2e; font-weight: 700; }
+  .acq-tag.sm { width: auto; padding: 2px 8px; font-size: 9.5px; flex: 0 0 auto; }
+  .acq-tag.owned { background: #8a8f9c; }
+  .watch-empty { font-size: 12px; color: #999; padding: 6px 8px; line-height: 1.5; }
+
   .empty-state {
     background: rgba(255,255,255,0.96); border-radius: 0 0 14px 14px; padding: 34px 24px;
     text-align: center; color: #555; box-shadow: 0 8px 28px rgba(0,0,0,0.32);
@@ -107,7 +137,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v11</div>
+<div class="page-version-badge">v12</div>
 <div class="wrap">
   <div class="note">
     <div class="note-text">
@@ -117,6 +147,16 @@
       Accuracy depends on your <a href="kizuna.html" target="_top">Kizuna Bond</a> and
       <a href="song_overview.html" target="_top">Discography</a> data too -
       keep those up to date for the most accurate scores.
+      <br><br>
+      &quot;Cards worth looking at&quot; searches every card in the game, but only for
+      supports - it keeps the leader each team already has.
+      <br>
+      <b>Full Check Leaders</b> also tries every card that could lead instead, which
+      can take a bit, so it runs only when you ask.
+    </div>
+    <div class="note-action">
+      <button class="sweep-btn" id="sweep-btn" type="button">Full Check Leaders</button>
+      <div class="sweep-stamp" id="sweep-stamp"></div>
     </div>
   </div>
   <div id="loading" class="loading">Computing your best teams&hellip;</div>
@@ -768,7 +808,16 @@ function recommendCardsWorthGetting(mech, leader, actualSupports, actualTotal, f
     res = optimizeStellerTeam(leader, fullPool, ctx);
   }
   var idealSupports = res[0], idealTotal = res[1];
-  if (idealTotal === null || idealTotal <= actualTotal) return [];
+  
+  
+  
+  
+  
+  
+  
+  if (idealTotal === null || idealTotal <= actualTotal) {
+    return {list: [], reason: 'optimal'};
+  }
   var actualKeys = {};
   actualSupports.forEach(function(c) { actualKeys[c.key] = true; });
   var seenGroups = {};
@@ -776,15 +825,116 @@ function recommendCardsWorthGetting(mech, leader, actualSupports, actualTotal, f
   (idealSupports || []).forEach(function(c) {
     if (actualKeys[c.key]) return;                            
     if (ownedSet[c.id]) return;                                
-    if (c.song && (c.song.indexOf('Veaut') !== -1 || c.song === 'S.teller')) return; 
+    
+    
+    
+    
+    
+    
     if (c.graduated) return;                                   
+                                                                
+                                                                
+                                                                
     if (seenGroups[c.groupKey]) return;
     seenGroups[c.groupKey] = true;
     var info = classifyAcquisition(c, ownedSet);
     out.push({id: c.id, member: c.member, song: c.song, centerSkill: shortSkillText(c.centerSkill),
               sk: skPctText(c.sk), tag: info.tag, note: info.note || null});
   });
-  return out.slice(0, 4);
+  return {list: out.slice(0, 4), reason: out.length ? 'found' : 'filtered'};
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var MAX_NEW_CARDS = 2;
+
+function sweepLeadersForColor(fullPool, ownedSet, baseTotal, ctx, currentLeaderKey) {
+  var found = [];
+
+  function consider(leader, supports, total) {
+    if (total === null || total === undefined || total <= baseTotal) return;
+    if (!supports) return;
+    var missing = [leader].concat(supports).filter(function(c) { return !ownedSet[c.id]; });
+    if (missing.length > MAX_NEW_CARDS) return;
+    
+    
+    
+    
+    var leaderOwned = !!ownedSet[leader.id];
+    found.push({
+      id: leader.id, member: leader.member, song: leader.song,
+      leaderOwned: leaderOwned,
+      leaderTag: leaderOwned ? 'Owned' : classifyAcquisition(leader, ownedSet).tag,
+      gainPct: (total - baseTotal) / baseTotal * 100,
+      total: total,
+      alsoNeeds: missing.filter(function(c) { return c.id !== leader.id; }).map(function(c) {
+        var info = classifyAcquisition(c, ownedSet);
+        return {id: c.id, member: c.member, song: c.song, tag: info.tag};
+      })
+    });
+  }
+
+  fullPool.forEach(function(c) {
+    if (c.key === currentLeaderKey) return;
+    if (c.song && c.song.indexOf('Veaut') !== -1) {
+      var v = optimizeVeautTeam(c, fullPool, ctx);
+      consider(c, v[0], v[1]);
+    } else if (c.song === 'S.teller') {
+      var s = optimizeStellerTeam(c, fullPool, ctx);
+      consider(c, s[0], s[1]);
+    }
+  });
+
+  
+  
+  
+  var skills = {};
+  fullPool.forEach(function(c) { if (isRegularSkill(c.centerSkill)) skills[c.centerSkill] = true; });
+  Object.keys(skills).forEach(function(skillText) {
+    var shape = SKILL_LOOKUP[skillText];
+    if (!shape) return;
+    var centers = fullPool.filter(function(c) { return c.centerSkill === skillText; });
+    if (!centers.length) return;
+    function seedScore(c) {
+      return engineScore(c.vo * STATUS_BONUS, c.da * STATUS_BONUS, c.pe * STATUS_BONUS,
+                          c.member, c.k, shape[0], shape[1], shape[2], SEED_SK_ESTIMATE, ctx);
+    }
+    var center = centers[0], best = seedScore(centers[0]);
+    centers.forEach(function(c) { var s = seedScore(c); if (s > best) { center = c; best = s; } });
+    if (center.key === currentLeaderKey) return;
+    var r = bestSupportsForLeader(center, shape[0], shape[1], shape[2], fullPool, ctx);
+    consider(center, r[0], r[1]);
+  });
+
+  found.sort(function(a, b) { return b.total - a.total; });
+
+  
+  
+  
+  var betterLeaders = {};
+  var kept = [];
+  found.forEach(function(row) {
+    var dominated = row.alsoNeeds.some(function(n) { return betterLeaders[n.id]; });
+    betterLeaders[row.id] = true;
+    if (!dominated) kept.push(row);
+  });
+  return kept;
 }
 
 
@@ -792,7 +942,14 @@ function computeBestTeamsCore(ownedByColor, poolByColor, ownedSet, ctx) {
   var results = {};
   Object.keys(ownedByColor).forEach(function(color) {
     var ownedPool = ownedByColor[color] || [];
-    var fullPool = poolByColor[color] || ownedPool;
+    
+    
+    
+    
+    
+    var fullPool = (poolByColor[color] || ownedPool).filter(function(c) {
+      return ownedSet[c.id] || !c.graduated;
+    });
     var normalTeam = bestNormalTeam(ownedPool, ctx);
 
     var veautCards = ownedPool.filter(function(c) { return c.song && c.song.indexOf('Veaut') !== -1; });
@@ -821,26 +978,34 @@ function computeBestTeamsCore(ownedByColor, poolByColor, ownedSet, ctx) {
     candidates.sort(function(a, b) { return b[1] - a[1]; });
     var winner = candidates[0][0];
     if (winner === 'veaut') {
+      var recVeaut = recommendCardsWorthGetting('veaut', bestVeaut.leader, bestVeaut.supports,
+                                                bestVeaut.total, fullPool, ownedSet, ctx);
       results[color] = {mech: 'veaut', leader: bestVeaut.leader, supports: bestVeaut.supports, total: bestVeaut.total,
                           rows: buildDisplayRows('veaut', bestVeaut.leader, bestVeaut.supports),
                           effectiveLabel: effectiveSkillLabel('veaut', bestVeaut.leader, bestVeaut.supports),
-                          recommended: recommendCardsWorthGetting('veaut', bestVeaut.leader, bestVeaut.supports, bestVeaut.total, fullPool, ownedSet, ctx)};
+                          recommended: recVeaut.list, recReason: recVeaut.reason};
     } else if (winner === 'steller') {
+      var recSteller = recommendCardsWorthGetting('steller', bestSteller.leader, bestSteller.supports,
+                                                  bestSteller.total, fullPool, ownedSet, ctx);
       results[color] = {mech: 'steller', leader: bestSteller.leader, supports: bestSteller.supports, total: bestSteller.total,
                           rows: buildDisplayRows('steller', bestSteller.leader, bestSteller.supports),
                           effectiveLabel: effectiveSkillLabel('steller', bestSteller.leader, bestSteller.supports),
-                          recommended: recommendCardsWorthGetting('steller', bestSteller.leader, bestSteller.supports, bestSteller.total, fullPool, ownedSet, ctx)};
+                          recommended: recSteller.list, recReason: recSteller.reason};
     } else {
       var normalSupportCards = normalTeam.supports.map(function(s) { return s[1]; });
+      var recNormal = recommendCardsWorthGetting('normal', normalTeam.center[1], normalSupportCards,
+                                                 normalTeam.teamTotal, fullPool, ownedSet, ctx);
       results[color] = {mech: 'normal', skillText: normalTeam.skillText, center: normalTeam.center,
                           supports: normalTeam.supports, total: normalTeam.teamTotal,
                           rows: buildDisplayRows('normal', normalTeam.center[1], normalSupportCards),
                           effectiveLabel: effectiveSkillLabel('normal', normalTeam.center[1], normalSupportCards),
-                          recommended: recommendCardsWorthGetting('normal', normalTeam.center[1], normalSupportCards, normalTeam.teamTotal, fullPool, ownedSet, ctx)};
+                          recommended: recNormal.list, recReason: recNormal.reason};
     }
   });
   return results;
 }
+
+var SWEEP_INPUTS = null;
 
 function runBestTeams() {
   var kizunaOverrides = loadKizunaOverrides();
@@ -863,6 +1028,9 @@ function runBestTeams() {
     if (!ownedSet[c.id]) return;
     (ownedByColor[c.color] = ownedByColor[c.color] || []).push(c);
   });
+  
+  
+  SWEEP_INPUTS = {poolByColor: poolByColor, ownedSet: ownedSet, ctx: ctx, pool: pool};
   return computeBestTeamsCore(ownedByColor, poolByColor, ownedSet, ctx);
 }
 
@@ -900,6 +1068,54 @@ function snapshotOf(results) {
                 recs: (r.recommended || []).map(function(x) { return x.id; })};
   });
   return out;
+}
+
+
+
+
+
+
+
+var WATCH_KEY = 'uniair_public_bestteams_watch_v1';
+
+
+
+
+
+
+
+
+var WATCH_SCHEMA = 2;
+
+function hashStr(s) {
+  var h = 5381;
+  for (var i = 0; i < s.length; i++) h = ((h * 33) ^ s.charCodeAt(i)) >>> 0;
+  return h.toString(36);
+}
+
+function inputsFingerprint(ownedSet, kizunaOverrides, discoOverrides, pool) {
+  function fromObj(o) {
+    return Object.keys(o || {}).sort().map(function(k) { return k + ':' + o[k]; }).join(',');
+  }
+  return [hashStr(fromObj(ownedSet)), hashStr(fromObj(kizunaOverrides)),
+          hashStr(fromObj(discoOverrides)),
+          hashStr(pool.length + '|' + pool.map(function(c) { return c.id; }).join(','))].join('-');
+}
+
+function loadWatch(fingerprint) {
+  var stored;
+  try { stored = JSON.parse(localStorage.getItem(WATCH_KEY)); }
+  catch (e) { return null; }
+  if (!stored || stored.sv !== WATCH_SCHEMA || stored.fp !== fingerprint) {
+    if (stored) { try { localStorage.removeItem(WATCH_KEY); } catch (e2) { } }
+    return null;
+  }
+  return stored;
+}
+
+function saveWatch(watch) {
+  try { localStorage.setItem(WATCH_KEY, JSON.stringify(watch)); }
+  catch (e) { }
 }
 
 function loadSnapshot() {
@@ -988,7 +1204,21 @@ function renderPanel(color, result, chg) {
   }).join('');
   var tagClass = {'Pull': 'pull', 'Upgrade': 'upgrade', 'Pull + Upgrade': 'pull-upgrade'};
   var worthGettingHtml = '';
-  if (result.recommended && result.recommended.length) {
+  if (!(result.recommended && result.recommended.length)) {
+    
+    
+    
+    var leadRow = null;
+    (result.rows || []).forEach(function(r) { if (r.isLeader && !leadRow) leadRow = r; });
+    var who = leadRow ? esc(leadRow.member) : 'this leader';
+    var msg = result.recReason === 'filtered'
+      ? 'Nothing to add. A better set of supports exists, but every card in it is one you '
+        + 'already own - the team above should have picked them.'
+      : 'Nothing to add. No card in the game would improve these four supports with '
+        + who + ' leading.';
+    worthGettingHtml = '<div class="worth-getting"><h3>Cards worth looking at</h3>' +
+      '<div class="watch-empty">' + msg + '</div></div>';
+  } else {
     var items = result.recommended.map(function(rec) {
       var label = esc(rec.member) + ' — ' + esc(rec.song);
       var skill = esc(rec.centerSkill || '');
@@ -1012,12 +1242,152 @@ function renderPanel(color, result, chg) {
       '<th>Member</th><th>Card / Song</th><th>Leader Skill</th><th>Score Skill</th>' +
       '</tr></thead><tbody>' + rowsHtml + '</tbody></table>' +
     (chg ? droppedNotes(chg) : '') +
-    worthGettingHtml;
+    worthGettingHtml +
+    watchHtml(color, result);
+}
+
+function watchHtml(color, result) {
+  if (!WATCH) return '';
+  var rows = (WATCH.byColor && WATCH.byColor[color]) || [];
+  var body;
+  if (!rows.length) {
+    var leaderRow = null;
+    (result.rows || []).forEach(function(r) { if (r.isLeader && !leaderRow) leaderRow = r; });
+    body = '<div class="watch-empty">No other team beats this one.' +
+      (leaderRow ? ' ' + esc(leaderRow.member) + ' — ' + esc(leaderRow.song) +
+                   ' leading these five is the best ' + esc(COLOR_LABEL[color]) + ' can do.' : '') +
+      '</div>';
+  } else {
+    var tagClass = {'Pull': 'pull', 'Upgrade': 'upgrade', 'Pull + Upgrade': 'pull-upgrade',
+                     'Owned': 'owned'};
+    body = '<table class="watch-table"><tbody>' + rows.map(function(r) {
+      var label = esc(r.member) + ' — ' + esc(r.song);
+      var leadTag = '<span class="acq-tag sm ' + (tagClass[r.leaderTag] || 'pull') + '">' +
+        esc(r.leaderTag) + '</span>';
+      var also;
+      if (!r.alsoNeeds.length) {
+        also = '<div class="also-note">' + (r.leaderOwned
+          ? '<span class="solo">Nothing at all</span> — you can build this team right now.'
+          : '<span class="solo">Nothing else</span> — you own the other four.') + '</div>';
+      } else {
+        
+        
+        also = r.alsoNeeds.map(function(n) {
+          var nl = esc(n.member) + ' — ' + esc(n.song);
+          return '<div class="also"><span class="plus">+</span>' +
+            '<span class="acq-tag sm ' + (tagClass[n.tag] || 'pull') + '">' + esc(n.tag) + '</span>' +
+            '<span class="nm" title="' + nl + '">' + nl + '</span></div>';
+        }).join('');
+      }
+      return '<tr>' +
+        '<td class="gain-cell"><span class="gain">+' + r.gainPct.toFixed(1) + '%</span></td>' +
+        '<td><div class="lead">' + leadTag +
+        '<span class="nm" title="' + label + '">' + label + '</span></div>' +
+        also + '</td></tr>';
+    }).join('') + '</tbody></table>';
+  }
+  return '<div class="watch"><h3>Other teams to look out for</h3>' +
+    '<p class="sub">' + esc(COLOR_LABEL[color]) + ' teams that would beat this one, ' +
+    'needing ' + MAX_NEW_CARDS + ' or fewer cards you don&#39;t have. ' +
+    'The tag says how you would get that team&#39;s leader.</p>' +
+    body + '</div>';
+}
+
+
+
+
+
+var WATCH = null;
+var SWEEPING = false;
+
+function setSweepButton(label, disabled) {
+  var btn = document.getElementById('sweep-btn');
+  if (!btn) return;
+  btn.textContent = label;
+  btn.disabled = !!disabled;
+}
+
+function renderSweepStamp() {
+  var el = document.getElementById('sweep-stamp');
+  if (el) el.textContent = WATCH ? 'Last checked ' + WATCH.stamp : 'Not checked yet';
+}
+
+function startSweep() {
+  if (SWEEPING || !SWEEP_INPUTS || !LAST_RESULTS) return;
+  SWEEPING = true;
+  var inputs = SWEEP_INPUTS;
+  var jpColors = Object.keys(LAST_RESULTS).filter(function(jp) { return LAST_RESULTS[jp]; });
+  var byColor = {};
+  var i = 0;
+
+  function step() {
+    if (i >= jpColors.length) {
+      SWEEPING = false;
+      WATCH = {sv: WATCH_SCHEMA,
+               fp: inputsFingerprint(inputs.ownedSet, loadKizunaOverrides(),
+                                     loadDiscoOverrides(), inputs.pool),
+               stamp: stampToday(), byColor: byColor};
+      saveWatch(WATCH);
+      setSweepButton('Full Check Leaders', false);
+      renderSweepStamp();
+      rerenderPanels();
+      return;
+    }
+    var jp = jpColors[i];
+    var letter = JP_TO_LETTER[jp] || jp;
+    setSweepButton('Checking ' + COLOR_LABEL[letter] + '… (' + (i + 1) + '/' + jpColors.length + ')', true);
+    setTimeout(function() {
+      var fullPool = (inputs.poolByColor[jp] || []).filter(function(c) {
+        return inputs.ownedSet[c.id] || !c.graduated;
+      });
+      try {
+        var res = LAST_RESULTS[jp];
+        var curLeader = res.mech === 'normal' ? res.center[1] : res.leader;
+        byColor[letter] = sweepLeadersForColor(fullPool, inputs.ownedSet,
+                                               res.total, inputs.ctx, curLeader.key);
+      } catch (e) {
+        byColor[letter] = [];
+      }
+      i++;
+      step();
+    }, 0);
+  }
+  step();
+}
+
+function stampToday() {
+  var d = new Date();
+  return MONTHS[d.getMonth()] + ' ' + d.getDate();
+}
+var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+
+
+function rerenderPanels() {
+  if (!LAST_RESULTS) return;
+  Object.keys(LAST_RESULTS).forEach(function(jp) {
+    var letter = JP_TO_LETTER[jp] || jp;
+    if (LAST_RESULTS[jp] && document.getElementById('panel-inner-' + letter)) {
+      renderPanel(letter, LAST_RESULTS[jp], LAST_CHANGES ? LAST_CHANGES[letter] : null);
+    }
+  });
+}
+
+
+
+
+
+
+function clearDot(btn) {
+  var dot = btn.querySelector('.chg-dot');
+  if (dot) dot.parentNode.removeChild(dot);
 }
 
 function setActiveColor(color) {
   document.querySelectorAll('.color-tab-btn').forEach(function(btn) {
-    btn.classList.toggle('active', btn.dataset.color === color);
+    var isOn = btn.dataset.color === color;
+    btn.classList.toggle('active', isOn);
+    if (isOn) clearDot(btn);
   });
   document.querySelectorAll('.panel, .empty-state').forEach(function(p) {
     p.classList.toggle('active', p.id === 'panel-' + color);
@@ -1028,6 +1398,7 @@ function setActiveColor(color) {
 
 var lastActiveColor = null;
 var LAST_RESULTS = null;
+var LAST_CHANGES = null;
 var NEW_CARD_IDS = null;
 
 function reportNewCards() {
@@ -1074,6 +1445,15 @@ function init() {
   Object.keys(changes).forEach(function(jp) {
     chgByLetter[JP_TO_LETTER[jp] || jp] = changes[jp];
   });
+  LAST_CHANGES = chgByLetter;
+
+  
+  
+  
+  WATCH = SWEEP_INPUTS
+    ? loadWatch(inputsFingerprint(SWEEP_INPUTS.ownedSet, loadKizunaOverrides(),
+                                  loadDiscoOverrides(), SWEEP_INPUTS.pool))
+    : null;
 
   
   
@@ -1096,7 +1476,9 @@ function init() {
     tabBtn.dataset.color = color;
     tabBtn.style.setProperty('--tc', COLOR_HEX[color]);
     tabBtn.textContent = COLOR_LABEL[color];
-    if (chgByLetter[color]) {
+    
+    
+    if (chgByLetter[color] && !isActive) {
       var dot = document.createElement('span');
       dot.className = 'chg-dot';
       tabBtn.appendChild(dot);
@@ -1114,6 +1496,7 @@ function init() {
   });
 
   lastActiveColor = activeColor;
+  renderSweepStamp();
   loadingEl.style.display = 'none';
   tabBar.style.display = 'flex';
   reportNewCards();
@@ -1143,6 +1526,8 @@ window.addEventListener('message', function(e) {
   
   setTimeout(init, 0);
 });
+
+document.getElementById('sweep-btn').addEventListener('click', startSweep);
 
 
 
