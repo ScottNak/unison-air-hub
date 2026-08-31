@@ -107,7 +107,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v10</div>
+<div class="page-version-badge">v11</div>
 <div class="wrap">
   <div class="note">
     <div class="note-text">
@@ -455,17 +455,25 @@ function bestNormalTeam(pool, ctx) {
 
 
 
+
+
+
+
+
+
+
+
 function bestSupportsForLeader(centerCard, lsvo, lsda, lspe, pool, ctx) {
-  var candidatesFull = pool.filter(function(c) { return c.key !== centerCard.key && c.groupKey !== centerCard.groupKey; });
+  var candidates = pool.filter(function(c) { return c.key !== centerCard.key && c.groupKey !== centerCard.groupKey; });
   function seedScore(c) {
     return engineScore(c.vo * STATUS_BONUS, c.da * STATUS_BONUS, c.pe * STATUS_BONUS,
                         c.member, c.k, lsvo, lsda, lspe, SEED_SK_ESTIMATE, ctx);
   }
-  var candidates = candidatesFull.slice().sort(function(a, b) { return seedScore(b) - seedScore(a); })
-    .slice(0, NORMAL_SUPPORT_SHORTLIST_SIZE);
-  if (candidates.length < 4) return candidates;
   function totalFn(supports) { return normalTeamTotal(centerCard, supports, lsvo, lsda, lspe, ctx); }
-  return multiRestartOptimize(candidates, totalFn, seedScore)[0];
+  if (candidates.length < 4) {
+    return [candidates, candidates.length ? totalFn(candidates) : null];
+  }
+  return multiRestartOptimize(candidates, totalFn, seedScore);
 }
 
 
@@ -742,36 +750,25 @@ function classifyAcquisition(card, ownedSet) {
 
 
 
-function shortlistForRecommend(leader, fullPool, seedShape, ctx) {
-  var candidates = fullPool.filter(function(c) { return c.key !== leader.key && c.groupKey !== leader.groupKey; });
-  function seedScore(c) {
-    return engineScore(c.vo * STATUS_BONUS, c.da * STATUS_BONUS, c.pe * STATUS_BONUS,
-                        c.member, c.k, seedShape[0], seedShape[1], seedShape[2], SEED_SK_ESTIMATE, ctx);
-  }
-  return candidates.slice().sort(function(a, b) { return seedScore(b) - seedScore(a); })
-    .slice(0, NORMAL_SUPPORT_SHORTLIST_SIZE);
-}
 
-function recommendCardsWorthGetting(mech, leader, actualSupports, fullPool, ownedSet, ctx) {
-  var idealSupports;
+
+
+
+
+
+
+function recommendCardsWorthGetting(mech, leader, actualSupports, actualTotal, fullPool, ownedSet, ctx) {
+  var res;
   if (mech === 'normal') {
     var shape = SKILL_LOOKUP[leader.centerSkill] || [0, 0, 0];
-    idealSupports = bestSupportsForLeader(leader, shape[0], shape[1], shape[2], fullPool, ctx);
+    res = bestSupportsForLeader(leader, shape[0], shape[1], shape[2], fullPool, ctx);
   } else if (mech === 'veaut') {
-    var vShape = SKILL_LOOKUP[leader.centerSkill] || [0, 0, 0];
-    idealSupports = optimizeVeautTeam(leader, shortlistForRecommend(leader, fullPool, vShape, ctx), ctx)[0];
+    res = optimizeVeautTeam(leader, fullPool, ctx);
   } else {
-    var info = STELLER_INFO[leader.centerSkill];
-    var code = info ? info.code : null;
-    var sShape;
-    if (code && STELLER_CODE_INFO[code] && STELLER_CODE_INFO[code].allmax) {
-      var m = STELLER_CODE_INFO['AB'].mult;
-      sShape = [m, m, m];
-    } else {
-      sShape = SKILL_LOOKUP[leader.centerSkill] || [0, 0, 0];
-    }
-    idealSupports = optimizeStellerTeam(leader, shortlistForRecommend(leader, fullPool, sShape, ctx), ctx)[0];
+    res = optimizeStellerTeam(leader, fullPool, ctx);
   }
+  var idealSupports = res[0], idealTotal = res[1];
+  if (idealTotal === null || idealTotal <= actualTotal) return [];
   var actualKeys = {};
   actualSupports.forEach(function(c) { actualKeys[c.key] = true; });
   var seenGroups = {};
@@ -827,19 +824,19 @@ function computeBestTeamsCore(ownedByColor, poolByColor, ownedSet, ctx) {
       results[color] = {mech: 'veaut', leader: bestVeaut.leader, supports: bestVeaut.supports, total: bestVeaut.total,
                           rows: buildDisplayRows('veaut', bestVeaut.leader, bestVeaut.supports),
                           effectiveLabel: effectiveSkillLabel('veaut', bestVeaut.leader, bestVeaut.supports),
-                          recommended: recommendCardsWorthGetting('veaut', bestVeaut.leader, bestVeaut.supports, fullPool, ownedSet, ctx)};
+                          recommended: recommendCardsWorthGetting('veaut', bestVeaut.leader, bestVeaut.supports, bestVeaut.total, fullPool, ownedSet, ctx)};
     } else if (winner === 'steller') {
       results[color] = {mech: 'steller', leader: bestSteller.leader, supports: bestSteller.supports, total: bestSteller.total,
                           rows: buildDisplayRows('steller', bestSteller.leader, bestSteller.supports),
                           effectiveLabel: effectiveSkillLabel('steller', bestSteller.leader, bestSteller.supports),
-                          recommended: recommendCardsWorthGetting('steller', bestSteller.leader, bestSteller.supports, fullPool, ownedSet, ctx)};
+                          recommended: recommendCardsWorthGetting('steller', bestSteller.leader, bestSteller.supports, bestSteller.total, fullPool, ownedSet, ctx)};
     } else {
       var normalSupportCards = normalTeam.supports.map(function(s) { return s[1]; });
       results[color] = {mech: 'normal', skillText: normalTeam.skillText, center: normalTeam.center,
                           supports: normalTeam.supports, total: normalTeam.teamTotal,
                           rows: buildDisplayRows('normal', normalTeam.center[1], normalSupportCards),
                           effectiveLabel: effectiveSkillLabel('normal', normalTeam.center[1], normalSupportCards),
-                          recommended: recommendCardsWorthGetting('normal', normalTeam.center[1], normalSupportCards, fullPool, ownedSet, ctx)};
+                          recommended: recommendCardsWorthGetting('normal', normalTeam.center[1], normalSupportCards, normalTeam.teamTotal, fullPool, ownedSet, ctx)};
     }
   });
   return results;
