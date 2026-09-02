@@ -41,6 +41,18 @@
   }
   .gear-menu .save-btn:hover { background: #dde1ec; }
   .gear-menu .save-note { color: #555; font-size: 11.5px; min-height: 14px; }
+  .gear-sep { height: 1px; background: #e4e7ef; margin: 2px 0; }
+  .gear-order-label { font-size: 11px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: .06em; color: #7a8296; padding: 2px 2px 0; }
+  .gear-seg { display: flex; gap: 4px; background: #eceef4; border-radius: 8px; padding: 3px; }
+  .gear-seg button {
+    flex: 1 1 0; appearance: none; border: none; cursor: pointer; font-family: inherit;
+    font-size: 11.5px; font-weight: 800; padding: 6px 4px; border-radius: 6px;
+    background: transparent; color: #6b7488; transition: background .12s ease, color .12s ease;
+  }
+  .gear-seg button[aria-pressed="true"] { box-shadow: 0 1px 4px rgba(0,0,0,0.16); }
+  .gear-seg .seg-h[aria-pressed="true"] { background: #7CC7E8; color: #24405a; }
+  .gear-seg .seg-s[aria-pressed="true"] { background: #F19DB5; color: #5a2434; }
 
   .tabs {
     display: flex; justify-content: center; gap: 8px; padding: 0 16px 16px;
@@ -94,6 +106,35 @@
     transition: background .12s ease;
   }
   .welcome-ready-btn:hover { background: #5aa0e8; }
+
+  .welcome-card[data-mode="full"] [data-when="order"] { display: none; }
+  .welcome-card[data-mode="order"] [data-when="full"] { display: none; }
+  .order-q { margin: 0 0 8px; font-size: 13px; font-weight: 700; color: #2d2d42; text-align: center; }
+  .order-pick { display: flex; gap: 10px; margin: 0 0 8px; }
+  .order-opt {
+    flex: 1 1 0; appearance: none; cursor: pointer; box-sizing: border-box; font-family: inherit;
+    background: #f6f7fb; border: 2px solid #e2e5ee; border-radius: 12px;
+    padding: 12px 8px 11px; display: flex; flex-direction: column; align-items: center; gap: 7px;
+    transition: border-color .12s ease, background .12s ease;
+  }
+  .order-opt:hover { background: #eef1f8; }
+  .order-opt.opt-h[aria-pressed="true"] { background: #eaf6fc; border-color: #7CC7E8;
+    box-shadow: 0 2px 10px rgba(124,199,232,0.38); }
+  .order-opt.opt-s[aria-pressed="true"] { background: #fdeef3; border-color: #F19DB5;
+    box-shadow: 0 2px 10px rgba(241,157,181,0.38); }
+  .order-opt.opt-h[aria-pressed="true"] .order-cap { color: #24405a; }
+  .order-opt.opt-s[aria-pressed="true"] .order-cap { color: #5a2434; }
+  .order-tabs { display: flex; align-items: center; gap: 4px; }
+  .order-pill { font-size: 11.5px; font-weight: 800; padding: 4px 9px; border-radius: 999px;
+    line-height: 1.3; white-space: nowrap; color: #24405a; }
+  .order-pill.h { background: #7CC7E8; }
+  .order-pill.s { background: #F19DB5; color: #5a2434; }
+  .order-pill.dim { opacity: .42; }
+  .order-arrow { font-size: 10px; color: #9aa3ba; }
+  .order-cap { font-size: 11px; font-weight: 700; color: #6b7488; letter-spacing: .02em;
+    transition: color .12s ease; }
+  .welcome-card p.order-hint { margin: 0 0 20px; font-size: 11.5px; line-height: 1.5;
+    color: #7a8296; text-align: center; }
 
   
   .bday-box {
@@ -291,10 +332,16 @@
     <button class="save-btn" id="hub-export-btn">&#11015; Export all</button>
     <button class="save-btn" id="hub-import-btn">&#11014; Import all</button>
     <button class="save-btn" id="hub-bulk-import-btn">&#9638; Bulk Add</button>
+    <div class="gear-sep"></div>
+    <span class="gear-order-label">Group order</span>
+    <div class="gear-seg" id="hub-order-seg">
+      <button type="button" class="seg-s" data-val="SAKURA" aria-pressed="false">櫻坂 first</button>
+      <button type="button" class="seg-h" data-val="HINATA" aria-pressed="true">日向坂 first</button>
+    </div>
     <input type="file" id="hub-import-file" accept="application/json" style="display:none">
     <span class="save-note" id="hub-save-note">&nbsp;</span>
   </div>
-  <div class="page-version-badge">v9</div>
+  <div class="page-version-badge">v10</div>
 </header>
 
 <div class="bday-box" id="bday-box"></div>
@@ -306,10 +353,25 @@
 <div class="frame-wrap" id="frame-wrap"></div>
 <div class="import-overlay" id="import-overlay"><iframe id="import-overlay-frame" title="Bulk Import"></iframe></div>
 <div class="welcome-overlay" id="welcome-overlay">
-  <div class="welcome-card">
-    <h2>Welcome!</h2>
-    <p>To get started, please input the cards you own in the game. This will help figure out the best teams you can make with the cards you have.</p>
-    <p>When you're done with this, click "Finished!" and make your way to the Discography and Kizuna section to further make the teams align with the members you've put extra effort into!</p>
+  <div class="welcome-card" id="welcome-card" data-mode="full">
+    <h2 data-when="full">Welcome!</h2>
+    <h2 data-when="order">One quick setting</h2>
+    <p data-when="full">To get started, please input the cards you own in the game. This will help figure out the best teams you can make with the cards you have.</p>
+    <p data-when="full">When you're done with this, click "Finished!" and make your way to the Discography and Kizuna section to further make the teams align with the members you've put extra effort into!</p>
+    <p data-when="order">Something new: you can now choose which group leads the tabs, columns and lists across the site.</p>
+    <p class="order-q" data-when="full">First, which group should come first?</p>
+    <div class="order-pick" id="welcome-order-pick">
+      <button type="button" class="order-opt opt-s" data-val="SAKURA" aria-pressed="false">
+        <span class="order-tabs"><span class="order-pill s">櫻坂</span><span class="order-arrow">&#9656;</span><span class="order-pill h dim">日向坂</span></span>
+        <span class="order-cap">Sakurazaka first</span>
+      </button>
+      <button type="button" class="order-opt opt-h" data-val="HINATA" aria-pressed="true">
+        <span class="order-tabs"><span class="order-pill h">日向坂</span><span class="order-arrow">&#9656;</span><span class="order-pill s dim">櫻坂</span></span>
+        <span class="order-cap">Hinatazaka first</span>
+      </button>
+    </div>
+    <p class="order-hint" data-when="full">Sets tab and column order across the whole site. Change it any time from the &#9881; menu.</p>
+    <p class="order-hint" data-when="order">You can change it any time from the &#9881; menu.</p>
     <button class="welcome-ready-btn" id="welcome-ready-btn" type="button">I'm ready!</button>
   </div>
 </div>
@@ -762,18 +824,87 @@
     importOverlayFrame.src = 'about:blank';
   }
 
+  var GROUP_ORDER_KEY = 'uniair_group_order_v1';
+  var GROUP_ORDER_SV = 1;
+
+  function readGroupFirst() {
+    try {
+      var rec = JSON.parse(localStorage.getItem(GROUP_ORDER_KEY));
+      if (rec && rec.sv === GROUP_ORDER_SV && (rec.first === 'SAKURA' || rec.first === 'HINATA')) {
+        return rec.first;
+      }
+    } catch (err) { }
+    return null;
+  }
+
+  function writeGroupFirst(first) {
+    try {
+      localStorage.setItem(GROUP_ORDER_KEY, JSON.stringify({ sv: GROUP_ORDER_SV, first: first }));
+    } catch (err) { }
+  }
+
+  function syncPick(wrap, first) {
+    wrap.querySelectorAll('button').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.val === first));
+    });
+  }
+
+  function pickedValue(wrap) {
+    var on = wrap.querySelector('button[aria-pressed="true"]');
+    return on ? on.dataset.val : 'HINATA';
+  }
+
+  var framesGroupFirst = readGroupFirst() || 'HINATA';
+
+  function applyGroupFirst(first) {
+    writeGroupFirst(first);
+    var seg = document.getElementById('hub-order-seg');
+    if (seg) syncPick(seg, first);
+    if (first === framesGroupFirst) return;
+    framesGroupFirst = first;
+    if (!framesStarted) return;
+    pages.forEach(function (page, i) {
+      iframes[i].src = page.file + '?v=' + Date.now();
+    });
+  }
+
+  (function () {
+    var seg = document.getElementById('hub-order-seg');
+    syncPick(seg, framesGroupFirst);
+    seg.addEventListener('click', function (e) {
+      var btn = e.target.closest('button');
+      if (!btn) return;
+      applyGroupFirst(btn.dataset.val);
+    });
+  })();
+
   (function () {
     var raw = null;
     try { raw = localStorage.getItem('uniair_public_owned'); } catch (err) { }
-    var isEmpty = !raw || raw === '{}' || raw === 'null';
-    if (!isEmpty) return;
+    var noCards = !raw || raw === '{}' || raw === 'null';
+    var noOrder = readGroupFirst() === null;
+    if (!noCards && !noOrder) return;
+
     var welcomeOverlay = document.getElementById('welcome-overlay');
+    var welcomeCard = document.getElementById('welcome-card');
+    var readyBtn = document.getElementById('welcome-ready-btn');
+    var pick = document.getElementById('welcome-order-pick');
+
+    welcomeCard.dataset.mode = noCards ? 'full' : 'order';
+    readyBtn.textContent = noCards ? "I'm ready!" : 'Save';
+    syncPick(pick, framesGroupFirst);
+    pick.addEventListener('click', function (e) {
+      var btn = e.target.closest('button');
+      if (btn) syncPick(pick, btn.dataset.val);
+    });
+
     welcomeOverlay.classList.add('open');
     document.body.classList.add('welcome-mode');
-    document.getElementById('welcome-ready-btn').addEventListener('click', function () {
+    readyBtn.addEventListener('click', function () {
+      applyGroupFirst(pickedValue(pick));
       welcomeOverlay.classList.remove('open');
       document.body.classList.remove('welcome-mode');
-      openImportMode(false);
+      if (noCards) openImportMode(false);
     });
   })();
 

@@ -393,7 +393,7 @@
 </style>
 </head>
 <body>
-  <div class="page-version-badge">v6</div>
+  <div class="page-version-badge">v7</div>
   <div class="wrap">
     
     <div class="section-card">
@@ -425,7 +425,7 @@
           </div>
         </div>
         <div class="group-halves">
-          <div class="group-half" style="--tc:#7CC7E8">
+          <div class="group-half" data-group="HINATA" style="--tc:#7CC7E8">
             <h3><span data-label-jp="日向坂" data-label-en="Hinatazaka">日向坂</span></h3>
             <div class="song-grid">
         <details class="song-tile">
@@ -5994,7 +5994,7 @@
           </div></div>
         </details></div>
           </div>
-          <div class="group-half" style="--tc:#F19DB5">
+          <div class="group-half" data-group="SAKURA" style="--tc:#F19DB5">
             <h3><span data-label-jp="櫻坂" data-label-en="Sakurazaka">櫻坂</span></h3>
             <div class="song-grid">
         <details class="song-tile">
@@ -11846,6 +11846,43 @@
   </div>
 <script>
 const SOURCE_FILE = "db13-2026-08-30";
+</script>
+<script>
+var UNIAIR_GROUP_ORDER_KEY = 'uniair_group_order_v1';
+var UNIAIR_GROUP_ORDER_SV = 1;
+function uniairGroupOrder() {
+  try {
+    var raw = localStorage.getItem(UNIAIR_GROUP_ORDER_KEY);
+    if (raw) {
+      var rec = JSON.parse(raw);
+      if (rec && rec.sv === UNIAIR_GROUP_ORDER_SV && rec.first === 'SAKURA') {
+        return ['SAKURA', 'HINATA'];
+      }
+    }
+  } catch (e) { }
+  return ['HINATA', 'SAKURA'];
+}
+function uniairGroupFirst() { return uniairGroupOrder()[0]; }
+
+(function applyGroupOrder() {
+  var first = uniairGroupFirst();
+  var halves = document.querySelector('.group-halves');
+  if (halves) {
+    var lead = halves.querySelector('.group-half[data-group="' + first + '"]');
+    if (lead) halves.insertBefore(lead, halves.firstElementChild);
+  }
+  var tabs = document.querySelector('.grid-group-tabs');
+  if (tabs) {
+    var leadBtn = tabs.querySelector('.grid-group-btn[data-grid-group-btn="' + first + '"]');
+    if (leadBtn) tabs.insertBefore(leadBtn, tabs.firstElementChild);
+  }
+  document.querySelectorAll('.grid-group-btn').forEach(function (btn) {
+    btn.classList.toggle('active', btn.dataset.gridGroupBtn === first);
+  });
+  document.querySelectorAll('.grid-scroll').forEach(function (gs) {
+    gs.classList.toggle('hidden', gs.dataset.gridGroup !== first);
+  });
+})();
 </script>
 <script>
 (function() {

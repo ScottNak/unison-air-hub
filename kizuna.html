@@ -154,7 +154,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v4</div>
+<div class="page-version-badge">v5</div>
 <div class="wrap">
   <div class="group-tab-bar" id="group-tab-bar"></div>
   <div id="groups"></div>
@@ -208,7 +208,24 @@ var GROUP_LABELS = {
 };
 var currentLang = 'JP';
 var groupColors = {SAKURA: '#F19DB5', HINATA: '#7CC7E8'};
-var GROUP_ORDER = ['HINATA', 'SAKURA'];
+
+var UNIAIR_GROUP_ORDER_KEY = 'uniair_group_order_v1';
+var UNIAIR_GROUP_ORDER_SV = 1;
+function uniairGroupOrder() {
+  try {
+    var raw = localStorage.getItem(UNIAIR_GROUP_ORDER_KEY);
+    if (raw) {
+      var rec = JSON.parse(raw);
+      if (rec && rec.sv === UNIAIR_GROUP_ORDER_SV && rec.first === 'SAKURA') {
+        return ['SAKURA', 'HINATA'];
+      }
+    }
+  } catch (e) { }
+  return ['HINATA', 'SAKURA'];
+}
+function uniairGroupFirst() { return uniairGroupOrder()[0]; }
+
+var GROUP_ORDER = uniairGroupOrder();
 
 function currentValue(groupName, name) {
   var key = groupName + '::' + name;
