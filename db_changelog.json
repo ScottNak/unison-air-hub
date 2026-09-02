@@ -5,6 +5,7 @@
    "date": "2026-08-30",
    "added": 0,
    "cardCount": 5508,
+   "titles": [],
    "cards": [],
    "note": "fixed 2 cards that still had all40% as center skill"
   },
@@ -13,6 +14,9 @@
    "date": "2026-08-29",
    "added": 22,
    "cardCount": 5508,
+   "titles": [
+    "MV Addiction"
+   ],
    "cards": [
     {
      "id": 6501,
@@ -175,6 +179,7 @@
    "date": "2026-08-28",
    "added": 0,
    "cardCount": 5486,
+   "titles": [],
    "cards": [],
    "note": "Updated English names to be consistent (last name - first name)"
   },
@@ -183,6 +188,9 @@
    "date": "2026-08-25",
    "added": 1,
    "cardCount": 5486,
+   "titles": [
+    "海風とわがまま"
+   ],
    "cards": [
     {
      "id": 6500,
@@ -198,6 +206,9 @@
    "date": "2026-08-23",
    "added": 16,
    "cardCount": 5485,
+   "titles": [
+    "海風とわがまま"
+   ],
    "cards": [
     {
      "id": 6484,

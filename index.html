@@ -341,7 +341,7 @@
     <input type="file" id="hub-import-file" accept="application/json" style="display:none">
     <span class="save-note" id="hub-save-note">&nbsp;</span>
   </div>
-  <div class="page-version-badge">v10</div>
+  <div class="page-version-badge">v11</div>
 </header>
 
 <div class="bday-box" id="bday-box"></div>
@@ -991,6 +991,10 @@
     return withYear ? s + " '" + m[1].slice(2) : s;
   }
   function dbCards(n) { return n + ' card' + (n === 1 ? '' : 's'); }
+  function dbTitles(t) {
+    if (!t || !t.length) return '';
+    return ' - ' + t.map(function (x) { return dbEsc(x); }).join(', ');
+  }
   function readSeenVersion() {
     try { return localStorage.getItem(DB_SEEN_KEY); } catch (err) { return null; }
   }
@@ -1212,7 +1216,8 @@
         '<p class="n">' +
           (n === 0 && e.note
             ? dbEsc(e.note)
-            : dbCards(n) + ' added' + (e.note ? ' - ' + dbEsc(e.note) : '')) +
+            : dbCards(n) + ' added' + dbTitles(e.titles) +
+              (e.note ? ' - ' + dbEsc(e.note) : '')) +
           '</p>' +
         (n ? '<div class="cards" data-cards="' + i + '" style="display:none">' +
              cardRowsHtml(e.cards) + '</div>' : '') +
