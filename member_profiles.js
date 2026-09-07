@@ -690,10 +690,10 @@ window.UNIAIR_MEMBER_PROFILES = {
     },
     "birthday": "2004-02-23",
     "group": "H",
-    "graduated": false,
+    "graduated": true,
     "gen": 3,
     "order": 4,
-    "id": "H0304"
+    "id": "H9304"
   },
   "石塚瑶季": {
     "english": {
