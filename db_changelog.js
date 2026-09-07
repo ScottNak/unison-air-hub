@@ -1,6 +1,328 @@
 window.UNIAIR_DB_CHANGELOG = {
  "entries": [
   {
+   "version": "db15-2026-09-07",
+   "date": "2026-09-07",
+   "added": 44,
+   "cardCount": 5552,
+   "titles": [
+    "自業自得+",
+    "愛し合いなさい+",
+    "絶対的第六感+",
+    "君を覚えてない+"
+   ],
+   "cards": [
+    {
+     "id": 6523,
+     "color": "R",
+     "memberEn": "Yamashita Shizuki",
+     "cs": "Da85%",
+     "sk": 0.0372
+    },
+    {
+     "id": 6524,
+     "color": "Y",
+     "memberEn": "Morita Hikaru",
+     "cs": "Pe70%",
+     "sk": 0.025
+    },
+    {
+     "id": 6525,
+     "color": "B",
+     "memberEn": "Inoue Rina",
+     "cs": "Vo70%",
+     "sk": 0.0232
+    },
+    {
+     "id": 6526,
+     "color": "G",
+     "memberEn": "Taniguchi Airi",
+     "cs": "Da70%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6527,
+     "color": "Y",
+     "memberEn": "Fujiyoshi Karin",
+     "cs": "Vo70%+仕上がり度50%",
+     "sk": 0.0067
+    },
+    {
+     "id": 6528,
+     "color": "B",
+     "memberEn": "Nakashima Yuzuki",
+     "cs": "Pe70%",
+     "sk": 0.0
+    },
+    {
+     "id": 6529,
+     "color": "P",
+     "memberEn": "Matsuda Rina",
+     "cs": "Vo70%",
+     "sk": 0.003
+    },
+    {
+     "id": 6530,
+     "color": "Y",
+     "memberEn": "Tamura Hono",
+     "cs": "ALL45%",
+     "sk": 0.034
+    },
+    {
+     "id": 6531,
+     "color": "P",
+     "memberEn": "Murayama Miu",
+     "cs": "VoPe50%",
+     "sk": 0.0368
+    },
+    {
+     "id": 6532,
+     "color": "G",
+     "memberEn": "Matono Mio",
+     "cs": "Pe70%",
+     "sk": 0.0246
+    },
+    {
+     "id": 6533,
+     "color": "R",
+     "memberEn": "Moriya Rena",
+     "cs": "Vo70%",
+     "sk": 0.0173
+    },
+    {
+     "id": 6534,
+     "color": "B",
+     "memberEn": "Murai Yū",
+     "cs": "Da70%",
+     "sk": 0.0078
+    },
+    {
+     "id": 6535,
+     "color": "R",
+     "memberEn": "Ōzono Rei",
+     "cs": "Da70%",
+     "sk": 0.0052
+    },
+    {
+     "id": 6536,
+     "color": "G",
+     "memberEn": "Yamasaki Ten",
+     "cs": "Vo70%",
+     "sk": 0.0245
+    },
+    {
+     "id": 6537,
+     "color": "G",
+     "memberEn": "Ishimori Rika",
+     "cs": "VoDa50%",
+     "sk": 0.0372
+    },
+    {
+     "id": 6538,
+     "color": "P",
+     "memberEn": "Endō Hikari",
+     "cs": "スキル発動率2.25倍",
+     "sk": 0.0234
+    },
+    {
+     "id": 6539,
+     "color": "P",
+     "memberEn": "Endō Riko",
+     "cs": "Pe70%",
+     "sk": 0.0246
+    },
+    {
+     "id": 6540,
+     "color": "B",
+     "memberEn": "Ōnuma Akiho",
+     "cs": "Vo85%",
+     "sk": 0.034
+    },
+    {
+     "id": 6541,
+     "color": "R",
+     "memberEn": "Odakura Reina",
+     "cs": "DaPe50%",
+     "sk": 0.0201
+    },
+    {
+     "id": 6542,
+     "color": "G",
+     "memberEn": "Kōsaka Marino",
+     "cs": "ALL35%",
+     "sk": 0.025
+    },
+    {
+     "id": 6543,
+     "color": "Y",
+     "memberEn": "Kojima Nagisa",
+     "cs": "Da70%",
+     "sk": 0.0368
+    },
+    {
+     "id": 6544,
+     "color": "Y",
+     "memberEn": "Takemoto Yui",
+     "cs": "Vo70%",
+     "sk": 0.0
+    },
+    {
+     "id": 6545,
+     "color": "R",
+     "memberEn": "Masumoto Kira",
+     "cs": "Pe70%",
+     "sk": 0.0232
+    },
+    {
+     "id": 6546,
+     "color": "B",
+     "memberEn": "Mukai Itoha",
+     "cs": "Vo70%",
+     "sk": 0.0222
+    },
+    {
+     "id": 6547,
+     "color": "B",
+     "memberEn": "Fujishima Kaho",
+     "cs": "Pe85%",
+     "sk": 0.0372
+    },
+    {
+     "id": 6548,
+     "color": "G",
+     "memberEn": "Konishi Nanami",
+     "cs": "Vo70%",
+     "sk": 0.0368
+    },
+    {
+     "id": 6549,
+     "color": "P",
+     "memberEn": "Matsuda Konoka",
+     "cs": "Da70%",
+     "sk": 0.025
+    },
+    {
+     "id": 6550,
+     "color": "Y",
+     "memberEn": "Kosaka Nao",
+     "cs": "Pe70%",
+     "sk": 0.0222
+    },
+    {
+     "id": 6551,
+     "color": "R",
+     "memberEn": "Tomita Suzuka",
+     "cs": "Da70%+仕上がり度50%",
+     "sk": 0.0078
+    },
+    {
+     "id": 6552,
+     "color": "G",
+     "memberEn": "Kawata Hina",
+     "cs": "ALL45%",
+     "sk": 0.034
+    },
+    {
+     "id": 6553,
+     "color": "R",
+     "memberEn": "Shōgenji Yōko",
+     "cs": "VoDa50%",
+     "sk": 0.0246
+    },
+    {
+     "id": 6554,
+     "color": "Y",
+     "memberEn": "Takahashi Mikuni",
+     "cs": "Da70%",
+     "sk": 0.0232
+    },
+    {
+     "id": 6555,
+     "color": "P",
+     "memberEn": "Kamimura Hinano",
+     "cs": "Pe70%",
+     "sk": 0.0201
+    },
+    {
+     "id": 6556,
+     "color": "B",
+     "memberEn": "Kanemura Miku",
+     "cs": "Vo70%",
+     "sk": 0.0143
+    },
+    {
+     "id": 6557,
+     "color": "P",
+     "memberEn": "Miyachi Sumire",
+     "cs": "DaPe50%",
+     "sk": 0.0372
+    },
+    {
+     "id": 6558,
+     "color": "Y",
+     "memberEn": "Takeuchi Kirari",
+     "cs": "Vo70%",
+     "sk": 0.0368
+    },
+    {
+     "id": 6559,
+     "color": "R",
+     "memberEn": "Watanabe Rina",
+     "cs": "Pe70%",
+     "sk": 0.025
+    },
+    {
+     "id": 6560,
+     "color": "B",
+     "memberEn": "Shimizu Rio",
+     "cs": "Da70%",
+     "sk": 0.0201
+    },
+    {
+     "id": 6561,
+     "color": "G",
+     "memberEn": "Morimoto Marie",
+     "cs": "スキル発動率2.25倍",
+     "sk": 0.0234
+    },
+    {
+     "id": 6562,
+     "color": "R",
+     "memberEn": "Hiraoka Mitsuki",
+     "cs": "Vo85%",
+     "sk": 0.034
+    },
+    {
+     "id": 6563,
+     "color": "B",
+     "memberEn": "Yamashita Haruka",
+     "cs": "ALL35%",
+     "sk": 0.025
+    },
+    {
+     "id": 6564,
+     "color": "P",
+     "memberEn": "Ishizuka Tamaki",
+     "cs": "Da70%",
+     "sk": 0.0246
+    },
+    {
+     "id": 6565,
+     "color": "G",
+     "memberEn": "Yamaguchi Haruyo",
+     "cs": "VoPe50%",
+     "sk": 0.0173
+    },
+    {
+     "id": 6566,
+     "color": "Y",
+     "memberEn": "Hirao Honoka",
+     "cs": "Pe70%",
+     "sk": 0.0055
+    }
+   ]
+  },
+  {
    "version": "db14-2026-09-07",
    "date": "2026-09-07",
    "added": 0,
