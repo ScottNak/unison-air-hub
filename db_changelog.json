@@ -1,6 +1,95 @@
 {
  "entries": [
   {
+   "version": "db17-2026-09-10",
+   "date": "2026-09-10",
+   "added": 10,
+   "cardCount": 5562,
+   "titles": [],
+   "cards": [
+    {
+     "id": 6567,
+     "color": "R",
+     "memberEn": "Kanemura Miku",
+     "cs": "ALL35%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6568,
+     "color": "B",
+     "memberEn": "Kosaka Nao",
+     "cs": "ALL35%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6569,
+     "color": "G",
+     "memberEn": "Fujiyoshi Karin",
+     "cs": "ALL35%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6570,
+     "color": "Y",
+     "memberEn": "Morita Hikaru",
+     "cs": "ALL35%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6571,
+     "color": "G",
+     "memberEn": "Odakura Reina",
+     "cs": "ALL35%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6572,
+     "color": "G",
+     "memberEn": "Kojima Nagisa",
+     "cs": "ALL35%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6573,
+     "color": "R",
+     "memberEn": "Murai Yū",
+     "cs": "ALL35%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6574,
+     "color": "P",
+     "memberEn": "Ishizuka Tamaki",
+     "cs": "ALL35%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6575,
+     "color": "B",
+     "memberEn": "Fujishima Kaho",
+     "cs": "ALL35%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6576,
+     "color": "G",
+     "memberEn": "Satō Yū",
+     "cs": "ALL35%",
+     "sk": 0.0163
+    }
+   ],
+   "note": "Birthday Cards"
+  },
+  {
+   "version": "db16-2026-09-10",
+   "date": "2026-09-10",
+   "added": 0,
+   "cardCount": 5552,
+   "titles": [],
+   "cards": [],
+   "note": "fix 高井俐香's 19th and 山田桃実's 18th stats"
+  },
+  {
    "version": "db15-2026-09-07",
    "date": "2026-09-07",
    "added": 44,
