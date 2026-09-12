@@ -68,7 +68,6 @@
   .team-table tr.row-lead td { background: rgba(217,178,58,0.16); }
   .team-table tr.row-lead td:first-child { box-shadow: inset 3px 0 0 #c9922a; }
   .chg-out { font-size: 11.5px; color: #8a5a5a; padding: 7px 10px 0; }
-  .chg-out s { color: #8a5a5a; }
   .chg-minus { font-weight: 800; color: #b5544f; }
 
   .worth-getting { margin-top: 16px; padding-top: 14px; border-top: 1px solid #eee; }
@@ -79,6 +78,9 @@
   .worth-table .name { color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .worth-table .skill { color: #666; font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .worth-table .ev { text-align: right; font-weight: 700; font-size: 11.5px; color: #2d2d42; white-space: nowrap; }
+  .worth-table .gain-cell { width: 62px; text-align: right; padding-right: 12px; }
+  .worth-table .gain { font-weight: 800; font-size: 13.5px; color: #1c7a2e; white-space: nowrap; }
+  .worth-table .gain.none { color: #bbb; font-weight: 700; }
   .acq-cell { width: 96px; }
   .acq-tag {
     display: inline-block; width: 92px; text-align: center; padding: 3px 4px; border-radius: 999px;
@@ -117,6 +119,12 @@
   .acq-tag.sm { width: auto; padding: 2px 8px; font-size: 9.5px; flex: 0 0 auto; }
   .acq-tag.owned { background: #8a8f9c; }
   .watch-empty { font-size: 12px; color: #999; padding: 6px 8px; line-height: 1.5; }
+  .sweep-stamp.stale { color: #b1731f; font-weight: 700; }
+  .watch .stale-banner {
+    font-size: 11.5px; color: #8a6520; background: #fdf6e6; border: 1px solid #f0dfae;
+    border-radius: 8px; padding: 7px 10px; margin: 0 0 9px; line-height: 1.55;
+  }
+  .watch-stale .watch-table, .watch-stale .watch-empty { opacity: 0.5; }
 
   .empty-state {
     background: rgba(255,255,255,0.96); border-radius: 0 0 14px 14px; padding: 34px 24px;
@@ -137,7 +145,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v13</div>
+<div class="page-version-badge">v14</div>
 <div class="wrap">
   <div class="note">
     <div class="note-text">
@@ -807,6 +815,43 @@ function classifyAcquisition(card, ownedSet) {
 
 
 
+
+
+
+
+
+
+
+function teamTotalWith(mech, leader, supports, ctx) {
+  if (mech === 'normal') {
+    var shape = SKILL_LOOKUP[leader.centerSkill] || [0, 0, 0];
+    return normalTeamTotal(leader, supports, shape[0], shape[1], shape[2], ctx);
+  }
+  if (mech === 'veaut') return veautTeamTotal(leader, supports, ctx);
+  return stellerTeamTotal(leader, supports, ctx);
+}
+
+
+
+function soloGainPct(card, mech, leader, actualSupports, actualTotal, ctx) {
+  if (!actualTotal || leader.groupKey === card.groupKey) return null;
+  var best = null;
+  for (var i = 0; i < actualSupports.length; i++) {
+    var clash = false;
+    for (var j = 0; j < actualSupports.length; j++) {
+      if (j !== i && actualSupports[j].groupKey === card.groupKey) { clash = true; break; }
+    }
+    if (clash) continue;
+    var trial = actualSupports.slice();
+    trial[i] = card;
+    var t = teamTotalWith(mech, leader, trial, ctx);
+    if (t === null || t === undefined) continue;
+    if (best === null || t > best) best = t;
+  }
+  if (best === null) return null;
+  return (best - actualTotal) / actualTotal * 100;
+}
+
 function recommendCardsWorthGetting(mech, leader, actualSupports, actualTotal, fullPool, ownedSet, ctx) {
   var res;
   if (mech === 'normal') {
@@ -849,7 +894,16 @@ function recommendCardsWorthGetting(mech, leader, actualSupports, actualTotal, f
     seenGroups[c.groupKey] = true;
     var info = classifyAcquisition(c, ownedSet);
     out.push({id: c.id, member: c.member, song: c.song, centerSkill: shortSkillText(c.centerSkill),
-              sk: skPctText(c.sk), tag: info.tag, note: info.note || null});
+              sk: skPctText(c.sk), tag: info.tag, note: info.note || null,
+              gainPct: soloGainPct(c, mech, leader, actualSupports, actualTotal, ctx)});
+  });
+  
+  
+  
+  out.sort(function(a, b) {
+    var av = (a.gainPct === null || a.gainPct === undefined) ? -Infinity : a.gainPct;
+    var bv = (b.gainPct === null || b.gainPct === undefined) ? -Infinity : b.gainPct;
+    return bv - av;
   });
   return {list: out.slice(0, 4), reason: out.length ? 'found' : 'filtered'};
 }
@@ -1087,6 +1141,10 @@ function snapshotOf(results) {
 
 
 
+
+
+
+
 var WATCH_KEY = 'uniair_public_bestteams_watch_v1';
 
 
@@ -1117,10 +1175,15 @@ function loadWatch(fingerprint) {
   var stored;
   try { stored = JSON.parse(localStorage.getItem(WATCH_KEY)); }
   catch (e) { return null; }
-  if (!stored || stored.sv !== WATCH_SCHEMA || stored.fp !== fingerprint) {
+  
+  
+  
+  
+  if (!stored || stored.sv !== WATCH_SCHEMA) {
     if (stored) { try { localStorage.removeItem(WATCH_KEY); } catch (e2) { } }
     return null;
   }
+  stored.stale = stored.fp !== fingerprint;
   return stored;
 }
 
@@ -1177,11 +1240,11 @@ function droppedNotes(chg) {
   var lines = [];
   if (chg.dropped.length) {
     lines.push('replaced ' + chg.dropped.map(function(e) {
-      return '<s>' + esc(e.m) + ' &mdash; ' + esc(e.s) + '</s>';
+      return esc(e.m) + ' &mdash; ' + esc(e.s);
     }).join(', '));
   }
   if (chg.leadMoved && chg.prevLead) {
-    lines.push('leader was <s>' + esc(chg.prevLead.m) + ' &mdash; ' + esc(chg.prevLead.s) + '</s>');
+    lines.push('leader was ' + esc(chg.prevLead.m) + ' &mdash; ' + esc(chg.prevLead.s));
   }
   return lines.map(function(t) {
     return '<div class="chg-out"><span class="chg-minus">&minus;</span> ' + t + '</div>';
@@ -1234,6 +1297,7 @@ function renderPanel(color, result, chg) {
       var label = esc(rec.member) + ' — ' + esc(rec.song);
       var skill = esc(rec.centerSkill || '');
       return '<tr class="' + ((chg && chg.recIn[rec.id]) ? 'row-in' : '') + '">' +
+        '<td class="gain-cell">' + soloGainHtml(rec.gainPct) + '</td>' +
         '<td class="acq-cell"><span class="acq-tag ' + (tagClass[rec.tag] || 'pull') + '">' + esc(rec.tag) + '</span></td>' +
         '<td class="name" title="' + label + '">' + label + '</td>' +
         '<td class="skill" title="' + skill + '">' + skill + '</td>' +
@@ -1255,6 +1319,17 @@ function renderPanel(color, result, chg) {
     (chg ? droppedNotes(chg) : '') +
     worthGettingHtml +
     watchHtml(color, result);
+}
+
+
+
+function soloGainHtml(pct) {
+  if (pct === null || pct === undefined) {
+    return '<span class="gain none" title="Cannot be measured on its own - it is the base or + of a card already on this team">&mdash;</span>';
+  }
+  if (pct >= 0.05) return '<span class="gain">+' + pct.toFixed(1) + '%</span>';
+  if (pct > 0) return '<span class="gain">&lt;0.1%</span>';
+  return '<span class="gain none" title="Worth nothing on its own - it only pays off alongside the other rows">&mdash;</span>';
 }
 
 function watchHtml(color, result) {
@@ -1297,11 +1372,16 @@ function watchHtml(color, result) {
         also + '</td></tr>';
     }).join('') + '</tbody></table>';
   }
-  return '<div class="watch"><h3>Other teams to look out for</h3>' +
+  var stale = !!WATCH.stale;
+  var banner = stale
+    ? '<div class="stale-banner"><b>Possibly out of date.</b> Recent changes detected.</div>'
+    : '';
+  return '<div class="watch' + (stale ? ' watch-stale' : '') + '">' +
+    '<h3>Other teams to look out for</h3>' +
     '<p class="sub">' + esc(COLOR_LABEL[color]) + ' teams that would beat this one, ' +
     'needing ' + MAX_NEW_CARDS + ' or fewer cards you don&#39;t have. ' +
     'The tag says how you would get that team&#39;s leader.</p>' +
-    body + '</div>';
+    banner + body + '</div>';
 }
 
 
@@ -1320,7 +1400,11 @@ function setSweepButton(label, disabled) {
 
 function renderSweepStamp() {
   var el = document.getElementById('sweep-stamp');
-  if (el) el.textContent = WATCH ? 'Last checked ' + WATCH.stamp : 'Not checked yet';
+  if (!el) return;
+  if (!WATCH) { el.textContent = 'Not checked yet'; el.className = 'sweep-stamp'; return; }
+  el.textContent = WATCH.stale ? 'Checked ' + WATCH.stamp + ' - out of date'
+                               : 'Last checked ' + WATCH.stamp;
+  el.className = 'sweep-stamp' + (WATCH.stale ? ' stale' : '');
 }
 
 function startSweep() {

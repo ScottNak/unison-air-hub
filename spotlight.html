@@ -37,6 +37,7 @@
   .cbadge-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
   .cbadge-btn.selected { box-shadow: 0 0 0 2px #fff, 0 0 0 4px #2d2d42, 0 4px 10px rgba(0,0,0,0.3); transform: translateY(-2px); }
   .team-table tbody tr.row-dim { opacity: .28; }
+  .team-table tbody tr.row-dim.row-in, .team-table tbody tr.row-dim.row-moved { opacity: .55; }
   .team-table tbody tr.row-highlight { transition: background .12s; }
   .team-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .team-table th {
@@ -45,6 +46,19 @@
   }
   .team-table td { padding: 9px 10px; border-bottom: 1px solid #eee; vertical-align: middle; }
   .center-row { background: #fff9e8; font-weight: 600; }
+  .team-table tr.row-in td, .suggest-table tr.row-in td { background: var(--mc-in, rgba(124,199,232,0.42)); }
+  .team-table tr.row-in td:first-child, .suggest-table tr.row-in td:first-child {
+    box-shadow: inset 3px 0 0 var(--mc, #7CC7E8);
+  }
+  .team-table tr.row-moved td { background: rgba(217,178,58,0.16); }
+  .team-table tr.row-moved td:first-child { box-shadow: inset 3px 0 0 #c9922a; }
+  .chg-dot {
+    display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+    background: #ffd97d; border: 1px solid rgba(0,0,0,0.35); margin-left: 6px;
+    vertical-align: middle;
+  }
+  .chg-out { font-size: 11.5px; color: #8a5a5a; padding: 7px 10px 0; }
+  .chg-minus { font-weight: 800; color: #b5544f; }
   .color-cell { text-align: center; }
   .color-sq {
     display: inline-flex; align-items: center; justify-content: center;
@@ -61,6 +75,8 @@
   .suggest-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
   .suggest-table td { padding: 6px 8px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
   .suggest-table .ev { text-align: right; font-weight: 700; font-size: 11.5px; color: #2d2d42; white-space: nowrap; }
+  .suggest-table .gain-cell { width: 62px; text-align: right; padding-right: 12px; }
+  .suggest-table .gain { font-weight: 800; font-size: 13.5px; color: #1c7a2e; white-space: nowrap; }
   .acq-cell { width: 96px; }
   .acq-tag {
     display: inline-block; width: 92px; text-align: center; padding: 3px 4px; border-radius: 999px;
@@ -157,7 +173,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v14</div>
+<div class="page-version-badge">v15</div>
 <div class="wrap">
   <div class="top-bar">
     <button class="settings-btn" id="settings-btn" type="button">⚙ Members &amp; Bonus List</button>
@@ -297,6 +313,29 @@ const RAINBOW_GRADIENT = 'linear-gradient(135deg,#e05a5a,#d9b23a,#5aa85a,#4a90d9
 const MEMBERS_KEY = 'uniair_public_spotlight_members_v1';
 const BONUS_KEY = 'uniair_public_spotlight_bonus_v1';
 
+
+
+
+
+
+
+const SNAP_KEY = 'uniair_public_spotlight_last_v1';
+const SNAP_SCHEMA = 1;
+
+function hexTint(hex, alpha) {
+  var r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+  return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+}
+
+
+
+
+
+function clearDot(label) {
+  var dot = label.querySelector('.chg-dot');
+  if (dot) dot.parentNode.removeChild(dot);
+}
+
 function esc(s) {
   return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
@@ -354,6 +393,56 @@ function loadBonusList() {
   return [];
 }
 function saveBonusList(list) { localStorage.setItem(BONUS_KEY, JSON.stringify(list)); }
+
+function loadSnapshot() {
+  try {
+    var v = JSON.parse(localStorage.getItem(SNAP_KEY));
+    if (!v || v.sv !== SNAP_SCHEMA) return null;
+    return v.byMember || null;
+  } catch (e) { return null; }
+}
+
+function saveSnapshot(byMember) {
+  try { localStorage.setItem(SNAP_KEY, JSON.stringify({sv: SNAP_SCHEMA, byMember: byMember})); }
+  catch (e) { }
+}
+
+
+
+
+function diffMember(now, prev) {
+  if (!prev || !prev.roster) return null;
+  var prevBy = {}, nowBy = {};
+  prev.roster.forEach(function(e) { prevBy[e.i] = e; });
+  now.roster.forEach(function(e) { nowBy[e.i] = e; });
+  var entered = {}, enteredCount = 0, centerMoved = {}, movedCount = 0, dropped = [];
+  now.roster.forEach(function(e) {
+    var p = prevBy[e.i];
+    if (!p) { entered[e.i] = true; enteredCount++; }
+    else if (p.c !== e.c) { centerMoved[e.i] = true; movedCount++; }
+  });
+  prev.roster.forEach(function(e) { if (!nowBy[e.i]) dropped.push(e.n); });
+  var prevSug = {};
+  (prev.sug || []).forEach(function(id) { prevSug[id] = true; });
+  var sugIn = {}, sugCount = 0;
+  (now.sug || []).forEach(function(id) { if (!prevSug[id]) { sugIn[id] = true; sugCount++; } });
+  if (!enteredCount && !movedCount && !dropped.length && !sugCount) return null;
+  return {entered: entered, centerMoved: centerMoved, dropped: dropped, sugIn: sugIn};
+}
+
+
+
+function droppedNote(chg) {
+  if (!chg || !chg.dropped.length) return '';
+  return '<div class="chg-out"><span class="chg-minus">&minus;</span> dropped ' +
+    chg.dropped.map(function(n) { return esc(n); }).join(', ') + '</div>';
+}
+
+
+
+function gainLabel(pct) {
+  return pct >= 0.05 ? '+' + pct.toFixed(1) + '%' : '&lt;0.1%';
+}
 
 window.addEventListener('message', function(e) {
   var msg = e.data;
@@ -909,7 +998,8 @@ function miniChip(songColor, isCenter, extraText, warnTier) {
   return '<span class="' + cls + '" style="background:' + bg + '" title="' + title + '">' + letter + extraText + '</span>';
 }
 
-function buildMemberContentHtml(memberCardsAll, starlightSongs, results, ctx) {
+function buildMemberContentHtml(memberCardsAll, starlightSongs, results, ctx, prevSnap, out) {
+  var chg = null;
   var ownedIdSet = {};
   memberCardsAll.forEach(function(c) { if (c.owned) ownedIdSet[c.id] = true; });
   var groups = {};
@@ -1012,6 +1102,10 @@ function buildMemberContentHtml(memberCardsAll, starlightSongs, results, ctx) {
     }
     var everCenter = appearances.some(function(p) { return p[1]; });
     var rowClass = everCenter ? 'center-row' : '';
+    if (chg) {
+      if (chg.entered[card.id]) rowClass += ' row-in';
+      else if (chg.centerMoved[card.id]) rowClass += ' row-moved';
+    }
     var colorsCsv = appearances.map(function(p) { return p[0]; }).join(',');
     var centerColorsCsv = appearances.filter(function(p) { return p[1]; }).map(function(p) { return p[0]; }).join(',');
     return '<tr class="' + rowClass + '" data-colors="' + esc(colorsCsv) + '" data-center-colors="' + esc(centerColorsCsv) + '" data-idx="' + idx + '">' +
@@ -1022,8 +1116,6 @@ function buildMemberContentHtml(memberCardsAll, starlightSongs, results, ctx) {
       '<td class="chips">' + chips + '</td>' +
       '</tr>';
   }
-
-  var rosterHtml = rosterRowsSorted.map(function(e, i) { return rosterRow(e, i); }).join('');
 
   var suggestionMap = {};
   Object.keys(groups).forEach(function(sig) {
@@ -1050,17 +1142,39 @@ function buildMemberContentHtml(memberCardsAll, starlightSongs, results, ctx) {
         }
         if (!suggestionMap[cand.key]) suggestionMap[cand.key] = {card: cand, byColor: {}};
         var e = suggestionMap[cand.key];
-        if (!(songColor in e.byColor) || delta > e.byColor[songColor][0]) e.byColor[songColor] = [delta, replaced, tier];
+        
+        
+        
+        var pct = baseTotal > 0 ? (delta / baseTotal * 100) : 0;
+        if (!(songColor in e.byColor) || delta > e.byColor[songColor][0]) e.byColor[songColor] = [delta, replaced, tier, pct];
       });
     });
   });
 
+  
+  
+  
+  function bestPct(entry) {
+    return Math.max.apply(null, Object.keys(entry.byColor).map(function(k) { return entry.byColor[k][3]; }));
+  }
+
   var suggestionEntries = Object.keys(suggestionMap).map(function(k) { return suggestionMap[k]; })
-    .sort(function(a, b) {
-      var maxA = Math.max.apply(null, Object.keys(a.byColor).map(function(k) { return a.byColor[k][0]; }));
-      var maxB = Math.max.apply(null, Object.keys(b.byColor).map(function(k) { return b.byColor[k][0]; }));
-      return maxB - maxA;
-    }).slice(0, 8);
+    .sort(function(a, b) { return bestPct(b) - bestPct(a); }).slice(0, 8);
+
+  
+  
+  var nowSnap = {
+    roster: rosterRowsSorted.map(function(e) {
+      return {i: e.card.id, n: e.card.song,
+              c: e.appearances.filter(function(p) { return p[1]; })
+                   .map(function(p) { return p[0]; }).sort().join(',')};
+    }),
+    sug: suggestionEntries.map(function(e) { return e.card.id; })
+  };
+  chg = diffMember(nowSnap, prevSnap);
+  if (out) { out.snap = nowSnap; out.changed = !!chg; }
+
+  var rosterHtml = rosterRowsSorted.map(function(e, i) { return rosterRow(e, i); }).join('');
 
   function suggestionRow(entry) {
     var card = entry.card;
@@ -1071,6 +1185,7 @@ function buildMemberContentHtml(memberCardsAll, starlightSongs, results, ctx) {
       var tier = rec[2];
       var cls = 'mchip';
       var title = esc(COLOR_NAMES[sc]);
+      title += ' — ' + gainLabel(rec[3]).replace('&lt;', '<');
       if (tier === 'oneoff') { cls += ' mchip-dropped'; title += ' — not an improvement once the current Starlight bonus ends'; }
       var bg = sc === 'ALL' ? RAINBOW_GRADIENT : COLOR_HEX_SL[sc];
       var ltr = COLOR_LETTERS[sc];
@@ -1079,7 +1194,9 @@ function buildMemberContentHtml(memberCardsAll, starlightSongs, results, ctx) {
     var chips = byColor.map(chip).join('');
     var acq = classifyAcquisition(card, ownedIdSet);
     SUGGESTED.push({id: card.id, tag: acq.tag});
-    return '<tr><td class="acq-cell"><span class="acq-tag ' + (ACQ_TAG_CLASS[acq.tag] || 'pull') + '">' + esc(acq.tag) + '</span></td>' +
+    return '<tr class="' + ((chg && chg.sugIn[card.id]) ? 'row-in' : '') + '">' +
+      '<td class="gain-cell"><span class="gain">' + gainLabel(bestPct(entry)) + '</span></td>' +
+      '<td class="acq-cell"><span class="acq-tag ' + (ACQ_TAG_CLASS[acq.tag] || 'pull') + '">' + esc(acq.tag) + '</span></td>' +
       '<td class="color-cell"><span class="color-sq" style="background:' + (COLOR_HEX_SL[card.color] || '#999') + '">' + letter + '</span></td>' +
       '<td class="song">' + esc(card.song) + '</td>' +
       '<td class="skill">' + esc(shortSkillText(card.centerSkill) || '') + '</td>' +
@@ -1107,7 +1224,7 @@ function buildMemberContentHtml(memberCardsAll, starlightSongs, results, ctx) {
   return '<div class="starlight-box"><h2><span class="badge star">★</span>Starlight-bonus cards this run (+50% Vo/Da/Pe)</h2><ul>' + starlightListHtml + '</ul></div>' +
     '<div class="team-card"><div class="badge-row">' + summaryBadges + '</div>' +
     '<table class="team-table"><thead><tr><th>Color</th><th>Card / Song</th><th>Leader Skill</th><th>Score Skill</th><th>Plays in</th></tr></thead>' +
-    '<tbody>' + rosterHtml + '</tbody></table>' + suggestionsHtml + '</div>' + emptyHtml;
+    '<tbody>' + rosterHtml + '</tbody></table>' + droppedNote(chg) + suggestionsHtml + '</div>' + emptyHtml;
 }
 
 
@@ -1160,7 +1277,11 @@ function memberGroup(member) {
   return _memberGroup[member] || null;
 }
 
-var lastActiveMemberIdx = 0;
+
+
+
+
+var lastActiveMember = null;
 var SUGGESTED = [];
 var NEW_CARD_IDS = null;
 
@@ -1211,7 +1332,11 @@ function renderAll() {
     return;
   }
 
-  var activeIdx = (lastActiveMemberIdx < members.length) ? lastActiveMemberIdx : 0;
+  var activeIdx = members.indexOf(lastActiveMember);
+  if (activeIdx < 0) activeIdx = 0;
+  lastActiveMember = members[activeIdx];
+  var prevSnap = loadSnapshot();
+  var nextSnap = {};
 
   members.forEach(function(member, i) {
     var isActive = i === activeIdx;
@@ -1223,13 +1348,27 @@ function renderAll() {
     var groupColor = GROUP_TAB_COLORS[memberGroup(member)];
     if (groupColor) label.style.setProperty('--tc', groupColor);
     tabBar.appendChild(input); tabBar.appendChild(label);
-    input.addEventListener('change', function() { lastActiveMemberIdx = i; syncPanels(); });
+    input.addEventListener('change', function() { lastActiveMember = member; clearDot(label); syncPanels(); });
 
     var panel = document.createElement('div');
     panel.className = 'member-panel' + (isActive ? ' member-panel-first-visible' : '');
     panel.dataset.idx = String(i);
+    if (groupColor) {
+      panel.style.setProperty('--mc', groupColor);
+      panel.style.setProperty('--mc-in', hexTint(groupColor, 0.42));
+    }
     var md = data.byMember[member];
-    panel.innerHTML = buildMemberContentHtml(md.memberCardsAll, md.starlightSongs, md.results, data.ctx);
+    var out = {};
+    panel.innerHTML = buildMemberContentHtml(md.memberCardsAll, md.starlightSongs, md.results,
+                                             data.ctx, prevSnap ? prevSnap[member] : null, out);
+    nextSnap[member] = out.snap;
+    
+    
+    if (out.changed && !isActive) {
+      var dot = document.createElement('span');
+      dot.className = 'chg-dot';
+      label.appendChild(dot);
+    }
     panelsEl.appendChild(panel);
     
     
@@ -1240,6 +1379,10 @@ function renderAll() {
     var allBadge = panel.querySelector('.cbadge-btn[data-color="ALL"]');
     if (allBadge) allBadge.click();
   });
+
+  
+  
+  saveSnapshot(nextSnap);
 
   function syncPanels() {
     var inputs = tabBar.querySelectorAll('.member-tab-input');
@@ -1363,7 +1506,6 @@ function wireBonusSearch() {
 }
 
 function recomputeAndRender() {
-  lastActiveMemberIdx = 0;
   var loadingEl = document.getElementById('loading');
   loadingEl.textContent = 'Computing Spotlight teams…';
   loadingEl.style.display = '';
