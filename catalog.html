@@ -27,7 +27,17 @@
   }
   .search-box:focus { border-color: #4a90d9; }
   .member-search-wrap { position: relative; flex: 1 1 220px; }
-  .member-search-wrap .search-box { width: 100%; box-sizing: border-box; flex: none; }
+  
+  .token-field {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 5px;
+    width: 100%; padding: 5px 8px; border-radius: 8px; border: 1px solid #d8d8e0;
+    background: #fff; cursor: text; min-height: 38px;
+  }
+  .token-field:focus-within { border-color: #4a90d9; }
+  .token-input {
+    flex: 1 1 150px; min-width: 120px; border: none; outline: none; background: none;
+    padding: 4px 4px; font-size: 13.5px; font-family: inherit; color: inherit;
+  }
   .member-suggestions {
     display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 20; margin-top: 2px;
     background: #fff; border: 1px solid #d8d8e0; border-radius: 8px; max-height: 260px;
@@ -99,6 +109,30 @@
   }
   .pull-order-btn:hover { border-color: #b8bad0; color: #222; }
   .pull-order-btn:disabled { opacity: 0.45; cursor: default; }
+  .pull-order-btn.active {
+    background: #2d2d42; border-color: #2d2d42; color: #fff;
+  }
+  .pull-order-btn.active:hover { color: #fff; border-color: #2d2d42; }
+
+  
+  .picked-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+  .picked-chips:empty { display: none; }
+  .picked-chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: #eef0fa; border: 1px solid #d3d7ee; border-radius: 999px;
+    padding: 3px 5px 3px 9px; font-size: 11.5px; color: #33374d; max-width: 100%;
+  }
+  .picked-chip .label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .picked-chip .x {
+    appearance: none; border: none; background: none; cursor: pointer;
+    color: #7b80a0; font-size: 13px; line-height: 1; padding: 0 3px; border-radius: 999px;
+  }
+  .picked-chip .x:hover { background: #d9ddf2; color: #222; }
+  .picked-clear {
+    appearance: none; border: 1px dashed #c8ccdf; background: none; cursor: pointer;
+    border-radius: 999px; padding: 3px 10px; font-size: 11px; font-weight: 700; color: #7b80a0;
+  }
+  .picked-clear:hover { border-color: #9a9fbb; color: #33374d; }
 
   .pd-overlay {
     position: fixed; inset: 0; z-index: 10000; background: rgba(20,20,32,0.55);
@@ -218,6 +252,8 @@
   .filter-stack { display: flex; flex-direction: column; gap: 10px; }
   .filter-row-inner { display: flex; gap: 10px; }
   .filter-row-inner .filter-group { flex: 1; }
+  
+  .filter-row-inner.auto .filter-group { flex: 0 0 auto; }
   .search-box.small { padding: 6px 9px; font-size: 12px; width: 100%; box-sizing: border-box; flex: none; }
   .multi-select {
     width: 190px; height: 110px; border-radius: 8px; border: 1px solid #d8d8e0;
@@ -225,6 +261,8 @@
   }
   .multi-select:focus { border-color: #4a90d9; }
   #song-filter { width: 340px; }
+  
+  #song-chips { width: 340px; max-height: 74px; overflow-y: auto; }
   
   #cs-filter { height: 144px; }
   .sk-input {
@@ -249,7 +287,7 @@
 </style>
 </head>
 <body>
-  <div class="page-version-badge">v10</div>
+  <div class="page-version-badge">v11</div>
   <div class="wrap">
     <div class="panel">
       <div class="controls">
@@ -258,7 +296,10 @@
           <button type="button" class="mode-switch-btn" data-mode="add">Add</button>
         </div>
         <div class="member-search-wrap">
-          <input type="text" class="search-box" id="member-search" placeholder="Search member (Japanese or English)..." autocomplete="off">
+          <div class="token-field" id="member-field">
+            <div class="picked-chips" id="member-chips"></div>
+            <input type="text" class="token-input" id="member-search" placeholder="Search member (Japanese or English)..." autocomplete="off">
+          </div>
           <div class="member-suggestions" id="member-suggestions"></div>
         </div>
         <div class="chip-row" id="color-filters"></div>
@@ -274,6 +315,7 @@
           <div class="filter-group">
             <label class="filter-label" for="song-filter">Song (multi-select)</label>
             <input type="text" class="search-box small" id="song-search" placeholder="Filter song list...">
+            <div class="picked-chips" id="song-chips"></div>
             <select multiple id="song-filter" class="multi-select"></select>
           </div>
           <div class="filter-group">
@@ -295,13 +337,20 @@
                 </div>
               </div>
             </div>
-            <div class="filter-group">
-              <label class="filter-label">Options</label>
-              <div class="filter-row-inner">
-                <label class="filter-toggle-label"><input type="checkbox" id="grad-filter"> Exclude graduated</label>
-                <label class="filter-toggle-label"><input type="checkbox" id="has-plus-filter"> Has SSR+</label>
-                <label class="filter-toggle-label"><input type="checkbox" id="pull-order-filter"> Pull order</label>
-                <button class="pull-order-btn" id="pull-order-edit-btn" type="button">&#9998; Edit pull order</button>
+            <div class="filter-row-inner auto">
+              <div class="filter-group">
+                <label class="filter-label">Options</label>
+                <div class="filter-row-inner">
+                  <label class="filter-toggle-label"><input type="checkbox" id="grad-filter"> Exclude graduated</label>
+                  <label class="filter-toggle-label"><input type="checkbox" id="has-plus-filter"> Has SSR+</label>
+                </div>
+              </div>
+              <div class="filter-group">
+                <label class="filter-label">Pull Order</label>
+                <div class="filter-row-inner">
+                  <button class="pull-order-btn" id="pull-order-toggle" type="button" aria-pressed="false">Show Order</button>
+                  <button class="pull-order-btn" id="pull-order-edit-btn" type="button">&#9998; Edit</button>
+                </div>
               </div>
             </div>
           </div>
@@ -333,13 +382,14 @@
         <li><b>Red text</b> indicates the member has graduated.</li>
         <li><b>Add/Remove owned cards</b>: switch into <b>Add</b> mode and click the appropriate button on a card.</li>
         <li><b>Upgrade owned cards</b>: to upgrade a card to its SSR+, click the <b>↑ Upgrade</b> button - it shows up right in <b>View</b> mode on any owned card that has a "+" available.</li>
-        <li>Song and Center Skill support selecting multiple values (ctrl/cmd-click, or shift-click for a range).</li>
+        <li>Song and Center Skill support selecting multiple values (ctrl/cmd-click, or shift-click for a range). Each song you pick also appears as a chip above the list - click its &times; to drop that one, or <b>Clear all</b> to drop them all.</li>
+        <li><b>Member search</b> takes more than one member: pick a name from the suggestions and it becomes a chip, then type the next one. Cards from any of the chipped members are shown.</li>
         <li>Owned marks are stored only in this browser - nothing is uploaded or synced anywhere.</li>
         <li><b>Warning</b>: clearing your browser data clears this info too. Use the hub's <b>Export</b>/<b>Import</b> buttons (top of the page) to save a backup file covering this and every other tab, and load it back.</li>
         <li>The <b>Center Skill</b> filter groups S.teller/Veaut-style cards by the text before their "+" (e.g. "Da85%+&lt;mechanic text&gt;" filters under "Da85%"), not as one-off categories.</li>
-        <li><b>Pull order</b>: tick it to swap the Owned column for the position each owned card was added in (#1 = first). Click the column header to sort by it. Cards get their number when you mark them owned, so mark a new batch in the order you actually pulled it; an upgraded card keeps its base card's number.</li>
+        <li><b>Pull Order &rarr; Show Order</b>: press it to swap the Owned column for the position each owned card was added in (#1 = first). Click the column header to sort by it. Cards get their number when you mark them owned, so mark a new batch in the order you actually pulled it; an upgraded card keeps its base card's number.</li>
         <li>An owned card shows <b>&mdash;</b> when no order was ever recorded for it - marks that arrived in bulk, from a save file or the bulk-add grid. Nothing is guessed on your behalf; give it a position in the dialog below.</li>
-        <li><b>Edit pull order</b> opens a dialog where you can fix a sequence - drag rows, or type a new position into a row's number box. Cards with no position wait at the top of that list until you give them one. Nothing is saved until you press <b>Save order</b>.</li>
+        <li><b>Pull Order &rarr; Edit</b> opens a dialog where you can fix a sequence - drag rows, or type a new position into a row's number box. Cards with no position wait at the top of that list until you give them one. Nothing is saved until you press <b>Save order</b>.</li>
       </ul>
     </div>
   </div>
@@ -381,6 +431,7 @@ let sortKey = 'tot';
 let sortDir = -1; 
 let selectedColors = new Set(); 
 let memberTerms = []; 
+let memberPicks = []; 
 let selectedSongs = new Set();
 let selectedCsBases = new Set();
 let skMinVal = 0;
@@ -749,11 +800,22 @@ document.getElementById('has-plus-filter').addEventListener('change', (e) => {
   render();
 });
 
-document.getElementById('pull-order-filter').addEventListener('change', (e) => {
-  pullOrderMode = e.target.checked;
+
+
+
+const pullToggleBtn = document.getElementById('pull-order-toggle');
+
+function setPullOrderMode(on) {
+  pullOrderMode = on;
+  pullToggleBtn.classList.toggle('active', on);
+  pullToggleBtn.setAttribute('aria-pressed', String(on));
   
   
-  if (!pullOrderMode && sortKey === 'pull') { sortKey = 'tot'; sortDir = -1; }
+  if (!on && sortKey === 'pull') { sortKey = 'tot'; sortDir = -1; }
+}
+
+pullToggleBtn.addEventListener('click', () => {
+  setPullOrderMode(!pullOrderMode);
   render();
 });
 
@@ -880,17 +942,25 @@ function render() {
   let rows = displayRows.filter(row => {
     const c = effectiveCard(row);
     if (selectedColors.size && !selectedColors.has(c.color)) return false;
-    if (memberTerms.length) {
+    if (memberTerms.length || memberPicks.length) {
       
       
       
       
       
-      const jp = c.member.toLowerCase();
-      const en = stripDiacritics((c.memberEn || '').toLowerCase());
-      const matchesJp = memberTerms.every(t => jp.includes(t));
-      const matchesEn = memberTerms.every(t => en.includes(t));
-      if (!matchesJp && !matchesEn) return false;
+      
+      
+      
+      
+      
+      
+      let hit = memberPicks.includes(c.member);
+      if (!hit && memberTerms.length) {
+        const jp = c.member.toLowerCase();
+        const en = stripDiacritics((c.memberEn || '').toLowerCase());
+        hit = memberTerms.every(t => jp.includes(t)) || memberTerms.every(t => en.includes(t));
+      }
+      if (!hit) return false;
     }
     if (selectedSongs.size && !selectedSongs.has(row.base.title)) return false;
     if (selectedCsBases.size && !selectedCsBases.has(c.csBase)) return false;
@@ -988,6 +1058,7 @@ document.querySelectorAll('thead th').forEach(th => {
 
 const memberSearchInput = document.getElementById('member-search');
 const memberSuggestionsEl = document.getElementById('member-suggestions');
+const memberChipsEl = document.getElementById('member-chips');
 const MAX_SUGGESTIONS = 8;
 
 function memberMatchesTerms(m, terms) {
@@ -1003,7 +1074,7 @@ function closeSuggestions() {
 
 function showSuggestions(terms) {
   if (!terms.length) { closeSuggestions(); return; }
-  const matches = MEMBERS.filter(m => memberMatchesTerms(m, terms)).slice(0, MAX_SUGGESTIONS);
+  const matches = MEMBERS.filter(m => !memberPicks.includes(m.jp) && memberMatchesTerms(m, terms)).slice(0, MAX_SUGGESTIONS);
   if (!matches.length) { closeSuggestions(); return; }
   memberSuggestionsEl.innerHTML = matches.map((m, i) =>
     '<div class="member-suggestion' + (i === 0 ? ' highlighted' : '') + '" data-jp="' + esc(m.jp) + '">'
@@ -1012,15 +1083,55 @@ function showSuggestions(terms) {
   memberSuggestionsEl.classList.add('open');
 }
 
+
+
+
+function renderMemberChips() {
+  memberChipsEl.innerHTML = memberPicks.map(jp => {
+    const m = MEMBERS.find(x => x.jp === jp);
+    const label = m ? jp + ' / ' + m.en : jp;
+    return '<span class="picked-chip"><span class="label">' + esc(label) + '</span>'
+      + '<button class="x" type="button" data-jp="' + esc(jp) + '" aria-label="Remove ' + esc(label) + '">&times;</button></span>';
+  }).join('');
+  if (memberPicks.length > 1) {
+    memberChipsEl.innerHTML += '<button class="picked-clear" id="member-clear" type="button">Clear all</button>';
+  }
+  
+  
+  
+  memberSearchInput.placeholder = memberPicks.length
+    ? 'Add another...' : 'Search member (Japanese or English)...';
+}
+
 function selectMember(jp) {
-  memberSearchInput.value = jp;
+  if (!memberPicks.includes(jp)) memberPicks.push(jp);
   
   
-  
-  memberTerms = [jp.toLowerCase()];
+  memberSearchInput.value = '';
+  memberTerms = [];
+  renderMemberChips();
   closeSuggestions();
   render();
 }
+
+function removeMember(jp) {
+  memberPicks = memberPicks.filter(x => x !== jp);
+  renderMemberChips();
+  render();
+}
+
+memberChipsEl.addEventListener('click', (e) => {
+  if (e.target.id === 'member-clear') { memberPicks = []; renderMemberChips(); render(); return; }
+  const x = e.target.closest('.x');
+  if (x) removeMember(x.dataset.jp);
+});
+
+
+
+document.getElementById('member-field').addEventListener('mousedown', (e) => {
+  if (e.target.closest('.picked-chip') || e.target.closest('.picked-clear')) return;
+  if (e.target !== memberSearchInput) { e.preventDefault(); memberSearchInput.focus(); }
+});
 
 let memberSearchTimer = null;
 memberSearchInput.addEventListener('input', (e) => {
@@ -1038,6 +1149,12 @@ memberSearchInput.addEventListener('focus', () => {
 
 memberSearchInput.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') { closeSuggestions(); return; }
+  
+  
+  if (e.key === 'Backspace' && !memberSearchInput.value && memberPicks.length) {
+    removeMember(memberPicks[memberPicks.length - 1]);
+    return;
+  }
   if (e.key === 'Enter') {
     const first = memberSuggestionsEl.querySelector('.member-suggestion');
     if (first) { e.preventDefault(); selectMember(first.dataset.jp); }
@@ -1063,6 +1180,8 @@ document.addEventListener('click', (e) => {
 function selectedValues(sel) {
   return Array.from(sel.selectedOptions).map(o => o.value);
 }
+
+const songChipsEl = document.getElementById('song-chips');
 
 function buildFilterOptions() {
   const songSel = document.getElementById('song-filter');
@@ -1096,7 +1215,36 @@ function buildFilterOptions() {
   
   selectedSongs = new Set(selectedValues(songSel));
   selectedCsBases = new Set(selectedValues(csSel));
+  renderSongChips();
 }
+
+
+
+
+
+function renderSongChips() {
+  const chips = Array.from(selectedSongs);
+  songChipsEl.innerHTML = chips.map(t =>
+    '<span class="picked-chip"><span class="label">' + esc(t) + '</span>'
+    + '<button class="x" type="button" data-song="' + esc(t) + '" aria-label="Remove ' + esc(t) + '">&times;</button></span>'
+  ).join('');
+  if (chips.length > 1) {
+    songChipsEl.innerHTML += '<button class="picked-clear" id="song-clear" type="button">Clear all</button>';
+  }
+}
+
+function setSongSelection(titles) {
+  selectedSongs = new Set(titles);
+  Array.from(document.getElementById('song-filter').options).forEach(o => { o.selected = selectedSongs.has(o.value); });
+  renderSongChips();
+  render();
+}
+
+songChipsEl.addEventListener('click', (e) => {
+  if (e.target.id === 'song-clear') { setSongSelection([]); return; }
+  const x = e.target.closest('.x');
+  if (x) setSongSelection(Array.from(selectedSongs).filter(t => t !== x.dataset.song));
+});
 
 function filterSongOptions() {
   const term = document.getElementById('song-search').value.trim().toLowerCase();
@@ -1109,6 +1257,7 @@ document.getElementById('song-search').addEventListener('input', () => filterSon
 
 document.getElementById('song-filter').addEventListener('change', (e) => {
   selectedSongs = new Set(selectedValues(e.target));
+  renderSongChips();
   render();
 });
 
@@ -1348,6 +1497,8 @@ document.querySelectorAll('#pd-dir .mode-switch-btn').forEach(btn => {
 
 function resetFilters() {
   memberTerms = [];
+  memberPicks = [];
+  renderMemberChips();
   document.getElementById('member-search').value = '';
   closeSuggestions();
 
@@ -1357,6 +1508,7 @@ function resetFilters() {
   selectedSongs = new Set();
   document.getElementById('song-search').value = '';
   Array.from(document.getElementById('song-filter').options).forEach(o => { o.selected = false; });
+  renderSongChips();
   filterSongOptions();
 
   selectedCsBases = new Set();
@@ -1374,9 +1526,7 @@ function resetFilters() {
   hasPlusOnly = false;
   document.getElementById('has-plus-filter').checked = false;
 
-  pullOrderMode = false;
-  document.getElementById('pull-order-filter').checked = false;
-  if (sortKey === 'pull') { sortKey = 'tot'; sortDir = -1; }
+  setPullOrderMode(false);
 
   render();
 }
