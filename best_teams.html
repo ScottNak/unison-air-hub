@@ -33,6 +33,11 @@
   }
   .color-tab-btn:hover { background: rgba(255,255,255,0.42); }
   .color-tab-btn.active { background: var(--tc); box-shadow: 0 -2px 10px rgba(0,0,0,0.25); }
+  
+  .color-tab-btn[data-color="A"].active {
+    background: linear-gradient(135deg,#e05a5a,#d9b23a,#5aa85a,#4a90d9,#9a6bc9);
+    text-shadow: 0 1px 2px rgba(0,0,0,.35);
+  }
 
   .panel { display: none; border-radius: 0 0 14px 14px; overflow: hidden;
             box-shadow: 0 8px 28px rgba(0,0,0,0.32); margin-bottom: 20px; }
@@ -78,6 +83,7 @@
   .worth-table .name { color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .worth-table .skill { color: #666; font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .worth-table .ev { text-align: right; font-weight: 700; font-size: 11.5px; color: #2d2d42; white-space: nowrap; }
+  .worth-table .color-cell { width: 34px; padding-right: 2px; }
   .worth-table .gain-cell { width: 62px; text-align: right; padding-right: 12px; }
   .worth-table .gain { font-weight: 800; font-size: 13.5px; color: #1c7a2e; white-space: nowrap; }
   .worth-table .gain.none { color: #bbb; font-weight: 700; }
@@ -117,8 +123,25 @@
   .watch-table .also-note { font-size: 11.5px; color: #777; margin-top: 4px; line-height: 1.5; }
   .watch-table .also-note .solo { color: #1c7a2e; font-weight: 700; }
   .acq-tag.sm { width: auto; padding: 2px 8px; font-size: 9.5px; flex: 0 0 auto; }
+  .color-sq.sm { width: 18px; height: 18px; font-size: 10px; border-radius: 4px; flex: 0 0 auto; }
   .acq-tag.owned { background: #8a8f9c; }
   .watch-empty { font-size: 12px; color: #999; padding: 6px 8px; line-height: 1.5; }
+  
+  
+  .color-cell { text-align: center; }
+  .team-table th.color-cell { text-align: center; }
+  .color-sq {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 5px; color: #fff; font-weight: 800;
+    font-size: 11px; text-shadow: 0 1px 2px rgba(0,0,0,.35);
+  }
+  
+  .header-info-split { display: flex; justify-content: space-between;
+                        align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .header-info-split .hi-note { white-space: nowrap; }
+  .all-gain { font-weight: 800; color: #1c7a2e; }
+  .all-state { font-size: 12.5px; color: #666; padding: 14px 4px; line-height: 1.6; }
+  .all-state a { color: #2e49a3; font-weight: 700; text-decoration: none; }
   .sweep-stamp.stale { color: #b1731f; font-weight: 700; }
   .watch .stale-banner {
     font-size: 11.5px; color: #8a6520; background: #fdf6e6; border: 1px solid #f0dfae;
@@ -145,12 +168,14 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v14</div>
+<div class="page-version-badge">v15</div>
 <div class="wrap">
   <div class="note">
     <div class="note-text">
       Builds each color's strongest 5-card team from cards you've marked owned
       in the <a href="catalog.html" target="_top">Card Database</a>.
+      <br><br>
+      The <b>All</b> tab is built when you open the tab and may take a moment.
       <br><br>
       Accuracy depends on your <a href="kizuna.html" target="_top">Kizuna Bond</a> and
       <a href="song_overview.html" target="_top">Discography</a> data too -
@@ -535,6 +560,51 @@ function bestSupportsForLeader(centerCard, lsvo, lsda, lspe, pool, ctx) {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function offColorCard(c) {
+  var o = {};
+  for (var k in c) { if (Object.prototype.hasOwnProperty.call(c, k)) o[k] = c[k]; }
+  o.vo = c.vo / STATUS_BONUS;
+  o.da = c.da / STATUS_BONUS;
+  o.pe = c.pe / STATUS_BONUS;
+  return o;
+}
+
+
+
+
+function veautExtendedPool(leader, jp, basePool, poolsByColor, keep) {
+  var conf = VEAUT_CONFIRMED[leader.member];
+  if (!conf) return basePool;
+  var extra = [];
+  conf.pairColors.forEach(function(pc) {
+    if (pc === jp) return;
+    (poolsByColor[pc] || []).forEach(function(c) {
+      if (keep && !keep(c)) return;
+      extra.push(offColorCard(c));
+    });
+  });
+  return extra.length ? basePool.concat(extra) : basePool;
+}
+
+
 function isPreciousPairCard(c) { return !!(c.song && c.song.indexOf('Precious') === 0); }
 function contribSkill(c) {
   if (isPreciousPairCard(c)) return [0, 0, 0];
@@ -742,12 +812,12 @@ function effectiveSkillLabel(mech, leader, supports) {
     var vst = veautTeamStats(leader, supports);
     teamLsvo = vst.teamLsvo; teamLsda = vst.teamLsda; teamLspe = vst.teamLspe;
     openVo = vst.openVo; openDa = vst.openDa; openPe = vst.openPe;
-    activationNote = 'SK ×' + vst.activationMult.toFixed(1) + ' for ' + leader.member + "'s own cards in the party";
+    activationNote = 'SK ×' + vst.activationMult.toFixed(1) + ' for ' + leader.member;
   } else if (mech === 'steller') {
     var sst = stellerTeamStats(leader, supports);
     teamLsvo = sst.teamLsvo; teamLsda = sst.teamLsda; teamLspe = sst.teamLspe;
     openVo = sst.openVo; openDa = sst.openDa; openPe = sst.openPe;
-    activationNote = sst.skBoostMult ? ('SK ×' + sst.skBoostMult.toFixed(2) + ' for the whole party (AllMax)') : null;
+    activationNote = sst.skBoostMult ? ('SK ×' + sst.skBoostMult.toFixed(2) + ' for the whole party') : null;
   } else {
     var shape = SKILL_LOOKUP[leader.centerSkill] || [0, 0, 0];
     teamLsvo = shape[0]; teamLsda = shape[1]; teamLspe = shape[2];
@@ -893,7 +963,10 @@ function recommendCardsWorthGetting(mech, leader, actualSupports, actualTotal, f
     if (seenGroups[c.groupKey]) return;
     seenGroups[c.groupKey] = true;
     var info = classifyAcquisition(c, ownedSet);
-    out.push({id: c.id, member: c.member, song: c.song, centerSkill: shortSkillText(c.centerSkill),
+    
+    
+    
+    out.push({id: c.id, color: c.color, member: c.member, song: c.song, centerSkill: shortSkillText(c.centerSkill),
               sk: skPctText(c.sk), tag: info.tag, note: info.note || null,
               gainPct: soloGainPct(c, mech, leader, actualSupports, actualTotal, ctx)});
   });
@@ -928,8 +1001,9 @@ function recommendCardsWorthGetting(mech, leader, actualSupports, actualTotal, f
 
 var MAX_NEW_CARDS = 2;
 
-function sweepLeadersForColor(fullPool, ownedSet, baseTotal, ctx, currentLeaderKey) {
+function sweepLeadersForColor(fullPool, ownedSet, baseTotal, ctx, currentLeaderKey, jp, poolsByColor) {
   var found = [];
+  var obtainableOrOwned = function(c) { return ownedSet[c.id] || c.obtainable; };
 
   function consider(leader, supports, total) {
     if (total === null || total === undefined || total <= baseTotal) return;
@@ -942,14 +1016,14 @@ function sweepLeadersForColor(fullPool, ownedSet, baseTotal, ctx, currentLeaderK
     
     var leaderOwned = !!ownedSet[leader.id];
     found.push({
-      id: leader.id, member: leader.member, song: leader.song,
+      id: leader.id, color: leader.color, member: leader.member, song: leader.song,
       leaderOwned: leaderOwned,
       leaderTag: leaderOwned ? 'Owned' : classifyAcquisition(leader, ownedSet).tag,
       gainPct: (total - baseTotal) / baseTotal * 100,
       total: total,
       alsoNeeds: missing.filter(function(c) { return c.id !== leader.id; }).map(function(c) {
         var info = classifyAcquisition(c, ownedSet);
-        return {id: c.id, member: c.member, song: c.song, tag: info.tag};
+        return {id: c.id, color: c.color, member: c.member, song: c.song, tag: info.tag};
       })
     });
   }
@@ -957,7 +1031,12 @@ function sweepLeadersForColor(fullPool, ownedSet, baseTotal, ctx, currentLeaderK
   fullPool.forEach(function(c) {
     if (c.key === currentLeaderKey) return;
     if (c.song && c.song.indexOf('Veaut') !== -1) {
-      var v = optimizeVeautTeam(c, fullPool, ctx);
+      
+      
+      var vPool = (jp && poolsByColor)
+        ? veautExtendedPool(c, jp, fullPool, poolsByColor, obtainableOrOwned)
+        : fullPool;
+      var v = optimizeVeautTeam(c, vPool, ctx);
       consider(c, v[0], v[1]);
     } else if (c.song === 'S.teller') {
       var s = optimizeStellerTeam(c, fullPool, ctx);
@@ -1017,10 +1096,17 @@ function computeBestTeamsCore(ownedByColor, poolByColor, ownedSet, ctx) {
     });
     var normalTeam = bestNormalTeam(ownedPool, ctx);
 
+    
+    
+    var isAllKey = (color === ALL_COLOR);
+    var obtainableOrOwned = function(c) { return ownedSet[c.id] || c.obtainable; };
+
     var veautCards = ownedPool.filter(function(c) { return c.song && c.song.indexOf('Veaut') !== -1; });
     var bestVeaut = null;
     veautCards.forEach(function(vc) {
-      var r = optimizeVeautTeam(vc, ownedPool, ctx);
+      var vPool = isAllKey ? ownedPool
+                           : veautExtendedPool(vc, color, ownedPool, ownedByColor, null);
+      var r = optimizeVeautTeam(vc, vPool, ctx);
       if (r[1] !== null && (!bestVeaut || r[1] > bestVeaut.total)) {
         bestVeaut = {leader: vc, supports: r[0], total: r[1]};
       }
@@ -1043,8 +1129,13 @@ function computeBestTeamsCore(ownedByColor, poolByColor, ownedSet, ctx) {
     candidates.sort(function(a, b) { return b[1] - a[1]; });
     var winner = candidates[0][0];
     if (winner === 'veaut') {
+      
+      
+      
+      var veautRecPool = isAllKey ? fullPool
+        : veautExtendedPool(bestVeaut.leader, color, fullPool, poolByColor, obtainableOrOwned);
       var recVeaut = recommendCardsWorthGetting('veaut', bestVeaut.leader, bestVeaut.supports,
-                                                bestVeaut.total, fullPool, ownedSet, ctx);
+                                                bestVeaut.total, veautRecPool, ownedSet, ctx);
       results[color] = {mech: 'veaut', leader: bestVeaut.leader, supports: bestVeaut.supports, total: bestVeaut.total,
                           rows: buildDisplayRows('veaut', bestVeaut.leader, bestVeaut.supports),
                           effectiveLabel: effectiveSkillLabel('veaut', bestVeaut.leader, bestVeaut.supports),
@@ -1100,9 +1191,40 @@ function runBestTeams() {
 }
 
 
-var COLOR_HEX = {"R": "#e05a5a", "B": "#4a90d9", "G": "#5aa85a", "Y": "#d9b23a", "P": "#9a6bc9"};
-var COLOR_LABEL = {"R": "Red", "B": "Blue", "G": "Green", "Y": "Yellow", "P": "Purple"};
-var COLOR_ORDER = ["R", "B", "G", "Y", "P"];
+
+
+
+
+
+
+
+
+
+
+
+
+var ALL_COLOR = 'A';
+
+function computeAllTeam() {
+  if (!SWEEP_INPUTS) return null;
+  var s = SWEEP_INPUTS;
+  var ownedAll = s.pool.filter(function(c) { return s.ownedSet[c.id]; });
+  if (!ownedAll.length) return null;
+  var ownedByColor = {};
+  ownedByColor[ALL_COLOR] = ownedAll;
+  var poolByColor = {};
+  Object.keys(s.poolByColor).forEach(function(k) { poolByColor[k] = s.poolByColor[k]; });
+  poolByColor[ALL_COLOR] = s.pool;
+  return computeBestTeamsCore(ownedByColor, poolByColor, s.ownedSet, s.ctx)[ALL_COLOR];
+}
+
+
+
+
+
+var COLOR_HEX = {"R": "#e05a5a", "B": "#4a90d9", "G": "#5aa85a", "Y": "#d9b23a", "P": "#9a6bc9", "A": "#6b7086"};
+var COLOR_LABEL = {"R": "Red", "B": "Blue", "G": "Green", "Y": "Yellow", "P": "Purple", "A": "All"};
+var COLOR_ORDER = ["R", "B", "G", "Y", "P", "A"];
 var JP_TO_LETTER = {"赤": "R", "青": "B", "緑": "G", "黄": "Y", "紫": "P"};
 
 function esc(s) {
@@ -1154,7 +1276,7 @@ var WATCH_KEY = 'uniair_public_bestteams_watch_v1';
 
 
 
-var WATCH_SCHEMA = 2;
+var WATCH_SCHEMA = 3;
 
 function hashStr(s) {
   var h = 5381;
@@ -1251,8 +1373,67 @@ function droppedNotes(chg) {
   }).join('');
 }
 
+
+
+
+
+
+function colorSquare(jp, mod) {
+  var letter = JP_TO_LETTER[jp] || '?';
+  var hex = COLOR_HEX[letter] || '#999';
+  return '<span class="color-sq' + (mod ? ' ' + mod : '') + '" style="background:' + hex + '">' +
+    esc(letter) + '</span>';
+}
+
+
+
+function sameTeamRows(a, b) {
+  if (!a || !b || !a.rows || !b.rows || a.rows.length !== b.rows.length) return false;
+  var ak = a.rows.map(function(r) { return rowKey(r.member, r.song); }).sort();
+  var bk = b.rows.map(function(r) { return rowKey(r.member, r.song); }).sort();
+  for (var i = 0; i < ak.length; i++) { if (ak[i] !== bk[i]) return false; }
+  return true;
+}
+
+
+
+
+
+
+
+
+function allCompareNote(result) {
+  if (!LAST_RESULTS) return '';
+  var bestJp = null, bestTotal = null;
+  Object.keys(LAST_RESULTS).forEach(function(jp) {
+    var r = LAST_RESULTS[jp];
+    if (!r) return;
+    if (bestTotal === null || r.total > bestTotal) { bestTotal = r.total; bestJp = jp; }
+  });
+  if (bestJp === null) return '';
+  var label = COLOR_LABEL[JP_TO_LETTER[bestJp] || bestJp] || bestJp;
+  var gain = result.total - bestTotal;
+  var body;
+  if (gain > 0) {
+    var pct = bestTotal ? (gain / bestTotal) * 100 : 0;
+    
+    
+    var pctText = pct < 0.05 ? '&lt;0.1%' : pct.toFixed(1) + '%';
+    body = '<span class="all-gain">' + pctText + '</span> stronger than your strongest team (' +
+           esc(label) + ')';
+  } else if (sameTeamRows(result, LAST_RESULTS[bestJp])) {
+    body = 'Same as your ' + esc(label) + ' team';
+  } else {
+    
+    
+    body = 'Matches your ' + esc(label) + ' team';
+  }
+  return '<span class="label">Note:</span>' + body;
+}
+
 function renderPanel(color, result, chg) {
   var inner = document.getElementById('panel-inner-' + color);
+  var isAll = (color === ALL_COLOR);
   if (!result) {
     inner.parentElement.outerHTML = '<div class="empty-state" id="panel-' + color + '">' +
       'No owned cards in ' + COLOR_LABEL[color] + ' yet. Mark some as owned on the ' +
@@ -1270,6 +1451,7 @@ function renderPanel(color, result, chg) {
       else if (chg.leadMoved && r.isLeader) rowCls += ' row-lead';
     }
     return '<tr class="' + rowCls + '">' +
+      '<td class="color-cell">' + colorSquare(r.color) + '</td>' +
       '<td title="' + esc(r.member) + '">' + esc(r.member) + '</td>' +
       '<td title="' + esc(r.song) + '">' + esc(r.song) + '</td>' +
       '<td title="' + esc(r.centerSkill || '') + '">' + esc(r.centerSkill || '') + '</td>' +
@@ -1299,6 +1481,7 @@ function renderPanel(color, result, chg) {
       return '<tr class="' + ((chg && chg.recIn[rec.id]) ? 'row-in' : '') + '">' +
         '<td class="gain-cell">' + soloGainHtml(rec.gainPct) + '</td>' +
         '<td class="acq-cell"><span class="acq-tag ' + (tagClass[rec.tag] || 'pull') + '">' + esc(rec.tag) + '</span></td>' +
+        '<td class="color-cell">' + colorSquare(rec.color) + '</td>' +
         '<td class="name" title="' + label + '">' + label + '</td>' +
         '<td class="skill" title="' + skill + '">' + skill + '</td>' +
         '<td class="ev">' + esc(rec.sk) + '</td></tr>';
@@ -1309,16 +1492,23 @@ function renderPanel(color, result, chg) {
   
   inner.innerHTML =
     '<div class="header-info">' +
-      '<div class="header-info-row"><span class="label">Effective Leader Skill:</span>' + esc(result.effectiveLabel) + '</div>' +
+      '<div class="header-info-row header-info-split">' +
+        '<span><span class="label">Effective Leader Skill:</span>' + esc(result.effectiveLabel) + '</span>' +
+        (isAll ? '<span class="hi-note">' + allCompareNote(result) + '</span>' : '') +
+      '</div>' +
     '</div>' +
     '<table class="team-table">' +
-      '<colgroup><col style="width:20%"><col style="width:34%"><col style="width:26%"><col style="width:20%"></colgroup>' +
+      '<colgroup><col style="width:10%"><col style="width:18%"><col style="width:30%"><col style="width:24%"><col style="width:18%"></colgroup>' +
       '<thead><tr>' +
+      '<th class="color-cell">Color</th>' +
       '<th>Member</th><th>Card / Song</th><th>Leader Skill</th><th>Score Skill</th>' +
       '</tr></thead><tbody>' + rowsHtml + '</tbody></table>' +
     (chg ? droppedNotes(chg) : '') +
     worthGettingHtml +
-    watchHtml(color, result);
+    
+    
+    
+    (color === ALL_COLOR ? '' : watchHtml(color, result));
 }
 
 
@@ -1349,7 +1539,7 @@ function watchHtml(color, result) {
     body = '<table class="watch-table"><tbody>' + rows.map(function(r) {
       var label = esc(r.member) + ' — ' + esc(r.song);
       var leadTag = '<span class="acq-tag sm ' + (tagClass[r.leaderTag] || 'pull') + '">' +
-        esc(r.leaderTag) + '</span>';
+        esc(r.leaderTag) + '</span>' + colorSquare(r.color, 'sm');
       var also;
       if (!r.alsoNeeds.length) {
         also = '<div class="also-note">' + (r.leaderOwned
@@ -1362,6 +1552,7 @@ function watchHtml(color, result) {
           var nl = esc(n.member) + ' — ' + esc(n.song);
           return '<div class="also"><span class="plus">+</span>' +
             '<span class="acq-tag sm ' + (tagClass[n.tag] || 'pull') + '">' + esc(n.tag) + '</span>' +
+            colorSquare(n.color, 'sm') +
             '<span class="nm" title="' + nl + '">' + nl + '</span></div>';
         }).join('');
       }
@@ -1439,7 +1630,8 @@ function startSweep() {
         var res = LAST_RESULTS[jp];
         var curLeader = res.mech === 'normal' ? res.center[1] : res.leader;
         byColor[letter] = sweepLeadersForColor(fullPool, inputs.ownedSet,
-                                               res.total, inputs.ctx, curLeader.key);
+                                               res.total, inputs.ctx, curLeader.key,
+                                               jp, inputs.poolByColor);
       } catch (e) {
         byColor[letter] = [];
       }
@@ -1466,6 +1658,83 @@ function rerenderPanels() {
       renderPanel(letter, LAST_RESULTS[jp], LAST_CHANGES ? LAST_CHANGES[letter] : null);
     }
   });
+}
+
+
+
+
+var ALL_RESULT = null;
+var ALL_DONE = false;
+var ALL_BUSY = false;
+
+
+
+var RUN_GEN = 0;
+
+function allPanelMessage(html) {
+  var inner = document.getElementById('panel-inner-' + ALL_COLOR);
+  if (inner) inner.innerHTML = '<div class="all-state">' + html + '</div>';
+}
+
+function renderAllPlaceholder() {
+  allPanelMessage('Open this tab to build the ALL-type team.');
+}
+
+function renderAllTeam() {
+  if (!ALL_RESULT) {
+    allPanelMessage('No owned cards yet. Mark some on the ' +
+      '<a href="catalog.html" target="_top">Card Database</a> to see a team here.');
+    return;
+  }
+  
+  
+  
+  var snapInput = {};
+  snapInput[ALL_COLOR] = ALL_RESULT;
+  var entry = snapshotOf(snapInput)[ALL_COLOR];
+  var stored = loadSnapshot() || {};
+  var chg = diffColor(entry, stored[ALL_COLOR]);
+  stored[ALL_COLOR] = entry;
+  saveSnapshot(stored);
+  renderPanel(ALL_COLOR, ALL_RESULT, chg);
+}
+
+
+
+
+
+
+
+function notWorseThanMono(res) {
+  if (!res || !LAST_RESULTS) return res;
+  var best = null;
+  Object.keys(LAST_RESULTS).forEach(function(jp) {
+    var r = LAST_RESULTS[jp];
+    if (r && (!best || r.total > best.total)) best = r;
+  });
+  return (best && best.total > res.total) ? best : res;
+}
+
+function ensureAllTeam() {
+  if (ALL_DONE || ALL_BUSY || !SWEEP_INPUTS) return;
+  ALL_BUSY = true;
+  var gen = RUN_GEN;
+  allPanelMessage('Working out your ALL-type team&hellip;');
+  
+  
+  setTimeout(function() {
+    var res = null, err = null;
+    try { res = computeAllTeam(); } catch (e) { err = e; }
+    if (gen !== RUN_GEN) return;
+    ALL_BUSY = false;
+    if (err) {
+      allPanelMessage('Something went wrong building the ALL team: ' + esc(err.message));
+      return;
+    }
+    ALL_RESULT = notWorseThanMono(res);
+    ALL_DONE = true;
+    renderAllTeam();
+  }, 0);
 }
 
 
@@ -1523,6 +1792,13 @@ function init() {
   var tabBar = document.getElementById('color-tab-bar');
   var panelsEl = document.getElementById('panels');
 
+  
+  
+  RUN_GEN++;
+  ALL_RESULT = null;
+  ALL_DONE = false;
+  ALL_BUSY = false;
+
   var results;
   try {
     results = runBestTeams();
@@ -1534,7 +1810,12 @@ function init() {
   LAST_RESULTS = results;
 
   var snap = snapshotOf(results);
-  var changes = diffAll(snap, loadSnapshot());
+  var prevSnap = loadSnapshot();
+  var changes = diffAll(snap, prevSnap);
+  
+  
+  
+  if (prevSnap && prevSnap[ALL_COLOR]) snap[ALL_COLOR] = prevSnap[ALL_COLOR];
   saveSnapshot(snap);
   var chgByLetter = {};
   Object.keys(changes).forEach(function(jp) {
@@ -1587,6 +1868,7 @@ function init() {
     panel.innerHTML = '<div class="panel-inner" id="panel-inner-' + color + '"></div>';
     panelsEl.appendChild(panel);
 
+    if (color === ALL_COLOR) { renderAllPlaceholder(); return; }
     renderPanel(color, byLetter[color], chgByLetter[color]);
   });
 
@@ -1595,12 +1877,16 @@ function init() {
   loadingEl.style.display = 'none';
   tabBar.style.display = 'flex';
   reportNewCards();
+  
+  
+  if (activeColor === ALL_COLOR) ensureAllTeam();
 }
 
 setActiveColor = (function(original) {
   return function(color) {
     lastActiveColor = color;
     original(color);
+    if (color === ALL_COLOR) ensureAllTeam();
   };
 })(setActiveColor);
 
