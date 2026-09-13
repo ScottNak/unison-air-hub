@@ -283,9 +283,10 @@
 
   
   .group-half h3 {
-    background: var(--tc, #6a4fc9); color: #fff; margin: 0 0 10px;
-    padding: 9px 14px; border-radius: 8px; text-align: center;
-    font-size: 12px; text-transform: uppercase; letter-spacing: .04em;
+    background: var(--tc, #6a4fc9); color: #23233a; margin: 0 0 10px;
+    padding: 9px 14px; border-radius: 8px;
+    display: flex; align-items: baseline; justify-content: center; gap: 10px;
+    font-size: 18px; font-weight: 800; letter-spacing: normal;
   }
 
   
@@ -338,6 +339,29 @@
   }
   .grid-group-btn:hover { background: rgba(45,45,66,0.12); }
   .grid-group-btn.active { background: var(--tc, #6a4fc9); color: #23233a; }
+
+  
+  .grid-group-btn {
+    display: flex; align-items: baseline; justify-content: center; gap: 10px;
+  }
+  .group-total {
+    font-size: 14px; font-weight: 700; letter-spacing: .02em;
+    font-variant-numeric: tabular-nums; opacity: .72;
+  }
+  .grid-group-total-tab {
+    flex: 0 1 auto; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 0;
+    text-align: center; font-weight: 800; padding: 12px 22px;
+    border-radius: 12px 12px 0 0; background: rgba(45,45,66,0.06); color: #2d2d42;
+    cursor: default; user-select: none;
+  }
+  .grid-group-total-tab .group-total { font-size: 19px; font-weight: 800; opacity: 1; }
+
+  
+  .toolbar-group { display: flex; align-items: center; gap: 8px; flex: 1 1 0; min-width: 0; justify-content: flex-end; }
+  .toolbar .show-switch-wrap { flex: 1 1 0; min-width: 0; justify-content: flex-start; }
+  .tiles-total { flex: 0 0 auto; text-align: center; }
+  .tiles-total .group-total { font-size: 19px; font-weight: 800; opacity: 1; color: #2d2d42; }
   .grid-scroll { border-radius: 0 0 10px 10px; border-top: 1px solid #ececf4; }
 
   
@@ -393,7 +417,7 @@
 </style>
 </head>
 <body>
-  <div class="page-version-badge">v7</div>
+  <div class="page-version-badge">v8</div>
   <div class="wrap">
     
     <div class="section-card">
@@ -414,8 +438,6 @@
 
       <div class="view-panel active" data-view-panel="tiles">
         <div class="toolbar">
-          <button class="secondary" id="disco-expand-all">Expand all</button>
-          <button class="secondary" id="disco-collapse-all">Collapse all</button>
           <div class="show-switch-wrap">
             <span class="show-switch-label">Show</span>
             <div class="show-switch" role="group" aria-label="Show mode">
@@ -423,10 +445,21 @@
               <button type="button" class="show-switch-btn" id="disco-show-incomplete">Incomplete</button>
             </div>
           </div>
+          <div class="tiles-total" title="合計 / Total">
+            <span class="group-total" data-group-total="ALL">0</span>
+          </div>
+          <div class="toolbar-group">
+            <button class="secondary" id="disco-expand-all">Expand all</button>
+            <button class="secondary" id="disco-collapse-all">Collapse all</button>
+          </div>
         </div>
         <div class="group-halves">
+          
           <div class="group-half" data-group="HINATA" style="--tc:#7CC7E8">
-            <h3><span data-label-jp="日向坂" data-label-en="Hinatazaka">日向坂</span></h3>
+            <h3>
+              <span data-label-jp="日向坂" data-label-en="Hinatazaka">日向坂</span>
+              <span class="group-total" data-group-total="HINATA">0</span>
+            </h3>
             <div class="song-grid">
         <details class="song-tile">
           <summary class="song-tile-head">
@@ -6269,8 +6302,12 @@
           </div></div>
         </details></div>
           </div>
+          
           <div class="group-half" data-group="SAKURA" style="--tc:#F19DB5">
-            <h3><span data-label-jp="櫻坂" data-label-en="Sakurazaka">櫻坂</span></h3>
+            <h3>
+              <span data-label-jp="櫻坂" data-label-en="Sakurazaka">櫻坂</span>
+              <span class="group-total" data-group-total="SAKURA">0</span>
+            </h3>
             <div class="song-grid">
         <details class="song-tile">
           <summary class="song-tile-head">
@@ -12368,11 +12405,18 @@
       <div class="view-panel" data-view-panel="grid">
         
       <div class="grid-group-tabs">
+        
         <button class="grid-group-btn active" data-grid-group-btn="HINATA" style="--tc:#7CC7E8">
           <span data-label-jp="日向坂" data-label-en="Hinatazaka">日向坂</span>
+          <span class="group-total" data-group-total="HINATA">0</span>
         </button>
+        <div class="grid-group-total-tab" title="合計 / Total">
+          <span class="group-total" data-group-total="ALL">0</span>
+        </div>
+        
         <button class="grid-group-btn" data-grid-group-btn="SAKURA" style="--tc:#F19DB5">
           <span data-label-jp="櫻坂" data-label-en="Sakurazaka">櫻坂</span>
+          <span class="group-total" data-group-total="SAKURA">0</span>
         </button>
       </div>
       
@@ -12435,6 +12479,9 @@ function uniairGroupFirst() { return uniairGroupOrder()[0]; }
   if (tabs) {
     var leadBtn = tabs.querySelector('.grid-group-btn[data-grid-group-btn="' + first + '"]');
     if (leadBtn) tabs.insertBefore(leadBtn, tabs.firstElementChild);
+    var totalTab = tabs.querySelector('.grid-group-total-tab');
+    var headBtn = tabs.querySelector('.grid-group-btn');
+    if (totalTab && headBtn) tabs.insertBefore(totalTab, headBtn.nextElementSibling);
   }
   document.querySelectorAll('.grid-group-btn').forEach(function (btn) {
     btn.classList.toggle('active', btn.dataset.gridGroupBtn === first);
@@ -12860,6 +12907,55 @@ function uniairGroupFirst() { return uniairGroupOrder()[0]; }
       }
       e.source.postMessage({ type: 'uniair-import-ack', id: msg.id, page: 'song_overview', changed: changed }, '*');
     }
+  });
+})();
+</script>
+<script>
+(function() {
+  var outputs = {};
+  document.querySelectorAll('.group-total').forEach(function(el) {
+    var key = el.dataset.groupTotal;
+    (outputs[key] = outputs[key] || []).push(el);
+  });
+
+  function write(key, value) {
+    (outputs[key] || []).forEach(function(el) {
+      el.textContent = value.toLocaleString('en-US');
+    });
+  }
+
+  function sumGroup(group) {
+    var total = 0;
+    document.querySelectorAll(
+      '.grid-scroll[data-grid-group="' + group + '"] td.grid-cell[data-level]'
+    ).forEach(function(td) {
+      total += parseInt(td.dataset.level, 10) || 0;
+    });
+    return total;
+  }
+
+  function refresh() {
+    var all = 0;
+    ['HINATA', 'SAKURA'].forEach(function(group) {
+      var sum = sumGroup(group);
+      all += sum;
+      write(group, sum);
+    });
+    write('ALL', all);
+  }
+
+  refresh();
+
+  var queued = false;
+  function schedule() {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(function() { queued = false; refresh(); });
+  }
+
+  var observer = new MutationObserver(schedule);
+  document.querySelectorAll('table.disco-grid-flip').forEach(function(table) {
+    observer.observe(table, { subtree: true, attributes: true, attributeFilter: ['data-level'] });
   });
 })();
 </script>
