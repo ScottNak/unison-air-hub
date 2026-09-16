@@ -12,15 +12,23 @@
     margin: 0; padding: 8px 16px 40px; color: #222;
   }
   .wrap { max-width: 880px; margin: 0 auto; }
-  .starlight-box {
-    background: rgba(255,255,255,0.92); border-radius: 12px; padding: 14px 20px;
-    margin-bottom: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  .bonus-bar {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+    background: rgba(255,255,255,0.92); border-radius: 12px; padding: 9px 14px;
+    margin-bottom: 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.25);
   }
-  .starlight-box h2 { font-size: 14px; margin: 0 0 6px; color: #6a4fc9; }
-  .starlight-box ul { margin: 0; padding-left: 20px; font-size: 13px; }
-  .starlight-box .none { color: #999; font-style: italic; list-style: none; margin-left: -20px; }
+  .bonus-bar-label {
+    font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em;
+    color: #6a4fc9; flex: 0 0 auto; line-height: 1.25; text-align: left;
+  }
+  .bonus-bar-chips { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; flex: 1 1 auto; min-width: 0; }
+  .bchip {
+    display: inline-flex; align-items: center; background: #eceef4; color: #2d2d42;
+    font-size: 13px; font-weight: 600; padding: 4px 11px; border-radius: 999px;
+  }
+  .bonus-none { font-size: 12px; color: #999; font-style: italic; }
   .team-card {
-    background: rgba(255,255,255,0.92); border-radius: 14px; overflow: hidden;
+    background: rgba(255,255,255,0.92); border-radius: 0 0 14px 14px; overflow: hidden;
     box-shadow: 0 8px 28px rgba(0,0,0,0.35); padding: 20px 24px 26px; margin-bottom: 20px;
     animation: fade .2s ease;
   }
@@ -84,7 +92,7 @@
   }
   .acq-tag.pull { background: #3a5bc7; }
   .acq-tag.upgrade { background: #1c7a2e; }
-  .acq-tag.pull-upgrade { background: #a05fc9; }
+  .acq-tag.pull-upgrade { background: linear-gradient(90deg, #3a5bc7 0%, #2f6f7a 50%, #1c7a2e 100%); }
   .chips { white-space: nowrap; }
   .mchip {
     display: inline-flex; align-items: center; justify-content: center;
@@ -104,7 +112,7 @@
   .member-tabs { background: transparent; box-shadow: none; margin-bottom: 0; }
   .member-tab-input { display: none; }
   
-  .member-tab-bar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .member-tab-bar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: -1px; }
   .member-tab-label {
     flex: 1 1 0; text-align: center; cursor: pointer; user-select: none;
     padding: 12px 14px; border-radius: 12px 12px 0 0;
@@ -119,12 +127,12 @@
   .member-panel { display: none; }
   .member-panel.member-panel-first-visible { display: block; }
 
-  .top-bar { display: flex; justify-content: center; gap: 10px; margin: 0 0 14px; flex-wrap: wrap; }
   .settings-btn {
-    appearance: none; border: none; cursor: pointer; font-weight: 700; font-size: 12.5px;
-    padding: 9px 16px; border-radius: 999px; background: rgba(255,255,255,0.85); color: #2d2d42;
+    appearance: none; cursor: pointer; font-weight: 700; font-size: 12px;
+    border: none; padding: 6px 14px; border-radius: 999px;
+    background: #4f4f5a; color: #fff; flex: 0 0 auto; margin-left: auto;
   }
-  .settings-btn:hover { background: #fff; }
+  .settings-btn:hover { background: #64646f; }
   .settings-panel {
     background: rgba(255,255,255,0.96); border-radius: 14px; padding: 16px 20px; margin-bottom: 18px;
     box-shadow: 0 8px 28px rgba(0,0,0,0.3); display: flex; flex-wrap: wrap; gap: 24px;
@@ -173,10 +181,12 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v15</div>
+<div class="page-version-badge">v16</div>
 <div class="wrap">
-  <div class="top-bar">
-    <button class="settings-btn" id="settings-btn" type="button">⚙ Members &amp; Bonus List</button>
+  <div class="bonus-bar">
+    <span class="bonus-bar-label">Spotlight<br>bonus songs</span>
+    <span class="bonus-bar-chips" id="bonus-bar-chips"></span>
+    <button class="settings-btn" id="settings-btn" type="button">⚙ Edit</button>
   </div>
   <div class="settings-panel" id="settings-panel" style="display:none;">
     <div class="settings-col">
@@ -184,8 +194,8 @@
       <div id="member-checklist" class="member-checklist"></div>
     </div>
     <div class="settings-col">
-      <h3>Starlight bonus cards (this rotation)</h3>
-      <p class="settings-hint">Birthday cards are always active automatically for each member &mdash; no need to add them here.</p>
+      <h3>Spotlight bonus songs (this rotation)</h3>
+      <p class="settings-hint">Birthday cards are always active and are automatically added for you</p>
       <input type="text" id="bonus-search" placeholder="Search a card title to add…" autocomplete="off">
       <div id="bonus-suggestions" class="bonus-suggestions"></div>
       <div id="bonus-chips" class="bonus-chips"></div>
@@ -965,14 +975,21 @@ function computeGroupSuggestions(memberCardsAll, kind, centerCard, supports, son
 }
 
 var WARN_TIER_TITLES = {
-  demoted: ' — loses the center role once the current Starlight bonus ends',
-  dropped: ' — falls off this team entirely once the current Starlight bonus ends'
+  demoted: ' — loses the center role once the current Spotlight bonus ends',
+  dropped: ' — falls off this team entirely once the current Spotlight bonus ends'
 };
 
 
 
 
 var ACQ_TAG_CLASS = {'Pull': 'pull', 'Upgrade': 'upgrade', 'Pull + Upgrade': 'pull-upgrade'};
+
+
+
+function acqPill(tag) {
+  if (tag === 'Pull + Upgrade') return '<span class="acq-tag pull-upgrade">Pull+Upgrade</span>';
+  return '<span class="acq-tag ' + (ACQ_TAG_CLASS[tag] || 'pull') + '">' + esc(tag) + '</span>';
+}
 function classifyAcquisition(card, ownedIdSet) {
   if (!card.baseId) return {tag: 'Pull'};
   if (ownedIdSet[card.baseId]) return {tag: 'Upgrade'};
@@ -1093,12 +1110,12 @@ function buildMemberContentHtml(memberCardsAll, starlightSongs, results, ctx, pr
     if (tiers.demoted.size) {
       var names = Array.from(tiers.demoted).sort(function(a, b) { return SONG_COLORS.indexOf(a) - SONG_COLORS.indexOf(b); })
         .map(function(c) { return esc(COLOR_NAMES[c]); }).join(', ');
-      star += ' <span class="warn-icon" title="Loses the center role to another card once the current Starlight bonus ends, for: ' + names + '">↘️</span>';
+      star += ' <span class="warn-icon" title="Loses the center role to another card once the current Spotlight bonus ends, for: ' + names + '">↘️</span>';
     }
     if (tiers.dropped.size) {
       var names2 = Array.from(tiers.dropped).sort(function(a, b) { return SONG_COLORS.indexOf(a) - SONG_COLORS.indexOf(b); })
         .map(function(c) { return esc(COLOR_NAMES[c]); }).join(', ');
-      star += ' <span class="warn-icon" title="Falls off this team entirely once the current Starlight bonus ends, for: ' + names2 + '">⚠️</span>';
+      star += ' <span class="warn-icon" title="Falls off this team entirely once the current Spotlight bonus ends, for: ' + names2 + '">⚠️</span>';
     }
     var everCenter = appearances.some(function(p) { return p[1]; });
     var rowClass = everCenter ? 'center-row' : '';
@@ -1186,7 +1203,7 @@ function buildMemberContentHtml(memberCardsAll, starlightSongs, results, ctx, pr
       var cls = 'mchip';
       var title = esc(COLOR_NAMES[sc]);
       title += ' — ' + gainLabel(rec[3]).replace('&lt;', '<');
-      if (tier === 'oneoff') { cls += ' mchip-dropped'; title += ' — not an improvement once the current Starlight bonus ends'; }
+      if (tier === 'oneoff') { cls += ' mchip-dropped'; title += ' — not an improvement once the current Spotlight bonus ends'; }
       var bg = sc === 'ALL' ? RAINBOW_GRADIENT : COLOR_HEX_SL[sc];
       var ltr = COLOR_LETTERS[sc];
       return '<span class="' + cls + '" style="background:' + bg + '" title="' + title + '">' + ltr + '</span>';
@@ -1196,7 +1213,7 @@ function buildMemberContentHtml(memberCardsAll, starlightSongs, results, ctx, pr
     SUGGESTED.push({id: card.id, tag: acq.tag});
     return '<tr class="' + ((chg && chg.sugIn[card.id]) ? 'row-in' : '') + '">' +
       '<td class="gain-cell"><span class="gain">' + gainLabel(bestPct(entry)) + '</span></td>' +
-      '<td class="acq-cell"><span class="acq-tag ' + (ACQ_TAG_CLASS[acq.tag] || 'pull') + '">' + esc(acq.tag) + '</span></td>' +
+      '<td class="acq-cell">' + acqPill(acq.tag) + '</td>' +
       '<td class="color-cell"><span class="color-sq" style="background:' + (COLOR_HEX_SL[card.color] || '#999') + '">' + letter + '</span></td>' +
       '<td class="song">' + esc(card.song) + '</td>' +
       '<td class="skill">' + esc(shortSkillText(card.centerSkill) || '') + '</td>' +
@@ -1216,13 +1233,7 @@ function buildMemberContentHtml(memberCardsAll, starlightSongs, results, ctx, pr
     emptyHtml = '<div class="empty">No eligible team could be built for: ' + names + '.</div>';
   }
 
-  var starlightArr = Array.from(starlightSongs).sort();
-  var starlightListHtml = starlightArr.length
-    ? starlightArr.map(function(s) { return '<li>' + esc(s) + '</li>'; }).join('')
-    : '<li class="none">(none this run)</li>';
-
-  return '<div class="starlight-box"><h2><span class="badge star">★</span>Starlight-bonus cards this run (+50% Vo/Da/Pe)</h2><ul>' + starlightListHtml + '</ul></div>' +
-    '<div class="team-card"><div class="badge-row">' + summaryBadges + '</div>' +
+  return '<div class="team-card"><div class="badge-row">' + summaryBadges + '</div>' +
     '<table class="team-table"><thead><tr><th>Color</th><th>Card / Song</th><th>Leader Skill</th><th>Score Skill</th><th>Plays in</th></tr></thead>' +
     '<tbody>' + rosterHtml + '</tbody></table>' + droppedNote(chg) + suggestionsHtml + '</div>' + emptyHtml;
 }
@@ -1285,6 +1296,37 @@ var lastActiveMember = null;
 var SUGGESTED = [];
 var NEW_CARD_IDS = null;
 
+
+
+
+
+var BONUS_BY_MEMBER = {};
+
+function birthdayOrdinal(title) {
+  var m = /^HAPPY\s+(.+?)\s+BIRTHDAY$/i.exec(title || '');
+  return m ? m[1] : null;
+}
+
+
+
+
+
+function renderBonusBar(member) {
+  var el = document.getElementById('bonus-bar-chips');
+  if (!el) return;
+  var songs = (member && BONUS_BY_MEMBER[member]) ? Array.from(BONUS_BY_MEMBER[member]) : loadBonusList().slice();
+  var bdays = [], others = [];
+  songs.forEach(function(s) {
+    var o = birthdayOrdinal(s);
+    if (o) bdays.push(o); else others.push(s);
+  });
+  others.sort();
+  bdays.sort(function(a, b) { return parseInt(a, 10) - parseInt(b, 10); });
+  var html = others.map(function(s) { return '<span class="bchip">' + esc(s) + '</span>'; }).join('');
+  if (bdays.length) html += '<span class="bchip">HAPPY ' + esc(bdays.join('/')) + ' BIRTHDAY</span>';
+  el.innerHTML = html || '<span class="bonus-none">(none this run)</span>';
+}
+
 function reportNewCards() {
   if (!NEW_CARD_IDS) return;
   var want = {};
@@ -1317,17 +1359,21 @@ function renderAll() {
     loadingEl.style.display = '';
     tabsWrap.style.display = 'none';
     panelsEl.innerHTML = '';
+    renderBonusBar(null);
     return;
   }
 
   var members = Object.keys(data.byMember);
+  BONUS_BY_MEMBER = {};
+  members.forEach(function(m) { BONUS_BY_MEMBER[m] = data.byMember[m].starlightSongs; });
   tabBar.innerHTML = '';
   panelsEl.innerHTML = '';
 
   if (!members.length) {
-    loadingEl.textContent = 'No members selected — use ⚙ Members & Bonus List above to pick who to show.';
+    loadingEl.textContent = 'No members selected — use ⚙ Edit above to pick who to show.';
     loadingEl.style.display = '';
     tabsWrap.style.display = 'none';
+    renderBonusBar(null);
     reportNewCards();
     return;
   }
@@ -1335,6 +1381,7 @@ function renderAll() {
   var activeIdx = members.indexOf(lastActiveMember);
   if (activeIdx < 0) activeIdx = 0;
   lastActiveMember = members[activeIdx];
+  renderBonusBar(lastActiveMember);
   var prevSnap = loadSnapshot();
   var nextSnap = {};
 
@@ -1348,7 +1395,7 @@ function renderAll() {
     var groupColor = GROUP_TAB_COLORS[memberGroup(member)];
     if (groupColor) label.style.setProperty('--tc', groupColor);
     tabBar.appendChild(input); tabBar.appendChild(label);
-    input.addEventListener('change', function() { lastActiveMember = member; clearDot(label); syncPanels(); });
+    input.addEventListener('change', function() { lastActiveMember = member; clearDot(label); renderBonusBar(member); syncPanels(); });
 
     var panel = document.createElement('div');
     panel.className = 'member-panel' + (isActive ? ' member-panel-first-visible' : '');
@@ -1546,6 +1593,7 @@ window.addEventListener('message', function(e) {
 
 function init() {
   initSettingsPanel();
+  renderBonusBar(null);
   setTimeout(renderAll, 0);
 }
 init();
