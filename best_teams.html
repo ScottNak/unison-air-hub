@@ -182,7 +182,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v16</div>
+<div class="page-version-badge">v18</div>
 <div class="wrap">
   <div class="note">
     <div class="note-text">
@@ -620,9 +620,13 @@ function veautExtendedPool(leader, jp, basePool, poolsByColor, keep) {
 
 
 function isPreciousPairCard(c) { return !!(c.song && c.song.indexOf('Precious') === 0); }
+var CONTRIB_ZERO = [0, 0, 0];
 function contribSkill(c) {
-  if (isPreciousPairCard(c)) return [0, 0, 0];
-  return SKILL_LOOKUP[c.centerSkill] || [0, 0, 0];
+  var v = c._contrib;
+  if (v !== undefined) return v;
+  v = isPreciousPairCard(c) ? CONTRIB_ZERO : (SKILL_LOOKUP[c.centerSkill] || CONTRIB_ZERO);
+  c._contrib = v;
+  return v;
 }
 
 function veautTeamStats(leader, chosenSupports) {
@@ -642,9 +646,14 @@ function veautTeamStats(leader, chosenSupports) {
     contributors = party;
     zeroClosedStats = false;
   }
-  var sumVo = openVo ? contributors.reduce(function(s, c) { return s + contribSkill(c)[0]; }, 0) : 0;
-  var sumDa = openDa ? contributors.reduce(function(s, c) { return s + contribSkill(c)[1]; }, 0) : 0;
-  var sumPe = openPe ? contributors.reduce(function(s, c) { return s + contribSkill(c)[2]; }, 0) : 0;
+  var sumVo = 0, sumDa = 0, sumPe = 0;
+  for (var ci = 0; ci < contributors.length; ci++) {
+    var cs = contribSkill(contributors[ci]);
+    sumVo += cs[0]; sumDa += cs[1]; sumPe += cs[2];
+  }
+  if (!openVo) sumVo = 0;
+  if (!openDa) sumDa = 0;
+  if (!openPe) sumPe = 0;
   return {teamLsvo: mult * sumVo, teamLsda: mult * sumDa, teamLspe: mult * sumPe,
            activationMult: activationMult, zeroClosedStats: zeroClosedStats,
            openVo: openVo, openDa: openDa, openPe: openPe};
@@ -699,9 +708,14 @@ function stellerTeamStats(leader, chosenSupports) {
     var nstats = shape.filter(function(x) { return x; }).length;
     var mult = SHAPE_MULT[nstats] || 0.7;
     var openVo = shape[0] !== 0, openDa = shape[1] !== 0, openPe = shape[2] !== 0;
-    var sumVo = openVo ? party.reduce(function(s, c) { return s + contribSkill(c)[0]; }, 0) : 0;
-    var sumDa = openDa ? party.reduce(function(s, c) { return s + contribSkill(c)[1]; }, 0) : 0;
-    var sumPe = openPe ? party.reduce(function(s, c) { return s + contribSkill(c)[2]; }, 0) : 0;
+    var sumVo = 0, sumDa = 0, sumPe = 0;
+    for (var pi = 0; pi < party.length; pi++) {
+      var pcs = contribSkill(party[pi]);
+      sumVo += pcs[0]; sumDa += pcs[1]; sumPe += pcs[2];
+    }
+    if (!openVo) sumVo = 0;
+    if (!openDa) sumDa = 0;
+    if (!openPe) sumPe = 0;
     return {teamLsvo: mult * sumVo, teamLsda: mult * sumDa, teamLspe: mult * sumPe, skBoostMult: null,
              zeroClosedStats: false, openVo: openVo, openDa: openDa, openPe: openPe};
   }
@@ -1208,7 +1222,26 @@ function runBestTeams() {
   
   
   SWEEP_INPUTS = {poolByColor: poolByColor, ownedSet: ownedSet, ctx: ctx, pool: pool};
-  return computeBestTeamsCore(ownedByColor, poolByColor, ownedSet, ctx);
+
+  
+  
+  
+  
+  RESULTS_FP = inputsFingerprint(ownedSet, kizunaOverrides, discoOverrides, pool);
+  
+  
+  
+  
+  
+  var forced = FORCE_RECOMPUTE;
+  FORCE_RECOMPUTE = false;
+  var record = forced ? null : loadResultsRecord(RESULTS_FP);
+  CACHED_ALL = record ? (record.all || null) : null;
+  if (record && record.results) return record.results;
+
+  var fresh = computeBestTeamsCore(ownedByColor, poolByColor, ownedSet, ctx);
+  saveResultsRecord(fresh, null);
+  return fresh;
 }
 
 
@@ -1298,6 +1331,40 @@ var WATCH_KEY = 'uniair_public_bestteams_watch_v1';
 
 
 var WATCH_SCHEMA = 4;
+
+var RESULTS_KEY = 'uniair_public_bestteams_results_v1';
+
+
+
+
+
+
+
+
+var RESULTS_SCHEMA = 'v18';
+var RESULTS_FP = null;
+var CACHED_ALL = null;
+
+var FORCE_RECOMPUTE = false;
+
+function loadResultsRecord(fingerprint) {
+  var stored;
+  try { stored = JSON.parse(localStorage.getItem(RESULTS_KEY)); }
+  catch (e) { return null; }
+  if (!stored || stored.sv !== RESULTS_SCHEMA || stored.fp !== fingerprint) {
+    if (stored) { try { localStorage.removeItem(RESULTS_KEY); } catch (e2) { } }
+    return null;
+  }
+  return stored;
+}
+
+function saveResultsRecord(results, all) {
+  if (!RESULTS_FP || !results) return;
+  try {
+    localStorage.setItem(RESULTS_KEY, JSON.stringify(
+      {sv: RESULTS_SCHEMA, fp: RESULTS_FP, results: results, all: all || null}));
+  } catch (e) { }
+}
 
 function hashStr(s) {
   var h = 5381;
@@ -1745,6 +1812,14 @@ function notWorseThanMono(res) {
 
 function ensureAllTeam() {
   if (ALL_DONE || ALL_BUSY || !SWEEP_INPUTS) return;
+  
+  
+  if (CACHED_ALL) {
+    ALL_RESULT = CACHED_ALL;
+    ALL_DONE = true;
+    renderAllTeam();
+    return;
+  }
   ALL_BUSY = true;
   var gen = RUN_GEN;
   allPanelMessage('Working out your ALL-type team&hellip;');
@@ -1761,6 +1836,8 @@ function ensureAllTeam() {
     }
     ALL_RESULT = notWorseThanMono(res);
     ALL_DONE = true;
+    CACHED_ALL = ALL_RESULT;
+    saveResultsRecord(LAST_RESULTS, ALL_RESULT);
     renderAllTeam();
   }, 0);
 }
@@ -1854,10 +1931,9 @@ function init() {
   
   
   
-  WATCH = SWEEP_INPUTS
-    ? loadWatch(inputsFingerprint(SWEEP_INPUTS.ownedSet, loadKizunaOverrides(),
-                                  loadDiscoOverrides(), SWEEP_INPUTS.pool))
-    : null;
+  
+  
+  WATCH = (SWEEP_INPUTS && RESULTS_FP) ? loadWatch(RESULTS_FP) : null;
 
   
   
@@ -1931,6 +2007,10 @@ window.addEventListener('message', function(e) {
   loadingEl.textContent = 'Recalculating your best teams…';
   loadingEl.style.display = '';
   document.getElementById('color-tab-bar').style.display = 'none';
+  
+  
+  
+  FORCE_RECOMPUTE = true;
   
   
   setTimeout(init, 0);
