@@ -127,12 +127,11 @@
   .wc-top, .wc-bot { display: flex; align-items: center; gap: 5px; min-width: 0; }
   .wc-top { justify-content: space-between; }
   .acq-grad {
-    display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto;
+    display: inline-block; flex: 0 0 auto;
     border-radius: 999px; padding: 2px 8px;
     font-weight: 800; font-size: 9.5px; color: #fff;
     background: linear-gradient(90deg, #3a5bc7 0%, #2f6f7a 50%, #1c7a2e 100%);
   }
-  .acq-grad i { font-style: normal; }
   .wc-top .nm { flex: 1 1 auto; }
   .wc-top .nm { font-size: 11.5px; font-weight: 700; color: #2d2d42; }
   .wc-bot .cd { font-size: 11px; color: #777; }
@@ -182,7 +181,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v18</div>
+<div class="page-version-badge">v19</div>
 <div class="wrap">
   <div class="note">
     <div class="note-text">
@@ -1341,7 +1340,7 @@ var RESULTS_KEY = 'uniair_public_bestteams_results_v1';
 
 
 
-var RESULTS_SCHEMA = 'v18';
+var RESULTS_SCHEMA = 'v19';
 var RESULTS_FP = null;
 var CACHED_ALL = null;
 
@@ -1631,7 +1630,7 @@ function watchHtml(color, result) {
     
     var cellPill = function(tag) {
       if (tag === 'Pull + Upgrade') {
-        return '<span class="acq-grad"><i>Pull</i><i>Up</i></span>';
+        return '<span class="acq-grad">Pull+Up</span>';
       }
       return '<span class="acq-tag sm ' + (tagClass[tag] || 'pull') + '">' + esc(tag) + '</span>';
     };
