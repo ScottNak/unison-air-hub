@@ -3,5 +3,5 @@ window.UNIAIR_PAGE_VERSIONS = {
   "songs": "v8",
   "kizuna": "v5",
   "bestteams": "v19",
-  "spotlight": "v16"
+  "spotlight": "v18"
 };
