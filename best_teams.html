@@ -84,7 +84,8 @@
   .worth-table .skill { color: #666; font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .worth-table .ev { text-align: right; font-weight: 700; font-size: 11.5px; color: #2d2d42; white-space: nowrap; }
   .worth-table .color-cell { width: 34px; padding-right: 2px; }
-  .worth-table .gain-cell { width: 62px; text-align: right; padding-right: 12px; }
+  .worth-table .gain-cell { width: 78px; text-align: right; padding-right: 12px;
+                             white-space: nowrap; }
   .worth-table .gain { font-weight: 800; font-size: 13.5px; color: #1c7a2e; white-space: nowrap; }
   .worth-table .gain.none { color: #bbb; font-weight: 700; }
   .acq-cell { width: 96px; }
@@ -140,6 +141,12 @@
   .acq-tag.sm { width: auto; padding: 2px 8px; font-size: 9.5px; flex: 0 0 auto; }
   .color-sq.sm { width: 18px; height: 18px; font-size: 10px; border-radius: 4px; flex: 0 0 auto; }
   .acq-tag.owned { background: #8a8f9c; }
+  .lead-mark {
+    display: inline-block; margin-left: 4px; cursor: help; font-size: 11px;
+    color: #c2c2cc; vertical-align: top; line-height: 1;
+  }
+  .lead-mark.reachable { color: #b1731f; }
+  .lead-mark:hover, .lead-mark:focus { color: #2d2d42; outline: none; }
   .watch-empty { font-size: 12px; color: #999; padding: 6px 8px; line-height: 1.5; }
   
   
@@ -181,7 +188,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v19</div>
+<div class="page-version-badge">v20</div>
 <div class="wrap">
   <div class="note">
     <div class="note-text">
@@ -502,10 +509,24 @@ function multiRestartOptimize(candidates, totalFn, primarySeedKey) {
 }
 
 
+
+
+
+
+
+
+
+function isMechLeaderCard(c) {
+  return !!(c.song && (c.song.indexOf('Veaut') !== -1 || c.song === 'S.teller'));
+}
+
 function bestNormalTeam(pool, ctx) {
   if (!pool.length) return null;
   var candidateSkillSet = {};
-  pool.forEach(function(c) { if (isRegularSkill(c.centerSkill)) candidateSkillSet[c.centerSkill] = true; });
+  pool.forEach(function(c) {
+    if (isMechLeaderCard(c)) return;
+    if (isRegularSkill(c.centerSkill)) candidateSkillSet[c.centerSkill] = true;
+  });
   var skills = Object.keys(candidateSkillSet).sort();
   var best = null;
   skills.forEach(function(skillText) {
@@ -515,7 +536,9 @@ function bestNormalTeam(pool, ctx) {
       return engineScore(c.vo * STATUS_BONUS, c.da * STATUS_BONUS, c.pe * STATUS_BONUS,
                           c.member, c.k, lsvo, lsda, lspe, SEED_SK_ESTIMATE, ctx);
     }
-    var centerCandidates = pool.filter(function(c) { return c.centerSkill === skillText; });
+    var centerCandidates = pool.filter(function(c) {
+      return c.centerSkill === skillText && !isMechLeaderCard(c);
+    });
     if (!centerCandidates.length) return;
     var centerCard = centerCandidates[0], centerCardScore = seedScore(centerCard);
     centerCandidates.forEach(function(c) {
@@ -949,6 +972,24 @@ function soloGainPct(card, mech, leader, actualSupports, actualTotal, ctx) {
   return (best - actualTotal) / actualTotal * 100;
 }
 
+
+
+
+
+
+
+function leadAsLeaderInfo(card, actualTotal, fullPool, ownedSet, ctx) {
+  if (!isMechLeaderCard(card) || !actualTotal) return null;
+  var res = card.song.indexOf('Veaut') !== -1
+    ? optimizeVeautTeam(card, fullPool, ctx)
+    : optimizeStellerTeam(card, fullPool, ctx);
+  var total = res[1];
+  if (total === null || total === undefined || total <= actualTotal) return null;
+  var missing = [card].concat(res[0] || []).filter(function(c) { return !ownedSet[c.id]; }).length;
+  return {gainPct: (total - actualTotal) / actualTotal * 100,
+          missing: missing, reachable: missing <= MAX_NEW_CARDS};
+}
+
 function recommendCardsWorthGetting(mech, leader, actualSupports, actualTotal, fullPool, ownedSet, ctx) {
   var res;
   if (mech === 'normal') {
@@ -995,6 +1036,15 @@ function recommendCardsWorthGetting(mech, leader, actualSupports, actualTotal, f
     
     out.push({id: c.id, color: c.color, member: c.member, song: c.song, centerSkill: shortSkillText(c.centerSkill),
               sk: skPctText(c.sk), tag: info.tag, note: info.note || null,
+              
+              
+              
+              
+              
+              
+              
+              
+              leadInfo: leadAsLeaderInfo(c, actualTotal, fullPool, ownedSet, ctx),
               gainPct: soloGainPct(c, mech, leader, actualSupports, actualTotal, ctx)});
   });
   
@@ -1340,7 +1390,7 @@ var RESULTS_KEY = 'uniair_public_bestteams_results_v1';
 
 
 
-var RESULTS_SCHEMA = 'v19';
+var RESULTS_SCHEMA = 'v20';
 var RESULTS_FP = null;
 var CACHED_ALL = null;
 
@@ -1566,7 +1616,7 @@ function renderPanel(color, result, chg) {
       var label = esc(rec.member) + ' — ' + esc(rec.song);
       var skill = esc(rec.centerSkill || '');
       return '<tr class="' + ((chg && chg.recIn[rec.id]) ? 'row-in' : '') + '">' +
-        '<td class="gain-cell">' + soloGainHtml(rec.gainPct) + '</td>' +
+        '<td class="gain-cell">' + soloGainHtml(rec.gainPct) + leadMarkHtml(rec.leadInfo) + '</td>' +
         '<td class="acq-cell"><span class="acq-tag ' + (tagClass[rec.tag] || 'pull') + '">' + esc(rec.tag) + '</span></td>' +
         '<td class="color-cell">' + colorSquare(rec.color) + '</td>' +
         '<td class="name" title="' + label + '">' + label + '</td>' +
@@ -1599,6 +1649,19 @@ function renderPanel(color, result, chg) {
 }
 
 
+
+
+
+
+function leadMarkHtml(info) {
+  if (!info) return '';
+  var t = info.reachable
+    ? 'Also leads its own team, +' + info.gainPct.toFixed(1) + '% - see Other teams to look out for below.'
+    : 'Also leads its own team, +' + info.gainPct.toFixed(1) + '%, but that team needs ' +
+      info.missing + ' cards you do not have.';
+  return '<span class="lead-mark' + (info.reachable ? ' reachable' : '') +
+    '" tabindex="0" title="' + esc(t) + '">&#9733;</span>';
+}
 
 function soloGainHtml(pct) {
   if (pct === null || pct === undefined) {

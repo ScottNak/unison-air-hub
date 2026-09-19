@@ -83,7 +83,8 @@
   .suggest-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
   .suggest-table td { padding: 6px 8px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
   .suggest-table .ev { text-align: right; font-weight: 700; font-size: 11.5px; color: #2d2d42; white-space: nowrap; }
-  .suggest-table .gain-cell { width: 62px; text-align: right; padding-right: 12px; }
+  .suggest-table .gain-cell { width: 78px; text-align: right; padding-right: 12px;
+                              white-space: nowrap; }
   .suggest-table .gain { font-weight: 800; font-size: 13.5px; color: #1c7a2e; white-space: nowrap; }
   .acq-cell { width: 96px; }
   .acq-tag {
@@ -94,7 +95,13 @@
   .acq-tag.upgrade { background: #1c7a2e; }
   .acq-tag.pull-upgrade { background: linear-gradient(90deg, #3a5bc7 0%, #2f6f7a 50%, #1c7a2e 100%); }
   .acq-tag.owned { background: #8a8f9c; }
-  .watch { margin-top: 16px; padding-top: 14px; border-top: 1px solid #eee; }
+  .lead-mark {
+    display: inline-block; margin-left: 4px; cursor: help; font-size: 11px;
+    color: #c2c2cc; vertical-align: top; line-height: 1;
+  }
+  .lead-mark.reachable { color: #b1731f; }
+  .lead-mark:hover, .lead-mark:focus { color: #2d2d42; outline: none; }
+  .watch { margin-top: 20px; padding-top: 16px; border-top: 2px solid #2d2d42; }
   .watch h3 { margin: 0 0 3px; font-size: 12px; text-transform: uppercase;
               letter-spacing: .03em; color: #b1731f; }
   .watch .sub { font-size: 11.5px; color: #888; margin: 0 0 9px; line-height: 1.5; }
@@ -217,7 +224,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v18</div>
+<div class="page-version-badge">v19</div>
 <div class="wrap">
   <div class="bonus-bar">
     <span class="bonus-bar-label">Spotlight<br>bonus songs</span>
@@ -795,6 +802,11 @@ function bestNormalTeamSpotlight(pool, songColor, starlightSongs, ctx) {
   var best = null;
   pool.forEach(function(centerCard) {
     var skillText = centerCard.centerSkill;
+    
+    
+    
+    
+    if (isMechLeaderCard(centerCard)) return;
     if (!isRegularSkill(skillText)) return;
     var shape = SKILL_LOOKUP[skillText] || [0, 0, 0];
     var lsvo = shape[0], lsda = shape[1], lspe = shape[2];
@@ -1421,7 +1433,7 @@ function buildMemberContentHtml(memberCardsAll, starlightSongs, results, ctx, pr
     }
     var colorsCsv = appearances.map(function(p) { return p[0]; }).join(',');
     var centerColorsCsv = appearances.filter(function(p) { return p[1]; }).map(function(p) { return p[0]; }).join(',');
-    return '<tr class="' + rowClass + '" data-colors="' + esc(colorsCsv) + '" data-center-colors="' + esc(centerColorsCsv) + '" data-idx="' + idx + '">' +
+    return '<tr class="' + rowClass + '" data-colors="' + esc(colorsCsv) + '" data-center-colors="' + esc(centerColorsCsv) + '">' +
       '<td class="color-cell"><span class="color-sq" style="background:' + (COLOR_HEX_SL[card.color] || '#999') + '">' + letter + '</span></td>' +
       '<td class="song">' + esc(card.song) + star + '</td>' +
       '<td class="skill">' + esc(shortSkillText(card.centerSkill) || '') + '</td>' +
@@ -1471,6 +1483,44 @@ function buildMemberContentHtml(memberCardsAll, starlightSongs, results, ctx, pr
     return Math.max.apply(null, Object.keys(entry.byColor).map(function(k) { return entry.byColor[k][3]; }));
   }
 
+  function bestPctColor(entry) {
+    var best = null, bestVal = -Infinity;
+    Object.keys(entry.byColor).forEach(function(k) {
+      if (entry.byColor[k][3] > bestVal) { bestVal = entry.byColor[k][3]; best = k; }
+    });
+    return best;
+  }
+
+  
+  
+  
+  var leadPool = memberCardsAll.filter(function(c) { return c.owned || c.obtainable; });
+  function spotlightLeadInfo(card, songColor) {
+    if (!isMechLeaderCard(card)) return null;
+    var winner = results[songColor];
+    if (!winner || !winner.total) return null;
+    var res = card.song.indexOf('Veaut') !== -1
+      ? optimizeVeautTeamSpotlight(card, leadPool, songColor, starlightSongs, ctx)
+      : optimizeStellerTeamSpotlight(card, leadPool, songColor, starlightSongs, ctx);
+    var total = res[1];
+    if (total === null || total === undefined || total <= winner.total) return null;
+    var missing = [card].concat(res[0] || []).filter(function(c) { return !ownedIdSet[c.id]; }).length;
+    return {gainPct: (total - winner.total) / winner.total * 100,
+            missing: missing, reachable: missing <= SWEEP_MAX_NEW_CARDS};
+  }
+
+  
+  
+  function leadMarkHtml(info) {
+    if (!info) return '';
+    var t = info.reachable
+      ? 'Also leads its own team, +' + info.gainPct.toFixed(1) + '% - see Other teams to look out for below.'
+      : 'Also leads its own team, +' + info.gainPct.toFixed(1) + '%, but that team needs ' +
+        info.missing + ' cards you do not have.';
+    return '<span class="lead-mark' + (info.reachable ? ' reachable' : '') +
+      '" tabindex="0" title="' + esc(t) + '">&#9733;</span>';
+  }
+
   var suggestionEntries = Object.keys(suggestionMap).map(function(k) { return suggestionMap[k]; })
     .sort(function(a, b) { return bestPct(b) - bestPct(a); }).slice(0, 8);
 
@@ -1508,7 +1558,8 @@ function buildMemberContentHtml(memberCardsAll, starlightSongs, results, ctx, pr
     var acq = classifyAcquisition(card, ownedIdSet);
     SUGGESTED.push({id: card.id, tag: acq.tag});
     return '<tr class="' + ((chg && chg.sugIn[card.id]) ? 'row-in' : '') + '">' +
-      '<td class="gain-cell"><span class="gain">' + gainLabel(bestPct(entry)) + '</span></td>' +
+      '<td class="gain-cell"><span class="gain">' + gainLabel(bestPct(entry)) + '</span>' +
+        leadMarkHtml(spotlightLeadInfo(card, bestPctColor(entry))) + '</td>' +
       '<td class="acq-cell">' + acqPill(acq.tag) + '</td>' +
       '<td class="color-cell"><span class="color-sq" style="background:' + (COLOR_HEX_SL[card.color] || '#999') + '">' + letter + '</span></td>' +
       '<td class="song">' + esc(card.song) + '</td>' +
@@ -1703,7 +1754,6 @@ function renderAll() {
 
     var panel = document.createElement('div');
     panel.className = 'member-panel' + (isActive ? ' member-panel-first-visible' : '');
-    panel.dataset.idx = String(i);
     panel.dataset.member = member;
     if (groupColor) {
       panel.style.setProperty('--mc', groupColor);
