@@ -188,7 +188,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v20</div>
+<div class="page-version-badge">v21</div>
 <div class="wrap">
   <div class="note">
     <div class="note-text">
@@ -202,13 +202,13 @@
       keep those up to date for the most accurate scores.
       <br><br>
       &quot;Cards worth looking at&quot; searches every card in the game, but only for
-      supports - it keeps the leader each team already has.
+      supports - it keeps the Center each team already has.
       <br>
-      <b>Full Check Leaders</b> also tries every card that could lead instead, which
+      <b>Full Check Centers</b> also tries every card that could lead instead, which
       can take a bit, so it runs only when you ask.
     </div>
     <div class="note-action">
-      <button class="sweep-btn" id="sweep-btn" type="button">Full Check Leaders</button>
+      <button class="sweep-btn" id="sweep-btn" type="button">Full Check Centers</button>
       <div class="sweep-stamp" id="sweep-stamp"></div>
     </div>
   </div>
@@ -1390,7 +1390,7 @@ var RESULTS_KEY = 'uniair_public_bestteams_results_v1';
 
 
 
-var RESULTS_SCHEMA = 'v20';
+var RESULTS_SCHEMA = 'v21';
 var RESULTS_FP = null;
 var CACHED_ALL = null;
 
@@ -1503,7 +1503,7 @@ function droppedNotes(chg) {
     }).join(', '));
   }
   if (chg.leadMoved && chg.prevLead) {
-    lines.push('leader was ' + esc(chg.prevLead.m) + ' &mdash; ' + esc(chg.prevLead.s));
+    lines.push('center was ' + esc(chg.prevLead.m) + ' &mdash; ' + esc(chg.prevLead.s));
   }
   return lines.map(function(t) {
     return '<div class="chg-out"><span class="chg-minus">&minus;</span> ' + t + '</div>';
@@ -1630,7 +1630,7 @@ function renderPanel(color, result, chg) {
   inner.innerHTML =
     '<div class="header-info">' +
       '<div class="header-info-row header-info-split">' +
-        '<span><span class="label">Effective Leader Skill:</span>' + esc(result.effectiveLabel) + '</span>' +
+        '<span><span class="label">Effective Center Skill:</span>' + esc(result.effectiveLabel) + '</span>' +
         (isAll ? '<span class="hi-note">' + allCompareNote(result) + '</span>' : '') +
       '</div>' +
     '</div>' +
@@ -1638,7 +1638,7 @@ function renderPanel(color, result, chg) {
       '<colgroup><col style="width:10%"><col style="width:18%"><col style="width:30%"><col style="width:24%"><col style="width:18%"></colgroup>' +
       '<thead><tr>' +
       '<th class="color-cell">Color</th>' +
-      '<th>Member</th><th>Card / Song</th><th>Leader Skill</th><th>Score Skill</th>' +
+      '<th>Member</th><th>Card / Song</th><th>Center Skill</th><th>Score Skill</th>' +
       '</tr></thead><tbody>' + rowsHtml + '</tbody></table>' +
     (chg ? droppedNotes(chg) : '') +
     worthGettingHtml +
@@ -1771,7 +1771,7 @@ function startSweep() {
                                      loadDiscoOverrides(), inputs.pool),
                stamp: stampToday(), byColor: byColor};
       saveWatch(WATCH);
-      setSweepButton('Full Check Leaders', false);
+      setSweepButton('Full Check Centers', false);
       renderSweepStamp();
       rerenderPanels();
       return;
