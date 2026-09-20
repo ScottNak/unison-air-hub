@@ -80,7 +80,10 @@
                        letter-spacing: .03em; color: #6a4fc9; }
   .worth-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
   .worth-table td { padding: 6px 8px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
-  .worth-table .name { color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  
+  .worth-table .name { color: #333; white-space: nowrap; }
+  .worth-table .name-txt { display: inline-block; max-width: 100%; overflow: hidden;
+                            text-overflow: ellipsis; vertical-align: middle; }
   .worth-table .skill { color: #666; font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .worth-table .ev { text-align: right; font-weight: 700; font-size: 11.5px; color: #2d2d42; white-space: nowrap; }
   .worth-table .color-cell { width: 34px; padding-right: 2px; }
@@ -113,12 +116,19 @@
   .watch .sub { font-size: 11.5px; color: #888; margin: 0 0 9px; line-height: 1.5; }
   .watch-grid { display: flex; flex-direction: column; gap: 8px; }
   .wrow {
-    display: grid; grid-template-columns: 58px repeat(5, minmax(0, 1fr));
-    gap: 6px; align-items: stretch;
+    display: flex; gap: 6px; align-items: center;
     padding: 7px 4px 8px; border-bottom: 1px solid #f0f0f0;
   }
-  .wrow .gain { align-self: center; text-align: right; padding-right: 8px;
+  .wrow .gain { flex: 0 0 58px; text-align: right; padding-right: 8px;
                  font-weight: 800; font-size: 14px; color: #1c7a2e; white-space: nowrap; }
+  .wbody { flex: 1 1 auto; min-width: 0; }
+  .wgrid { display: grid; gap: 6px; grid-template-columns: repeat(5, minmax(0, 1fr));
+            align-items: stretch; }
+  .whead { display: flex; gap: 6px; padding: 0 4px; }
+  .whead .gain-sp { flex: 0 0 58px; }
+  .wlabels span { font-size: 9.5px; font-weight: 900; letter-spacing: .09em;
+                   text-transform: uppercase; color: #9aa0b4; line-height: 20px; }
+  .wlabels .sup { grid-column: 2 / 6; }
   .wcell {
     min-width: 0; padding: 5px 6px; border: 1px solid #ececf2; border-radius: 8px;
     background: #fafafa; display: flex; flex-direction: column; gap: 3px;
@@ -141,12 +151,15 @@
   .acq-tag.sm { width: auto; padding: 2px 8px; font-size: 9.5px; flex: 0 0 auto; }
   .color-sq.sm { width: 18px; height: 18px; font-size: 10px; border-radius: 4px; flex: 0 0 auto; }
   .acq-tag.owned { background: #8a8f9c; }
+  
   .lead-mark {
-    display: inline-block; margin-left: 4px; cursor: help; font-size: 11px;
-    color: #c2c2cc; vertical-align: top; line-height: 1;
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-left: 5px; width: 16px; height: 16px; border-radius: 50%;
+    background: #ff6f00; color: #fff; font-size: 11px; font-weight: 900;
+    cursor: help; vertical-align: text-bottom; box-shadow: 0 1px 2px rgba(0,0,0,.2);
   }
-  .lead-mark.reachable { color: #b1731f; }
-  .lead-mark:hover, .lead-mark:focus { color: #2d2d42; outline: none; }
+  
+  .lead-mark:hover, .lead-mark:focus { background: #2d2d42; outline: none; }
   .watch-empty { font-size: 12px; color: #999; padding: 6px 8px; line-height: 1.5; }
   
   
@@ -188,7 +201,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v21</div>
+<div class="page-version-badge">v22</div>
 <div class="wrap">
   <div class="note">
     <div class="note-text">
@@ -1390,7 +1403,7 @@ var RESULTS_KEY = 'uniair_public_bestteams_results_v1';
 
 
 
-var RESULTS_SCHEMA = 'v21';
+var RESULTS_SCHEMA = 'v22';
 var RESULTS_FP = null;
 var CACHED_ALL = null;
 
@@ -1616,10 +1629,11 @@ function renderPanel(color, result, chg) {
       var label = esc(rec.member) + ' — ' + esc(rec.song);
       var skill = esc(rec.centerSkill || '');
       return '<tr class="' + ((chg && chg.recIn[rec.id]) ? 'row-in' : '') + '">' +
-        '<td class="gain-cell">' + soloGainHtml(rec.gainPct) + leadMarkHtml(rec.leadInfo) + '</td>' +
+        '<td class="gain-cell">' + soloGainHtml(rec.gainPct) + '</td>' +
         '<td class="acq-cell"><span class="acq-tag ' + (tagClass[rec.tag] || 'pull') + '">' + esc(rec.tag) + '</span></td>' +
         '<td class="color-cell">' + colorSquare(rec.color) + '</td>' +
-        '<td class="name" title="' + label + '">' + label + '</td>' +
+        '<td class="name" title="' + label + '"><span class="name-txt">' + label + '</span>' +
+          leadMarkHtml(rec.leadInfo) + '</td>' +
         '<td class="skill" title="' + skill + '">' + skill + '</td>' +
         '<td class="ev">' + esc(rec.sk) + '</td></tr>';
     }).join('');
@@ -1653,14 +1667,17 @@ function renderPanel(color, result, chg) {
 
 
 
+
+
+
+
+
 function leadMarkHtml(info) {
-  if (!info) return '';
-  var t = info.reachable
-    ? 'Also leads its own team, +' + info.gainPct.toFixed(1) + '% - see Other teams to look out for below.'
-    : 'Also leads its own team, +' + info.gainPct.toFixed(1) + '%, but that team needs ' +
-      info.missing + ' cards you do not have.';
-  return '<span class="lead-mark' + (info.reachable ? ' reachable' : '') +
-    '" tabindex="0" title="' + esc(t) + '">&#9733;</span>';
+  if (!info || info.reachable) return '';
+  var t = 'Also the Center of a better team, +' + info.gainPct.toFixed(1) +
+    '%, but that team needs ' + info.missing +
+    (info.missing === 1 ? ' more card' : ' more cards') + ' you do not have.';
+  return '<span class="lead-mark" tabindex="0" title="' + esc(t) + '">!</span>';
 }
 
 function soloGainHtml(pct) {
@@ -1714,13 +1731,20 @@ function watchHtml(color, result) {
         '</div>' +
       '</div>';
     };
-    body = '<div class="watch-grid">' + rows.map(function(r) {
+    
+    
+    var head = '<div class="whead"><span class="gain-sp"></span><div class="wbody">' +
+      '<div class="wgrid wlabels"><span>Center</span><span class="sup">Supports</span></div>' +
+      '</div></div>';
+    body = head + '<div class="watch-grid">' + rows.map(function(r) {
       var cells = cardCell(r, r.leaderTag, r.leaderOwned, true) +
         (r.supports || []).map(function(c) {
           return cardCell(c, c.tag, c.owned, false);
         }).join('');
       return '<div class="wrow">' +
-        '<span class="gain">+' + r.gainPct.toFixed(1) + '%</span>' + cells + '</div>';
+        '<span class="gain">+' + r.gainPct.toFixed(1) + '%</span>' +
+        '<div class="wbody"><div class="wgrid wcards">' + cells + '</div></div>' +
+      '</div>';
     }).join('') + '</div>';
   }
   var banner = WATCH.stale

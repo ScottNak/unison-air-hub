@@ -49,8 +49,8 @@
   .team-table tbody tr.row-highlight { transition: background .12s; }
   .team-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .team-table th {
-    text-align: left; padding: 8px 10px; background: #f2f2f7; color: #666;
-    font-size: 11px; text-transform: uppercase; letter-spacing: .04em;
+    text-align: left; padding: 8px 10px; background: #2d2d42; color: #fff;
+    font-size: 10px; text-transform: uppercase; letter-spacing: .03em;
   }
   .team-table td { padding: 9px 10px; border-bottom: 1px solid #eee; vertical-align: middle; }
   .center-row { background: #fff9e8; font-weight: 600; }
@@ -68,6 +68,7 @@
   .chg-out { font-size: 11.5px; color: #8a5a5a; padding: 7px 10px 0; }
   .chg-minus { font-weight: 800; color: #b5544f; }
   .color-cell { text-align: center; }
+  .team-table th.color-cell { text-align: center; }
   .color-sq {
     display: inline-flex; align-items: center; justify-content: center;
     width: 22px; height: 22px; border-radius: 5px; color: #fff; font-weight: 800;
@@ -267,7 +268,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v20</div>
+<div class="page-version-badge">v22</div>
 <div class="wrap">
   <div class="bonus-bar">
     <span class="bonus-bar-label">Spotlight<br>bonus songs</span>
@@ -1249,9 +1250,13 @@ function sweepShelfHtml(center) {
 
 
 
+
+
+
+
 var NEWTEAM_HEAD = '<tr class="grp"><td colspan="8">For a New Team' +
-  '<span class="grp-note">New teams are only listed when they need ' + SWEEP_MAX_NEW_CARDS +
-  ' or fewer cards you do not have</span></td></tr>';
+  '<span class="grp-note">Only shows better teams needing ' + SWEEP_MAX_NEW_CARDS +
+  ' or fewer cards you don&#39;t have</span></td></tr>';
 
 
 
@@ -1924,7 +1929,7 @@ function buildMemberContentHtml(memberCardsAll, starlightSongs, results, ctx, pr
   }
 
   return '<div class="team-card"><div class="badge-row">' + summaryBadges + '</div>' +
-    '<table class="team-table"><thead><tr><th>Color</th><th>Card / Song</th><th>Center Skill</th><th>Score Skill</th><th>Plays in</th></tr></thead>' +
+    '<table class="team-table"><thead><tr><th class="color-cell">Color</th><th>Card / Song</th><th>Center Skill</th><th>Score Skill</th><th>Plays in</th></tr></thead>' +
     '<tbody>' + rosterHtml + '</tbody></table>' + droppedNote(chg) + suggestionsHtml + '</div>' + emptyHtml;
 }
 
