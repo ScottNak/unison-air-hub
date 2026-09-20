@@ -268,7 +268,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v22</div>
+<div class="page-version-badge">v23</div>
 <div class="wrap">
   <div class="bonus-bar">
     <span class="bonus-bar-label">Spotlight<br>bonus songs</span>
@@ -1535,6 +1535,18 @@ function teamSignature(winner) {
   return winner.kind + '|' + winner.center[1].key + '|' + supportKeys.join(',');
 }
 
+var MAX_SUPPORTS = 4;
+
+
+
+
+
+function trialTeam(supports, cand, replaced) {
+  if (!replaced) return supports.concat([cand]);
+  var i = supports.findIndex(function(c) { return c.key === replaced.key; });
+  return supports.slice(0, i).concat([cand]).concat(supports.slice(i + 1));
+}
+
 function groupTotalFn(kind, centerCard, songColor, starlightSongs, ctx) {
   if (kind === 'veaut') return function(supports) { return veautTeamTotalSpotlight(centerCard, supports, songColor, starlightSongs, ctx); };
   if (kind === 'steller') return function(supports) { return stellerTeamTotalSpotlight(centerCard, supports, songColor, starlightSongs, ctx); };
@@ -1543,6 +1555,20 @@ function groupTotalFn(kind, centerCard, songColor, starlightSongs, ctx) {
 
 function computeGroupSuggestions(memberCardsAll, kind, centerCard, supports, songColor, baseTotal, starlightSongs, ctx, topN) {
   topN = topN || 3;
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
@@ -1574,10 +1600,12 @@ function computeGroupSuggestions(memberCardsAll, kind, centerCard, supports, son
   candidates.forEach(function(cand) {
     var pinned = hasSlot(cand.groupKey) ? slotForGroup[cand.groupKey] : -1;
     var bestDelta = null, bestSlot = null;
+    if (pinned < 0 && supports.length < MAX_SUPPORTS) {
+      bestDelta = totalFn(trialTeam(supports, cand, null)) - baseTotal;
+    }
     for (var i = 0; i < supports.length; i++) {
       if (pinned >= 0 && i !== pinned) continue;
-      var trial = supports.slice(0, i).concat([cand]).concat(supports.slice(i + 1));
-      var delta = totalFn(trial) - baseTotal;
+      var delta = totalFn(trialTeam(supports, cand, supports[i])) - baseTotal;
       if (bestDelta === null || delta > bestDelta) { bestDelta = delta; bestSlot = supports[i]; }
     }
     if (bestDelta !== null && bestDelta > 0) suggestions.push([cand, bestDelta, bestSlot]);
@@ -1764,9 +1792,7 @@ function buildMemberContentHtml(memberCardsAll, starlightSongs, results, ctx, pr
             totalFnReduced = groupTotalFn(kind, centerCard, songColor, reducedStarlight, ctx);
             baseReduced = totalFnReduced(supports);
           }
-          var idx = supports.findIndex(function(c) { return c.key === replaced.key; });
-          var trial = supports.slice(0, idx).concat([cand]).concat(supports.slice(idx + 1));
-          var altDelta = totalFnReduced(trial) - baseReduced;
+          var altDelta = totalFnReduced(trialTeam(supports, cand, replaced)) - baseReduced;
           if (altDelta <= 0) tier = 'oneoff';
         }
         if (!suggestionMap[cand.key]) suggestionMap[cand.key] = {card: cand, byColor: {}};
