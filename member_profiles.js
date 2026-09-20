@@ -1,7 +1,7 @@
 window.UNIAIR_MEMBER_PROFILES = {
   "遠藤光莉": {
     "english": {
-      "family": "Endō",
+      "family": "Endo",
       "given": "Hikari"
     },
     "birthday": "1999-04-17",
@@ -13,7 +13,7 @@ window.UNIAIR_MEMBER_PROFILES = {
   },
   "大園玲": {
     "english": {
-      "family": "Ōzono",
+      "family": "Ozono",
       "given": "Rei"
     },
     "birthday": "2000-04-18",
@@ -25,7 +25,7 @@ window.UNIAIR_MEMBER_PROFILES = {
   },
   "大沼晶保": {
     "english": {
-      "family": "Ōnuma",
+      "family": "Onuma",
       "given": "Akiho"
     },
     "birthday": "1999-10-12",
@@ -37,7 +37,7 @@ window.UNIAIR_MEMBER_PROFILES = {
   },
   "幸阪茉里乃": {
     "english": {
-      "family": "Kōsaka",
+      "family": "Kosaka",
       "given": "Marino"
     },
     "birthday": "2002-12-19",
@@ -145,7 +145,7 @@ window.UNIAIR_MEMBER_PROFILES = {
   },
   "遠藤理子": {
     "english": {
-      "family": "Endō",
+      "family": "Endo",
       "given": "Riko"
     },
     "birthday": "2006-01-09",
@@ -230,7 +230,7 @@ window.UNIAIR_MEMBER_PROFILES = {
   "村井優": {
     "english": {
       "family": "Murai",
-      "given": "Yū"
+      "given": "Yu"
     },
     "birthday": "2004-08-18",
     "group": "S",
@@ -301,7 +301,7 @@ window.UNIAIR_MEMBER_PROFILES = {
   },
   "佐藤愛桜": {
     "english": {
-      "family": "Satō",
+      "family": "Sato",
       "given": "Neo"
     },
     "birthday": "2006-12-01",
@@ -338,7 +338,7 @@ window.UNIAIR_MEMBER_PROFILES = {
   "目黒陽色": {
     "english": {
       "family": "Meguro",
-      "given": "Hīro"
+      "given": "Hiro"
     },
     "birthday": "2006-01-24",
     "group": "S",
@@ -445,7 +445,7 @@ window.UNIAIR_MEMBER_PROFILES = {
   },
   "齋藤冬優花": {
     "english": {
-      "family": "Saitō",
+      "family": "Saito",
       "given": "Fuyuka"
     },
     "birthday": "1998-02-15",
@@ -457,7 +457,7 @@ window.UNIAIR_MEMBER_PROFILES = {
   },
   "佐藤詩織": {
     "english": {
-      "family": "Satō",
+      "family": "Sato",
       "given": "Shiori"
     },
     "birthday": "1996-11-16",
@@ -470,7 +470,7 @@ window.UNIAIR_MEMBER_PROFILES = {
   "菅井友香": {
     "english": {
       "family": "Sugai",
-      "given": "Yūka"
+      "given": "Yuka"
     },
     "birthday": "1995-11-29",
     "group": "S",
@@ -733,8 +733,8 @@ window.UNIAIR_MEMBER_PROFILES = {
   },
   "正源司陽子": {
     "english": {
-      "family": "Shōgenji",
-      "given": "Yōko"
+      "family": "Shogenji",
+      "given": "Yoko"
     },
     "birthday": "2007-02-14",
     "group": "H",
@@ -829,7 +829,7 @@ window.UNIAIR_MEMBER_PROFILES = {
   },
   "大田美月": {
     "english": {
-      "family": "Ōta",
+      "family": "Ota",
       "given": "Mizuki"
     },
     "birthday": "2006-12-07",
@@ -841,7 +841,7 @@ window.UNIAIR_MEMBER_PROFILES = {
   },
   "大野愛実": {
     "english": {
-      "family": "Ōno",
+      "family": "Ono",
       "given": "Manami"
     },
     "birthday": "2007-05-05",
@@ -878,7 +878,7 @@ window.UNIAIR_MEMBER_PROFILES = {
   "坂井新奈": {
     "english": {
       "family": "Sakai",
-      "given": "Nīna"
+      "given": "Nina"
     },
     "birthday": "2009-03-14",
     "group": "H",
@@ -889,8 +889,8 @@ window.UNIAIR_MEMBER_PROFILES = {
   },
   "佐藤優羽": {
     "english": {
-      "family": "Satō",
-      "given": "Yū"
+      "family": "Sato",
+      "given": "Yu"
     },
     "birthday": "2006-09-10",
     "group": "H",
@@ -974,7 +974,7 @@ window.UNIAIR_MEMBER_PROFILES = {
   "影山優佳": {
     "english": {
       "family": "Kageyama",
-      "given": "Yūka"
+      "given": "Yuka"
     },
     "birthday": "2001-05-08",
     "group": "H",
@@ -985,7 +985,7 @@ window.UNIAIR_MEMBER_PROFILES = {
   },
   "加藤史帆": {
     "english": {
-      "family": "Katō",
+      "family": "Kato",
       "given": "Shiho"
     },
     "birthday": "1998-02-02",
@@ -997,8 +997,8 @@ window.UNIAIR_MEMBER_PROFILES = {
   },
   "齊藤京子": {
     "english": {
-      "family": "Saitō",
-      "given": "Kyōko"
+      "family": "Saito",
+      "given": "Kyoko"
     },
     "birthday": "1997-09-05",
     "group": "H",
