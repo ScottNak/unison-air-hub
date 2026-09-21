@@ -1,6 +1,15 @@
 window.UNIAIR_DB_CHANGELOG = {
  "entries": [
   {
+   "version": "db19-2026-09-21",
+   "date": "2026-09-21",
+   "added": 0,
+   "cardCount": 5562,
+   "titles": [],
+   "cards": [],
+   "note": "Updated english text of member names"
+  },
+  {
    "version": "db18-2026-09-21",
    "date": "2026-09-21",
    "added": 0,
