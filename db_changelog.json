@@ -1,6 +1,409 @@
 {
  "entries": [
   {
+   "version": "db20-2026-09-23",
+   "date": "2026-09-23",
+   "added": 56,
+   "cardCount": 5618,
+   "titles": [
+    "UNI'S ON AIR 7th ANNIVERSARY"
+   ],
+   "cards": [
+    {
+     "id": 6577,
+     "color": "G",
+     "memberEn": "Moriya Rena",
+     "cs": "VoPe50%",
+     "sk": 0.0334
+    },
+    {
+     "id": 6578,
+     "color": "R",
+     "memberEn": "Odakura Reina",
+     "cs": "ALL45%",
+     "sk": 0.0324
+    },
+    {
+     "id": 6579,
+     "color": "B",
+     "memberEn": "Fujiyoshi Karin",
+     "cs": "Vo70%",
+     "sk": 0.025
+    },
+    {
+     "id": 6580,
+     "color": "Y",
+     "memberEn": "Endo Riko",
+     "cs": "Vo70%",
+     "sk": 0.0232
+    },
+    {
+     "id": 6581,
+     "color": "R",
+     "memberEn": "Meguro Hiro",
+     "cs": "Pe70%",
+     "sk": 0.0173
+    },
+    {
+     "id": 6582,
+     "color": "G",
+     "memberEn": "Endo Hikari",
+     "cs": "Da70%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6583,
+     "color": "B",
+     "memberEn": "Taniguchi Airi",
+     "cs": "Da70%",
+     "sk": 0.0078
+    },
+    {
+     "id": 6584,
+     "color": "P",
+     "memberEn": "Murai Yu",
+     "cs": "Da70%",
+     "sk": 0.0
+    },
+    {
+     "id": 6585,
+     "color": "P",
+     "memberEn": "Yamakawa Ui",
+     "cs": "Vo85%",
+     "sk": 0.0368
+    },
+    {
+     "id": 6586,
+     "color": "P",
+     "memberEn": "Onuma Akiho",
+     "cs": "Pe85%",
+     "sk": 0.034
+    },
+    {
+     "id": 6587,
+     "color": "R",
+     "memberEn": "Nakagawa Chihiro",
+     "cs": "Da70%",
+     "sk": 0.0252
+    },
+    {
+     "id": 6588,
+     "color": "B",
+     "memberEn": "Ishimori Rika",
+     "cs": "Da70%",
+     "sk": 0.0232
+    },
+    {
+     "id": 6589,
+     "color": "G",
+     "memberEn": "Asai Konomi",
+     "cs": "Pe70%",
+     "sk": 0.0173
+    },
+    {
+     "id": 6590,
+     "color": "B",
+     "memberEn": "Inaguma Hina",
+     "cs": "Vo70%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6591,
+     "color": "Y",
+     "memberEn": "Yamasaki Ten",
+     "cs": "Da70%",
+     "sk": 0.0078
+    },
+    {
+     "id": 6592,
+     "color": "R",
+     "memberEn": "Tamura Hono",
+     "cs": "Pe70%",
+     "sk": 0.0
+    },
+    {
+     "id": 6593,
+     "color": "B",
+     "memberEn": "Yamada Momomi",
+     "cs": "Da85%",
+     "sk": 0.0349
+    },
+    {
+     "id": 6594,
+     "color": "G",
+     "memberEn": "Kojima Nagisa",
+     "cs": "Vo85%",
+     "sk": 0.0324
+    },
+    {
+     "id": 6595,
+     "color": "G",
+     "memberEn": "Matono Mio",
+     "cs": "Da70%",
+     "sk": 0.0252
+    },
+    {
+     "id": 6596,
+     "color": "Y",
+     "memberEn": "Kosaka Marino",
+     "cs": "Pe70%",
+     "sk": 0.0246
+    },
+    {
+     "id": 6597,
+     "color": "Y",
+     "memberEn": "Sato Neo",
+     "cs": "Da70%",
+     "sk": 0.0173
+    },
+    {
+     "id": 6598,
+     "color": "P",
+     "memberEn": "Nakashima Yuzuki",
+     "cs": "Pe70%",
+     "sk": 0.0078
+    },
+    {
+     "id": 6599,
+     "color": "R",
+     "memberEn": "Yamashita Shizuki",
+     "cs": "Vo70%",
+     "sk": 0.0
+    },
+    {
+     "id": 6600,
+     "color": "G",
+     "memberEn": "Matsuda Rina",
+     "cs": "Vo85%",
+     "sk": 0.034
+    },
+    {
+     "id": 6601,
+     "color": "P",
+     "memberEn": "Mukai Itoha",
+     "cs": "Da85%",
+     "sk": 0.0334
+    },
+    {
+     "id": 6602,
+     "color": "Y",
+     "memberEn": "Ozono Rei",
+     "cs": "Da70%",
+     "sk": 0.025
+    },
+    {
+     "id": 6603,
+     "color": "R",
+     "memberEn": "Matsumoto Wako",
+     "cs": "Vo70%",
+     "sk": 0.0246
+    },
+    {
+     "id": 6604,
+     "color": "B",
+     "memberEn": "Katsumata Haru",
+     "cs": "Pe70%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6605,
+     "color": "P",
+     "memberEn": "Morita Hikaru",
+     "cs": "Vo70%",
+     "sk": 0.0067
+    },
+    {
+     "id": 6606,
+     "color": "Y",
+     "memberEn": "Murayama Miu",
+     "cs": "Vo70%",
+     "sk": 0.0
+    },
+    {
+     "id": 6607,
+     "color": "R",
+     "memberEn": "Ono Manami",
+     "cs": "Vo85%",
+     "sk": 0.034
+    },
+    {
+     "id": 6608,
+     "color": "G",
+     "memberEn": "Takeuchi Kirari",
+     "cs": "Da85%",
+     "sk": 0.0324
+    },
+    {
+     "id": 6609,
+     "color": "P",
+     "memberEn": "Sato Yu",
+     "cs": "Da70%",
+     "sk": 0.0246
+    },
+    {
+     "id": 6610,
+     "color": "G",
+     "memberEn": "Konishi Nanami",
+     "cs": "Pe70%",
+     "sk": 0.0232
+    },
+    {
+     "id": 6611,
+     "color": "R",
+     "memberEn": "Fujishima Kaho",
+     "cs": "Pe70%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6612,
+     "color": "Y",
+     "memberEn": "Tsurusaki Niko",
+     "cs": "Vo70%",
+     "sk": 0.0078
+    },
+    {
+     "id": 6613,
+     "color": "B",
+     "memberEn": "Shimizu Rio",
+     "cs": "Vo70%",
+     "sk": 0.0
+    },
+    {
+     "id": 6614,
+     "color": "Y",
+     "memberEn": "Hiraoka Mitsuki",
+     "cs": "Da85%",
+     "sk": 0.0349
+    },
+    {
+     "id": 6615,
+     "color": "R",
+     "memberEn": "Ishizuka Tamaki",
+     "cs": "Pe85%",
+     "sk": 0.0324
+    },
+    {
+     "id": 6616,
+     "color": "G",
+     "memberEn": "Katayama Saki",
+     "cs": "Vo70%",
+     "sk": 0.0252
+    },
+    {
+     "id": 6617,
+     "color": "B",
+     "memberEn": "Watanabe Rina",
+     "cs": "Pe70%",
+     "sk": 0.0232
+    },
+    {
+     "id": 6618,
+     "color": "R",
+     "memberEn": "Takai Rika",
+     "cs": "Vo70%",
+     "sk": 0.0173
+    },
+    {
+     "id": 6619,
+     "color": "B",
+     "memberEn": "Takahashi Mikuni",
+     "cs": "Da70%",
+     "sk": 0.0067
+    },
+    {
+     "id": 6620,
+     "color": "P",
+     "memberEn": "Kosaka Nao",
+     "cs": "Vo70%",
+     "sk": 0.0
+    },
+    {
+     "id": 6621,
+     "color": "R",
+     "memberEn": "Yamashita Haruka",
+     "cs": "VoDa50%",
+     "sk": 0.0349
+    },
+    {
+     "id": 6622,
+     "color": "Y",
+     "memberEn": "Shimoda Izuki",
+     "cs": "Pe85%",
+     "sk": 0.0334
+    },
+    {
+     "id": 6623,
+     "color": "P",
+     "memberEn": "Kanemura Miku",
+     "cs": "Pe70%",
+     "sk": 0.025
+    },
+    {
+     "id": 6624,
+     "color": "B",
+     "memberEn": "Hirao Honoka",
+     "cs": "Vo70%",
+     "sk": 0.0246
+    },
+    {
+     "id": 6625,
+     "color": "G",
+     "memberEn": "Morimoto Marie",
+     "cs": "Vo70%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6626,
+     "color": "P",
+     "memberEn": "Ota Mizuki",
+     "cs": "Da70%",
+     "sk": 0.0078
+    },
+    {
+     "id": 6627,
+     "color": "Y",
+     "memberEn": "Sakai Nina",
+     "cs": "Da85%",
+     "sk": 0.0368
+    },
+    {
+     "id": 6628,
+     "color": "B",
+     "memberEn": "Matsuo Sakura",
+     "cs": "DaPe50%",
+     "sk": 0.0324
+    },
+    {
+     "id": 6629,
+     "color": "P",
+     "memberEn": "Shogenji Yoko",
+     "cs": "Vo70%",
+     "sk": 0.0252
+    },
+    {
+     "id": 6630,
+     "color": "R",
+     "memberEn": "Kuramori Hinano",
+     "cs": "Da70%",
+     "sk": 0.025
+    },
+    {
+     "id": 6631,
+     "color": "G",
+     "memberEn": "Miyachi Sumire",
+     "cs": "Da70%",
+     "sk": 0.0173
+    },
+    {
+     "id": 6632,
+     "color": "Y",
+     "memberEn": "Kamimura Hinano",
+     "cs": "Pe70%",
+     "sk": 0.0067
+    }
+   ]
+  },
+  {
    "version": "db19-2026-09-21",
    "date": "2026-09-21",
    "added": 0,
