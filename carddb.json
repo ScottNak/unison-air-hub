@@ -1,6 +1,6 @@
 {
- "version": "db20-2026-09-23",
- "cardCount": 5618,
+ "version": "db22-2026-09-23",
+ "cardCount": 5621,
  "cards": [
   {
    "id": 1,
@@ -84270,6 +84270,51 @@
    "pe": 4569,
    "cs": "Pe70%",
    "csBase": "Pe70%",
+   "grad": false
+  },
+  {
+   "id": 6633,
+   "color": "B",
+   "title": "HAPPY 21st BIRTHDAY",
+   "member": "山川宇衣",
+   "memberEn": "Yamakawa Ui",
+   "tot": 11859,
+   "sk": 0.0163,
+   "vo": 3779,
+   "da": 3869,
+   "pe": 3781,
+   "cs": "ALL35%",
+   "csBase": "ALL35%",
+   "grad": false
+  },
+  {
+   "id": 6634,
+   "color": "Y",
+   "title": "HAPPY 19th BIRTHDAY",
+   "member": "中川智尋",
+   "memberEn": "Nakagawa Chihiro",
+   "tot": 11854,
+   "sk": 0.0163,
+   "vo": 3779,
+   "da": 3866,
+   "pe": 3779,
+   "cs": "ALL35%",
+   "csBase": "ALL35%",
+   "grad": false
+  },
+  {
+   "id": 6635,
+   "color": "P",
+   "title": "HAPPY 23rd BIRTHDAY",
+   "member": "平尾帆夏",
+   "memberEn": "Hirao Honoka",
+   "tot": 11867,
+   "sk": 0.0163,
+   "vo": 3775,
+   "da": 3880,
+   "pe": 3782,
+   "cs": "ALL35%",
+   "csBase": "ALL35%",
    "grad": false
   }
  ]
