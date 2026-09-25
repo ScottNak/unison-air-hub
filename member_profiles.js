@@ -4,6 +4,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Endo",
       "given": "Hikari"
     },
+    "kana": "えんどう ひかり",
     "birthday": "1999-04-17",
     "group": "S",
     "graduated": false,
@@ -16,6 +17,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Ozono",
       "given": "Rei"
     },
+    "kana": "おおぞの れい",
     "birthday": "2000-04-18",
     "group": "S",
     "graduated": false,
@@ -28,6 +30,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Onuma",
       "given": "Akiho"
     },
+    "kana": "おおぬま あきほ",
     "birthday": "1999-10-12",
     "group": "S",
     "graduated": false,
@@ -40,6 +43,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Kosaka",
       "given": "Marino"
     },
+    "kana": "こうさか まりの",
     "birthday": "2002-12-19",
     "group": "S",
     "graduated": false,
@@ -52,6 +56,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Tamura",
       "given": "Hono"
     },
+    "kana": "たむら ほの",
     "birthday": "1998-10-21",
     "group": "S",
     "graduated": false,
@@ -64,6 +69,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Fujiyoshi",
       "given": "Karin"
     },
+    "kana": "ふじよし かりん",
     "birthday": "2001-08-29",
     "group": "S",
     "graduated": false,
@@ -76,6 +82,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Masumoto",
       "given": "Kira"
     },
+    "kana": "ますもと きら",
     "birthday": "2002-01-12",
     "group": "S",
     "graduated": false,
@@ -88,6 +95,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Matsuda",
       "given": "Rina"
     },
+    "kana": "まつだ りな",
     "birthday": "1999-10-13",
     "group": "S",
     "graduated": false,
@@ -100,6 +108,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Morita",
       "given": "Hikaru"
     },
+    "kana": "もりた ひかる",
     "birthday": "2001-07-10",
     "group": "S",
     "graduated": false,
@@ -112,6 +121,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Moriya",
       "given": "Rena"
     },
+    "kana": "もりや れな",
     "birthday": "2000-01-02",
     "group": "S",
     "graduated": false,
@@ -124,6 +134,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Yamasaki",
       "given": "Ten"
     },
+    "kana": "やまさき てん",
     "birthday": "2005-09-28",
     "group": "S",
     "graduated": false,
@@ -136,6 +147,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Ishimori",
       "given": "Rika"
     },
+    "kana": "いしもり りか",
     "birthday": "2002-01-13",
     "group": "S",
     "graduated": false,
@@ -148,6 +160,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Endo",
       "given": "Riko"
     },
+    "kana": "えんどう りこ",
     "birthday": "2006-01-09",
     "group": "S",
     "graduated": false,
@@ -160,6 +173,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Odakura",
       "given": "Reina"
     },
+    "kana": "おだくら れいな",
     "birthday": "2004-07-25",
     "group": "S",
     "graduated": false,
@@ -172,6 +186,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Kojima",
       "given": "Nagisa"
     },
+    "kana": "こじま なぎさ",
     "birthday": "2005-07-07",
     "group": "S",
     "graduated": false,
@@ -184,6 +199,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Taniguchi",
       "given": "Airi"
     },
+    "kana": "たにぐち あいり",
     "birthday": "2005-04-12",
     "group": "S",
     "graduated": false,
@@ -196,6 +212,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Nakashima",
       "given": "Yuzuki"
     },
+    "kana": "なかしま ゆづき",
     "birthday": "2003-02-17",
     "group": "S",
     "graduated": false,
@@ -208,6 +225,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Matono",
       "given": "Mio"
     },
+    "kana": "まとの みお",
     "birthday": "2006-11-08",
     "group": "S",
     "graduated": false,
@@ -220,6 +238,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Mukai",
       "given": "Itoha"
     },
+    "kana": "むかい いとは",
     "birthday": "2006-05-09",
     "group": "S",
     "graduated": false,
@@ -232,6 +251,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Murai",
       "given": "Yu"
     },
+    "kana": "むらい ゆう",
     "birthday": "2004-08-18",
     "group": "S",
     "graduated": false,
@@ -244,6 +264,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Murayama",
       "given": "Miu"
     },
+    "kana": "むらやま みう",
     "birthday": "2005-02-15",
     "group": "S",
     "graduated": false,
@@ -256,6 +277,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Yamashita",
       "given": "Shizuki"
     },
+    "kana": "やました しづき",
     "birthday": "2005-01-22",
     "group": "S",
     "graduated": false,
@@ -268,6 +290,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Asai",
       "given": "Konomi"
     },
+    "kana": "あさい このみ",
     "birthday": "2004-12-22",
     "group": "S",
     "graduated": false,
@@ -280,6 +303,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Inaguma",
       "given": "Hina"
     },
+    "kana": "いなぐま ひな",
     "birthday": "2006-03-09",
     "group": "S",
     "graduated": false,
@@ -292,6 +316,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Katsumata",
       "given": "Haru"
     },
+    "kana": "かつまた はる",
     "birthday": "2004-01-24",
     "group": "S",
     "graduated": false,
@@ -304,6 +329,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Sato",
       "given": "Neo"
     },
+    "kana": "さとう ねお",
     "birthday": "2006-12-01",
     "group": "S",
     "graduated": false,
@@ -316,6 +342,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Nakagawa",
       "given": "Chihiro"
     },
+    "kana": "なかがわ ちひろ",
     "birthday": "2007-09-16",
     "group": "S",
     "graduated": false,
@@ -328,6 +355,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Matsumoto",
       "given": "Wako"
     },
+    "kana": "まつもと わこ",
     "birthday": "2005-02-06",
     "group": "S",
     "graduated": false,
@@ -340,6 +368,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Meguro",
       "given": "Hiro"
     },
+    "kana": "めぐろ ひいろ",
     "birthday": "2006-01-24",
     "group": "S",
     "graduated": false,
@@ -352,6 +381,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Yamakawa",
       "given": "Ui"
     },
+    "kana": "やまかわ うい",
     "birthday": "2005-09-19",
     "group": "S",
     "graduated": false,
@@ -364,6 +394,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Yamada",
       "given": "Momomi"
     },
+    "kana": "やまだ ももみ",
     "birthday": "2008-07-20",
     "group": "S",
     "graduated": false,
@@ -376,6 +407,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Ishimori",
       "given": "Nijika"
     },
+    "kana": "いしもり にじか",
     "birthday": "1997-05-07",
     "group": "K",
     "graduated": true,
@@ -388,6 +420,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Uemura",
       "given": "Rina"
     },
+    "kana": "うえむら りな",
     "birthday": "1997-01-04",
     "group": "S",
     "graduated": true,
@@ -400,6 +433,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Ozeki",
       "given": "Rika"
     },
+    "kana": "おぜき りか",
     "birthday": "1997-10-07",
     "group": "S",
     "graduated": true,
@@ -412,6 +446,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Oda",
       "given": "Nana"
     },
+    "kana": "おだ なな",
     "birthday": "1998-06-04",
     "group": "K",
     "graduated": true,
@@ -424,6 +459,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Koike",
       "given": "Minami"
     },
+    "kana": "こいけ みなみ",
     "birthday": "1998-11-14",
     "group": "S",
     "graduated": true,
@@ -436,6 +472,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Kobayashi",
       "given": "Yui"
     },
+    "kana": "こばやし ゆい",
     "birthday": "1999-10-23",
     "group": "S",
     "graduated": true,
@@ -448,6 +485,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Saito",
       "given": "Fuyuka"
     },
+    "kana": "さいとう ふゆか",
     "birthday": "1998-02-15",
     "group": "S",
     "graduated": true,
@@ -460,6 +498,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Sato",
       "given": "Shiori"
     },
+    "kana": "さとう しおり",
     "birthday": "1996-11-16",
     "group": "K",
     "graduated": true,
@@ -472,6 +511,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Sugai",
       "given": "Yuka"
     },
+    "kana": "すがい ゆうか",
     "birthday": "1995-11-29",
     "group": "S",
     "graduated": true,
@@ -484,6 +524,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Suzumoto",
       "given": "Miyu"
     },
+    "kana": "すずもと みゆ",
     "birthday": "1997-12-05",
     "group": "K",
     "graduated": true,
@@ -496,6 +537,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Nagasawa",
       "given": "Nanako"
     },
+    "kana": "ながさわ ななこ",
     "birthday": "1997-04-23",
     "group": "K",
     "graduated": true,
@@ -508,6 +550,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Habu",
       "given": "Mizuho"
     },
+    "kana": "はぶ みづほ",
     "birthday": "1997-07-07",
     "group": "S",
     "graduated": true,
@@ -520,6 +563,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Harada",
       "given": "Aoi"
     },
+    "kana": "はらだ あおい",
     "birthday": "2000-05-07",
     "group": "S",
     "graduated": true,
@@ -532,6 +576,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Hirate",
       "given": "Yurina"
     },
+    "kana": "ひらて ゆりな",
     "birthday": "2001-06-25",
     "group": "K",
     "graduated": true,
@@ -544,6 +589,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Moriya",
       "given": "Akane"
     },
+    "kana": "もりや あかね",
     "birthday": "1997-11-12",
     "group": "S",
     "graduated": true,
@@ -556,6 +602,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Watanabe",
       "given": "Rika"
     },
+    "kana": "わたなべ りか",
     "birthday": "1995-05-16",
     "group": "S",
     "graduated": true,
@@ -568,6 +615,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Watanabe",
       "given": "Risa"
     },
+    "kana": "わたなべ りさ",
     "birthday": "1998-07-27",
     "group": "S",
     "graduated": true,
@@ -580,6 +628,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Inoue",
       "given": "Rina"
     },
+    "kana": "いのうえ りな",
     "birthday": "2001-01-29",
     "group": "S",
     "graduated": true,
@@ -592,6 +641,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Seki",
       "given": "Yumiko"
     },
+    "kana": "せき ゆみこ",
     "birthday": "1998-06-29",
     "group": "S",
     "graduated": true,
@@ -604,6 +654,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Takemoto",
       "given": "Yui"
     },
+    "kana": "たけもと ゆい",
     "birthday": "2002-03-23",
     "group": "S",
     "graduated": true,
@@ -616,6 +667,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Matsudaira",
       "given": "Riko"
     },
+    "kana": "まつだいら りこ",
     "birthday": "1998-05-05",
     "group": "S",
     "graduated": true,
@@ -628,6 +680,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Kanemura",
       "given": "Miku"
     },
+    "kana": "かねむら みく",
     "birthday": "2002-09-10",
     "group": "H",
     "graduated": false,
@@ -640,6 +693,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Kosaka",
       "given": "Nao"
     },
+    "kana": "こさか なお",
     "birthday": "2002-09-07",
     "group": "H",
     "graduated": false,
@@ -652,6 +706,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Kamimura",
       "given": "Hinano"
     },
+    "kana": "かみむら ひなの",
     "birthday": "2004-04-12",
     "group": "H",
     "graduated": false,
@@ -664,6 +719,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Takahashi",
       "given": "Mikuni"
     },
+    "kana": "たかはし みくに",
     "birthday": "2003-09-27",
     "group": "H",
     "graduated": false,
@@ -676,6 +732,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Morimoto",
       "given": "Marie"
     },
+    "kana": "もりもと まりぃ",
     "birthday": "2004-02-23",
     "group": "H",
     "graduated": false,
@@ -688,6 +745,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Yamaguchi",
       "given": "Haruyo"
     },
+    "kana": "やまぐち はるよ",
     "birthday": "2004-02-23",
     "group": "H",
     "graduated": true,
@@ -700,6 +758,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Ishizuka",
       "given": "Tamaki"
     },
+    "kana": "いしづか たまき",
     "birthday": "2004-08-06",
     "group": "H",
     "graduated": false,
@@ -712,6 +771,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Konishi",
       "given": "Nanami"
     },
+    "kana": "こにし ななみ",
     "birthday": "2004-10-03",
     "group": "H",
     "graduated": false,
@@ -724,6 +784,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Shimizu",
       "given": "Rio"
     },
+    "kana": "しみず りお",
     "birthday": "2005-01-15",
     "group": "H",
     "graduated": false,
@@ -736,6 +797,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Shogenji",
       "given": "Yoko"
     },
+    "kana": "しょうげんじ ようこ",
     "birthday": "2007-02-14",
     "group": "H",
     "graduated": false,
@@ -748,6 +810,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Takeuchi",
       "given": "Kirari"
     },
+    "kana": "たけうち きらり",
     "birthday": "2006-02-20",
     "group": "H",
     "graduated": false,
@@ -760,6 +823,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Hirao",
       "given": "Honoka"
     },
+    "kana": "ひらお ほのか",
     "birthday": "2003-07-31",
     "group": "H",
     "graduated": false,
@@ -772,6 +836,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Hiraoka",
       "given": "Mitsuki"
     },
+    "kana": "ひらおか みつき",
     "birthday": "2002-04-09",
     "group": "H",
     "graduated": false,
@@ -784,6 +849,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Fujishima",
       "given": "Kaho"
     },
+    "kana": "ふじしま かほ",
     "birthday": "2006-08-07",
     "group": "H",
     "graduated": false,
@@ -796,6 +862,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Miyachi",
       "given": "Sumire"
     },
+    "kana": "みやち すみれ",
     "birthday": "2005-12-31",
     "group": "H",
     "graduated": false,
@@ -808,6 +875,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Yamashita",
       "given": "Haruka"
     },
+    "kana": "やました はるか",
     "birthday": "2003-05-20",
     "group": "H",
     "graduated": false,
@@ -820,6 +888,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Watanabe",
       "given": "Rina"
     },
+    "kana": "わたなべ りな",
     "birthday": "2009-02-07",
     "group": "H",
     "graduated": false,
@@ -832,6 +901,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Ota",
       "given": "Mizuki"
     },
+    "kana": "おおた みづき",
     "birthday": "2006-12-07",
     "group": "H",
     "graduated": false,
@@ -844,6 +914,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Ono",
       "given": "Manami"
     },
+    "kana": "おおの まなみ",
     "birthday": "2007-05-05",
     "group": "H",
     "graduated": false,
@@ -856,6 +927,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Katayama",
       "given": "Saki"
     },
+    "kana": "かたやま さき",
     "birthday": "2006-12-26",
     "group": "H",
     "graduated": false,
@@ -868,6 +940,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Kuramori",
       "given": "Hinano"
     },
+    "kana": "くらもり ひなの",
     "birthday": "2006-01-23",
     "group": "H",
     "graduated": false,
@@ -880,6 +953,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Sakai",
       "given": "Nina"
     },
+    "kana": "さかい にいな",
     "birthday": "2009-03-14",
     "group": "H",
     "graduated": false,
@@ -892,6 +966,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Sato",
       "given": "Yu"
     },
+    "kana": "さとう ゆう",
     "birthday": "2006-09-10",
     "group": "H",
     "graduated": false,
@@ -904,6 +979,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Shimoda",
       "given": "Izuki"
     },
+    "kana": "しもだ いずき",
     "birthday": "2006-12-26",
     "group": "H",
     "graduated": false,
@@ -916,6 +992,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Takai",
       "given": "Rika"
     },
+    "kana": "たかい りか",
     "birthday": "2007-08-01",
     "group": "H",
     "graduated": false,
@@ -928,6 +1005,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Tsurusaki",
       "given": "Niko"
     },
+    "kana": "つるさき にこ",
     "birthday": "2004-03-27",
     "group": "H",
     "graduated": false,
@@ -940,6 +1018,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Matsuo",
       "given": "Sakura"
     },
+    "kana": "まつお さくら",
     "birthday": "2005-06-08",
     "group": "H",
     "graduated": false,
@@ -952,6 +1031,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Iguchi",
       "given": "Mao"
     },
+    "kana": "いぐち まお",
     "birthday": "1995-11-10",
     "group": "H",
     "graduated": true,
@@ -964,6 +1044,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Ushio",
       "given": "Sarina"
     },
+    "kana": "うしお さりな",
     "birthday": "1997-12-26",
     "group": "H",
     "graduated": true,
@@ -976,6 +1057,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Kageyama",
       "given": "Yuka"
     },
+    "kana": "かげやま ゆうか",
     "birthday": "2001-05-08",
     "group": "H",
     "graduated": true,
@@ -988,6 +1070,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Kato",
       "given": "Shiho"
     },
+    "kana": "かとう しほ",
     "birthday": "1998-02-02",
     "group": "H",
     "graduated": true,
@@ -1000,6 +1083,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Saito",
       "given": "Kyoko"
     },
+    "kana": "さいとう きょうこ",
     "birthday": "1997-09-05",
     "group": "H",
     "graduated": true,
@@ -1012,6 +1096,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Sasaki",
       "given": "Kumi"
     },
+    "kana": "ささき くみ",
     "birthday": "1996-01-22",
     "group": "H",
     "graduated": true,
@@ -1024,6 +1109,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Sasaki",
       "given": "Mirei"
     },
+    "kana": "ささき みれい",
     "birthday": "1999-12-17",
     "group": "H",
     "graduated": true,
@@ -1036,6 +1122,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Takase",
       "given": "Mana"
     },
+    "kana": "たかせ まな",
     "birthday": "1998-09-20",
     "group": "H",
     "graduated": true,
@@ -1048,6 +1135,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Takamoto",
       "given": "Ayaka"
     },
+    "kana": "たかもと あやか",
     "birthday": "1998-11-02",
     "group": "H",
     "graduated": true,
@@ -1060,6 +1148,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Higashimura",
       "given": "Mei"
     },
+    "kana": "ひがしむら めい",
     "birthday": "1998-08-23",
     "group": "H",
     "graduated": true,
@@ -1072,6 +1161,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Kawata",
       "given": "Hina"
     },
+    "kana": "かわた ひな",
     "birthday": "2001-07-23",
     "group": "H",
     "graduated": true,
@@ -1084,6 +1174,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Tomita",
       "given": "Suzuka"
     },
+    "kana": "とみた すずか",
     "birthday": "2001-01-18",
     "group": "H",
     "graduated": true,
@@ -1096,6 +1187,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Nibu",
       "given": "Akari"
     },
+    "kana": "にぶ あかり",
     "birthday": "2001-02-15",
     "group": "H",
     "graduated": true,
@@ -1108,6 +1200,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Hamagishi",
       "given": "Hiyori"
     },
+    "kana": "はまぎし ひより",
     "birthday": "2002-09-28",
     "group": "H",
     "graduated": true,
@@ -1120,6 +1213,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Matsuda",
       "given": "Konoka"
     },
+    "kana": "まつだ このか",
     "birthday": "1999-04-27",
     "group": "H",
     "graduated": true,
@@ -1132,6 +1226,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Miyata",
       "given": "Manamo"
     },
+    "kana": "みやた まなも",
     "birthday": "1998-04-28",
     "group": "H",
     "graduated": true,
@@ -1144,6 +1239,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Watanabe",
       "given": "Miho"
     },
+    "kana": "わたなべ みほ",
     "birthday": "2000-02-24",
     "group": "H",
     "graduated": true,
@@ -1156,6 +1252,7 @@ window.UNIAIR_MEMBER_PROFILES = {
       "family": "Kishi",
       "given": "Honoka"
     },
+    "kana": "きし ほのか",
     "birthday": "2004-08-15",
     "group": "H",
     "graduated": true,
