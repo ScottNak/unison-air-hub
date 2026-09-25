@@ -136,7 +136,7 @@
   .wcell.is-leader { border-color: #d8d8e2; }
   .wcell.is-need { background: #fff; border-color: #dfe3ef; }
   .wc-top, .wc-bot { display: flex; align-items: center; gap: 5px; min-width: 0; }
-  .wc-top { justify-content: space-between; }
+  .wc-top { justify-content: space-between; align-items: flex-start; }
   .acq-grad {
     display: inline-block; flex: 0 0 auto;
     border-radius: 999px; padding: 2px 8px;
@@ -144,10 +144,13 @@
     background: linear-gradient(90deg, #3a5bc7 0%, #2f6f7a 50%, #1c7a2e 100%);
   }
   .wc-top .nm { flex: 1 1 auto; }
-  .wc-top .nm { font-size: 11.5px; font-weight: 700; color: #2d2d42; }
-  .wc-bot .cd { font-size: 11px; color: #777; }
-  .wcell .nm, .wcell .cd { min-width: 0; overflow: hidden;
-                            text-overflow: ellipsis; white-space: nowrap; }
+  .wc-top .nm { font-size: 11.5px; font-weight: 700; color: #2d2d42;
+                 line-height: 1.25; word-break: keep-all; }
+  .wc-bot .cd { font-size: 11px; color: #777; line-height: 1.3;
+                 display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; }
+  .wcell .nm, .wcell .cd { min-width: 0; overflow: hidden; }
+  .wc-bot { margin-top: auto; }
+  .wc-bot .color-sq.sm { align-self: flex-end; }
   .acq-tag.sm { width: auto; padding: 2px 8px; font-size: 9.5px; flex: 0 0 auto; }
   .color-sq.sm { width: 18px; height: 18px; font-size: 10px; border-radius: 4px; flex: 0 0 auto; }
   .acq-tag.owned { background: #8a8f9c; }
@@ -201,7 +204,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v22</div>
+<div class="page-version-badge">v23</div>
 <div class="wrap">
   <div class="note">
     <div class="note-text">
@@ -231,6 +234,49 @@
 </div>
 
 <script>
+
+var UNIAIR_NAME_EN = {"上村ひなの": "Kamimura Hinano", "上村莉菜": "Uemura Rina", "下田衣珠季": "Shimoda Izuki", "中嶋優月": "Nakashima Yuzuki", "中川智尋": "Nakagawa Chihiro", "丹生明里": "Nibu Akari", "井上梨名": "Inoue Rina", "井口眞緒": "Iguchi Mao", "佐々木久美": "Sasaki Kumi", "佐々木美玲": "Sasaki Mirei", "佐藤優羽": "Sato Yu", "佐藤愛桜": "Sato Neo", "佐藤詩織": "Sato Shiori", "加藤史帆": "Kato Shiho", "勝又春": "Katsumata Haru", "原田葵": "Harada Aoi", "向井純葉": "Mukai Itoha", "土生瑞穂": "Habu Mizuho", "坂井新奈": "Sakai Nina", "増本綺良": "Masumoto Kira", "大園玲": "Ozono Rei", "大沼晶保": "Onuma Akiho", "大田美月": "Ota Mizuki", "大野愛実": "Ono Manami", "守屋茜": "Moriya Akane", "守屋麗奈": "Moriya Rena", "宮地すみれ": "Miyachi Sumire", "宮田愛萌": "Miyata Manamo", "富田鈴花": "Tomita Suzuka", "小坂菜緒": "Kosaka Nao", "小島凪紗": "Kojima Nagisa", "小林由依": "Kobayashi Yui", "小池美波": "Koike Minami", "小田倉麗奈": "Odakura Reina", "小西夏菜実": "Konishi Nanami", "尾関梨香": "Ozeki Rika", "山下瞳月": "Yamashita Shizuki", "山下葉留花": "Yamashita Haruka", "山口陽世": "Yamaguchi Haruyo", "山川宇衣": "Yamakawa Ui", "山田桃実": "Yamada Momomi", "山﨑天": "Yamasaki Ten", "岸帆夏": "Kishi Honoka", "平尾帆夏": "Hirao Honoka", "平岡海月": "Hiraoka Mitsuki", "平手友梨奈": "Hirate Yurina", "幸阪茉里乃": "Kosaka Marino", "影山優佳": "Kageyama Yuka", "村井優": "Murai Yu", "村山美羽": "Murayama Miu", "東村芽依": "Higashimura Mei", "松尾桜": "Matsuo Sakura", "松平璃子": "Matsudaira Riko", "松本和子": "Matsumoto Wako", "松田好花": "Matsuda Konoka", "松田里奈": "Matsuda Rina", "森本茉莉": "Morimoto Marie", "森田ひかる": "Morita Hikaru", "正源司陽子": "Shogenji Yoko", "武元唯衣": "Takemoto Yui", "河田陽菜": "Kawata Hina", "浅井恋乃未": "Asai Konomi", "清水理央": "Shimizu Rio", "渡辺梨加": "Watanabe Rika", "渡辺莉奈": "Watanabe Rina", "渡邉理佐": "Watanabe Risa", "渡邉美穂": "Watanabe Miho", "潮紗理菜": "Ushio Sarina", "濱岸ひより": "Hamagishi Hiyori", "片山紗希": "Katayama Saki", "田村保乃": "Tamura Hono", "的野美青": "Matono Mio", "目黒陽色": "Meguro Hiro", "石塚瑶季": "Ishizuka Tamaki", "石森璃花": "Ishimori Rika", "石森虹花": "Ishimori Nijika", "稲熊ひな": "Inaguma Hina", "竹内希来里": "Takeuchi Kirari", "織田奈那": "Oda Nana", "菅井友香": "Sugai Yuka", "蔵盛妃那乃": "Kuramori Hinano", "藤吉夏鈴": "Fujiyoshi Karin", "藤嶌果歩": "Fujishima Kaho", "谷口愛季": "Taniguchi Airi", "遠藤光莉": "Endo Hikari", "遠藤理子": "Endo Riko", "金村美玖": "Kanemura Miku", "鈴本美愉": "Suzumoto Miyu", "長沢菜々香": "Nagasawa Nanako", "関有美子": "Seki Yumiko", "高井俐香": "Takai Rika", "高本彩花": "Takamoto Ayaka", "高瀬愛奈": "Takase Mana", "髙橋未来虹": "Takahashi Mikuni", "鶴崎仁香": "Tsurusaki Niko", "齊藤京子": "Saito Kyoko", "齋藤冬優花": "Saito Fuyuka"};
+var UNIAIR_NAME_LANG = (function () {
+  try {
+    var raw = localStorage.getItem('uniair_name_lang_v1');
+    if (raw) {
+      var rec = JSON.parse(raw);
+      if (rec && rec.sv === 1 && rec.lang === 'EN') return 'EN';
+    }
+  } catch (e) { }
+  return 'JP';
+})();
+function uniairName(jp) {
+  if (UNIAIR_NAME_LANG === 'EN' && UNIAIR_NAME_EN[jp]) return UNIAIR_NAME_EN[jp];
+  return jp;
+}
+
+
+function fitWcellSongs() {
+  var pairs = [];
+  document.querySelectorAll('.wcell').forEach(function (cell) {
+    var cd = cell.querySelector('.cd');
+    var bot = cell.querySelector('.wc-bot');
+    if (!cd || !bot) return;
+    cd.style.webkitLineClamp = '1';
+    pairs.push([cell, cd, bot]);
+  });
+  var lines = pairs.map(function (p) {
+    if (!p[0].offsetHeight) return 1;
+    var cs = getComputedStyle(p[0]);
+    var top = p[0].querySelector('.wc-top');
+    var room = p[0].clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) -
+      (top ? top.offsetHeight + (parseFloat(cs.rowGap) || 0) : 0);
+    var lh = parseFloat(getComputedStyle(p[1]).lineHeight);
+    return lh ? Math.max(1, Math.floor((room + 0.5) / lh)) : 1;
+  });
+  pairs.forEach(function (p, i) {
+    if (lines[i] > 1) p[1].style.webkitLineClamp = String(lines[i]);
+  });
+}
+window.addEventListener('resize', fitWcellSongs);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitWcellSongs);
+
 
 const KIZUNA_TABLE = [[2,0,0,0],[3,10,0,0],[4,10,10,0],[5,10,10,10],[6,25,10,10],[7,25,10,10],[8,25,25,10],[9,25,25,25],[10,25,25,25],[11,45,25,25],[12,45,25,25],[13,45,45,25],[14,45,45,45],[15,65,45,45],[16,65,65,45],[17,65,65,45],[18,65,65,65],[19,90,65,65],[20,90,90,65],[21,90,90,90],[22,90,90,90],[23,115,90,90],[24,115,115,90],[25,115,115,115],[26,140,115,115],[27,140,115,115],[28,140,140,115],[29,140,140,140],[30,165,140,140],[31,165,170,140],[32,165,170,140],[33,165,170,170],[34,195,170,170],[35,195,200,170],[36,195,200,200],[37,195,200,200],[38,225,200,200],[39,225,230,200],[40,225,230,230],[41,255,230,230],[42,255,230,230],[43,255,260,230],[44,255,260,260],[45,285,260,260],[46,285,290,260],[47,285,290,260],[48,285,290,290],[49,315,290,290],[50,315,320,290],[51,315,320,320],[52,325,330,330],[53,360,330,330],[54,360,365,330],[55,360,365,365],[56,395,365,365],[57,395,365,365]];
 const KIZUNA_STEP = {"fromLevel":57,"step":35,"baseTotal":1125};
@@ -875,7 +921,7 @@ function effectiveSkillLabel(mech, leader, supports) {
     var vst = veautTeamStats(leader, supports);
     teamLsvo = vst.teamLsvo; teamLsda = vst.teamLsda; teamLspe = vst.teamLspe;
     openVo = vst.openVo; openDa = vst.openDa; openPe = vst.openPe;
-    activationNote = 'SK ×' + vst.activationMult.toFixed(1) + ' for ' + leader.member;
+    activationNote = 'SK ×' + vst.activationMult.toFixed(1) + ' for ' + uniairName(leader.member);
   } else if (mech === 'steller') {
     var sst = stellerTeamStats(leader, supports);
     teamLsvo = sst.teamLsvo; teamLsda = sst.teamLsda; teamLspe = sst.teamLspe;
@@ -1403,7 +1449,7 @@ var RESULTS_KEY = 'uniair_public_bestteams_results_v1';
 
 
 
-var RESULTS_SCHEMA = 'v22';
+var RESULTS_SCHEMA = 'v23';
 var RESULTS_FP = null;
 var CACHED_ALL = null;
 
@@ -1512,11 +1558,11 @@ function droppedNotes(chg) {
   var lines = [];
   if (chg.dropped.length) {
     lines.push('replaced ' + chg.dropped.map(function(e) {
-      return esc(e.m) + ' &mdash; ' + esc(e.s);
+      return esc(uniairName(e.m)) + ' &mdash; ' + esc(e.s);
     }).join(', '));
   }
   if (chg.leadMoved && chg.prevLead) {
-    lines.push('center was ' + esc(chg.prevLead.m) + ' &mdash; ' + esc(chg.prevLead.s));
+    lines.push('center was ' + esc(uniairName(chg.prevLead.m)) + ' &mdash; ' + esc(chg.prevLead.s));
   }
   return lines.map(function(t) {
     return '<div class="chg-out"><span class="chg-minus">&minus;</span> ' + t + '</div>';
@@ -1602,7 +1648,7 @@ function renderPanel(color, result, chg) {
     }
     return '<tr class="' + rowCls + '">' +
       '<td class="color-cell">' + colorSquare(r.color) + '</td>' +
-      '<td title="' + esc(r.member) + '">' + esc(r.member) + '</td>' +
+      '<td title="' + esc(uniairName(r.member)) + '">' + esc(uniairName(r.member)) + '</td>' +
       '<td title="' + esc(r.song) + '">' + esc(r.song) + '</td>' +
       '<td title="' + esc(r.centerSkill || '') + '">' + esc(r.centerSkill || '') + '</td>' +
       '<td>' + skHtml + '</td>' +
@@ -1616,7 +1662,7 @@ function renderPanel(color, result, chg) {
     
     var leadRow = null;
     (result.rows || []).forEach(function(r) { if (r.isLeader && !leadRow) leadRow = r; });
-    var who = leadRow ? esc(leadRow.member) : 'this leader';
+    var who = leadRow ? esc(uniairName(leadRow.member)) : 'this leader';
     var msg = result.recReason === 'filtered'
       ? 'Nothing to add. A better set of supports exists, but every card in it is one you '
         + 'already own - the team above should have picked them.'
@@ -1626,7 +1672,7 @@ function renderPanel(color, result, chg) {
       '<div class="watch-empty">' + msg + '</div></div>';
   } else {
     var items = result.recommended.map(function(rec) {
-      var label = esc(rec.member) + ' — ' + esc(rec.song);
+      var label = esc(uniairName(rec.member)) + ' — ' + esc(rec.song);
       var skill = esc(rec.centerSkill || '');
       return '<tr class="' + ((chg && chg.recIn[rec.id]) ? 'row-in' : '') + '">' +
         '<td class="gain-cell">' + soloGainHtml(rec.gainPct) + '</td>' +
@@ -1660,6 +1706,7 @@ function renderPanel(color, result, chg) {
     
     
     (color === ALL_COLOR ? '' : watchHtml(color, result));
+  fitWcellSongs();
 }
 
 
@@ -1697,7 +1744,7 @@ function watchHtml(color, result) {
     var leaderRow = null;
     (result.rows || []).forEach(function(r) { if (r.isLeader && !leaderRow) leaderRow = r; });
     body = '<div class="watch-empty">No other team beats this one.' +
-      (leaderRow ? ' ' + esc(leaderRow.member) + ' — ' + esc(leaderRow.song) +
+      (leaderRow ? ' ' + esc(uniairName(leaderRow.member)) + ' — ' + esc(leaderRow.song) +
                    ' leading these five is the best ' + esc(COLOR_LABEL[color]) + ' can do.' : '') +
       '</div>';
   } else {
@@ -1715,7 +1762,7 @@ function watchHtml(color, result) {
       return '<span class="acq-tag sm ' + (tagClass[tag] || 'pull') + '">' + esc(tag) + '</span>';
     };
     var cardCell = function(c, tag, owned, isLeader) {
-      var full = esc(c.member) + ' — ' + esc(c.song);
+      var full = esc(uniairName(c.member)) + ' — ' + esc(c.song);
       
       
       var hex = COLOR_HEX[JP_TO_LETTER[c.color] || '?'] || '#999';
@@ -1723,7 +1770,7 @@ function watchHtml(color, result) {
       return '<div class="wcell' + (isLeader ? ' is-leader' : (owned ? '' : ' is-need')) +
         '" title="' + full + '"' + tint + '>' +
         '<div class="wc-top">' +
-          '<span class="nm">' + esc(c.member) + '</span>' +
+          '<span class="nm">' + esc(uniairName(c.member)) + '</span>' +
           cellPill(tag) +
         '</div>' +
         '<div class="wc-bot">' + colorSquare(c.color, 'sm') +
@@ -1947,6 +1994,7 @@ function setActiveColor(color) {
   document.querySelectorAll('.panel, .empty-state').forEach(function(p) {
     p.classList.toggle('active', p.id === 'panel-' + color);
   });
+  fitWcellSongs();
 }
 
 

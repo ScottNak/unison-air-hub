@@ -417,7 +417,7 @@
 </style>
 </head>
 <body>
-  <div class="page-version-badge">v9</div>
+  <div class="page-version-badge">v10</div>
   <div class="wrap">
     
     <div class="section-card">
@@ -12492,6 +12492,27 @@ function uniairGroupFirst() { return uniairGroupOrder()[0]; }
 })();
 </script>
 <script>
+var UNIAIR_NAME_EN = {"上村ひなの": "Kamimura Hinano", "上村莉菜": "Uemura Rina", "下田衣珠季": "Shimoda Izuki", "中嶋優月": "Nakashima Yuzuki", "中川智尋": "Nakagawa Chihiro", "丹生明里": "Nibu Akari", "井上梨名": "Inoue Rina", "井口眞緒": "Iguchi Mao", "佐々木久美": "Sasaki Kumi", "佐々木美玲": "Sasaki Mirei", "佐藤優羽": "Sato Yu", "佐藤愛桜": "Sato Neo", "佐藤詩織": "Sato Shiori", "加藤史帆": "Kato Shiho", "勝又春": "Katsumata Haru", "原田葵": "Harada Aoi", "向井純葉": "Mukai Itoha", "土生瑞穂": "Habu Mizuho", "坂井新奈": "Sakai Nina", "増本綺良": "Masumoto Kira", "大園玲": "Ozono Rei", "大沼晶保": "Onuma Akiho", "大田美月": "Ota Mizuki", "大野愛実": "Ono Manami", "守屋茜": "Moriya Akane", "守屋麗奈": "Moriya Rena", "宮地すみれ": "Miyachi Sumire", "宮田愛萌": "Miyata Manamo", "富田鈴花": "Tomita Suzuka", "小坂菜緒": "Kosaka Nao", "小島凪紗": "Kojima Nagisa", "小林由依": "Kobayashi Yui", "小池美波": "Koike Minami", "小田倉麗奈": "Odakura Reina", "小西夏菜実": "Konishi Nanami", "尾関梨香": "Ozeki Rika", "山下瞳月": "Yamashita Shizuki", "山下葉留花": "Yamashita Haruka", "山口陽世": "Yamaguchi Haruyo", "山川宇衣": "Yamakawa Ui", "山田桃実": "Yamada Momomi", "山﨑天": "Yamasaki Ten", "岸帆夏": "Kishi Honoka", "平尾帆夏": "Hirao Honoka", "平岡海月": "Hiraoka Mitsuki", "平手友梨奈": "Hirate Yurina", "幸阪茉里乃": "Kosaka Marino", "影山優佳": "Kageyama Yuka", "村井優": "Murai Yu", "村山美羽": "Murayama Miu", "東村芽依": "Higashimura Mei", "松尾桜": "Matsuo Sakura", "松平璃子": "Matsudaira Riko", "松本和子": "Matsumoto Wako", "松田好花": "Matsuda Konoka", "松田里奈": "Matsuda Rina", "森本茉莉": "Morimoto Marie", "森田ひかる": "Morita Hikaru", "正源司陽子": "Shogenji Yoko", "武元唯衣": "Takemoto Yui", "河田陽菜": "Kawata Hina", "浅井恋乃未": "Asai Konomi", "清水理央": "Shimizu Rio", "渡辺梨加": "Watanabe Rika", "渡辺莉奈": "Watanabe Rina", "渡邉理佐": "Watanabe Risa", "渡邉美穂": "Watanabe Miho", "潮紗理菜": "Ushio Sarina", "濱岸ひより": "Hamagishi Hiyori", "片山紗希": "Katayama Saki", "田村保乃": "Tamura Hono", "的野美青": "Matono Mio", "目黒陽色": "Meguro Hiro", "石塚瑶季": "Ishizuka Tamaki", "石森璃花": "Ishimori Rika", "石森虹花": "Ishimori Nijika", "稲熊ひな": "Inaguma Hina", "竹内希来里": "Takeuchi Kirari", "織田奈那": "Oda Nana", "菅井友香": "Sugai Yuka", "蔵盛妃那乃": "Kuramori Hinano", "藤吉夏鈴": "Fujiyoshi Karin", "藤嶌果歩": "Fujishima Kaho", "谷口愛季": "Taniguchi Airi", "遠藤光莉": "Endo Hikari", "遠藤理子": "Endo Riko", "金村美玖": "Kanemura Miku", "鈴本美愉": "Suzumoto Miyu", "長沢菜々香": "Nagasawa Nanako", "関有美子": "Seki Yumiko", "高井俐香": "Takai Rika", "高本彩花": "Takamoto Ayaka", "高瀬愛奈": "Takase Mana", "髙橋未来虹": "Takahashi Mikuni", "鶴崎仁香": "Tsurusaki Niko", "齊藤京子": "Saito Kyoko", "齋藤冬優花": "Saito Fuyuka"};
+var UNIAIR_NAME_LANG = (function () {
+  try {
+    var raw = localStorage.getItem('uniair_name_lang_v1');
+    if (raw) {
+      var rec = JSON.parse(raw);
+      if (rec && rec.sv === 1 && rec.lang === 'EN') return 'EN';
+    }
+  } catch (e) { }
+  return 'JP';
+})();
+function uniairName(jp) {
+  if (UNIAIR_NAME_LANG === 'EN' && UNIAIR_NAME_EN[jp]) return UNIAIR_NAME_EN[jp];
+  return jp;
+}
+
+document.querySelectorAll('.dm-name[data-name-jp]').forEach(function (el) {
+  el.textContent = uniairName(el.dataset.nameJp);
+});
+</script>
+<script>
 (function() {
   var CATALOG_OWNED_KEY = 'uniair_public_owned';
   var ownedSet = {};
@@ -12730,30 +12751,6 @@ function uniairGroupFirst() { return uniairGroupOrder()[0]; }
   fitGridScroll();
 
   
-  
-  
-  
-  
-  
-  
-  
-  
-  function applyLanguage(lang) {
-    document.querySelectorAll('[data-name-en]').forEach(function(el) {
-      el.textContent = (lang === 'EN') ? el.dataset.nameEn : el.dataset.nameJp;
-    });
-    document.querySelectorAll('[data-label-en]').forEach(function(el) {
-      el.textContent = (lang === 'EN') ? el.dataset.labelEn : el.dataset.labelJp;
-    });
-  }
-
-  window.addEventListener('message', function(e) {
-    if (e.data && e.data.type === 'uniair-lang' && (e.data.lang === 'JP' || e.data.lang === 'EN')) {
-      applyLanguage(e.data.lang);
-    }
-  });
-
-  
   var filterEl = document.getElementById('disco-filter');
   if (filterEl) {
     filterEl.addEventListener('input', function(e) {
@@ -12761,7 +12758,9 @@ function uniairGroupFirst() { return uniairGroupOrder()[0]; }
       document.querySelectorAll('.song-tile').forEach(function(tile) {
         var songName = tile.querySelector('.song-name').textContent.toLowerCase();
         var memberNames = Array.prototype.map.call(
-          tile.querySelectorAll('.dm-name'), function(el) { return el.textContent.toLowerCase(); }
+          tile.querySelectorAll('.dm-name'), function(el) {
+            return (el.dataset.nameJp + ' ' + el.dataset.nameEn).toLowerCase();
+          }
         ).join(' ');
         var match = !q || songName.indexOf(q) !== -1 || memberNames.indexOf(q) !== -1;
         tile.classList.toggle('hidden', !match);

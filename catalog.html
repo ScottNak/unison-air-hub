@@ -297,7 +297,7 @@
 </style>
 </head>
 <body>
-  <div class="page-version-badge">v13</div>
+  <div class="page-version-badge">v14</div>
   <div class="wrap">
     <div class="panel">
       <div class="controls">
@@ -347,13 +347,6 @@
                   <button type="button" class="mode-switch-btn active" data-owned="all">All</button>
                   <button type="button" class="mode-switch-btn" data-owned="owned">Owned</button>
                   <button type="button" class="mode-switch-btn" data-owned="unowned">Unowned</button>
-                </div>
-              </div>
-              <div class="filter-group">
-                <label class="filter-label">Member Name</label>
-                <div class="mode-switch mode-switch-sm" id="name-lang-switch" role="group" aria-label="Member name language">
-                  <button type="button" class="mode-switch-btn active" data-lang="JP">&#26085;&#26412;&#35486;</button>
-                  <button type="button" class="mode-switch-btn" data-lang="EN">English</button>
                 </div>
               </div>
             </div>
@@ -538,7 +531,7 @@ const MEMBER_KANA = {"遠藤光莉":"えんどう ひかり","大園玲":"おお
 const KANA_COLLATOR = new Intl.Collator('ja');
 
 
-const NAME_LANG_KEY = 'uniair_catalog_name_lang_v1';
+const NAME_LANG_KEY = 'uniair_name_lang_v1';
 const NAME_LANG_SV = 1;
 function loadNameLang() {
   try {
@@ -549,12 +542,7 @@ function loadNameLang() {
     return rec.lang === 'EN' ? 'EN' : 'JP';
   } catch (e) { return 'JP'; }
 }
-function saveNameLang(lang) {
-  try {
-    localStorage.setItem(NAME_LANG_KEY, JSON.stringify({sv: NAME_LANG_SV, lang: lang}));
-  } catch (e) {}
-}
-let nameLang = loadNameLang();
+const nameLang = loadNameLang();
 
 
 function memberLabel(jp) {
@@ -833,15 +821,6 @@ document.querySelectorAll('#owned-switch .mode-switch-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     ownedFilter = btn.dataset.owned;
     document.querySelectorAll('#owned-switch .mode-switch-btn').forEach(b => b.classList.toggle('active', b === btn));
-    render();
-  });
-});
-
-document.querySelectorAll('#name-lang-switch .mode-switch-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    nameLang = btn.dataset.lang === 'EN' ? 'EN' : 'JP';
-    saveNameLang(nameLang);
-    document.querySelectorAll('#name-lang-switch .mode-switch-btn').forEach(b => b.classList.toggle('active', b === btn));
     render();
   });
 });
@@ -1381,7 +1360,7 @@ let pdDirty = false;
 function pdCardLabel(id) {
   const c = CARD_BY_ID[id];
   if (!c) return '<span class="pd-title">card id ' + id + '</span>';
-  return '<span class="pd-member">' + esc(c.member) + '</span><span class="pd-title">' + esc(c.title) + '</span>';
+  return '<span class="pd-member">' + esc(memberLabel(c.member)) + '</span><span class="pd-title">' + esc(c.title) + '</span>';
 }
 
 function pdMatches(id) {
@@ -1608,10 +1587,6 @@ function resetFilters() {
 }
 
 document.getElementById('filters-reset-btn').addEventListener('click', resetFilters);
-
-document.querySelectorAll('#name-lang-switch .mode-switch-btn').forEach(b => {
-  b.classList.toggle('active', b.dataset.lang === nameLang);
-});
 
 buildDisplayRows();
 buildFilterOptions();

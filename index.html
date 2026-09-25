@@ -53,6 +53,13 @@
   .gear-seg button[aria-pressed="true"] { box-shadow: 0 1px 4px rgba(0,0,0,0.16); }
   .gear-seg .seg-h[aria-pressed="true"] { background: #7CC7E8; color: #24405a; }
   .gear-seg .seg-s[aria-pressed="true"] { background: #F19DB5; color: #5a2434; }
+  .gear-seg .seg-n[aria-pressed="true"] { background: #fff; color: #2d2d42; }
+  .gear-info {
+    display: inline-flex; align-items: center; justify-content: center; vertical-align: 1px;
+    width: 14px; height: 14px; margin-left: 4px; border-radius: 50%;
+    background: #dfe3ec; color: #6b7488; font-size: 9.5px; font-weight: 800;
+    text-transform: none; letter-spacing: 0; cursor: help;
+  }
 
   .tabs {
     display: flex; justify-content: center; gap: 8px; padding: 0 16px;
@@ -338,10 +345,15 @@
       <button type="button" class="seg-s" data-val="SAKURA" aria-pressed="false">櫻坂 first</button>
       <button type="button" class="seg-h" data-val="HINATA" aria-pressed="true">日向坂 first</button>
     </div>
+    <span class="gear-order-label">Member names <span class="gear-info" tabindex="0" title="• Grid view in the Disco tab and Bulk Add will always show the Japanese Name. (Note: the English name always appears on hover)&#10;• Sorting the Member column in Card DB matches the in-game あいうえお sort order, even in English mode." aria-label="• Grid view in the Disco tab and Bulk Add will always show the Japanese Name. (Note: the English name always appears on hover)&#10;• Sorting the Member column in Card DB matches the in-game あいうえお sort order, even in English mode.">i</span></span>
+    <div class="gear-seg" id="hub-name-seg">
+      <button type="button" class="seg-n" data-val="JP" aria-pressed="true">日本語</button>
+      <button type="button" class="seg-n" data-val="EN" aria-pressed="false">English</button>
+    </div>
     <input type="file" id="hub-import-file" accept="application/json" style="display:none">
     <span class="save-note" id="hub-save-note">&nbsp;</span>
   </div>
-  <div class="page-version-badge">v12</div>
+  <div class="page-version-badge">v13</div>
 </header>
 
 <div class="bday-box" id="bday-box"></div>
@@ -867,6 +879,42 @@
       iframes[i].src = page.file + '?v=' + Date.now();
     });
   }
+
+  var NAME_LANG_KEY = 'uniair_name_lang_v1';
+  var NAME_LANG_SV = 1;
+
+  function readNameLang() {
+    try {
+      var rec = JSON.parse(localStorage.getItem(NAME_LANG_KEY));
+      if (rec && rec.sv === NAME_LANG_SV && rec.lang === 'EN') return 'EN';
+    } catch (err) { }
+    return 'JP';
+  }
+
+  var framesNameLang = readNameLang();
+
+  function applyNameLang(lang) {
+    try {
+      localStorage.setItem(NAME_LANG_KEY, JSON.stringify({ sv: NAME_LANG_SV, lang: lang }));
+    } catch (err) { }
+    syncPick(document.getElementById('hub-name-seg'), lang);
+    if (lang === framesNameLang) return;
+    framesNameLang = lang;
+    if (!framesStarted) return;
+    pages.forEach(function (page, i) {
+      iframes[i].src = page.file + '?v=' + Date.now();
+    });
+  }
+
+  (function () {
+    var seg = document.getElementById('hub-name-seg');
+    syncPick(seg, framesNameLang);
+    seg.addEventListener('click', function (e) {
+      var btn = e.target.closest('button');
+      if (!btn) return;
+      applyNameLang(btn.dataset.val);
+    });
+  })();
 
   (function () {
     var seg = document.getElementById('hub-order-seg');

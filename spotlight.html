@@ -160,17 +160,20 @@
   .wcell.is-center { border-color: #d8d8e2; }
   .wcell.is-need { background: #fff; border-color: #dfe3ef; }
   .wc-top, .wc-bot { display: flex; align-items: center; gap: 5px; min-width: 0; }
-  .wc-top { justify-content: space-between; }
+  .wc-top { justify-content: space-between; align-items: flex-start; }
   .acq-grad {
     display: inline-block; flex: 0 0 auto;
     border-radius: 999px; padding: 2px 8px;
     font-weight: 800; font-size: 9.5px; color: #fff;
     background: linear-gradient(90deg, #3a5bc7 0%, #2f6f7a 50%, #1c7a2e 100%);
   }
-  .wc-top .nm { flex: 1 1 auto; font-size: 11.5px; font-weight: 700; color: #2d2d42; }
-  .wc-bot .cd { font-size: 11px; color: #777; }
-  .wcell .nm, .wcell .cd { min-width: 0; overflow: hidden;
-                           text-overflow: ellipsis; white-space: nowrap; }
+  .wc-top .nm { flex: 1 1 auto; font-size: 11.5px; font-weight: 700; color: #2d2d42;
+                line-height: 1.25; word-break: keep-all; }
+  .wc-bot .cd { font-size: 11px; color: #777; line-height: 1.3;
+                display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; }
+  .wcell .nm, .wcell .cd { min-width: 0; overflow: hidden; }
+  .wc-bot { margin-top: auto; }
+  .wc-bot .color-sq.sm { align-self: flex-end; }
   .acq-tag.sm { width: auto; padding: 2px 8px; font-size: 9.5px; flex: 0 0 auto; }
   .color-sq.sm { width: 18px; height: 18px; font-size: 10px; border-radius: 4px; flex: 0 0 auto; }
   .chips { white-space: nowrap; text-align: right; width: 110px; }
@@ -202,18 +205,14 @@
   .member-tab-bar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: -1px; }
   .member-tab-label {
     flex: 1 1 0; text-align: center; cursor: pointer; user-select: none;
-    padding: 8px 14px; border-radius: 12px 12px 0 0;
-    font-size: 14px; font-weight: 800; color: #2d2d42;
+    display: flex; align-items: center; justify-content: center;
+    padding: 11px 10px; border-radius: 12px 12px 0 0;
+    font-size: 13px; font-weight: 800; color: #2d2d42;
     background: rgba(255,255,255,0.55);
     transition: background .12s ease, color .12s ease;
   }
   .member-tab-label:hover { background: rgba(255,255,255,0.75); }
-  .mtab-jp { display: block; line-height: 17px; }
-  .mtab-en {
-    display: block; line-height: 12px;
-    font-size: 10.5px; font-weight: 700; letter-spacing: .01em;
-    opacity: .68; white-space: nowrap;
-  }
+  .member-tab-label .chg-dot { flex: none; }
   .member-tab-input:checked + .member-tab-label {
     background: var(--tc, #7a6bff); color: #23233a; box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
   }
@@ -274,7 +273,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v25</div>
+<div class="page-version-badge">v26</div>
 <div class="wrap">
   <div class="bonus-bar">
     <span class="bonus-bar-label">Spotlight<br>bonus songs</span>
@@ -405,7 +404,50 @@ function uniairGroupOrder() {
 }
 function uniairGroupFirst() { return uniairGroupOrder()[0]; }
 
-const ROSTER = [{"name": "金村美玖", "nameEn": "Kanemura Miku", "group": "HINATA", "graduated": false}, {"name": "小坂菜緒", "nameEn": "Kosaka Nao", "group": "HINATA", "graduated": false}, {"name": "上村ひなの", "nameEn": "Kamimura Hinano", "group": "HINATA", "graduated": false}, {"name": "髙橋未来虹", "nameEn": "Takahashi Mikuni", "group": "HINATA", "graduated": false}, {"name": "森本茉莉", "nameEn": "Morimoto Marie", "group": "HINATA", "graduated": false}, {"name": "石塚瑶季", "nameEn": "Ishizuka Tamaki", "group": "HINATA", "graduated": false}, {"name": "小西夏菜実", "nameEn": "Konishi Nanami", "group": "HINATA", "graduated": false}, {"name": "清水理央", "nameEn": "Shimizu Rio", "group": "HINATA", "graduated": false}, {"name": "正源司陽子", "nameEn": "Shogenji Yoko", "group": "HINATA", "graduated": false}, {"name": "竹内希来里", "nameEn": "Takeuchi Kirari", "group": "HINATA", "graduated": false}, {"name": "平尾帆夏", "nameEn": "Hirao Honoka", "group": "HINATA", "graduated": false}, {"name": "平岡海月", "nameEn": "Hiraoka Mitsuki", "group": "HINATA", "graduated": false}, {"name": "藤嶌果歩", "nameEn": "Fujishima Kaho", "group": "HINATA", "graduated": false}, {"name": "宮地すみれ", "nameEn": "Miyachi Sumire", "group": "HINATA", "graduated": false}, {"name": "山下葉留花", "nameEn": "Yamashita Haruka", "group": "HINATA", "graduated": false}, {"name": "渡辺莉奈", "nameEn": "Watanabe Rina", "group": "HINATA", "graduated": false}, {"name": "大田美月", "nameEn": "Ota Mizuki", "group": "HINATA", "graduated": false}, {"name": "大野愛実", "nameEn": "Ono Manami", "group": "HINATA", "graduated": false}, {"name": "片山紗希", "nameEn": "Katayama Saki", "group": "HINATA", "graduated": false}, {"name": "蔵盛妃那乃", "nameEn": "Kuramori Hinano", "group": "HINATA", "graduated": false}, {"name": "坂井新奈", "nameEn": "Sakai Nina", "group": "HINATA", "graduated": false}, {"name": "佐藤優羽", "nameEn": "Sato Yu", "group": "HINATA", "graduated": false}, {"name": "下田衣珠季", "nameEn": "Shimoda Izuki", "group": "HINATA", "graduated": false}, {"name": "高井俐香", "nameEn": "Takai Rika", "group": "HINATA", "graduated": false}, {"name": "鶴崎仁香", "nameEn": "Tsurusaki Niko", "group": "HINATA", "graduated": false}, {"name": "松尾桜", "nameEn": "Matsuo Sakura", "group": "HINATA", "graduated": false}, {"name": "井口眞緒", "nameEn": "Iguchi Mao", "group": "HINATA", "graduated": true}, {"name": "潮紗理菜", "nameEn": "Ushio Sarina", "group": "HINATA", "graduated": true}, {"name": "影山優佳", "nameEn": "Kageyama Yuka", "group": "HINATA", "graduated": true}, {"name": "加藤史帆", "nameEn": "Kato Shiho", "group": "HINATA", "graduated": true}, {"name": "齊藤京子", "nameEn": "Saito Kyoko", "group": "HINATA", "graduated": true}, {"name": "佐々木久美", "nameEn": "Sasaki Kumi", "group": "HINATA", "graduated": true}, {"name": "佐々木美玲", "nameEn": "Sasaki Mirei", "group": "HINATA", "graduated": true}, {"name": "高瀬愛奈", "nameEn": "Takase Mana", "group": "HINATA", "graduated": true}, {"name": "高本彩花", "nameEn": "Takamoto Ayaka", "group": "HINATA", "graduated": true}, {"name": "東村芽依", "nameEn": "Higashimura Mei", "group": "HINATA", "graduated": true}, {"name": "河田陽菜", "nameEn": "Kawata Hina", "group": "HINATA", "graduated": true}, {"name": "富田鈴花", "nameEn": "Tomita Suzuka", "group": "HINATA", "graduated": true}, {"name": "丹生明里", "nameEn": "Nibu Akari", "group": "HINATA", "graduated": true}, {"name": "濱岸ひより", "nameEn": "Hamagishi Hiyori", "group": "HINATA", "graduated": true}, {"name": "松田好花", "nameEn": "Matsuda Konoka", "group": "HINATA", "graduated": true}, {"name": "宮田愛萌", "nameEn": "Miyata Manamo", "group": "HINATA", "graduated": true}, {"name": "渡邉美穂", "nameEn": "Watanabe Miho", "group": "HINATA", "graduated": true}, {"name": "山口陽世", "nameEn": "Yamaguchi Haruyo", "group": "HINATA", "graduated": true}, {"name": "岸帆夏", "nameEn": "Kishi Honoka", "group": "HINATA", "graduated": true}, {"name": "遠藤光莉", "nameEn": "Endo Hikari", "group": "SAKURA", "graduated": false}, {"name": "大園玲", "nameEn": "Ozono Rei", "group": "SAKURA", "graduated": false}, {"name": "大沼晶保", "nameEn": "Onuma Akiho", "group": "SAKURA", "graduated": false}, {"name": "幸阪茉里乃", "nameEn": "Kosaka Marino", "group": "SAKURA", "graduated": false}, {"name": "田村保乃", "nameEn": "Tamura Hono", "group": "SAKURA", "graduated": false}, {"name": "藤吉夏鈴", "nameEn": "Fujiyoshi Karin", "group": "SAKURA", "graduated": false}, {"name": "増本綺良", "nameEn": "Masumoto Kira", "group": "SAKURA", "graduated": false}, {"name": "松田里奈", "nameEn": "Matsuda Rina", "group": "SAKURA", "graduated": false}, {"name": "森田ひかる", "nameEn": "Morita Hikaru", "group": "SAKURA", "graduated": false}, {"name": "守屋麗奈", "nameEn": "Moriya Rena", "group": "SAKURA", "graduated": false}, {"name": "山﨑天", "nameEn": "Yamasaki Ten", "group": "SAKURA", "graduated": false}, {"name": "石森璃花", "nameEn": "Ishimori Rika", "group": "SAKURA", "graduated": false}, {"name": "遠藤理子", "nameEn": "Endo Riko", "group": "SAKURA", "graduated": false}, {"name": "小田倉麗奈", "nameEn": "Odakura Reina", "group": "SAKURA", "graduated": false}, {"name": "小島凪紗", "nameEn": "Kojima Nagisa", "group": "SAKURA", "graduated": false}, {"name": "谷口愛季", "nameEn": "Taniguchi Airi", "group": "SAKURA", "graduated": false}, {"name": "中嶋優月", "nameEn": "Nakashima Yuzuki", "group": "SAKURA", "graduated": false}, {"name": "的野美青", "nameEn": "Matono Mio", "group": "SAKURA", "graduated": false}, {"name": "向井純葉", "nameEn": "Mukai Itoha", "group": "SAKURA", "graduated": false}, {"name": "村井優", "nameEn": "Murai Yu", "group": "SAKURA", "graduated": false}, {"name": "村山美羽", "nameEn": "Murayama Miu", "group": "SAKURA", "graduated": false}, {"name": "山下瞳月", "nameEn": "Yamashita Shizuki", "group": "SAKURA", "graduated": false}, {"name": "浅井恋乃未", "nameEn": "Asai Konomi", "group": "SAKURA", "graduated": false}, {"name": "稲熊ひな", "nameEn": "Inaguma Hina", "group": "SAKURA", "graduated": false}, {"name": "勝又春", "nameEn": "Katsumata Haru", "group": "SAKURA", "graduated": false}, {"name": "佐藤愛桜", "nameEn": "Sato Neo", "group": "SAKURA", "graduated": false}, {"name": "中川智尋", "nameEn": "Nakagawa Chihiro", "group": "SAKURA", "graduated": false}, {"name": "松本和子", "nameEn": "Matsumoto Wako", "group": "SAKURA", "graduated": false}, {"name": "目黒陽色", "nameEn": "Meguro Hiro", "group": "SAKURA", "graduated": false}, {"name": "山川宇衣", "nameEn": "Yamakawa Ui", "group": "SAKURA", "graduated": false}, {"name": "山田桃実", "nameEn": "Yamada Momomi", "group": "SAKURA", "graduated": false}, {"name": "石森虹花", "nameEn": "Ishimori Nijika", "group": "SAKURA", "graduated": true}, {"name": "上村莉菜", "nameEn": "Uemura Rina", "group": "SAKURA", "graduated": true}, {"name": "尾関梨香", "nameEn": "Ozeki Rika", "group": "SAKURA", "graduated": true}, {"name": "織田奈那", "nameEn": "Oda Nana", "group": "SAKURA", "graduated": true}, {"name": "小池美波", "nameEn": "Koike Minami", "group": "SAKURA", "graduated": true}, {"name": "小林由依", "nameEn": "Kobayashi Yui", "group": "SAKURA", "graduated": true}, {"name": "齋藤冬優花", "nameEn": "Saito Fuyuka", "group": "SAKURA", "graduated": true}, {"name": "佐藤詩織", "nameEn": "Sato Shiori", "group": "SAKURA", "graduated": true}, {"name": "菅井友香", "nameEn": "Sugai Yuka", "group": "SAKURA", "graduated": true}, {"name": "鈴本美愉", "nameEn": "Suzumoto Miyu", "group": "SAKURA", "graduated": true}, {"name": "長沢菜々香", "nameEn": "Nagasawa Nanako", "group": "SAKURA", "graduated": true}, {"name": "土生瑞穂", "nameEn": "Habu Mizuho", "group": "SAKURA", "graduated": true}, {"name": "原田葵", "nameEn": "Harada Aoi", "group": "SAKURA", "graduated": true}, {"name": "平手友梨奈", "nameEn": "Hirate Yurina", "group": "SAKURA", "graduated": true}, {"name": "守屋茜", "nameEn": "Moriya Akane", "group": "SAKURA", "graduated": true}, {"name": "渡辺梨加", "nameEn": "Watanabe Rika", "group": "SAKURA", "graduated": true}, {"name": "渡邉理佐", "nameEn": "Watanabe Risa", "group": "SAKURA", "graduated": true}, {"name": "井上梨名", "nameEn": "Inoue Rina", "group": "SAKURA", "graduated": true}, {"name": "関有美子", "nameEn": "Seki Yumiko", "group": "SAKURA", "graduated": true}, {"name": "武元唯衣", "nameEn": "Takemoto Yui", "group": "SAKURA", "graduated": true}, {"name": "松平璃子", "nameEn": "Matsudaira Riko", "group": "SAKURA", "graduated": true}];
+
+var UNIAIR_NAME_EN = {"上村ひなの": "Kamimura Hinano", "上村莉菜": "Uemura Rina", "下田衣珠季": "Shimoda Izuki", "中嶋優月": "Nakashima Yuzuki", "中川智尋": "Nakagawa Chihiro", "丹生明里": "Nibu Akari", "井上梨名": "Inoue Rina", "井口眞緒": "Iguchi Mao", "佐々木久美": "Sasaki Kumi", "佐々木美玲": "Sasaki Mirei", "佐藤優羽": "Sato Yu", "佐藤愛桜": "Sato Neo", "佐藤詩織": "Sato Shiori", "加藤史帆": "Kato Shiho", "勝又春": "Katsumata Haru", "原田葵": "Harada Aoi", "向井純葉": "Mukai Itoha", "土生瑞穂": "Habu Mizuho", "坂井新奈": "Sakai Nina", "増本綺良": "Masumoto Kira", "大園玲": "Ozono Rei", "大沼晶保": "Onuma Akiho", "大田美月": "Ota Mizuki", "大野愛実": "Ono Manami", "守屋茜": "Moriya Akane", "守屋麗奈": "Moriya Rena", "宮地すみれ": "Miyachi Sumire", "宮田愛萌": "Miyata Manamo", "富田鈴花": "Tomita Suzuka", "小坂菜緒": "Kosaka Nao", "小島凪紗": "Kojima Nagisa", "小林由依": "Kobayashi Yui", "小池美波": "Koike Minami", "小田倉麗奈": "Odakura Reina", "小西夏菜実": "Konishi Nanami", "尾関梨香": "Ozeki Rika", "山下瞳月": "Yamashita Shizuki", "山下葉留花": "Yamashita Haruka", "山口陽世": "Yamaguchi Haruyo", "山川宇衣": "Yamakawa Ui", "山田桃実": "Yamada Momomi", "山﨑天": "Yamasaki Ten", "岸帆夏": "Kishi Honoka", "平尾帆夏": "Hirao Honoka", "平岡海月": "Hiraoka Mitsuki", "平手友梨奈": "Hirate Yurina", "幸阪茉里乃": "Kosaka Marino", "影山優佳": "Kageyama Yuka", "村井優": "Murai Yu", "村山美羽": "Murayama Miu", "東村芽依": "Higashimura Mei", "松尾桜": "Matsuo Sakura", "松平璃子": "Matsudaira Riko", "松本和子": "Matsumoto Wako", "松田好花": "Matsuda Konoka", "松田里奈": "Matsuda Rina", "森本茉莉": "Morimoto Marie", "森田ひかる": "Morita Hikaru", "正源司陽子": "Shogenji Yoko", "武元唯衣": "Takemoto Yui", "河田陽菜": "Kawata Hina", "浅井恋乃未": "Asai Konomi", "清水理央": "Shimizu Rio", "渡辺梨加": "Watanabe Rika", "渡辺莉奈": "Watanabe Rina", "渡邉理佐": "Watanabe Risa", "渡邉美穂": "Watanabe Miho", "潮紗理菜": "Ushio Sarina", "濱岸ひより": "Hamagishi Hiyori", "片山紗希": "Katayama Saki", "田村保乃": "Tamura Hono", "的野美青": "Matono Mio", "目黒陽色": "Meguro Hiro", "石塚瑶季": "Ishizuka Tamaki", "石森璃花": "Ishimori Rika", "石森虹花": "Ishimori Nijika", "稲熊ひな": "Inaguma Hina", "竹内希来里": "Takeuchi Kirari", "織田奈那": "Oda Nana", "菅井友香": "Sugai Yuka", "蔵盛妃那乃": "Kuramori Hinano", "藤吉夏鈴": "Fujiyoshi Karin", "藤嶌果歩": "Fujishima Kaho", "谷口愛季": "Taniguchi Airi", "遠藤光莉": "Endo Hikari", "遠藤理子": "Endo Riko", "金村美玖": "Kanemura Miku", "鈴本美愉": "Suzumoto Miyu", "長沢菜々香": "Nagasawa Nanako", "関有美子": "Seki Yumiko", "高井俐香": "Takai Rika", "高本彩花": "Takamoto Ayaka", "高瀬愛奈": "Takase Mana", "髙橋未来虹": "Takahashi Mikuni", "鶴崎仁香": "Tsurusaki Niko", "齊藤京子": "Saito Kyoko", "齋藤冬優花": "Saito Fuyuka"};
+var UNIAIR_NAME_LANG = (function () {
+  try {
+    var raw = localStorage.getItem('uniair_name_lang_v1');
+    if (raw) {
+      var rec = JSON.parse(raw);
+      if (rec && rec.sv === 1 && rec.lang === 'EN') return 'EN';
+    }
+  } catch (e) { }
+  return 'JP';
+})();
+function uniairName(jp) {
+  if (UNIAIR_NAME_LANG === 'EN' && UNIAIR_NAME_EN[jp]) return UNIAIR_NAME_EN[jp];
+  return jp;
+}
+
+
+function fitWcellSongs() {
+  var pairs = [];
+  document.querySelectorAll('.wcell').forEach(function (cell) {
+    var cd = cell.querySelector('.cd');
+    var bot = cell.querySelector('.wc-bot');
+    if (!cd || !bot) return;
+    cd.style.webkitLineClamp = '1';
+    pairs.push([cell, cd, bot]);
+  });
+  var lines = pairs.map(function (p) {
+    if (!p[0].offsetHeight) return 1;
+    var cs = getComputedStyle(p[0]);
+    var top = p[0].querySelector('.wc-top');
+    var room = p[0].clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) -
+      (top ? top.offsetHeight + (parseFloat(cs.rowGap) || 0) : 0);
+    var lh = parseFloat(getComputedStyle(p[1]).lineHeight);
+    return lh ? Math.max(1, Math.floor((room + 0.5) / lh)) : 1;
+  });
+  pairs.forEach(function (p, i) {
+    if (lines[i] > 1) p[1].style.webkitLineClamp = String(lines[i]);
+  });
+}
+window.addEventListener('resize', fitWcellSongs);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitWcellSongs);
+
+const ROSTER = [{"name": "金村美玖", "group": "HINATA", "graduated": false}, {"name": "小坂菜緒", "group": "HINATA", "graduated": false}, {"name": "上村ひなの", "group": "HINATA", "graduated": false}, {"name": "髙橋未来虹", "group": "HINATA", "graduated": false}, {"name": "森本茉莉", "group": "HINATA", "graduated": false}, {"name": "石塚瑶季", "group": "HINATA", "graduated": false}, {"name": "小西夏菜実", "group": "HINATA", "graduated": false}, {"name": "清水理央", "group": "HINATA", "graduated": false}, {"name": "正源司陽子", "group": "HINATA", "graduated": false}, {"name": "竹内希来里", "group": "HINATA", "graduated": false}, {"name": "平尾帆夏", "group": "HINATA", "graduated": false}, {"name": "平岡海月", "group": "HINATA", "graduated": false}, {"name": "藤嶌果歩", "group": "HINATA", "graduated": false}, {"name": "宮地すみれ", "group": "HINATA", "graduated": false}, {"name": "山下葉留花", "group": "HINATA", "graduated": false}, {"name": "渡辺莉奈", "group": "HINATA", "graduated": false}, {"name": "大田美月", "group": "HINATA", "graduated": false}, {"name": "大野愛実", "group": "HINATA", "graduated": false}, {"name": "片山紗希", "group": "HINATA", "graduated": false}, {"name": "蔵盛妃那乃", "group": "HINATA", "graduated": false}, {"name": "坂井新奈", "group": "HINATA", "graduated": false}, {"name": "佐藤優羽", "group": "HINATA", "graduated": false}, {"name": "下田衣珠季", "group": "HINATA", "graduated": false}, {"name": "高井俐香", "group": "HINATA", "graduated": false}, {"name": "鶴崎仁香", "group": "HINATA", "graduated": false}, {"name": "松尾桜", "group": "HINATA", "graduated": false}, {"name": "井口眞緒", "group": "HINATA", "graduated": true}, {"name": "潮紗理菜", "group": "HINATA", "graduated": true}, {"name": "影山優佳", "group": "HINATA", "graduated": true}, {"name": "加藤史帆", "group": "HINATA", "graduated": true}, {"name": "齊藤京子", "group": "HINATA", "graduated": true}, {"name": "佐々木久美", "group": "HINATA", "graduated": true}, {"name": "佐々木美玲", "group": "HINATA", "graduated": true}, {"name": "高瀬愛奈", "group": "HINATA", "graduated": true}, {"name": "高本彩花", "group": "HINATA", "graduated": true}, {"name": "東村芽依", "group": "HINATA", "graduated": true}, {"name": "河田陽菜", "group": "HINATA", "graduated": true}, {"name": "富田鈴花", "group": "HINATA", "graduated": true}, {"name": "丹生明里", "group": "HINATA", "graduated": true}, {"name": "濱岸ひより", "group": "HINATA", "graduated": true}, {"name": "松田好花", "group": "HINATA", "graduated": true}, {"name": "宮田愛萌", "group": "HINATA", "graduated": true}, {"name": "渡邉美穂", "group": "HINATA", "graduated": true}, {"name": "山口陽世", "group": "HINATA", "graduated": true}, {"name": "岸帆夏", "group": "HINATA", "graduated": true}, {"name": "遠藤光莉", "group": "SAKURA", "graduated": false}, {"name": "大園玲", "group": "SAKURA", "graduated": false}, {"name": "大沼晶保", "group": "SAKURA", "graduated": false}, {"name": "幸阪茉里乃", "group": "SAKURA", "graduated": false}, {"name": "田村保乃", "group": "SAKURA", "graduated": false}, {"name": "藤吉夏鈴", "group": "SAKURA", "graduated": false}, {"name": "増本綺良", "group": "SAKURA", "graduated": false}, {"name": "松田里奈", "group": "SAKURA", "graduated": false}, {"name": "森田ひかる", "group": "SAKURA", "graduated": false}, {"name": "守屋麗奈", "group": "SAKURA", "graduated": false}, {"name": "山﨑天", "group": "SAKURA", "graduated": false}, {"name": "石森璃花", "group": "SAKURA", "graduated": false}, {"name": "遠藤理子", "group": "SAKURA", "graduated": false}, {"name": "小田倉麗奈", "group": "SAKURA", "graduated": false}, {"name": "小島凪紗", "group": "SAKURA", "graduated": false}, {"name": "谷口愛季", "group": "SAKURA", "graduated": false}, {"name": "中嶋優月", "group": "SAKURA", "graduated": false}, {"name": "的野美青", "group": "SAKURA", "graduated": false}, {"name": "向井純葉", "group": "SAKURA", "graduated": false}, {"name": "村井優", "group": "SAKURA", "graduated": false}, {"name": "村山美羽", "group": "SAKURA", "graduated": false}, {"name": "山下瞳月", "group": "SAKURA", "graduated": false}, {"name": "浅井恋乃未", "group": "SAKURA", "graduated": false}, {"name": "稲熊ひな", "group": "SAKURA", "graduated": false}, {"name": "勝又春", "group": "SAKURA", "graduated": false}, {"name": "佐藤愛桜", "group": "SAKURA", "graduated": false}, {"name": "中川智尋", "group": "SAKURA", "graduated": false}, {"name": "松本和子", "group": "SAKURA", "graduated": false}, {"name": "目黒陽色", "group": "SAKURA", "graduated": false}, {"name": "山川宇衣", "group": "SAKURA", "graduated": false}, {"name": "山田桃実", "group": "SAKURA", "graduated": false}, {"name": "石森虹花", "group": "SAKURA", "graduated": true}, {"name": "上村莉菜", "group": "SAKURA", "graduated": true}, {"name": "尾関梨香", "group": "SAKURA", "graduated": true}, {"name": "織田奈那", "group": "SAKURA", "graduated": true}, {"name": "小池美波", "group": "SAKURA", "graduated": true}, {"name": "小林由依", "group": "SAKURA", "graduated": true}, {"name": "齋藤冬優花", "group": "SAKURA", "graduated": true}, {"name": "佐藤詩織", "group": "SAKURA", "graduated": true}, {"name": "菅井友香", "group": "SAKURA", "graduated": true}, {"name": "鈴本美愉", "group": "SAKURA", "graduated": true}, {"name": "長沢菜々香", "group": "SAKURA", "graduated": true}, {"name": "土生瑞穂", "group": "SAKURA", "graduated": true}, {"name": "原田葵", "group": "SAKURA", "graduated": true}, {"name": "平手友梨奈", "group": "SAKURA", "graduated": true}, {"name": "守屋茜", "group": "SAKURA", "graduated": true}, {"name": "渡辺梨加", "group": "SAKURA", "graduated": true}, {"name": "渡邉理佐", "group": "SAKURA", "graduated": true}, {"name": "井上梨名", "group": "SAKURA", "graduated": true}, {"name": "関有美子", "group": "SAKURA", "graduated": true}, {"name": "武元唯衣", "group": "SAKURA", "graduated": true}, {"name": "松平璃子", "group": "SAKURA", "graduated": true}];
 
 const SONG_COLORS = ['赤', '青', '緑', '黄', '紫', 'ALL'];
 const COLOR_NAMES = {'赤':'Red','青':'Blue','緑':'Green','黄':'Yellow','紫':'Purple','ALL':'All-type'};
@@ -1164,8 +1206,8 @@ function sweepCardCell(c, tag, owned, isCenter) {
   var pill = tag === 'Pull + Upgrade'
     ? '<span class="acq-grad">Pull+Up</span>'
     : '<span class="acq-tag sm ' + (ACQ_TAG_CLASS[tag] || 'pull') + '">' + esc(tag) + '</span>';
-  return '<div class="' + cls + '" title="' + esc(c.member) + ' &mdash; ' + esc(c.song) + '"' + tint + '>' +
-    '<div class="wc-top"><span class="nm">' + esc(c.member) + '</span>' + pill + '</div>' +
+  return '<div class="' + cls + '" title="' + esc(uniairName(c.member)) + ' &mdash; ' + esc(c.song) + '"' + tint + '>' +
+    '<div class="wc-top"><span class="nm">' + esc(uniairName(c.member)) + '</span>' + pill + '</div>' +
     '<div class="wc-bot">' + sweepColorSquare(c.color, 'sm') +
       '<span class="cd">' + esc(c.song) + '</span></div>' +
   '</div>';
@@ -1460,6 +1502,7 @@ function wireShelfToggles() {
     var row = owner && owner.nextElementSibling;
     if (!row || !row.classList.contains('shelf')) return;
     var hidden = row.classList.toggle('hidden');
+    if (!hidden) fitWcellSongs();
     btn.classList.toggle('open', !hidden);
     btn.setAttribute('aria-expanded', hidden ? 'false' : 'true');
   });
@@ -2015,15 +2058,6 @@ function memberGroup(member) {
   return _memberGroup[member] || null;
 }
 
-var _memberEn = null;
-function memberNameEn(member) {
-  if (!_memberEn) {
-    _memberEn = {};
-    ROSTER.forEach(function(m) { _memberEn[m.name] = m.nameEn; });
-  }
-  return _memberEn[member] || '';
-}
-
 
 
 
@@ -2131,15 +2165,7 @@ function renderAll() {
     input.id = 'mtab-' + i; input.checked = isActive;
     var label = document.createElement('label');
     label.htmlFor = 'mtab-' + i; label.className = 'member-tab-label';
-    var jpLine = document.createElement('span');
-    jpLine.className = 'mtab-jp'; jpLine.textContent = member;
-    label.appendChild(jpLine);
-    var enName = memberNameEn(member);
-    if (enName) {
-      var enLine = document.createElement('span');
-      enLine.className = 'mtab-en'; enLine.textContent = enName;
-      label.appendChild(enLine);
-    }
+    label.textContent = uniairName(member);
     var groupColor = GROUP_TAB_COLORS[memberGroup(member)];
     if (groupColor) label.style.setProperty('--tc', groupColor);
     tabBar.appendChild(input); tabBar.appendChild(label);
@@ -2166,7 +2192,7 @@ function renderAll() {
     if (out.changed && !isActive) {
       var dot = document.createElement('span');
       dot.className = 'chg-dot';
-      jpLine.appendChild(dot);
+      label.appendChild(dot);
     }
     panelsEl.appendChild(panel);
     
@@ -2187,6 +2213,7 @@ function renderAll() {
     var inputs = tabBar.querySelectorAll('.member-tab-input');
     var panels = panelsEl.querySelectorAll('.member-panel');
     inputs.forEach(function(inp, i) { panels[i].style.display = inp.checked ? 'block' : 'none'; });
+    fitWcellSongs();
   }
   syncPanels();
   ensureSweep(lastActiveMember);
@@ -2218,7 +2245,7 @@ function renderMemberChecklist(selected) {
       cb.checked = !!selectedSet[m.name];
       label.appendChild(cb);
       var span = document.createElement('span');
-      span.textContent = m.name + ' (' + m.nameEn + ')' + (m.graduated ? ' — graduated' : '');
+      span.textContent = uniairName(m.name) + (m.graduated ? ' — graduated' : '');
       label.appendChild(span);
       el.appendChild(label);
     });
