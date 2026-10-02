@@ -85,10 +85,10 @@ window.UNIAIR_MEMBER_PROFILES = {
     "kana": "ますもと きら",
     "birthday": "2002-01-12",
     "group": "S",
-    "graduated": false,
+    "graduated": true,
     "gen": 2,
     "order": 10,
-    "id": "S0210"
+    "id": "S9210"
   },
   "松田里奈": {
     "english": {

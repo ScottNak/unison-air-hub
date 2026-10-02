@@ -1,6 +1,33 @@
 {
  "entries": [
   {
+   "version": "db25-2026-10-02",
+   "date": "2026-10-02",
+   "added": 1,
+   "cardCount": 5624,
+   "titles": [
+    "HAPPY 22nd BIRTHDAY"
+   ],
+   "cards": [
+    {
+     "id": 6638,
+     "color": "R",
+     "memberEn": "Konishi Nanami",
+     "cs": "ALL35%",
+     "sk": 0.0368
+    }
+   ]
+  },
+  {
+   "version": "db24-2026-10-02",
+   "date": "2026-10-02",
+   "added": 0,
+   "cardCount": 5623,
+   "titles": [],
+   "cards": [],
+   "note": "Masumoto Kira marked as graduated"
+  },
+  {
    "version": "db23-2026-09-27",
    "date": "2026-09-27",
    "added": 2,

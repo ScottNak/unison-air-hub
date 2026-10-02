@@ -1,6 +1,6 @@
 {
- "version": "db23-2026-09-27",
- "cardCount": 5623,
+ "version": "db25-2026-10-02",
+ "cardCount": 5624,
  "cards": [
   {
    "id": 1,
@@ -13215,7 +13215,7 @@
    "pe": 4287,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 882,
@@ -13605,7 +13605,7 @@
    "pe": 5037,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 908,
@@ -14325,7 +14325,7 @@
    "pe": 3082,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 956,
@@ -15435,7 +15435,7 @@
    "pe": 3235,
    "cs": "Da70%",
    "csBase": "Da70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1030,
@@ -16200,7 +16200,7 @@
    "pe": 4258,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1081,
@@ -16725,7 +16725,7 @@
    "pe": 3809,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1116,
@@ -17115,7 +17115,7 @@
    "pe": 4559,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1142,
@@ -18735,7 +18735,7 @@
    "pe": 3293,
    "cs": "Da70%",
    "csBase": "Da70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1250,
@@ -19380,7 +19380,7 @@
    "pe": 3021,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1293,
@@ -19755,7 +19755,7 @@
    "pe": 3771,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1318,
@@ -20805,7 +20805,7 @@
    "pe": 2235,
    "cs": "VoDa50%",
    "csBase": "VoDa50%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1388,
@@ -21480,7 +21480,7 @@
    "pe": 5857,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1433,
@@ -22170,7 +22170,7 @@
    "pe": 3145,
    "cs": "Da70%",
    "csBase": "Da70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1479,
@@ -22515,7 +22515,7 @@
    "pe": 3895,
    "cs": "Da70%",
    "csBase": "Da70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1502,
@@ -23760,7 +23760,7 @@
    "pe": 2238,
    "cs": "VoDa50%",
    "csBase": "VoDa50%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1585,
@@ -24540,7 +24540,7 @@
    "pe": 5830,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1637,
@@ -25005,7 +25005,7 @@
    "pe": 3286,
    "cs": "Da70%",
    "csBase": "Da70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1668,
@@ -25125,7 +25125,7 @@
    "pe": 3650,
    "cs": "ALL40%",
    "csBase": "ALL40%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1676,
@@ -25410,7 +25410,7 @@
    "pe": 2239,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1695,
@@ -25785,7 +25785,7 @@
    "pe": 2989,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1720,
@@ -26730,7 +26730,7 @@
    "pe": 3917,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1783,
@@ -27690,7 +27690,7 @@
    "pe": 3239,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1847,
@@ -28200,7 +28200,7 @@
    "pe": 3312,
    "cs": "Da70%",
    "csBase": "Da70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1881,
@@ -28335,7 +28335,7 @@
    "pe": 3183,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1890,
@@ -28665,7 +28665,7 @@
    "pe": 3933,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1912,
@@ -29730,7 +29730,7 @@
    "pe": 3531,
    "cs": "ALL35%",
    "csBase": "ALL35%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 1983,
@@ -30600,7 +30600,7 @@
    "pe": 3150,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 2041,
@@ -30840,7 +30840,7 @@
    "pe": 2404,
    "cs": "Da90%+スキル発動率1.8倍",
    "csBase": "Da90%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 2057,
@@ -31095,7 +31095,7 @@
    "pe": 3426,
    "cs": "ALL35%",
    "csBase": "ALL35%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 2074,
@@ -31425,7 +31425,7 @@
    "pe": 4176,
    "cs": "ALL35%",
    "csBase": "ALL35%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 2096,
@@ -32550,7 +32550,7 @@
    "pe": 3518,
    "cs": "スキル発動率2.25倍",
    "csBase": "スキル発動率2.25倍",
-   "grad": false
+   "grad": true
   },
   {
    "id": 2171,
@@ -33255,7 +33255,7 @@
    "pe": 3594,
    "cs": "スキル発動率2.25倍",
    "csBase": "スキル発動率2.25倍",
-   "grad": false
+   "grad": true
   },
   {
    "id": 2218,
@@ -34110,7 +34110,7 @@
    "pe": 3151,
    "cs": "Da70%",
    "csBase": "Da70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 2275,
@@ -34425,7 +34425,7 @@
    "pe": 3901,
    "cs": "Da70%",
    "csBase": "Da70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 2296,
@@ -35220,7 +35220,7 @@
    "pe": 3171,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 2349,
@@ -36270,7 +36270,7 @@
    "pe": 4145,
    "cs": "DaPe50%",
    "csBase": "DaPe50%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 2419,
@@ -36780,7 +36780,7 @@
    "pe": 3120,
    "cs": "Da70%",
    "csBase": "Da70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 2453,
@@ -37665,7 +37665,7 @@
    "pe": 3995,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 2512,
@@ -38100,7 +38100,7 @@
    "pe": 3616,
    "cs": "ALL35%",
    "csBase": "ALL35%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 2541,
@@ -38475,7 +38475,7 @@
    "pe": 3895,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 2566,
@@ -39045,7 +39045,7 @@
    "pe": 4645,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 2604,
@@ -39525,7 +39525,7 @@
    "pe": 3955,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 2636,
@@ -40680,7 +40680,7 @@
    "pe": 3273,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 2713,
@@ -41115,7 +41115,7 @@
    "pe": 3011,
    "cs": "Da70%",
    "csBase": "Da70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 2742,
@@ -42000,7 +42000,7 @@
    "pe": 3083,
    "cs": "Da70%",
    "csBase": "Da70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 2801,
@@ -42750,7 +42750,7 @@
    "pe": 3171,
    "cs": "Vo70%+仕上がり度50%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 2851,
@@ -43890,7 +43890,7 @@
    "pe": 3846,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 2927,
@@ -45090,7 +45090,7 @@
    "pe": 3191,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 3007,
@@ -45645,7 +45645,7 @@
    "pe": 4366,
    "cs": "VoPe50%",
    "csBase": "VoPe50%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 3044,
@@ -46170,7 +46170,7 @@
    "pe": 2799,
    "cs": "Da70%",
    "csBase": "Da70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 3079,
@@ -47025,7 +47025,7 @@
    "pe": 3024,
    "cs": "Da70%",
    "csBase": "Da70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 3136,
@@ -47700,7 +47700,7 @@
    "pe": 2251,
    "cs": "Vo85%",
    "csBase": "Vo85%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 3181,
@@ -48480,7 +48480,7 @@
    "pe": 3189,
    "cs": "Da70%",
    "csBase": "Da70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 3233,
@@ -49515,7 +49515,7 @@
    "pe": 5037,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 3302,
@@ -51225,7 +51225,7 @@
    "pe": 3713,
    "cs": "ALL35%",
    "csBase": "ALL35%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 3416,
@@ -51795,7 +51795,7 @@
    "pe": 3181,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 3454,
@@ -52080,7 +52080,7 @@
    "pe": 7736,
    "cs": "Pe85%+自身と同じタイプのセンタースキルのうち、Peアップ効果のみを合算して0.7倍（ALLで0.8倍）で発動、VoとDaの値を0にする",
    "csBase": "Pe85%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 3473,
@@ -52245,7 +52245,7 @@
    "pe": 2405,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 3484,
@@ -53235,7 +53235,7 @@
    "pe": 4143,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 3550,
@@ -54225,7 +54225,7 @@
    "pe": 1631,
    "cs": "VoDa50%",
    "csBase": "VoDa50%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 3616,
@@ -54630,7 +54630,7 @@
    "pe": 3631,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 3652,
@@ -55725,7 +55725,7 @@
    "pe": 3761,
    "cs": "Da70%",
    "csBase": "Da70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 3774,
@@ -56730,7 +56730,7 @@
    "pe": 4607,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 3841,
@@ -57105,7 +57105,7 @@
    "pe": 3122,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 3866,
@@ -58065,7 +58065,7 @@
    "pe": 6714,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 3930,
@@ -59100,7 +59100,7 @@
    "pe": 4090,
    "cs": "スキル発動率2.25倍",
    "csBase": "スキル発動率2.25倍",
-   "grad": false
+   "grad": true
   },
   {
    "id": 4046,
@@ -59610,7 +59610,7 @@
    "pe": 4596,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 4080,
@@ -60345,7 +60345,7 @@
    "pe": 3784,
    "cs": "Da70%",
    "csBase": "Da70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 4184,
@@ -61110,7 +61110,7 @@
    "pe": 3693,
    "cs": "Vo70%+仕上がり度50%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 4261,
@@ -61890,7 +61890,7 @@
    "pe": 2234,
    "cs": "Da85%",
    "csBase": "Da85%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 4337,
@@ -62550,7 +62550,7 @@
    "pe": 3679,
    "cs": "ALL45%",
    "csBase": "ALL45%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 4381,
@@ -62985,7 +62985,7 @@
    "pe": 3001,
    "cs": "Vo85%",
    "csBase": "Vo85%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 4410,
@@ -63525,7 +63525,7 @@
    "pe": 3684,
    "cs": "Da70%",
    "csBase": "Da70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 4446,
@@ -63990,7 +63990,7 @@
    "pe": 3141,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 4520,
@@ -64950,7 +64950,7 @@
    "pe": 3931,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 4584,
@@ -65445,7 +65445,7 @@
    "pe": 4578,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 4617,
@@ -66285,7 +66285,7 @@
    "pe": 3769,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 4716,
@@ -67215,7 +67215,7 @@
    "pe": 2381,
    "cs": "VoDa50%",
    "csBase": "VoDa50%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 4890,
@@ -67740,7 +67740,7 @@
    "pe": 1876,
    "cs": "VoDa50%",
    "csBase": "VoDa50%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 4925,
@@ -68295,7 +68295,7 @@
    "pe": 5047,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 4972,
@@ -70125,7 +70125,7 @@
    "pe": 2775,
    "cs": "VoDa50%",
    "csBase": "VoDa50%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 5192,
@@ -71475,7 +71475,7 @@
    "pe": 4309,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 5750,
@@ -71640,7 +71640,7 @@
    "pe": 3802,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 5785,
@@ -73185,7 +73185,7 @@
    "pe": 3183,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 5888,
@@ -73635,7 +73635,7 @@
    "pe": 3806,
    "cs": "Da70%",
    "csBase": "Da70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 5918,
@@ -74340,7 +74340,7 @@
    "pe": 3800,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 5965,
@@ -75105,7 +75105,7 @@
    "pe": 6673,
    "cs": "Pe85%",
    "csBase": "Pe85%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 6016,
@@ -76365,7 +76365,7 @@
    "pe": 3220,
    "cs": "All35%",
    "csBase": "ALL35%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 6101,
@@ -76380,7 +76380,7 @@
    "pe": 3271,
    "cs": "All35%",
    "csBase": "ALL35%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 6102,
@@ -76395,7 +76395,7 @@
    "pe": 3337,
    "cs": "All35%",
    "csBase": "ALL35%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 6103,
@@ -76410,7 +76410,7 @@
    "pe": 3843,
    "cs": "All35%",
    "csBase": "ALL35%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 6104,
@@ -76425,7 +76425,7 @@
    "pe": 3784,
    "cs": "All35%",
    "csBase": "ALL35%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 6105,
@@ -79365,7 +79365,7 @@
    "pe": 7816,
    "cs": "Pe85%",
    "csBase": "Pe85%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 6301,
@@ -80415,7 +80415,7 @@
    "pe": 3872,
    "cs": "Vo70%",
    "csBase": "Vo70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 6372,
@@ -80850,7 +80850,7 @@
    "pe": 2984,
    "cs": "Da85%",
    "csBase": "Da85%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 6401,
@@ -82350,7 +82350,7 @@
    "pe": 3482,
    "cs": "Da70%",
    "csBase": "Da70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 6505,
@@ -82965,7 +82965,7 @@
    "pe": 5059,
    "cs": "Pe70%",
    "csBase": "Pe70%",
-   "grad": false
+   "grad": true
   },
   {
    "id": 6546,
@@ -84343,6 +84343,21 @@
    "vo": 3779,
    "da": 3878,
    "pe": 3781,
+   "cs": "ALL35%",
+   "csBase": "ALL35%",
+   "grad": false
+  },
+  {
+   "id": 6638,
+   "color": "R",
+   "title": "HAPPY 22nd BIRTHDAY",
+   "member": "小西夏菜実",
+   "memberEn": "Konishi Nanami",
+   "tot": 11845,
+   "sk": 0.0368,
+   "vo": 3780,
+   "da": 3853,
+   "pe": 3782,
    "cs": "ALL35%",
    "csBase": "ALL35%",
    "grad": false
