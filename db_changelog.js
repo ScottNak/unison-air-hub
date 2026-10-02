@@ -1,6 +1,32 @@
 window.UNIAIR_DB_CHANGELOG = {
  "entries": [
   {
+   "version": "db23-2026-09-27",
+   "date": "2026-09-27",
+   "added": 2,
+   "cardCount": 5623,
+   "titles": [
+    "HAPPY 23rd BIRTHDAY",
+    "HAPPY 21st BIRTHDAY"
+   ],
+   "cards": [
+    {
+     "id": 6636,
+     "color": "P",
+     "memberEn": "Takahashi Mikuni",
+     "cs": "ALL35%",
+     "sk": 0.0368
+    },
+    {
+     "id": 6637,
+     "color": "P",
+     "memberEn": "Yamasaki Ten",
+     "cs": "ALL35%",
+     "sk": 0.0368
+    }
+   ]
+  },
+  {
    "version": "db22-2026-09-23",
    "date": "2026-09-23",
    "added": 1,
