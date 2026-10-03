@@ -140,6 +140,12 @@
   .order-arrow { font-size: 10px; color: #9aa3ba; }
   .order-cap { font-size: 11px; font-weight: 700; color: #6b7488; letter-spacing: .02em;
     transition: color .12s ease; }
+  .order-opt.opt-n[aria-pressed="true"] { background: #eef4fc; border-color: #4a90d9;
+    box-shadow: 0 2px 10px rgba(74,144,217,0.3); }
+  .order-opt.opt-n[aria-pressed="true"] .order-cap { color: #24405a; }
+  .name-sample { font-size: 15px; font-weight: 800; color: #2d2d42; }
+  .welcome-card p.order-q { margin: 0 0 8px; }
+  .welcome-card[data-mode="order"] #welcome-order-pick { margin-bottom: 20px; }
   .welcome-card p.order-hint { margin: 0 0 20px; font-size: 11.5px; line-height: 1.5;
     color: #7a8296; text-align: center; }
 
@@ -353,7 +359,7 @@
     <input type="file" id="hub-import-file" accept="application/json" style="display:none">
     <span class="save-note" id="hub-save-note">&nbsp;</span>
   </div>
-  <div class="page-version-badge">v13</div>
+  <div class="page-version-badge">v14</div>
 </header>
 
 <div class="bday-box" id="bday-box"></div>
@@ -367,11 +373,11 @@
 <div class="welcome-overlay" id="welcome-overlay">
   <div class="welcome-card" id="welcome-card" data-mode="full">
     <h2 data-when="full">Welcome!</h2>
-    <h2 data-when="order">One quick setting</h2>
+    <h2 data-when="order">A couple of quick settings</h2>
     <p data-when="full">To get started, please input the cards you own in the game. This will help figure out the best teams you can make with the cards you have.</p>
     <p data-when="full">When you're done with this, click "Finished!" and make your way to the Discography and Kizuna section to further make the teams align with the members you've put extra effort into!</p>
-    <p data-when="order">Something new: you can now choose which group leads the tabs, columns and lists across the site.</p>
-    <p class="order-q" data-when="full">First, which group should come first?</p>
+    <p data-when="order">Something new: you can now choose which group leads the tabs, columns and lists across the site, and whether member names show in Japanese or English.</p>
+    <p class="order-q">First, which group should come first?</p>
     <div class="order-pick" id="welcome-order-pick">
       <button type="button" class="order-opt opt-s" data-val="SAKURA" aria-pressed="false">
         <span class="order-tabs"><span class="order-pill s">櫻坂</span><span class="order-arrow">&#9656;</span><span class="order-pill h dim">日向坂</span></span>
@@ -382,8 +388,19 @@
         <span class="order-cap">Hinatazaka first</span>
       </button>
     </div>
-    <p class="order-hint" data-when="full">Sets tab and column order across the whole site. Change it any time from the &#9881; menu.</p>
-    <p class="order-hint" data-when="order">You can change it any time from the &#9881; menu.</p>
+    <p class="order-hint" data-when="full">Sets tab and column order across the whole site.</p>
+    <p class="order-q">Next, how should member names appear?</p>
+    <div class="order-pick" id="welcome-name-pick">
+      <button type="button" class="order-opt opt-n" data-val="JP" aria-pressed="true">
+        <span class="name-sample">齊藤京子</span>
+        <span class="order-cap">日本語</span>
+      </button>
+      <button type="button" class="order-opt opt-n" data-val="EN" aria-pressed="false">
+        <span class="name-sample">Saito Kyoko</span>
+        <span class="order-cap">English</span>
+      </button>
+    </div>
+    <p class="order-hint">Change these any time from the &#9881; menu.</p>
     <button class="welcome-ready-btn" id="welcome-ready-btn" type="button">I'm ready!</button>
   </div>
 </div>
@@ -937,6 +954,7 @@
     var welcomeCard = document.getElementById('welcome-card');
     var readyBtn = document.getElementById('welcome-ready-btn');
     var pick = document.getElementById('welcome-order-pick');
+    var namePick = document.getElementById('welcome-name-pick');
 
     welcomeCard.dataset.mode = noCards ? 'full' : 'order';
     readyBtn.textContent = noCards ? "I'm ready!" : 'Save';
@@ -945,11 +963,17 @@
       var btn = e.target.closest('button');
       if (btn) syncPick(pick, btn.dataset.val);
     });
+    syncPick(namePick, framesNameLang);
+    namePick.addEventListener('click', function (e) {
+      var btn = e.target.closest('button');
+      if (btn) syncPick(namePick, btn.dataset.val);
+    });
 
     welcomeOverlay.classList.add('open');
     document.body.classList.add('welcome-mode');
     readyBtn.addEventListener('click', function () {
       applyGroupFirst(pickedValue(pick));
+      applyNameLang(pickedValue(namePick));
       welcomeOverlay.classList.remove('open');
       document.body.classList.remove('welcome-mode');
       if (noCards) openImportMode(false);
