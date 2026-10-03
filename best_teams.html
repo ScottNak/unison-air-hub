@@ -25,18 +25,19 @@
 
   .color-tab-bar { display: flex; gap: 6px; margin-bottom: -1px; }
   .color-tab-btn {
-    appearance: none; border: none; cursor: pointer; font-weight: 800; font-size: 13px;
-    flex: 1 1 0; text-align: center; color: #fff;
+    appearance: none; border: none; cursor: pointer; font-weight: 700; font-size: 15px;
+    flex: 1 1 0; text-align: center; color: #2d2d42;
     padding: 11px 10px; border-radius: 12px 12px 0 0;
-    background: rgba(255,255,255,0.28);
-    transition: background .12s ease, opacity .12s ease;
+    background: rgba(255,255,255,0.55);
+    transition: background .12s ease, color .12s ease;
   }
-  .color-tab-btn:hover { background: rgba(255,255,255,0.42); }
-  .color-tab-btn.active { background: var(--tc); box-shadow: 0 -2px 10px rgba(0,0,0,0.25); }
+  
+  .color-tab-btn:hover { background: rgba(255,255,255,0.75); }
+  .color-tab-btn.active { background: var(--tc); color: #23233a; box-shadow: 0 -2px 10px rgba(0,0,0,0.25); }
   
   .color-tab-btn[data-color="A"].active {
     background: linear-gradient(135deg,#e05a5a,#d9b23a,#5aa85a,#4a90d9,#9a6bc9);
-    text-shadow: 0 1px 2px rgba(0,0,0,.35);
+    color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.35);
   }
 
   .panel { display: none; border-radius: 0 0 14px 14px; overflow: hidden;
@@ -96,9 +97,9 @@
     display: inline-block; width: 92px; text-align: center; padding: 3px 4px; border-radius: 999px;
     font-weight: 800; font-size: 10.5px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
-  .acq-tag.pull { background: #3a5bc7; }
-  .acq-tag.upgrade { background: #1c7a2e; }
-  .acq-tag.pull-upgrade { background: linear-gradient(90deg, #3a5bc7 0%, #2f6f7a 50%, #1c7a2e 100%); }
+  .acq-tag.pull { background: #1c7a2e; }
+  .acq-tag.upgrade { background: #3a5bc7; }
+  .acq-tag.pull-upgrade { background: linear-gradient(90deg, #1c7a2e 0%, #2f6f7a 50%, #3a5bc7 100%); }
 
   .note-action { flex: 0 0 auto; text-align: center; }
   .sweep-btn {
@@ -127,7 +128,7 @@
     display: inline-block; flex: 0 0 auto;
     border-radius: 999px; padding: 2px 8px;
     font-weight: 800; font-size: 9.5px; color: #fff;
-    background: linear-gradient(90deg, #3a5bc7 0%, #2f6f7a 50%, #1c7a2e 100%);
+    background: linear-gradient(90deg, #1c7a2e 0%, #2f6f7a 50%, #3a5bc7 100%);
   }
   .wc-top .nm { flex: 1 1 auto; }
   .wc-top .nm { font-size: 11.5px; font-weight: 700; color: #2d2d42;
@@ -225,7 +226,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v24</div>
+<div class="page-version-badge">v25</div>
 <div class="wrap">
   <div class="note">
     <div class="note-text">
@@ -1464,7 +1465,7 @@ var RESULTS_KEY = 'uniair_public_bestteams_results_v1';
 
 
 
-var RESULTS_SCHEMA = 'v24';
+var RESULTS_SCHEMA = 'v25';
 var RESULTS_FP = null;
 var CACHED_ALL = null;
 
