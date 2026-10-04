@@ -271,9 +271,9 @@
 
   .filters-panel {
     background: #f5f6fb; border: 1px solid #e4e6f0; border-radius: 12px;
-    padding: 14px 16px 16px; margin: 2px 0 14px;
+    padding: 6px 16px; margin: 2px 0 14px;
   }
-  .filters-header { display: flex; align-items: center; justify-content: space-between; margin: 0 0 10px; }
+  .filters-header { display: flex; align-items: center; justify-content: space-between; margin: 0 0 6px; }
   .filters-toggle {
     appearance: none; border: none; background: none; cursor: pointer; padding: 0;
     display: flex; align-items: center; gap: 6px;
@@ -283,7 +283,7 @@
   .filters-toggle:hover { color: #43475c; }
   .filters-toggle .chevron { font-size: 9px; transition: transform 0.15s ease; }
   .filters-panel.collapsed .filters-toggle .chevron { transform: rotate(-90deg); }
-  .filters-panel.collapsed .filter-row, .filters-panel.collapsed .cs-line { display: none; }
+  .filters-panel.collapsed .filter-bar, .filters-panel.collapsed .cs-line { display: none; }
   .filters-panel.collapsed .filters-header { margin-bottom: 0; }
   .filters-header { gap: 12px; }
   .filters-summary { display: none; flex: 1; flex-wrap: wrap; gap: 6px; align-items: center; }
@@ -307,14 +307,19 @@
     padding: 5px 12px; border-radius: 999px; font-size: 11px; font-weight: 700; color: #555;
   }
   .filters-reset-btn:hover { border-color: #b8bad0; color: #222; }
-  .filter-row { align-items: stretch; gap: 10px; margin-bottom: 0; }
   .filter-group {
     display: flex; flex-direction: column; gap: 6px;
     background: #fff; border: 1px solid #e6e8f2; border-radius: 9px; padding: 9px 11px;
   }
   .filter-label { font-size: 10px; text-transform: uppercase; color: #888; letter-spacing: .03em; font-weight: 700; }
-  
-  .filter-row-inner { display: flex; gap: 10px; }
+  .filter-bar {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+    background: #fff; border: 1px solid #e6e8f2; border-radius: 9px; padding: 7px 11px;
+  }
+  .filter-bar .filter-label { margin-right: 2px; }
+  .filter-bar .sk-input { width: 80px; padding: 0 8px; font-size: 12px; }
+  .filter-bar .sk-input, .filter-bar .filter-toggle-label, .filter-bar .pull-order-btn { box-sizing: border-box; height: 30px; }
+  .filter-bar .filter-toggle-label, .filter-bar .pull-order-btn { padding: 0 12px; }
   .search-box.small { padding: 6px 9px; font-size: 12px; width: 100%; box-sizing: border-box; flex: none; }
   .search-clear-wrap { position: relative; }
   .search-clear-wrap .search-box.small { padding-right: 26px; }
@@ -353,7 +358,7 @@
 </style>
 </head>
 <body>
-  <div class="page-version-badge">v15</div>
+  <div class="page-version-badge">v16</div>
   <div class="wrap">
     <div class="panel">
       <div class="controls">
@@ -390,33 +395,21 @@
           <span class="cs-div"></span>
           <div class="cs-chips" id="cs-extra"></div>
         </div>
-        <div class="controls filter-row">
-          <div class="filter-group">
-            <label class="filter-label" for="sk-min">Skill EV% &ge;</label>
-            <input type="number" id="sk-min" class="sk-input" min="0" max="100" step="0.01" placeholder="e.g. 1.5">
+        <div class="filter-bar">
+          <label class="filter-label" for="sk-min">Skill EV% &ge;</label>
+          <input type="number" id="sk-min" class="sk-input" min="0" max="100" step="0.01" placeholder="e.g. 1.5">
+          <span class="cs-div"></span>
+          <div class="mode-switch mode-switch-sm" id="owned-switch" role="group" aria-label="Owned filter">
+            <button type="button" class="mode-switch-btn active" data-owned="all">All</button>
+            <button type="button" class="mode-switch-btn" data-owned="owned">Owned</button>
+            <button type="button" class="mode-switch-btn" data-owned="unowned">Unowned</button>
           </div>
-          <div class="filter-group">
-            <label class="filter-label">Owned</label>
-            <div class="mode-switch mode-switch-sm" id="owned-switch" role="group" aria-label="Owned filter">
-              <button type="button" class="mode-switch-btn active" data-owned="all">All</button>
-              <button type="button" class="mode-switch-btn" data-owned="owned">Owned</button>
-              <button type="button" class="mode-switch-btn" data-owned="unowned">Unowned</button>
-            </div>
-          </div>
-          <div class="filter-group">
-            <label class="filter-label">Options</label>
-            <div class="filter-row-inner">
-              <label class="filter-toggle-label"><input type="checkbox" id="grad-filter"> Exclude graduated</label>
-              <label class="filter-toggle-label"><input type="checkbox" id="has-plus-filter"> Has SSR+</label>
-            </div>
-          </div>
-          <div class="filter-group">
-            <label class="filter-label">Pull Order</label>
-            <div class="filter-row-inner">
-              <button class="pull-order-btn" id="pull-order-toggle" type="button" aria-pressed="false">Show Order</button>
-              <button class="pull-order-btn" id="pull-order-edit-btn" type="button">&#9998; Edit</button>
-            </div>
-          </div>
+          <span class="cs-div"></span>
+          <label class="filter-toggle-label"><input type="checkbox" id="grad-filter"> Exclude graduated</label>
+          <label class="filter-toggle-label"><input type="checkbox" id="has-plus-filter"> Has SSR+</label>
+          <span class="cs-div"></span>
+          <button class="pull-order-btn" id="pull-order-toggle" type="button" aria-pressed="false">Show Pull Order</button>
+          <button class="pull-order-btn" id="pull-order-edit-btn" type="button">Edit Pull Order</button>
         </div>
       </div>
       <div class="table-scroll">
@@ -449,9 +442,9 @@
         <li>When <b>Filters</b> is collapsed, the active filters are listed beside it - click a filter's &times; to clear it.</li>
         <li>Owned marks are stored only in this browser - nothing is uploaded or synced anywhere.</li>
         <li><b>Warning</b>: clearing your browser data clears this info too. Use the hub's <b>Export</b>/<b>Import</b> buttons (top of the page) to save a backup file covering this and every other tab, and load it back.</li>
-        <li><b>Pull Order &rarr; Show Order</b>: press it to swap the Owned column for the position each owned card was added in (#1 = first). Click the column header to sort by it. Cards get their number when you mark them owned, so mark a new batch in the order you actually pulled it; an upgraded card keeps its base card's number.</li>
+        <li><b>Show Pull Order</b>: press it to swap the Owned column for the position each owned card was added in (#1 = first). Click the column header to sort by it. Cards get their number when you mark them owned, so mark a new batch in the order you actually pulled it; an upgraded card keeps its base card's number.</li>
         <li>An owned card shows <b>&mdash;</b> when no order was ever recorded for it - marks that arrived in bulk, from a save file or the bulk-add grid. Nothing is guessed on your behalf; give it a position in the dialog below.</li>
-        <li><b>Pull Order &rarr; Edit</b> opens a dialog where you can fix a sequence - drag rows, or type a new position into a row's number box. Cards with no position wait at the top of that list until you give them one. Nothing is saved until you press <b>Save order</b>.</li>
+        <li><b>Edit Pull Order</b> opens a dialog where you can fix a sequence - drag rows, or type a new position into a row's number box. Cards with no position wait at the top of that list until you give them one. Nothing is saved until you press <b>Save order</b>.</li>
       </ul>
     </div>
   </div>
