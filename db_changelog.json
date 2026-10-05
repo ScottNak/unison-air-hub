@@ -1,6 +1,66 @@
 {
  "entries": [
   {
+   "version": "db26-2026-10-05",
+   "date": "2026-10-05",
+   "added": 7,
+   "cardCount": 5631,
+   "titles": [
+    "Veaut"
+   ],
+   "cards": [
+    {
+     "id": 6639,
+     "color": "Y",
+     "memberEn": "Sakai Nina",
+     "cs": "Da85%",
+     "sk": 0.0361
+    },
+    {
+     "id": 6640,
+     "color": "R",
+     "memberEn": "Ono Manami",
+     "cs": "Vo85%",
+     "sk": 0.0368
+    },
+    {
+     "id": 6641,
+     "color": "Y",
+     "memberEn": "Hiraoka Mitsuki",
+     "cs": "Da85%",
+     "sk": 0.0368
+    },
+    {
+     "id": 6642,
+     "color": "B",
+     "memberEn": "Yamada Momomi",
+     "cs": "Da85%",
+     "sk": 0.0368
+    },
+    {
+     "id": 6643,
+     "color": "P",
+     "memberEn": "Yamakawa Ui",
+     "cs": "Vo85%",
+     "sk": 0.0368
+    },
+    {
+     "id": 6644,
+     "color": "G",
+     "memberEn": "Moriya Rena",
+     "cs": "VoPe55%",
+     "sk": 0.0361
+    },
+    {
+     "id": 6645,
+     "color": "G",
+     "memberEn": "Matsuda Rina",
+     "cs": "Vo85%",
+     "sk": 0.0368
+    }
+   ]
+  },
+  {
    "version": "db25-2026-10-02",
    "date": "2026-10-02",
    "added": 1,
