@@ -20,6 +20,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6646,
      "color": "R",
      "memberEn": "Kosaka Marino",
+     "title": "4th YAL FL ブルームーンキス",
      "cs": "Vo70%",
      "sk": 0.0078
     },
@@ -27,6 +28,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6647,
      "color": "B",
      "memberEn": "Konishi Nanami",
+     "title": "7回目のひな誕祭 FL 永遠のソフィア",
      "cs": "Da70%",
      "sk": 0.0067
     },
@@ -34,6 +36,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6648,
      "color": "Y",
      "memberEn": "Kosaka Nao",
+     "title": "MON 2025 FL お願いバッハ！",
      "cs": "Pe70%",
      "sk": 0.0163
     },
@@ -41,6 +44,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6649,
      "color": "Y",
      "memberEn": "Kanemura Miku",
+     "title": "MON 2025 FL お願いバッハ！",
      "cs": "Vo70%",
      "sk": 0.0
     },
@@ -48,6 +52,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6650,
      "color": "P",
      "memberEn": "Katayama Saki",
+     "title": "MON 2025 FL あの娘にグイグイ",
      "cs": "Pe70%",
      "sk": 0.0324
     },
@@ -55,6 +60,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6651,
      "color": "G",
      "memberEn": "Ono Manami",
+     "title": "MON 2025 FL 恋した魚は空を飛ぶ",
      "cs": "Vo70%",
      "sk": 0.0232
     },
@@ -62,6 +68,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6652,
      "color": "R",
      "memberEn": "Hiraoka Mitsuki",
+     "title": "MON 2025 FL 恋した魚は空を飛ぶ",
      "cs": "Da70%",
      "sk": 0.0252
     },
@@ -69,6 +76,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6653,
      "color": "B",
      "memberEn": "Matono Mio",
+     "title": "5th TOUR 2025 \"Addiction\" FL Make or Break",
      "cs": "Vo70%",
      "sk": 0.0232
     },
@@ -76,6 +84,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6654,
      "color": "P",
      "memberEn": "Moriya Rena",
+     "title": "5th TOUR 2025 \"Addiction\" FL Make or Break",
      "cs": "Da70%",
      "sk": 0.0246
     },
@@ -83,6 +92,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6655,
      "color": "G",
      "memberEn": "Mukai Itoha",
+     "title": "5th TOUR 2025 \"Addiction\" FL Nightmare症候群",
      "cs": "Pe70%",
      "sk": 0.0163
     },
@@ -90,6 +100,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6656,
      "color": "B",
      "memberEn": "Taniguchi Airi",
+     "title": "5th TOUR 2025 \"Addiction\" FL Nightmare症候群",
      "cs": "Pe70%",
      "sk": 0.0334
     },
@@ -97,6 +108,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6657,
      "color": "Y",
      "memberEn": "Odakura Reina",
+     "title": "4th YAL FL 標識",
      "cs": "Da70%",
      "sk": 0.0078
     },
@@ -104,6 +116,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6658,
      "color": "P",
      "memberEn": "Takahashi Mikuni",
+     "title": "MON 2025 FL あの娘にグイグイ",
      "cs": "Vo70%",
      "sk": 0.0067
     }
@@ -122,6 +135,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6639,
      "color": "Y",
      "memberEn": "Sakai Nina",
+     "title": "Veaut",
      "cs": "Da85%",
      "sk": 0.0361
     },
@@ -129,6 +143,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6640,
      "color": "R",
      "memberEn": "Ono Manami",
+     "title": "Veaut",
      "cs": "Vo85%",
      "sk": 0.0368
     },
@@ -136,6 +151,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6641,
      "color": "Y",
      "memberEn": "Hiraoka Mitsuki",
+     "title": "Veaut",
      "cs": "Da85%",
      "sk": 0.0368
     },
@@ -143,6 +159,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6642,
      "color": "B",
      "memberEn": "Yamada Momomi",
+     "title": "Veaut",
      "cs": "Da85%",
      "sk": 0.0368
     },
@@ -150,6 +167,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6643,
      "color": "P",
      "memberEn": "Yamakawa Ui",
+     "title": "Veaut",
      "cs": "Vo85%",
      "sk": 0.0368
     },
@@ -157,6 +175,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6644,
      "color": "G",
      "memberEn": "Moriya Rena",
+     "title": "Veaut",
      "cs": "VoPe55%",
      "sk": 0.0361
     },
@@ -164,6 +183,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6645,
      "color": "G",
      "memberEn": "Matsuda Rina",
+     "title": "Veaut",
      "cs": "Vo85%",
      "sk": 0.0368
     }
@@ -182,6 +202,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6638,
      "color": "R",
      "memberEn": "Konishi Nanami",
+     "title": "HAPPY 22nd BIRTHDAY",
      "cs": "ALL35%",
      "sk": 0.0368
     }
@@ -210,6 +231,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6636,
      "color": "P",
      "memberEn": "Takahashi Mikuni",
+     "title": "HAPPY 23rd BIRTHDAY",
      "cs": "ALL35%",
      "sk": 0.0368
     },
@@ -217,6 +239,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6637,
      "color": "P",
      "memberEn": "Yamasaki Ten",
+     "title": "HAPPY 21st BIRTHDAY",
      "cs": "ALL35%",
      "sk": 0.0368
     }
@@ -235,6 +258,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6635,
      "color": "P",
      "memberEn": "Hirao Honoka",
+     "title": "HAPPY 23rd BIRTHDAY",
      "cs": "ALL35%",
      "sk": 0.0163
     }
@@ -254,6 +278,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6633,
      "color": "B",
      "memberEn": "Yamakawa Ui",
+     "title": "HAPPY 21st BIRTHDAY",
      "cs": "ALL35%",
      "sk": 0.0163
     },
@@ -261,6 +286,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6634,
      "color": "Y",
      "memberEn": "Nakagawa Chihiro",
+     "title": "HAPPY 19th BIRTHDAY",
      "cs": "ALL35%",
      "sk": 0.0163
     }
@@ -279,6 +305,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6577,
      "color": "G",
      "memberEn": "Moriya Rena",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "VoPe50%",
      "sk": 0.0334
     },
@@ -286,6 +313,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6578,
      "color": "R",
      "memberEn": "Odakura Reina",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "ALL45%",
      "sk": 0.0324
     },
@@ -293,6 +321,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6579,
      "color": "B",
      "memberEn": "Fujiyoshi Karin",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Vo70%",
      "sk": 0.025
     },
@@ -300,6 +329,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6580,
      "color": "Y",
      "memberEn": "Endo Riko",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Vo70%",
      "sk": 0.0232
     },
@@ -307,6 +337,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6581,
      "color": "R",
      "memberEn": "Meguro Hiro",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Pe70%",
      "sk": 0.0173
     },
@@ -314,6 +345,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6582,
      "color": "G",
      "memberEn": "Endo Hikari",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Da70%",
      "sk": 0.0163
     },
@@ -321,6 +353,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6583,
      "color": "B",
      "memberEn": "Taniguchi Airi",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Da70%",
      "sk": 0.0078
     },
@@ -328,6 +361,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6584,
      "color": "P",
      "memberEn": "Murai Yu",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Da70%",
      "sk": 0.0
     },
@@ -335,6 +369,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6585,
      "color": "P",
      "memberEn": "Yamakawa Ui",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Vo85%",
      "sk": 0.0368
     },
@@ -342,6 +377,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6586,
      "color": "P",
      "memberEn": "Onuma Akiho",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Pe85%",
      "sk": 0.034
     },
@@ -349,6 +385,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6587,
      "color": "R",
      "memberEn": "Nakagawa Chihiro",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Da70%",
      "sk": 0.0252
     },
@@ -356,6 +393,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6588,
      "color": "B",
      "memberEn": "Ishimori Rika",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Da70%",
      "sk": 0.0232
     },
@@ -363,6 +401,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6589,
      "color": "G",
      "memberEn": "Asai Konomi",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Pe70%",
      "sk": 0.0173
     },
@@ -370,6 +409,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6590,
      "color": "B",
      "memberEn": "Inaguma Hina",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Vo70%",
      "sk": 0.0163
     },
@@ -377,6 +417,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6591,
      "color": "Y",
      "memberEn": "Yamasaki Ten",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Da70%",
      "sk": 0.0078
     },
@@ -384,6 +425,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6592,
      "color": "R",
      "memberEn": "Tamura Hono",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Pe70%",
      "sk": 0.0
     },
@@ -391,6 +433,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6593,
      "color": "B",
      "memberEn": "Yamada Momomi",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Da85%",
      "sk": 0.0349
     },
@@ -398,6 +441,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6594,
      "color": "G",
      "memberEn": "Kojima Nagisa",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Vo85%",
      "sk": 0.0324
     },
@@ -405,6 +449,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6595,
      "color": "G",
      "memberEn": "Matono Mio",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Da70%",
      "sk": 0.0252
     },
@@ -412,6 +457,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6596,
      "color": "Y",
      "memberEn": "Kosaka Marino",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Pe70%",
      "sk": 0.0246
     },
@@ -419,6 +465,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6597,
      "color": "Y",
      "memberEn": "Sato Neo",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Da70%",
      "sk": 0.0173
     },
@@ -426,6 +473,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6598,
      "color": "P",
      "memberEn": "Nakashima Yuzuki",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Pe70%",
      "sk": 0.0078
     },
@@ -433,6 +481,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6599,
      "color": "R",
      "memberEn": "Yamashita Shizuki",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Vo70%",
      "sk": 0.0
     },
@@ -440,6 +489,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6600,
      "color": "G",
      "memberEn": "Matsuda Rina",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Vo85%",
      "sk": 0.034
     },
@@ -447,6 +497,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6601,
      "color": "P",
      "memberEn": "Mukai Itoha",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Da85%",
      "sk": 0.0334
     },
@@ -454,6 +505,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6602,
      "color": "Y",
      "memberEn": "Ozono Rei",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Da70%",
      "sk": 0.025
     },
@@ -461,6 +513,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6603,
      "color": "R",
      "memberEn": "Matsumoto Wako",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Vo70%",
      "sk": 0.0246
     },
@@ -468,6 +521,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6604,
      "color": "B",
      "memberEn": "Katsumata Haru",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Pe70%",
      "sk": 0.0163
     },
@@ -475,6 +529,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6605,
      "color": "P",
      "memberEn": "Morita Hikaru",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Vo70%",
      "sk": 0.0067
     },
@@ -482,6 +537,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6606,
      "color": "Y",
      "memberEn": "Murayama Miu",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Vo70%",
      "sk": 0.0
     },
@@ -489,6 +545,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6607,
      "color": "R",
      "memberEn": "Ono Manami",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Vo85%",
      "sk": 0.034
     },
@@ -496,6 +553,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6608,
      "color": "G",
      "memberEn": "Takeuchi Kirari",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Da85%",
      "sk": 0.0324
     },
@@ -503,6 +561,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6609,
      "color": "P",
      "memberEn": "Sato Yu",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Da70%",
      "sk": 0.0246
     },
@@ -510,6 +569,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6610,
      "color": "G",
      "memberEn": "Konishi Nanami",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Pe70%",
      "sk": 0.0232
     },
@@ -517,6 +577,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6611,
      "color": "R",
      "memberEn": "Fujishima Kaho",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Pe70%",
      "sk": 0.0163
     },
@@ -524,6 +585,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6612,
      "color": "Y",
      "memberEn": "Tsurusaki Niko",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Vo70%",
      "sk": 0.0078
     },
@@ -531,6 +593,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6613,
      "color": "B",
      "memberEn": "Shimizu Rio",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Vo70%",
      "sk": 0.0
     },
@@ -538,6 +601,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6614,
      "color": "Y",
      "memberEn": "Hiraoka Mitsuki",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Da85%",
      "sk": 0.0349
     },
@@ -545,6 +609,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6615,
      "color": "R",
      "memberEn": "Ishizuka Tamaki",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Pe85%",
      "sk": 0.0324
     },
@@ -552,6 +617,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6616,
      "color": "G",
      "memberEn": "Katayama Saki",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Vo70%",
      "sk": 0.0252
     },
@@ -559,6 +625,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6617,
      "color": "B",
      "memberEn": "Watanabe Rina",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Pe70%",
      "sk": 0.0232
     },
@@ -566,6 +633,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6618,
      "color": "R",
      "memberEn": "Takai Rika",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Vo70%",
      "sk": 0.0173
     },
@@ -573,6 +641,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6619,
      "color": "B",
      "memberEn": "Takahashi Mikuni",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Da70%",
      "sk": 0.0067
     },
@@ -580,6 +649,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6620,
      "color": "P",
      "memberEn": "Kosaka Nao",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Vo70%",
      "sk": 0.0
     },
@@ -587,6 +657,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6621,
      "color": "R",
      "memberEn": "Yamashita Haruka",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "VoDa50%",
      "sk": 0.0349
     },
@@ -594,6 +665,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6622,
      "color": "Y",
      "memberEn": "Shimoda Izuki",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Pe85%",
      "sk": 0.0334
     },
@@ -601,6 +673,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6623,
      "color": "P",
      "memberEn": "Kanemura Miku",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Pe70%",
      "sk": 0.025
     },
@@ -608,6 +681,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6624,
      "color": "B",
      "memberEn": "Hirao Honoka",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Vo70%",
      "sk": 0.0246
     },
@@ -615,6 +689,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6625,
      "color": "G",
      "memberEn": "Morimoto Marie",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Vo70%",
      "sk": 0.0163
     },
@@ -622,6 +697,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6626,
      "color": "P",
      "memberEn": "Ota Mizuki",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Da70%",
      "sk": 0.0078
     },
@@ -629,6 +705,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6627,
      "color": "Y",
      "memberEn": "Sakai Nina",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Da85%",
      "sk": 0.0368
     },
@@ -636,6 +713,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6628,
      "color": "B",
      "memberEn": "Matsuo Sakura",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "DaPe50%",
      "sk": 0.0324
     },
@@ -643,6 +721,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6629,
      "color": "P",
      "memberEn": "Shogenji Yoko",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Vo70%",
      "sk": 0.0252
     },
@@ -650,6 +729,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6630,
      "color": "R",
      "memberEn": "Kuramori Hinano",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Da70%",
      "sk": 0.025
     },
@@ -657,6 +737,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6631,
      "color": "G",
      "memberEn": "Miyachi Sumire",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Da70%",
      "sk": 0.0173
     },
@@ -664,6 +745,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6632,
      "color": "Y",
      "memberEn": "Kamimura Hinano",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
      "cs": "Pe70%",
      "sk": 0.0067
     }
@@ -698,6 +780,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6567,
      "color": "R",
      "memberEn": "Kanemura Miku",
+     "title": "HAPPY 24th BIRTHDAY",
      "cs": "ALL35%",
      "sk": 0.0163
     },
@@ -705,6 +788,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6568,
      "color": "B",
      "memberEn": "Kosaka Nao",
+     "title": "HAPPY 24th BIRTHDAY",
      "cs": "ALL35%",
      "sk": 0.0163
     },
@@ -712,6 +796,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6569,
      "color": "G",
      "memberEn": "Fujiyoshi Karin",
+     "title": "HAPPY 25th BIRTHDAY",
      "cs": "ALL35%",
      "sk": 0.0163
     },
@@ -719,6 +804,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6570,
      "color": "Y",
      "memberEn": "Morita Hikaru",
+     "title": "HAPPY 25th BIRTHDAY",
      "cs": "ALL35%",
      "sk": 0.0163
     },
@@ -726,6 +812,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6571,
      "color": "G",
      "memberEn": "Odakura Reina",
+     "title": "HAPPY 22nd BIRTHDAY",
      "cs": "ALL35%",
      "sk": 0.0163
     },
@@ -733,6 +820,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6572,
      "color": "G",
      "memberEn": "Kojima Nagisa",
+     "title": "HAPPY 21st BIRTHDAY",
      "cs": "ALL35%",
      "sk": 0.0163
     },
@@ -740,6 +828,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6573,
      "color": "R",
      "memberEn": "Murai Yū",
+     "title": "HAPPY 22nd BIRTHDAY",
      "cs": "ALL35%",
      "sk": 0.0163
     },
@@ -747,6 +836,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6574,
      "color": "P",
      "memberEn": "Ishizuka Tamaki",
+     "title": "HAPPY 22nd BIRTHDAY",
      "cs": "ALL35%",
      "sk": 0.0163
     },
@@ -754,6 +844,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6575,
      "color": "B",
      "memberEn": "Fujishima Kaho",
+     "title": "HAPPY 20th BIRTHDAY",
      "cs": "ALL35%",
      "sk": 0.0163
     },
@@ -761,6 +852,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6576,
      "color": "G",
      "memberEn": "Satō Yū",
+     "title": "HAPPY 20th BIRTHDAY",
      "cs": "ALL35%",
      "sk": 0.0163
     }
@@ -792,6 +884,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6523,
      "color": "R",
      "memberEn": "Yamashita Shizuki",
+     "title": "自業自得+",
      "cs": "Da85%",
      "sk": 0.0372
     },
@@ -799,6 +892,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6524,
      "color": "Y",
      "memberEn": "Morita Hikaru",
+     "title": "自業自得+",
      "cs": "Pe70%",
      "sk": 0.025
     },
@@ -806,6 +900,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6525,
      "color": "B",
      "memberEn": "Inoue Rina",
+     "title": "自業自得+",
      "cs": "Vo70%",
      "sk": 0.0232
     },
@@ -813,6 +908,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6526,
      "color": "G",
      "memberEn": "Taniguchi Airi",
+     "title": "自業自得+",
      "cs": "Da70%",
      "sk": 0.0163
     },
@@ -820,6 +916,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6527,
      "color": "Y",
      "memberEn": "Fujiyoshi Karin",
+     "title": "自業自得+",
      "cs": "Vo70%+仕上がり度50%",
      "sk": 0.0067
     },
@@ -827,6 +924,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6528,
      "color": "B",
      "memberEn": "Nakashima Yuzuki",
+     "title": "自業自得+",
      "cs": "Pe70%",
      "sk": 0.0
     },
@@ -834,6 +932,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6529,
      "color": "P",
      "memberEn": "Matsuda Rina",
+     "title": "自業自得+",
      "cs": "Vo70%",
      "sk": 0.003
     },
@@ -841,6 +940,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6530,
      "color": "Y",
      "memberEn": "Tamura Hono",
+     "title": "自業自得+",
      "cs": "ALL45%",
      "sk": 0.034
     },
@@ -848,6 +948,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6531,
      "color": "P",
      "memberEn": "Murayama Miu",
+     "title": "自業自得+",
      "cs": "VoPe50%",
      "sk": 0.0368
     },
@@ -855,6 +956,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6532,
      "color": "G",
      "memberEn": "Matono Mio",
+     "title": "自業自得+",
      "cs": "Pe70%",
      "sk": 0.0246
     },
@@ -862,6 +964,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6533,
      "color": "R",
      "memberEn": "Moriya Rena",
+     "title": "自業自得+",
      "cs": "Vo70%",
      "sk": 0.0173
     },
@@ -869,6 +972,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6534,
      "color": "B",
      "memberEn": "Murai Yū",
+     "title": "自業自得+",
      "cs": "Da70%",
      "sk": 0.0078
     },
@@ -876,6 +980,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6535,
      "color": "R",
      "memberEn": "Ōzono Rei",
+     "title": "自業自得+",
      "cs": "Da70%",
      "sk": 0.0052
     },
@@ -883,6 +988,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6536,
      "color": "G",
      "memberEn": "Yamasaki Ten",
+     "title": "自業自得+",
      "cs": "Vo70%",
      "sk": 0.0245
     },
@@ -890,6 +996,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6537,
      "color": "G",
      "memberEn": "Ishimori Rika",
+     "title": "愛し合いなさい+",
      "cs": "VoDa50%",
      "sk": 0.0372
     },
@@ -897,6 +1004,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6538,
      "color": "P",
      "memberEn": "Endō Hikari",
+     "title": "愛し合いなさい+",
      "cs": "スキル発動率2.25倍",
      "sk": 0.0234
     },
@@ -904,6 +1012,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6539,
      "color": "P",
      "memberEn": "Endō Riko",
+     "title": "愛し合いなさい+",
      "cs": "Pe70%",
      "sk": 0.0246
     },
@@ -911,6 +1020,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6540,
      "color": "B",
      "memberEn": "Ōnuma Akiho",
+     "title": "愛し合いなさい+",
      "cs": "Vo85%",
      "sk": 0.034
     },
@@ -918,6 +1028,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6541,
      "color": "R",
      "memberEn": "Odakura Reina",
+     "title": "愛し合いなさい+",
      "cs": "DaPe50%",
      "sk": 0.0201
     },
@@ -925,6 +1036,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6542,
      "color": "G",
      "memberEn": "Kōsaka Marino",
+     "title": "愛し合いなさい+",
      "cs": "ALL35%",
      "sk": 0.025
     },
@@ -932,6 +1044,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6543,
      "color": "Y",
      "memberEn": "Kojima Nagisa",
+     "title": "愛し合いなさい+",
      "cs": "Da70%",
      "sk": 0.0368
     },
@@ -939,6 +1052,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6544,
      "color": "Y",
      "memberEn": "Takemoto Yui",
+     "title": "愛し合いなさい+",
      "cs": "Vo70%",
      "sk": 0.0
     },
@@ -946,6 +1060,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6545,
      "color": "R",
      "memberEn": "Masumoto Kira",
+     "title": "愛し合いなさい+",
      "cs": "Pe70%",
      "sk": 0.0232
     },
@@ -953,6 +1068,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6546,
      "color": "B",
      "memberEn": "Mukai Itoha",
+     "title": "愛し合いなさい+",
      "cs": "Vo70%",
      "sk": 0.0222
     },
@@ -960,6 +1076,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6547,
      "color": "B",
      "memberEn": "Fujishima Kaho",
+     "title": "絶対的第六感+",
      "cs": "Pe85%",
      "sk": 0.0372
     },
@@ -967,6 +1084,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6548,
      "color": "G",
      "memberEn": "Konishi Nanami",
+     "title": "絶対的第六感+",
      "cs": "Vo70%",
      "sk": 0.0368
     },
@@ -974,6 +1092,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6549,
      "color": "P",
      "memberEn": "Matsuda Konoka",
+     "title": "絶対的第六感+",
      "cs": "Da70%",
      "sk": 0.025
     },
@@ -981,6 +1100,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6550,
      "color": "Y",
      "memberEn": "Kosaka Nao",
+     "title": "絶対的第六感+",
      "cs": "Pe70%",
      "sk": 0.0222
     },
@@ -988,6 +1108,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6551,
      "color": "R",
      "memberEn": "Tomita Suzuka",
+     "title": "絶対的第六感+",
      "cs": "Da70%+仕上がり度50%",
      "sk": 0.0078
     },
@@ -995,6 +1116,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6552,
      "color": "G",
      "memberEn": "Kawata Hina",
+     "title": "絶対的第六感+",
      "cs": "ALL45%",
      "sk": 0.034
     },
@@ -1002,6 +1124,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6553,
      "color": "R",
      "memberEn": "Shōgenji Yōko",
+     "title": "絶対的第六感+",
      "cs": "VoDa50%",
      "sk": 0.0246
     },
@@ -1009,6 +1132,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6554,
      "color": "Y",
      "memberEn": "Takahashi Mikuni",
+     "title": "絶対的第六感+",
      "cs": "Da70%",
      "sk": 0.0232
     },
@@ -1016,6 +1140,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6555,
      "color": "P",
      "memberEn": "Kamimura Hinano",
+     "title": "絶対的第六感+",
      "cs": "Pe70%",
      "sk": 0.0201
     },
@@ -1023,6 +1148,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6556,
      "color": "B",
      "memberEn": "Kanemura Miku",
+     "title": "絶対的第六感+",
      "cs": "Vo70%",
      "sk": 0.0143
     },
@@ -1030,6 +1156,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6557,
      "color": "P",
      "memberEn": "Miyachi Sumire",
+     "title": "君を覚えてない+",
      "cs": "DaPe50%",
      "sk": 0.0372
     },
@@ -1037,6 +1164,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6558,
      "color": "Y",
      "memberEn": "Takeuchi Kirari",
+     "title": "君を覚えてない+",
      "cs": "Vo70%",
      "sk": 0.0368
     },
@@ -1044,6 +1172,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6559,
      "color": "R",
      "memberEn": "Watanabe Rina",
+     "title": "君を覚えてない+",
      "cs": "Pe70%",
      "sk": 0.025
     },
@@ -1051,6 +1180,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6560,
      "color": "B",
      "memberEn": "Shimizu Rio",
+     "title": "君を覚えてない+",
      "cs": "Da70%",
      "sk": 0.0201
     },
@@ -1058,6 +1188,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6561,
      "color": "G",
      "memberEn": "Morimoto Marie",
+     "title": "君を覚えてない+",
      "cs": "スキル発動率2.25倍",
      "sk": 0.0234
     },
@@ -1065,6 +1196,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6562,
      "color": "R",
      "memberEn": "Hiraoka Mitsuki",
+     "title": "君を覚えてない+",
      "cs": "Vo85%",
      "sk": 0.034
     },
@@ -1072,6 +1204,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6563,
      "color": "B",
      "memberEn": "Yamashita Haruka",
+     "title": "君を覚えてない+",
      "cs": "ALL35%",
      "sk": 0.025
     },
@@ -1079,6 +1212,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6564,
      "color": "P",
      "memberEn": "Ishizuka Tamaki",
+     "title": "君を覚えてない+",
      "cs": "Da70%",
      "sk": 0.0246
     },
@@ -1086,6 +1220,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6565,
      "color": "G",
      "memberEn": "Yamaguchi Haruyo",
+     "title": "君を覚えてない+",
      "cs": "VoPe50%",
      "sk": 0.0173
     },
@@ -1093,6 +1228,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6566,
      "color": "Y",
      "memberEn": "Hirao Honoka",
+     "title": "君を覚えてない+",
      "cs": "Pe70%",
      "sk": 0.0055
     }
@@ -1129,6 +1265,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6501,
      "color": "B",
      "memberEn": "Yamasaki Ten",
+     "title": "MV Addiction",
      "cs": "Da85%",
      "sk": 0.0368
     },
@@ -1136,6 +1273,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6502,
      "color": "P",
      "memberEn": "Murayama Miu",
+     "title": "MV Addiction",
      "cs": "ALL45%",
      "sk": 0.0252
     },
@@ -1143,6 +1281,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6503,
      "color": "Y",
      "memberEn": "Ōnuma Akiho",
+     "title": "MV Addiction",
      "cs": "Vo70%",
      "sk": 0.0232
     },
@@ -1150,6 +1289,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6504,
      "color": "G",
      "memberEn": "Masumoto Kira",
+     "title": "MV Addiction",
      "cs": "Da70%",
      "sk": 0.0173
     },
@@ -1157,6 +1297,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6505,
      "color": "B",
      "memberEn": "Mukai Itoha",
+     "title": "MV Addiction",
      "cs": "Pe70%",
      "sk": 0.0163
     },
@@ -1164,6 +1305,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6506,
      "color": "P",
      "memberEn": "Matono Mio",
+     "title": "MV Addiction",
      "cs": "Vo70%",
      "sk": 0.0234
     },
@@ -1171,6 +1313,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6507,
      "color": "R",
      "memberEn": "Morita Hikaru",
+     "title": "MV Addiction",
      "cs": "Pe70%",
      "sk": 0.0245
     },
@@ -1178,6 +1321,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6508,
      "color": "P",
      "memberEn": "Fujiyoshi Karin",
+     "title": "MV Addiction",
      "cs": "Vo85%",
      "sk": 0.0368
     },
@@ -1185,6 +1329,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6509,
      "color": "G",
      "memberEn": "Nakashima Yuzuki",
+     "title": "MV Addiction",
      "cs": "Da70%",
      "sk": 0.0252
     },
@@ -1192,6 +1337,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6510,
      "color": "B",
      "memberEn": "Kojima Nagisa",
+     "title": "MV Addiction",
      "cs": "ALL45%",
      "sk": 0.0232
     },
@@ -1199,6 +1345,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6511,
      "color": "P",
      "memberEn": "Endō Hikari",
+     "title": "MV Addiction",
      "cs": "Da70%",
      "sk": 0.0173
     },
@@ -1206,6 +1353,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6512,
      "color": "R",
      "memberEn": "Moriya Rena",
+     "title": "MV Addiction",
      "cs": "Vo70%",
      "sk": 0.0163
     },
@@ -1213,6 +1361,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6513,
      "color": "Y",
      "memberEn": "Tamura Hono",
+     "title": "MV Addiction",
      "cs": "Pe70%",
      "sk": 0.0275
     },
@@ -1220,6 +1369,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6514,
      "color": "B",
      "memberEn": "Endō Riko",
+     "title": "MV Addiction",
      "cs": "Vo70%",
      "sk": 0.0204
     },
@@ -1227,6 +1377,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6515,
      "color": "G",
      "memberEn": "Kōsaka Marino",
+     "title": "MV Addiction",
      "cs": "VoPe50%",
      "sk": 0.034
     },
@@ -1234,6 +1385,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6516,
      "color": "Y",
      "memberEn": "Taniguchi Airi",
+     "title": "MV Addiction",
      "cs": "Pe70%",
      "sk": 0.0252
     },
@@ -1241,6 +1393,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6517,
      "color": "R",
      "memberEn": "Matsuda Rina",
+     "title": "MV Addiction",
      "cs": "Pe70%",
      "sk": 0.0232
     },
@@ -1248,6 +1401,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6518,
      "color": "Y",
      "memberEn": "Murai Yū",
+     "title": "MV Addiction",
      "cs": "Da70%",
      "sk": 0.0173
     },
@@ -1255,6 +1409,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6519,
      "color": "P",
      "memberEn": "Ishimori Rika",
+     "title": "MV Addiction",
      "cs": "Pe70%",
      "sk": 0.0163
     },
@@ -1262,6 +1417,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6520,
      "color": "R",
      "memberEn": "Odakura Reina",
+     "title": "MV Addiction",
      "cs": "Da70%",
      "sk": 0.0234
     },
@@ -1269,6 +1425,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6521,
      "color": "G",
      "memberEn": "Ōzono Rei",
+     "title": "MV Addiction",
      "cs": "Vo70%",
      "sk": 0.0275
     },
@@ -1276,6 +1433,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6522,
      "color": "B",
      "memberEn": "Yamashita Shizuki",
+     "title": "MV Addiction",
      "cs": "Da70%",
      "sk": 0.0057
     }
@@ -1303,6 +1461,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6500,
      "color": "Y",
      "memberEn": "Yamaguchi Haruyo",
+     "title": "海風とわがまま",
      "cs": "Da85%",
      "sk": 0.0368
     }
@@ -1321,6 +1480,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6484,
      "color": "R",
      "memberEn": "Watanabe Rina",
+     "title": "海風とわがまま",
      "cs": "Da70%",
      "sk": 0.0163
     },
@@ -1328,6 +1488,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6485,
      "color": "P",
      "memberEn": "Konishi Nanami",
+     "title": "海風とわがまま",
      "cs": "Vo70%",
      "sk": 0.0173
     },
@@ -1335,6 +1496,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6486,
      "color": "Y",
      "memberEn": "Morimoto Marie",
+     "title": "海風とわがまま",
      "cs": "Pe70%",
      "sk": 0.0232
     },
@@ -1342,6 +1504,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6487,
      "color": "P",
      "memberEn": "Fujishima Kaho",
+     "title": "海風とわがまま",
      "cs": "Da70%+仕上がり度50%",
      "sk": 0.0246
     },
@@ -1349,6 +1512,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6488,
      "color": "R",
      "memberEn": "Shimizu Rio",
+     "title": "海風とわがまま",
      "cs": "Pe85%",
      "sk": 0.034
     },
@@ -1356,6 +1520,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6489,
      "color": "P",
      "memberEn": "Takeuchi Kirari",
+     "title": "海風とわがまま",
      "cs": "Pe70%",
      "sk": 0.0
     },
@@ -1363,6 +1528,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6490,
      "color": "B",
      "memberEn": "Ishizuka Tamaki",
+     "title": "海風とわがまま",
      "cs": "Da70%",
      "sk": 0.0067
     },
@@ -1370,6 +1536,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6491,
      "color": "R",
      "memberEn": "Yamashita Haruka",
+     "title": "海風とわがまま",
      "cs": "Vo70%",
      "sk": 0.0078
     },
@@ -1377,6 +1544,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6492,
      "color": "Y",
      "memberEn": "Miyachi Sumire",
+     "title": "海風とわがまま",
      "cs": "Da70%",
      "sk": 0.0163
     },
@@ -1384,6 +1552,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6493,
      "color": "G",
      "memberEn": "Hirao Honoka",
+     "title": "海風とわがまま",
      "cs": "Pe70%",
      "sk": 0.0173
     },
@@ -1391,6 +1560,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6494,
      "color": "B",
      "memberEn": "Kamimura Hinano",
+     "title": "海風とわがまま",
      "cs": "Vo70%",
      "sk": 0.025
     },
@@ -1398,6 +1568,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6495,
      "color": "Y",
      "memberEn": "Kosaka Nao",
+     "title": "海風とわがまま",
      "cs": "ALL45%",
      "sk": 0.0252
     },
@@ -1405,6 +1576,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6496,
      "color": "P",
      "memberEn": "Takahashi Mikuni",
+     "title": "海風とわがまま",
      "cs": "ALL45%",
      "sk": 0.0368
     },
@@ -1412,6 +1584,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6497,
      "color": "B",
      "memberEn": "Shōgenji Yōko",
+     "title": "海風とわがまま",
      "cs": "Pe70%",
      "sk": 0.0
     },
@@ -1419,6 +1592,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6498,
      "color": "G",
      "memberEn": "Kanemura Miku",
+     "title": "海風とわがまま",
      "cs": "Vo70%",
      "sk": 0.0067
     },
@@ -1426,6 +1600,7 @@ window.UNIAIR_DB_CHANGELOG = {
      "id": 6499,
      "color": "Y",
      "memberEn": "Hiraoka Mitsuki",
+     "title": "海風とわがまま",
      "cs": "Vo70%",
      "sk": 0.0078
     }
