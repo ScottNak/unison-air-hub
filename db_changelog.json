@@ -1,6 +1,115 @@
 {
  "entries": [
   {
+   "version": "db27-2026-10-21",
+   "date": "2026-10-21",
+   "added": 13,
+   "cardCount": 5644,
+   "titles": [
+    "4th YAL FL ブルームーンキス",
+    "7回目のひな誕祭 FL 永遠のソフィア",
+    "MON 2025 FL お願いバッハ！",
+    "MON 2025 FL あの娘にグイグイ",
+    "MON 2025 FL 恋した魚は空を飛ぶ",
+    "5th TOUR 2025 \"Addiction\" FL Make or Break",
+    "5th TOUR 2025 \"Addiction\" FL Nightmare症候群",
+    "4th YAL FL 標識"
+   ],
+   "cards": [
+    {
+     "id": 6646,
+     "color": "R",
+     "memberEn": "Kosaka Marino",
+     "cs": "Vo70%",
+     "sk": 0.0078
+    },
+    {
+     "id": 6647,
+     "color": "B",
+     "memberEn": "Konishi Nanami",
+     "cs": "Da70%",
+     "sk": 0.0067
+    },
+    {
+     "id": 6648,
+     "color": "Y",
+     "memberEn": "Kosaka Nao",
+     "cs": "Pe70%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6649,
+     "color": "Y",
+     "memberEn": "Kanemura Miku",
+     "cs": "Vo70%",
+     "sk": 0.0
+    },
+    {
+     "id": 6650,
+     "color": "P",
+     "memberEn": "Katayama Saki",
+     "cs": "Pe70%",
+     "sk": 0.0324
+    },
+    {
+     "id": 6651,
+     "color": "G",
+     "memberEn": "Ono Manami",
+     "cs": "Vo70%",
+     "sk": 0.0232
+    },
+    {
+     "id": 6652,
+     "color": "R",
+     "memberEn": "Hiraoka Mitsuki",
+     "cs": "Da70%",
+     "sk": 0.0252
+    },
+    {
+     "id": 6653,
+     "color": "B",
+     "memberEn": "Matono Mio",
+     "cs": "Vo70%",
+     "sk": 0.0232
+    },
+    {
+     "id": 6654,
+     "color": "P",
+     "memberEn": "Moriya Rena",
+     "cs": "Da70%",
+     "sk": 0.0246
+    },
+    {
+     "id": 6655,
+     "color": "G",
+     "memberEn": "Mukai Itoha",
+     "cs": "Pe70%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6656,
+     "color": "B",
+     "memberEn": "Taniguchi Airi",
+     "cs": "Pe70%",
+     "sk": 0.0334
+    },
+    {
+     "id": 6657,
+     "color": "Y",
+     "memberEn": "Odakura Reina",
+     "cs": "Da70%",
+     "sk": 0.0078
+    },
+    {
+     "id": 6658,
+     "color": "P",
+     "memberEn": "Takahashi Mikuni",
+     "cs": "Vo70%",
+     "sk": 0.0067
+    }
+   ]
+  },
+  {
    "version": "db26-2026-10-05",
    "date": "2026-10-05",
    "added": 7,
