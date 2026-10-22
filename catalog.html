@@ -57,7 +57,7 @@
   }
   .chip.active { color: #fff; border-color: transparent; }
   .chip.active-neutral { background: #2d2d42; color: #fff; }
-  .table-scroll { overflow-x: auto; max-height: 68vh; overflow-y: auto; border-radius: 10px; border: 1px solid #eee; }
+  .table-scroll { overflow-x: auto; max-height: 68vh; overflow-y: auto; border-radius: 10px; border: 1px solid #eee; contain: layout paint; }
   table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
   thead th {
     position: sticky; top: 0; background: #2d2d42; color: #fff; text-align: left; padding: 9px 10px;
@@ -358,7 +358,7 @@
 </style>
 </head>
 <body>
-  <div class="page-version-badge">v16</div>
+  <div class="page-version-badge">v17</div>
   <div class="wrap">
     <div class="panel">
       <div class="controls">
@@ -610,6 +610,27 @@ function uniairGroupFirst() { return uniairGroupOrder()[0]; }
 const MEMBER_RANK = {"HINATA":{"金村美玖":0,"小坂菜緒":1,"上村ひなの":2,"髙橋未来虹":3,"森本茉莉":4,"石塚瑶季":5,"小西夏菜実":6,"清水理央":7,"正源司陽子":8,"竹内希来里":9,"平尾帆夏":10,"平岡海月":11,"藤嶌果歩":12,"宮地すみれ":13,"山下葉留花":14,"渡辺莉奈":15,"大田美月":16,"大野愛実":17,"片山紗希":18,"蔵盛妃那乃":19,"坂井新奈":20,"佐藤優羽":21,"下田衣珠季":22,"高井俐香":23,"鶴崎仁香":24,"松尾桜":25,"井口眞緒":26,"潮紗理菜":27,"影山優佳":28,"加藤史帆":29,"齊藤京子":30,"佐々木久美":31,"佐々木美玲":32,"高瀬愛奈":33,"高本彩花":34,"東村芽依":35,"河田陽菜":36,"富田鈴花":37,"丹生明里":38,"濱岸ひより":39,"松田好花":40,"宮田愛萌":41,"渡邉美穂":42,"山口陽世":43,"岸帆夏":44,"遠藤光莉":45,"大園玲":46,"大沼晶保":47,"幸阪茉里乃":48,"田村保乃":49,"藤吉夏鈴":50,"松田里奈":51,"森田ひかる":52,"守屋麗奈":53,"山﨑天":54,"石森璃花":55,"遠藤理子":56,"小田倉麗奈":57,"小島凪紗":58,"谷口愛季":59,"中嶋優月":60,"的野美青":61,"向井純葉":62,"村井優":63,"村山美羽":64,"山下瞳月":65,"浅井恋乃未":66,"稲熊ひな":67,"勝又春":68,"佐藤愛桜":69,"中川智尋":70,"松本和子":71,"目黒陽色":72,"山川宇衣":73,"山田桃実":74,"石森虹花":75,"上村莉菜":76,"尾関梨香":77,"織田奈那":78,"小池美波":79,"小林由依":80,"齋藤冬優花":81,"佐藤詩織":82,"菅井友香":83,"鈴本美愉":84,"長沢菜々香":85,"土生瑞穂":86,"原田葵":87,"平手友梨奈":88,"守屋茜":89,"渡辺梨加":90,"渡邉理佐":91,"井上梨名":92,"関有美子":93,"武元唯衣":94,"増本綺良":95,"松平璃子":96},"SAKURA":{"遠藤光莉":0,"大園玲":1,"大沼晶保":2,"幸阪茉里乃":3,"田村保乃":4,"藤吉夏鈴":5,"松田里奈":6,"森田ひかる":7,"守屋麗奈":8,"山﨑天":9,"石森璃花":10,"遠藤理子":11,"小田倉麗奈":12,"小島凪紗":13,"谷口愛季":14,"中嶋優月":15,"的野美青":16,"向井純葉":17,"村井優":18,"村山美羽":19,"山下瞳月":20,"浅井恋乃未":21,"稲熊ひな":22,"勝又春":23,"佐藤愛桜":24,"中川智尋":25,"松本和子":26,"目黒陽色":27,"山川宇衣":28,"山田桃実":29,"石森虹花":30,"上村莉菜":31,"尾関梨香":32,"織田奈那":33,"小池美波":34,"小林由依":35,"齋藤冬優花":36,"佐藤詩織":37,"菅井友香":38,"鈴本美愉":39,"長沢菜々香":40,"土生瑞穂":41,"原田葵":42,"平手友梨奈":43,"守屋茜":44,"渡辺梨加":45,"渡邉理佐":46,"井上梨名":47,"関有美子":48,"武元唯衣":49,"増本綺良":50,"松平璃子":51,"金村美玖":52,"小坂菜緒":53,"上村ひなの":54,"髙橋未来虹":55,"森本茉莉":56,"石塚瑶季":57,"小西夏菜実":58,"清水理央":59,"正源司陽子":60,"竹内希来里":61,"平尾帆夏":62,"平岡海月":63,"藤嶌果歩":64,"宮地すみれ":65,"山下葉留花":66,"渡辺莉奈":67,"大田美月":68,"大野愛実":69,"片山紗希":70,"蔵盛妃那乃":71,"坂井新奈":72,"佐藤優羽":73,"下田衣珠季":74,"高井俐香":75,"鶴崎仁香":76,"松尾桜":77,"井口眞緒":78,"潮紗理菜":79,"影山優佳":80,"加藤史帆":81,"齊藤京子":82,"佐々木久美":83,"佐々木美玲":84,"高瀬愛奈":85,"高本彩花":86,"東村芽依":87,"河田陽菜":88,"富田鈴花":89,"丹生明里":90,"濱岸ひより":91,"松田好花":92,"宮田愛萌":93,"渡邉美穂":94,"山口陽世":95,"岸帆夏":96}}[uniairGroupFirst()];
 const MEMBER_EN = {"遠藤光莉":"Endo Hikari","大園玲":"Ozono Rei","大沼晶保":"Onuma Akiho","幸阪茉里乃":"Kosaka Marino","田村保乃":"Tamura Hono","藤吉夏鈴":"Fujiyoshi Karin","増本綺良":"Masumoto Kira","松田里奈":"Matsuda Rina","森田ひかる":"Morita Hikaru","守屋麗奈":"Moriya Rena","山﨑天":"Yamasaki Ten","石森璃花":"Ishimori Rika","遠藤理子":"Endo Riko","小田倉麗奈":"Odakura Reina","小島凪紗":"Kojima Nagisa","谷口愛季":"Taniguchi Airi","中嶋優月":"Nakashima Yuzuki","的野美青":"Matono Mio","向井純葉":"Mukai Itoha","村井優":"Murai Yu","村山美羽":"Murayama Miu","山下瞳月":"Yamashita Shizuki","浅井恋乃未":"Asai Konomi","稲熊ひな":"Inaguma Hina","勝又春":"Katsumata Haru","佐藤愛桜":"Sato Neo","中川智尋":"Nakagawa Chihiro","松本和子":"Matsumoto Wako","目黒陽色":"Meguro Hiro","山川宇衣":"Yamakawa Ui","山田桃実":"Yamada Momomi","石森虹花":"Ishimori Nijika","上村莉菜":"Uemura Rina","尾関梨香":"Ozeki Rika","織田奈那":"Oda Nana","小池美波":"Koike Minami","小林由依":"Kobayashi Yui","齋藤冬優花":"Saito Fuyuka","佐藤詩織":"Sato Shiori","菅井友香":"Sugai Yuka","鈴本美愉":"Suzumoto Miyu","長沢菜々香":"Nagasawa Nanako","土生瑞穂":"Habu Mizuho","原田葵":"Harada Aoi","平手友梨奈":"Hirate Yurina","守屋茜":"Moriya Akane","渡辺梨加":"Watanabe Rika","渡邉理佐":"Watanabe Risa","井上梨名":"Inoue Rina","関有美子":"Seki Yumiko","武元唯衣":"Takemoto Yui","松平璃子":"Matsudaira Riko","金村美玖":"Kanemura Miku","小坂菜緒":"Kosaka Nao","上村ひなの":"Kamimura Hinano","髙橋未来虹":"Takahashi Mikuni","森本茉莉":"Morimoto Marie","山口陽世":"Yamaguchi Haruyo","石塚瑶季":"Ishizuka Tamaki","小西夏菜実":"Konishi Nanami","清水理央":"Shimizu Rio","正源司陽子":"Shogenji Yoko","竹内希来里":"Takeuchi Kirari","平尾帆夏":"Hirao Honoka","平岡海月":"Hiraoka Mitsuki","藤嶌果歩":"Fujishima Kaho","宮地すみれ":"Miyachi Sumire","山下葉留花":"Yamashita Haruka","渡辺莉奈":"Watanabe Rina","大田美月":"Ota Mizuki","大野愛実":"Ono Manami","片山紗希":"Katayama Saki","蔵盛妃那乃":"Kuramori Hinano","坂井新奈":"Sakai Nina","佐藤優羽":"Sato Yu","下田衣珠季":"Shimoda Izuki","高井俐香":"Takai Rika","鶴崎仁香":"Tsurusaki Niko","松尾桜":"Matsuo Sakura","井口眞緒":"Iguchi Mao","潮紗理菜":"Ushio Sarina","影山優佳":"Kageyama Yuka","加藤史帆":"Kato Shiho","齊藤京子":"Saito Kyoko","佐々木久美":"Sasaki Kumi","佐々木美玲":"Sasaki Mirei","高瀬愛奈":"Takase Mana","高本彩花":"Takamoto Ayaka","東村芽依":"Higashimura Mei","河田陽菜":"Kawata Hina","富田鈴花":"Tomita Suzuka","丹生明里":"Nibu Akari","濱岸ひより":"Hamagishi Hiyori","松田好花":"Matsuda Konoka","宮田愛萌":"Miyata Manamo","渡邉美穂":"Watanabe Miho","岸帆夏":"Kishi Honoka"};
 const MEMBER_KANA = {"遠藤光莉":"えんどう ひかり","大園玲":"おおぞの れい","大沼晶保":"おおぬま あきほ","幸阪茉里乃":"こうさか まりの","田村保乃":"たむら ほの","藤吉夏鈴":"ふじよし かりん","増本綺良":"ますもと きら","松田里奈":"まつだ りな","森田ひかる":"もりた ひかる","守屋麗奈":"もりや れな","山﨑天":"やまさき てん","石森璃花":"いしもり りか","遠藤理子":"えんどう りこ","小田倉麗奈":"おだくら れいな","小島凪紗":"こじま なぎさ","谷口愛季":"たにぐち あいり","中嶋優月":"なかしま ゆづき","的野美青":"まとの みお","向井純葉":"むかい いとは","村井優":"むらい ゆう","村山美羽":"むらやま みう","山下瞳月":"やました しづき","浅井恋乃未":"あさい このみ","稲熊ひな":"いなぐま ひな","勝又春":"かつまた はる","佐藤愛桜":"さとう ねお","中川智尋":"なかがわ ちひろ","松本和子":"まつもと わこ","目黒陽色":"めぐろ ひいろ","山川宇衣":"やまかわ うい","山田桃実":"やまだ ももみ","石森虹花":"いしもり にじか","上村莉菜":"うえむら りな","尾関梨香":"おぜき りか","織田奈那":"おだ なな","小池美波":"こいけ みなみ","小林由依":"こばやし ゆい","齋藤冬優花":"さいとう ふゆか","佐藤詩織":"さとう しおり","菅井友香":"すがい ゆうか","鈴本美愉":"すずもと みゆ","長沢菜々香":"ながさわ ななこ","土生瑞穂":"はぶ みづほ","原田葵":"はらだ あおい","平手友梨奈":"ひらて ゆりな","守屋茜":"もりや あかね","渡辺梨加":"わたなべ りか","渡邉理佐":"わたなべ りさ","井上梨名":"いのうえ りな","関有美子":"せき ゆみこ","武元唯衣":"たけもと ゆい","松平璃子":"まつだいら りこ","金村美玖":"かねむら みく","小坂菜緒":"こさか なお","上村ひなの":"かみむら ひなの","髙橋未来虹":"たかはし みくに","森本茉莉":"もりもと まりぃ","山口陽世":"やまぐち はるよ","石塚瑶季":"いしづか たまき","小西夏菜実":"こにし ななみ","清水理央":"しみず りお","正源司陽子":"しょうげんじ ようこ","竹内希来里":"たけうち きらり","平尾帆夏":"ひらお ほのか","平岡海月":"ひらおか みつき","藤嶌果歩":"ふじしま かほ","宮地すみれ":"みやち すみれ","山下葉留花":"やました はるか","渡辺莉奈":"わたなべ りな","大田美月":"おおた みづき","大野愛実":"おおの まなみ","片山紗希":"かたやま さき","蔵盛妃那乃":"くらもり ひなの","坂井新奈":"さかい にいな","佐藤優羽":"さとう ゆう","下田衣珠季":"しもだ いずき","高井俐香":"たかい りか","鶴崎仁香":"つるさき にこ","松尾桜":"まつお さくら","井口眞緒":"いぐち まお","潮紗理菜":"うしお さりな","影山優佳":"かげやま ゆうか","加藤史帆":"かとう しほ","齊藤京子":"さいとう きょうこ","佐々木久美":"ささき くみ","佐々木美玲":"ささき みれい","高瀬愛奈":"たかせ まな","高本彩花":"たかもと あやか","東村芽依":"ひがしむら めい","河田陽菜":"かわた ひな","富田鈴花":"とみた すずか","丹生明里":"にぶ あかり","濱岸ひより":"はまぎし ひより","松田好花":"まつだ このか","宮田愛萌":"みやた まなも","渡邉美穂":"わたなべ みほ","岸帆夏":"きし ほのか"};
+
+var TITLE_ROMAJI = {"11th Single ひなた坂46 LIVE FL 夏色のミュール":"11th Single hinatazaka46 LIVE FL natsuironomyuru mule","11th Single ひなた坂46 LIVE FL 錆つかない剣を持て！":"11th Single hinatazaka46 LIVE FL sabitsukanaikenomote！","1st TOUR 2021 FL 半信半疑":"1st TOUR 2021 FL hanshinhangi","1stYAL FL なぜ恋":"1stYAL FL nazekoi","1stYAL FL ジャマイカビール":"1stYAL FL jamaikabiru Jamaica Beer","1stYAL FL 偶然の答え":"1stYAL FL guuzennokotae","1stYAL FL 思ったよりも寂しくない":"1stYAL FL omottayorimosabishikunai","1stYAL FL 櫻坂の詩":"1stYAL FL sakurazakanouta","1stYAL FL 流れ弾":"1stYAL FL nagaredama","1stYAL FL 無言の宇宙":"1stYAL FL mugonnouchuu","2023年 年末歌唱衣装":"2023年 年末歌唱衣装","2nd TOUR FL 不協和音":"2nd TOUR FL fukyouwaon","2nd TOUR FL 五月雨よ":"2nd TOUR FL samidareyo","2nd TOUR FL 摩擦係数":"2nd TOUR FL masatsukeisuu","2nd TOUR FL 断絶":"2nd TOUR FL danzetsu","2nd TOUR FL 条件反射で泣けて来る":"2nd TOUR FL joukenhanshadenaketekuru","2nd TOUR FL 流れ弾":"2nd TOUR FL nagaredama","2nd TOUR FL 砂塵":"2nd TOUR FL sajin","3rd TOUR FL 五月雨よ":"3rd TOUR FL samidareyo","3rd TOUR FL 夏の近道":"3rd TOUR FL natsunochikamichi","3rd TOUR FL 摩擦係数":"3rd TOUR FL masatsukeisuu","3rd TOUR FL 桜月":"3rd TOUR FL sakurazuki","3rd TOUR FL 無念":"3rd TOUR FL munen","3rd YAL FL 僕たちの La vie en rose":"3rd YAL FL bokutachino La vie en rose","3rd YAL FL 承認欲求":"3rd YAL FL shouninyokkyuu","3rd YAL FL 条件反射で泣けて来る":"3rd YAL FL joukenhanshadenaketekuru","3rd YAL FL 隙間風よ":"3rd YAL FL sukimakazeyo","3rd YAL FL 静寂の暴力":"3rd YAL FL seijakunobouryoku","3rdYAL FL 世界には愛しかない":"3rdYAL FL sekainihaaishikanai","3rdYAL FL 二人セゾン":"3rdYAL FL futarisezon saison","3rdYAL FL 僕たちの戦争":"3rdYAL FL bokutachinosensou","3rdYAL FL 危なっかしい計画":"3rdYAL FL abunakkashiikeikaku","3rdYAL FL 手を繋いで帰ろうか":"3rdYAL FL teotsunaidekaerouka","3rdYAL FL 東京タワーはどこから見える？":"3rdYAL FL toukyoutawahadokokaramieru？ tower","3rdワンマン FL NO WAR in the future":"3rdwanman FL NO WAR in the future one-man","3rdワンマン FL キツネ":"3rdwanman FL kitsune one-man","3rdワンマン FL 君に話しておきたいこと":"3rdwanman FL kiminihanashiteokitaikoto one-man","3回目のひな誕祭 FL JOYFUL LOVE":"3回目nohinatansai FL JOYFUL LOVE","3回目のひな誕祭 FL ってか":"3回目nohinatansai FL tteka","3回目のひな誕祭 FL ひらがなけやき":"3回目nohinatansai FL hiraganakeyaki","3回目のひな誕祭 FL 抱きしめてやる":"3回目nohinatansai FL dakishimeteyaru","3回目のひな誕祭 FL 永遠の白線":"3回目nohinatansai FL eiennohakusen","4th ARENA TOUR 2024 FL コンビナート":"4th ARENA TOUR 2024 FL konbinato kombinat","4th ARENA TOUR 2024 FL マモリビト":"4th ARENA TOUR 2024 FL mamoribito","4th ARENA TOUR 2024 FL 何度 LOVE SONGの歌詞を読み返しただろう":"4th ARENA TOUR 2024 FL nando LOVE SONGnokashioyomikaeshitadarou","4th ARENA TOUR 2024 FL 何歳の頃に戻りたいのか？":"4th ARENA TOUR 2024 FL nansainokoronimodoritainoka？","4th YAL FL ブルームーンキス":"4th YAL FL burumunkisu Blue Moon Kiss","4th YAL FL マンホールの蓋の上":"4th YAL FL manhorunofutanoue manhole","4th YAL FL 本質的なこと":"4th YAL FL honshitsutekinakoto","4th YAL FL 標識":"4th YAL FL hyoushiki","4th YAL FL 静寂の暴力":"4th YAL FL seijakunobouryoku","4回目のひな誕祭 FL Cage":"4回目nohinatansai FL Cage","4回目のひな誕祭 FL One choice":"4回目nohinatansai FL One choice","4回目のひな誕祭 FL 一番好きだとみんなに言っていた小説のタイトルを思い出せない":"4回目nohinatansai FL ichibansukidatominnaniitteitashousetsunotaitoruoomoidasenai title","4回目のひな誕祭 FL 半分の記憶":"4回目nohinatansai FL hanbunnokioku","4回目のひな誕祭 FL 月と星が踊るMidnight":"4回目nohinatansai FL tsukitohoshigaodoruMidnight","4回目のひな誕祭 FL 青春の馬":"4回目nohinatansai FL seishunnouma","5th TOUR 2025 \"Addiction\" FL Nightmare症候群":"5th TOUR 2025 \"Addiction\" FL Nightmareshoukougun","5th TOUR 2025 \"Addiction\" FL もう一曲欲しいのかい?":"5th TOUR 2025 \"Addiction\" FL mouikkyokuhoshiinokai?","5th TOUR 2025 \"Addiction\" FL ノンアルコール":"5th TOUR 2025 \"Addiction\" FL nonarukoru non-alcohol","5th TOUR 2025 \"Addiction\" FL 死んだふり":"5th TOUR 2025 \"Addiction\" FL shindafuri","5th TOUR 2025 \"Addiction\" FL 紋白蝶が確か飛んでた":"5th TOUR 2025 \"Addiction\" FL monshirochougatashikatondeta","5th TOUR 2025 \"Addiction\" FL 自業自得":"5th TOUR 2025 \"Addiction\" FL jigoujitoku","5回目のひな誕祭 FL ハッピーオーラ":"5回目nohinatansai FL happiora Happy Aura","5回目のひな誕祭 FL 君はハニーデュー":"5回目nohinatansai FL kimihahanideu honeydew","5回目のひな誕祭 FL 声の足跡":"5回目nohinatansai FL koenoashiato","5回目のひな誕祭 FL 月と星が踊るMidnight":"5回目nohinatansai FL tsukitohoshigaodoruMidnight","5回目のひな誕祭 FL 未熟な怒り":"5回目nohinatansai FL mijukunaikari","5回目のひな誕祭 FL 見たことない魔物":"5回目nohinatansai FL mitakotonaimamono","5回目のひな誕祭 FL 青春ポップコーン":"5回目nohinatansai FL seishunpoppukon popcorn","6回目のひな誕祭 FL 夜明けのスピード":"6回目nohinatansai FL yoakenosupido speed","6回目のひな誕祭 FL 妄想コスモス":"6回目nohinatansai FL mousoukosumosu cosmos","6回目のひな誕祭 FL 雨が降ったって":"6回目nohinatansai FL amegafuttatte","7回目のひな誕祭 FL 永遠のソフィア":"7回目nohinatansai FL eiennosofia Sophia","8th Single BACKS LIVE!! FL 僕たちの La vie en rose":"8th Single BACKS LIVE!! FL bokutachino La vie en rose","8th Single BACKS LIVE!! FL 断絶":"8th Single BACKS LIVE!! FL danzetsu","8th Single BACKS LIVE!! FL 油を注せ！":"8th Single BACKS LIVE!! FL aburaosase！","8th Single BACKS LIVE!! FL 無念":"8th Single BACKS LIVE!! FL munen","8th Single BACKS LIVE!! FL 隙間風よ":"8th Single BACKS LIVE!! FL sukimakazeyo","BACKS LIVE!! FL それが愛なのね":"BACKS LIVE!! FL soregaainanone","BACKS LIVE!! FL なぜ恋":"BACKS LIVE!! FL nazekoi","BACKS LIVE!! FL ブルームーンキス":"BACKS LIVE!! FL burumunkisu Blue Moon Kiss","BACKS LIVE!! FL 君と僕と洗濯物":"BACKS LIVE!! FL kimitobokutosentakumono","BNL 2025 FL ジャーマンアイリス":"BNL 2025 FL jamanairisu German Iris","BNL 2025 FL パクチー ピーマン グリーンピース":"BNL 2025 FL pakuchi piman gurinpisu green peas","BNL 2025 FL 海風とわがまま":"BNL 2025 FL umikazetowagamama","BNL 2025 FL 絶対的第六感":"BNL 2025 FL zettaitekidairokkan","DCL FL ときめき草":"DCL FL tokimekisou","DCL FL キュン":"DCL FL kyun","DCL FL ハッピーオーラ":"DCL FL happiora Happy Aura","DCL FL 君に話しておきたいこと":"DCL FL kiminihanashiteokitaikoto","DCL FL 抱きしめてやる":"DCL FL dakishimeteyaru","DCL FL 沈黙が愛なら":"DCL FL chinmokugaainara","DCL FL 耳に落ちる涙":"DCL FL miminiochirunamida","FL こんなに好きになっちゃっていいの？":"FL konnanisukininatchatteiino？","FL ひらがなで恋したい":"FL hiraganadekoishitai","FL やさしさが邪魔をする":"FL yasashisagajamaosuru","FL ドレミソラシド":"FL doremisorashido","FL 期待していない自分":"FL kitaishiteinaijibun","FL 約束の卵":"FL yakusokunotamago","HMT 2024 FL 君はハニーデュー":"HMT 2024 FL kimihahanideu honeydew","HMT 2024 FL 夕陽Dance":"HMT 2024 FL yuuhiDance","HMT 2024 FL 真夜中の懺悔大会":"HMT 2024 FL mayonakanozangetaikai","HMT 2024 FL 耳に落ちる涙":"HMT 2024 FL miminiochirunamida","HMT 2024 FL 膨大な夢に押し潰されて":"HMT 2024 FL boudainayumenioshitsubusarete","HST 2022 FL ってか":"HST 2022 FL tteka","HST 2022 FL ゴーフルと君":"HST 2022 FL gofurutokimi gaufre","HST 2022 FL ブルーベリー＆ラズベリー":"HST 2022 FL buruberi＆razuberi Blueberry & Raspberry","HST 2022 FL 僕なんか":"HST 2022 FL bokunanka","HST 2022 FL 恋した魚は空を飛ぶ":"HST 2022 FL koishitasakanahasoraotobu","HST 2022 FL 日向坂":"HST 2022 FL hinatazaka","HTT 2023 FL ひらがなで恋したい":"HTT 2023 FL hiraganadekoishitai","HTT 2023 FL シーラカンス":"HTT 2023 FL shirakansu coelacanth","HTT 2023 FL 君は０から１になれ":"HTT 2023 FL kimihazerokaraichininare","HTT 2023 FL 最初の白夜":"HTT 2023 FL saishonobyakuya","HTT 2023 FL 期待していない自分":"HTT 2023 FL kitaishiteinaijibun","MON 2025 FL あの娘にグイグイ":"MON 2025 FL anokoniguigui","MON 2025 FL お願いバッハ！":"MON 2025 FL onegaibahha！ Bach","MON 2025 FL 恋した魚は空を飛ぶ":"MON 2025 FL koishitasakanahasoraotobu","MON 2025 FL 空飛ぶ車":"MON 2025 FL soratobukuruma","MV ゴーフルと君":"MV gofurutokimi gaufre","MV ドローン旋回中":"MV doronsenkaichuu drone","MV マモリビト":"MV mamoribito","MV 世界にはThank you！が溢れている":"MV sekainihaThank you！gaafureteiru","MV 真夜中の懺悔大会":"MV mayonakanozangetaikai","MV 見たことない魔物":"MV mitakotonaimamono","MV 車間距離":"MV shakankyori","WKF2021 FL それが愛なのね":"WKF2021 FL soregaainanone","WKF2021 FL アザトカワイイ":"WKF2021 FL azatokawaii","WKF2021 FL 君と僕と洗濯物":"WKF2021 FL kimitobokutosentakumono","WKF2021 FL 声の足跡":"WKF2021 FL koenoashiato","WKF2021 FL 思ったよりも寂しくない":"WKF2021 FL omottayorimosabishikunai","WKF2021 FL 櫻坂の詩":"WKF2021 FL sakurazakanouta","WKF2021 FL 青春の馬":"WKF2021 FL seishunnouma","WKF2022 FL もうこんなに好きになれない":"WKF2022 FL moukonnanisukininarenai","WKF2022 FL コンセントレーション":"WKF2022 FL konsentoreshon Concentration","WKF2022 FL バスルームトラベル":"WKF2022 FL basurumutoraberu Bathroom Travel","WKF2022 FL 僕なんか":"WKF2022 FL bokunanka","WKF2022 FL 太陽は見上げる人を選ばない":"WKF2022 FL taiyouhamiageruhitooerabanai","WKF2022 FL 好きということは…":"WKF2022 FL sukitoiukotoha…","WKF2022 FL 思いがけないダブルレインボー":"WKF2022 FL omoigakenaidaburureinbo double rainbow","WKF2022 FL 恋が絶滅する日":"WKF2022 FL koigazetsumetsusuruhi","WKF2022 FL 無言の宇宙":"WKF2022 FL mugonnouchuu","「3rd Single BACKS LIVE!!」衣装":"「3rd Single BACKS LIVE!!」衣装","「3rd YEAR ANNIVERSARY LIVE」ライブ衣装":"「3rd YEAR ANNIVERSARY LIVE」raibu衣装 live","「3回目のひな誕祭」ライブ衣装":"「3回目nohinatansai」raibu衣装 live","「4回目のひな誕祭」黄色衣装":"「4回目nohinatansai」黄色衣装","いつもと違う私へテイクオフ！":"itsumotochigauwatashiheteikuofu！ take off","これが、私たちの現在形。":"korega、watashitachinogenzaikei。","こんなに好きになっちゃっていいの？":"konnanisukininatchatteiino？","こんなに好きになっちゃっていいの？+":"konnanisukininatchatteiino？+","その日を境に、世界が変わった。":"sonohiosakaini、sekaigakawatta。","ってか":"tteka","ってか+":"tteka+","ときめく冬色に包まれて":"tokimekufuyuironitsutsumarete","なぜ 恋をして来なかったんだろう？":"naze koioshitekonakattandarou？","なぜ 恋をして来なかったんだろう？+":"naze koioshitekonakattandarou？+","ひなくり2019 FL Dash&Rush":"hinakuri2019 FL Dash&Rush","ひなくり2019 FL まさか 偶然…":"hinakuri2019 FL masaka guuzen…","ひなくり2019 FL ホントの時間":"hinakuri2019 FL hontonojikan","ひなくり2019 FL 約束の卵":"hinakuri2019 FL yakusokunotamago","ひなくり2019 FL 誰よりも高く跳べ！":"hinakuri2019 FL dareyorimotakakutobe！","ひなくり2020 FL ただがむしゃらに":"hinakuri2020 FL tadagamusharani","ひなくり2020 FL まさか 偶然…":"hinakuri2020 FL masaka guuzen…","ひなくり2020 FL ドレミ":"hinakuri2020 FL doremi","ひなくり2020 FL 夏ジャム":"hinakuri2020 FL natsujamu jam","ひなくり2020 FL 約束の卵2020":"hinakuri2020 FL yakusokunotamago2020","ひなくり2021 FL Right?":"hinakuri2021 FL Right?","ひなくり2021 FL アディショナルタイム":"hinakuri2021 FL adishonarutaimu Additional Time","ひなくり2021 FL 約束の卵2020":"hinakuri2021 FL yakusokunotamago2020","ひなくり2021 FL 膨大な夢に押し潰されて":"hinakuri2021 FL boudainayumenioshitsubusarete","ひなくり2022 FL ブルーベリー＆ラズベリー":"hinakuri2022 FL buruberi＆razuberi Blueberry & Raspberry","ひなくり2022 FL ママのドレス":"hinakuri2022 FL mamanodoresu dress","ひなくり2022 FL 世界にはThank you！が溢れている":"hinakuri2022 FL sekainihaThank you！gaafureteiru","ひなくり2022 FL 君しか勝たん":"hinakuri2022 FL kimishikakatan","ひなくり2022 FL 誰よりも高く跳べ！2020":"hinakuri2022 FL dareyorimotakakutobe！2020","ひなたのさしいれ":"hinatanosashiire","ひな誕祭 FL My fans":"hinatansai FL My fans","ひな誕祭 FL アザトカワイイ":"hinatansai FL azatokawaii","ひな誕祭 FL キツネ":"hinatansai FL kitsune","ひな誕祭 FL 僕たちは付き合っている":"hinatansai FL bokutachihatsukiatteiru","ひな誕祭 FL 期待していない自分":"hinatansai FL kitaishiteinaijibun","ひな誕祭 FL 青春の馬":"hinatansai FL seishunnouma","ほかほか中華をあなたと":"hokahokachuukaoanatato","アザトカワイイ":"azatokawaii","アザトカワイイ+":"azatokawaii+","アンビバレント":"anbibarento Ambivalent","アンビバレント+":"anbibarento+ Ambivalent","アーリーサマーシャイン":"arisamashain Early Summer Shine","エレガンス・ルージュ'19":"eregansu・ruju'19 Elegance Rouge","ガラスを割れ！":"garasuoware！ glass","ガラスを割れ！+":"garasuoware！+ glass","キツネ":"kitsune","キツネ+":"kitsune+","キュン":"kyun","キュン+":"kyun+","クリスマスベルの音色が彩る夜に":"kurisumasuberunoneirogairodoruyoruni Christmas Christmas bell","グレースフル・ドール":"guresufuru・doru Graceful Doll","サイレントマジョリティー":"sairentomajoriti Silent Majority","サイレントマジョリティー+":"sairentomajoriti+ Silent Majority","シーラカンス":"shirakansu coelacanth","シーラカンス+":"shirakansu+ coelacanth","ジャーマンアイリス":"jamanairisu German Iris","ジャーマンアイリス+":"jamanairisu+ German Iris","セルリアン・フラワーズ'19":"serurian・furawazu'19 Cerulean Flowers","ゼンブ・オブ・トーキョー":"zenbu・obu・tokyo Zenbu of Tokyo","ソンナコトナイヨ":"sonnakotonaiyo","ソンナコトナイヨ+":"sonnakotonaiyo+","チアフル・シュート":"chiafuru・shuto Cheerful Shoot","トゥインクル・ドール":"tuinkuru・doru Twinkle Doll","ドレミソラシド":"doremisorashido","ドレミソラシド+":"doremisorashido+","ナチュラル・スウィフト":"nachuraru・suwifuto Natural Swift","ハッピーオーラ":"happiora Happy Aura","ハッピーオーラ+":"happiora+ Happy Aura","ハピネス・スマッシュ":"hapinesu・sumasshu Happiness Smash","ブライトフラワーガーデン":"buraitofurawagaden Bright Flower Garden","ブリック・ストリート":"burikku・sutorito Brick Street","ブルーベリー＆ラズベリー":"buruberi＆razuberi Blueberry & Raspberry","ブルーベリー＆ラズベリー+":"buruberi＆razuberi+ Blueberry & Raspberry","ホワイト・ドリーミング":"howaito・dorimingu White Dreaming","ミスティ・ブロッサム・ポーション":"misuti・burossamu・poshon Misty Blossom Potion","ラグジュアリー・ホリディ":"ragujuari・horidi Luxury Holiday","ルミナ・フローラ・ポーション":"rumina・furora・poshon Lumina Flora Potion","ロッククライミング":"rokkukuraimingu rock climbing","ロッククライミング+":"rokkukuraimingu+ rock climbing","世界には愛しかない":"sekainihaaishikanai","世界には愛しかない+":"sekainihaaishikanai+","中華の香りに誘われて":"chuukanokaorinisasowarete","二人セゾン":"futarisezon saison","二人セゾン+":"futarisezon+ saison","五月雨よ":"samidareyo","五月雨よ+":"samidareyo+","何度でも何度でも":"nandodemonandodemo","何度でも何度でも+":"nandodemonandodemo+","何歳の頃に戻りたいのか？":"nansainokoronimodoritainoka？","何歳の頃に戻りたいのか？+":"nansainokoronimodoritainoka？+","僕なんか":"bokunanka","僕なんか+":"bokunanka+","僕のジレンマ":"bokunojirenma dilemma","僕のジレンマ+":"bokunojirenma+ dilemma","僕は僕を好きになれない":"bokuhabokuosukininarenai","僕らの秘密のライブステージ":"bokuranohimitsunoraibusuteji live live stage","光降り注ぐ喝采を浴びて":"hikarifurisosogukassaioabite","全ツ'18 FL ガラスを割れ！":"zentsu'18 FL garasuoware！ glass","全ツ'18 FL 世界には愛しかない":"zentsu'18 FL sekainihaaishikanai","全ツ'18 FL 二人セゾン":"zentsu'18 FL futarisezon saison","全ツ'18 FL 危なっかしい計画":"zentsu'18 FL abunakkashiikeikaku","全ツ'18 FL 手を繋いで帰ろうか":"zentsu'18 FL teotsunaidekaerouka","全ツ'18 FL 語るなら未来を…":"zentsu'18 FL katarunaramiraio…","全国おひさま化計画 FL キュン":"zenkokuohisamakakeikaku FL kyun","全国おひさま化計画 FL ソンナコトナイヨ":"zenkokuohisamakakeikaku FL sonnakotonaiyo","全国おひさま化計画 FL 君しか勝たん":"zenkokuohisamakakeikaku FL kimishikakatan","卒業写真だけが知ってる":"sotsugyoushashindakegashitteru","君しか勝たん":"kimishikakatan","君しか勝たん+":"kimishikakatan+","君に話しておきたいこと":"kiminihanashiteokitaikoto","君に話しておきたいこと+":"kiminihanashiteokitaikoto+","君はハニーデュー":"kimihahanideu honeydew","君はハニーデュー+":"kimihahanideu+ honeydew","君は０から１になれ":"kimihazerokaraichininare","君は０から１になれ+":"kimihazerokaraichininare+","君を覚えてない":"kimiooboetenai","君を覚えてない+":"kimiooboetenai+","声の足跡":"koenoashiato","声の足跡+":"koenoashiato+","夏の近道":"natsunochikamichi","夏の近道+":"natsunochikamichi+","夕日差し込む静寂の時間":"yuuhisashikomuseijakunojikan","夢運ぶ春のひととき":"yumehakobuharunohitotoki","巡る記憶に浮かぶ儚い時間":"megurukiokuniukabuhakanaijikan","幸せが照らす花道の先へ":"shiawasegaterasuhanamichinosakihe","思ったよりも寂しくない":"omottayorimosabishikunai","思ったよりも寂しくない+":"omottayorimosabishikunai+","想い響く夏祭り":"omoihibikunatsumatsuri","愛し合いなさい":"aishiainasai","愛し合いなさい+":"aishiainasai+","承認欲求":"shouninyokkyuu","承認欲求+":"shouninyokkyuu+","揺れる淡い記憶を覗き込んで":"yureruawaikiokuonozokikonde","摩擦係数":"masatsukeisuu","摩擦係数+":"masatsukeisuu+","放課後のジャムセッション":"houkagonojamusesshon jam jam session","新参者":"shinzanmono","星々の瞬きが祝福する夜に":"hoshiboshinomatatakigashukufukusuruyoruni","春が舞い込む街角":"harugamaikomumachikado","春を彩る天空の花":"haruoirodorutenkuunohana","春を運ぶ幻想の風":"haruohakobugensounokaze","春風が誘う森を抜けて":"harukazegasasoumorionukete","月と星が踊るMidnight":"tsukitohoshigaodoruMidnight","月と星が踊るMidnight+":"tsukitohoshigaodoruMidnight+","期待していない自分":"kitaishiteinaijibun","期待していない自分+":"kitaishiteinaijibun+","未来へ、まっすぐに":"miraihe、massuguni","東京ドーム2019 FL バレエと少年":"toukyoudomu2019 FL bareetoshounen dome ballet","東京ドーム2019 FL 不協和音":"toukyoudomu2019 FL fukyouwaon dome","東京ドーム2019 FL 制服と太陽":"toukyoudomu2019 FL seifukutotaiyou dome","東京ドーム2019 FL 結局、じゃあねしか言えない":"toukyoudomu2019 FL kekkyoku、jaaneshikaienai dome","東京ドーム2019 FL 語るなら未来を…":"toukyoudomu2019 FL katarunaramiraio… dome","東京ドーム2019 FL 避雷針":"toukyoudomu2019 FL hiraishin dome","桜月":"sakurazuki","桜月+":"sakurazuki+","櫻咲く未来へ、踏み出して":"sakurasakumiraihe、fumidashite","櫻坂46 DCDL FL Nobody's fault":"sakurazaka46 DCDL FL Nobody's fault","櫻坂46 DCDL FL Plastic regret":"sakurazaka46 DCDL FL Plastic regret","櫻坂46 DCDL FL なぜ恋":"sakurazaka46 DCDL FL nazekoi","櫻坂46 DCDL FL ブルームーンキス":"sakurazaka46 DCDL FL burumunkisu Blue Moon Kiss","櫻坂46 DCDL FL 半信半疑":"sakurazaka46 DCDL FL hanshinhangi","櫻坂46 DCDL FL 最終の地下鉄に乗って":"sakurazaka46 DCDL FL saishuunochikatetsuninotte","櫻色の幕開け":"sakuraironomakuake","欅共和国2019 FL アンビバレント":"keyakikyouwakoku2019 FL anbibarento Ambivalent","欅共和国2019 FL 世界には愛しかない":"keyakikyouwakoku2019 FL sekainihaaishikanai","欅共和国2019 FL 手を繋いで帰ろうか":"keyakikyouwakoku2019 FL teotsunaidekaerouka","欅共和国2019 FL 青空が違う":"keyakikyouwakoku2019 FL aozoragachigau","次の自分へ、進むあなたに。":"tsuginojibunhe、susumuanatani。","武道館3rdYAL FL 黒い羊":"budoukan3rdYAL FL kuroihitsuji","死んだふり":"shindafuri","死んだふり+":"shindafuri+","油を注せ！":"aburaosase！","油を注せ！+":"aburaosase！+","流れ弾":"nagaredama","流れ弾+":"nagaredama+","海風とわがまま":"umikazetowagamama","清夏彩る涼の装":"seikairodoruryounosou","甘く溶ける想いを包み込んで":"amakutokeruomoiotsutsumikonde","甘降る庭と舞い踊る白雪":"amafuruniwatomaiodorushirayuki","真夏のシーサイドバケーション":"manatsunoshisaidobakeshon Seaside Vacation","確信的クロワッサン":"kakushintekikurowassan croissant","確信的クロワッサン+":"kakushintekikurowassan+ croissant","秋そよぐ癒しの陽光":"akisoyoguiyashinoyoukou","秋陽ふりそそぐ山路の寄り道":"shuuyoufurisosoguyamajinoyorimichi","空飛ぶ車":"soratobukuruma","紅葉が誘う憩いのひと時":"momijigasasouikoinohitotoki","紅葉彩る湯屋の花":"momijiirodoruyuyanohana","絶対的第六感":"zettaitekidairokkan","絶対的第六感+":"zettaitekidairokkan+","聖なる夜と甘味の幸福":"seinaruyorutokanminokoufuku","聖夜の街角で":"seiyanomachikadode","自業自得":"jigoujitoku","自業自得+":"jigoujitoku+","花薫る早春の昼下がり":"hanakaorusoushunnohirusagari","蒼幕のクランクイン":"soumakunokurankuin crank in","誰がその鐘を鳴らすのか？":"daregasonokaneonarasunoka？","誰がその鐘を鳴らすのか？+":"daregasonokaneonarasunoka？+","錆つかない剣を持て！":"sabitsukanaikenomote！","錆つかない剣を持て！+":"sabitsukanaikenomote！+","降り積もる心の贈り物":"furitsumorukokoronookurimono","雨上がりの朝日の先に":"ameagarinoasahinosakini","雨音が包むおうち時間":"amaotogatsutsumuouchijikan","雪煌めく淡色の街角":"yukikiramekuawaironomachikado","青春の馬":"seishunnouma","青春の馬+":"seishunnouma+","静寂に包まれた洋書室にて":"seijakunitsutsumaretayoushoshitsunite","静寂の暴力":"seijakunobouryoku","静寂の暴力+":"seijakunobouryoku+","願い結ぶ夏の夕暮れ":"negaimusubunatsunoyuugure","風に吹かれても":"kazenifukaretemo","風に吹かれても+":"kazenifukaretemo+","飛行機雲ができる理由":"hikoukigumogadekiruriyuu","飛行機雲ができる理由+":"hikoukigumogadekiruriyuu+","黄昏雪色のクリスマスを":"tasogareyukiironokurisumasuo Christmas"};
+function romajiFold(s) {
+  return String(s).normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase()
+    .replace(/[^a-z0-9]/g, '')
+    .replace(/wa/g, 'ha').replace(/wo/g, 'o').replace(/he/g, 'e')
+    .replace(/ou/g, 'o').replace(/oo/g, 'o').replace(/uu/g, 'u');
+}
+var TITLE_FOLD = {};
+Object.keys(TITLE_ROMAJI).forEach(function(t) { TITLE_FOLD[t] = romajiFold(TITLE_ROMAJI[t]); });
+var FOLD_TERM = null, FOLD_TERM_VAL = '';
+function romajiHit(title, term) {
+  if (term !== FOLD_TERM) { FOLD_TERM = term; FOLD_TERM_VAL = romajiFold(term); }
+  var f = FOLD_TERM_VAL;
+  var r = TITLE_FOLD[title];
+  return !!f && !!r && r.indexOf(f) !== -1;
+}
+function titleHit(title, term) {
+  return String(title).toLowerCase().indexOf(term) !== -1 || romajiHit(title, term);
+}
+
 const KANA_COLLATOR = new Intl.Collator('ja');
 
 
@@ -1056,7 +1077,7 @@ function render() {
     
     if (selectedSongs.size || songTerm) {
       const t = row.base.title;
-      if (!(selectedSongs.has(t) || (songTerm && t.toLowerCase().includes(songTerm)))) return false;
+      if (!(selectedSongs.has(t) || (songTerm && titleHit(t, songTerm)))) return false;
     }
     if (csStats.size || csPcts.size || csExtras.size) {
       
@@ -1208,7 +1229,7 @@ function membersInSongFilter() {
   const out = new Set();
   displayRows.forEach(r => {
     const t = r.base.title;
-    if (selectedSongs.has(t) || (songTerm && t.toLowerCase().includes(songTerm))) out.add(r.base.member);
+    if (selectedSongs.has(t) || (songTerm && titleHit(t, songTerm))) out.add(r.base.member);
   });
   return out;
 }
@@ -1339,7 +1360,7 @@ function showSongSuggestions() {
   displayRows.forEach(r => {
     const t = r.base.title;
     if (selectedSongs.has(t)) return;
-    if (songTerm && !t.toLowerCase().includes(songTerm)) return;
+    if (songTerm && !titleHit(t, songTerm)) return;
     if (memberOn && !(memberPicks.includes(r.base.member)
         || (memberTerms.length && memberNameHit(r.base.member, r.base.memberEn, memberTerms)))) return;
     titles.add(t);
@@ -1375,6 +1396,8 @@ function setSongSelection(titles) {
 
 function selectSong(t) {
   selectedSongs.add(t);
+  clearTimeout(songSearchTimer);
+  clearTimeout(songSuggestTimer);
   songSearchInput.value = '';
   songTerm = '';
   renderSongChips();
@@ -1394,24 +1417,28 @@ document.getElementById('song-field').addEventListener('mousedown', (e) => {
 });
 
 let songSearchTimer = null;
+let songSuggestTimer = null;
+
+
+
 songSearchInput.addEventListener('input', (e) => {
+  songTerm = e.target.value.trim().toLowerCase();
+  clearTimeout(songSuggestTimer);
+  songSuggestTimer = setTimeout(showSongSuggestions, 150);
   clearTimeout(songSearchTimer);
-  songSearchTimer = setTimeout(() => {
-    songTerm = e.target.value.trim().toLowerCase();
-    showSongSuggestions();
-    render();
-  }, 120);
+  songSearchTimer = setTimeout(render, 300);
 });
 
 songSearchInput.addEventListener('focus', showSongSuggestions);
 
 songSearchInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') { closeSongSuggestions(); return; }
+  if (e.key === 'Escape') { clearTimeout(songSuggestTimer); closeSongSuggestions(); return; }
   if (e.key === 'Backspace' && !songSearchInput.value && selectedSongs.size) {
     setSongSelection(Array.from(selectedSongs).slice(0, -1));
     return;
   }
   if (e.key === 'Enter') {
+    if (songSuggestTimer) { clearTimeout(songSuggestTimer); songSuggestTimer = null; showSongSuggestions(); }
     const hl = songSuggestionsEl.querySelector('.member-suggestion.highlighted');
     if (hl) { e.preventDefault(); selectSong(hl.dataset.song); }
   }
@@ -1573,7 +1600,7 @@ function pdMatches(id) {
   const c = CARD_BY_ID[id];
   if (!c) return false;
   const hay = stripDiacritics((c.member + ' ' + c.title + ' ' + (c.memberEn || '')).toLowerCase());
-  return pdQuery.split(/\s+/).every(t => hay.includes(t));
+  return pdQuery.split(/\s+/).every(t => hay.includes(t) || romajiHit(c.title, t));
 }
 
 function pdRenderList() {
@@ -1783,7 +1810,7 @@ function upSongTerm() { return upSongEl.value.trim().toLowerCase(); }
 function upMatches(row, memberTerms, songTerm) {
   const c = row.base;
   if (!memberNameHit(c.member, c.memberEn, memberTerms)) return false;
-  if (songTerm && !c.title.toLowerCase().includes(songTerm)) return false;
+  if (songTerm && !titleHit(c.title, songTerm)) return false;
   if (upOwnedFilter === 'owned' && !rowOwned(row)) return false;
   if (upOwnedFilter === 'unowned' && rowOwned(row)) return false;
   return true;
@@ -1891,7 +1918,7 @@ function upMemberSuggestions() {
   const terms = upMemberTerms();
   const song = upSongTerm();
   const hasSong = new Set();
-  if (song) displayRows.forEach(r => { if (r.base.title.toLowerCase().includes(song)) hasSong.add(r.base.member); });
+  if (song) displayRows.forEach(r => { if (titleHit(r.base.title, song)) hasSong.add(r.base.member); });
   return MEMBERS.filter(m => memberNameHit(m.jp, m.en, terms) && (!song || hasSong.has(m.jp)))
     .map(m => ({ val: m.jp, html: esc(m.jp) + '<span class="en">' + esc(m.en) + '</span>' }));
 }
@@ -1907,7 +1934,7 @@ function upSongSuggestions() {
   const titles = new Set();
   displayRows.forEach(r => {
     const t = r.base.title;
-    if (song && !t.toLowerCase().includes(song)) return;
+    if (song && !titleHit(t, song)) return;
     if (!memberNameHit(r.base.member, r.base.memberEn, terms)) return;
     titles.add(t);
   });
@@ -1997,6 +2024,8 @@ function resetFilters() {
   updateColorChipStyles();
 
   selectedSongs = new Set();
+  clearTimeout(songSearchTimer);
+  clearTimeout(songSuggestTimer);
   songTerm = '';
   songSearchInput.value = '';
   renderSongChips();
