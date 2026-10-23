@@ -1,6 +1,25 @@
 window.UNIAIR_DB_CHANGELOG = {
  "entries": [
   {
+   "version": "db28-2026-10-23",
+   "date": "2026-10-23",
+   "added": 1,
+   "cardCount": 5645,
+   "titles": [
+    "UNI'S ON AIR 7th ANNIVERSARY"
+   ],
+   "cards": [
+    {
+     "id": 6659,
+     "color": "R",
+     "memberEn": "Masumoto Kira",
+     "title": "UNI'S ON AIR 7th ANNIVERSARY",
+     "cs": "Pe85%",
+     "sk": 0.0368
+    }
+   ]
+  },
+  {
    "version": "db27-2026-10-21",
    "date": "2026-10-21",
    "added": 13,

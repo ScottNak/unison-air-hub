@@ -87,8 +87,8 @@ window.UNIAIR_MEMBER_PROFILES = {
     "group": "S",
     "graduated": true,
     "gen": 2,
-    "order": 10,
-    "id": "S9210"
+    "order": 12,
+    "id": "S9212"
   },
   "松田里奈": {
     "english": {
@@ -672,8 +672,8 @@ window.UNIAIR_MEMBER_PROFILES = {
     "group": "S",
     "graduated": true,
     "gen": 2,
-    "order": 12,
-    "id": "S9212"
+    "order": 10,
+    "id": "S9210"
   },
   "金村美玖": {
     "english": {

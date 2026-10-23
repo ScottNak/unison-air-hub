@@ -1,6 +1,6 @@
 {
- "version": "db27-2026-10-21",
- "cardCount": 5644,
+ "version": "db28-2026-10-23",
+ "cardCount": 5645,
  "cards": [
   {
    "id": 1,
@@ -84661,6 +84661,21 @@
    "cs": "Vo70%",
    "csBase": "Vo70%",
    "grad": false
+  },
+  {
+   "id": 6659,
+   "color": "R",
+   "title": "UNI'S ON AIR 7th ANNIVERSARY",
+   "member": "増本綺良",
+   "memberEn": "Masumoto Kira",
+   "tot": 12877,
+   "sk": 0.0368,
+   "vo": 2845,
+   "da": 2898,
+   "pe": 6704,
+   "cs": "Pe85%",
+   "csBase": "Pe85%",
+   "grad": true
   }
  ]
 }
