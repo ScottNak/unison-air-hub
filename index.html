@@ -263,6 +263,7 @@
   .report.hot .sep2 { opacity: 0.4; }
   .report.hot .rwait, .report.hot .rmiss { color: rgba(58,47,16,0.6); }
   .report.hot .rx { background: rgba(58,47,16,0.16); color: #3a2f10; }
+  .report.hot .info { background: rgba(58,47,16,0.16); color: #3a2f10; }
 
   .db-scrim {
     display: none; position: fixed; inset: 0; z-index: 40;
@@ -369,7 +370,7 @@
     <input type="file" id="hub-import-file" accept="application/json" style="display:none">
     <span class="save-note" id="hub-save-note">&nbsp;</span>
   </div>
-  <div class="page-version-badge">v15</div>
+  <div class="page-version-badge">v16</div>
 </header>
 
 <div class="bday-box" id="bday-box"></div>
@@ -1163,12 +1164,14 @@
     var line = '<span class="tick">&#10003;</span> <b>' +
       dbEsc(dbVerLabel(reportState.version)) + '</b>' + dot +
       dbCards(reportState.added) + ' added' +
+      ' <button class="info" id="db-report-info" type="button" aria-label="What&#39;s new">i</button>' +
       (found.length ? dot + found.join(', ') + ' &rarr;' : '') +
       (notes.length ? dot + notes.join(dot) : '');
     pillRow.innerHTML =
       '<span class="report ' + (hot ? 'hot' : 'muted') + '">' + line +
       '<button class="rx" type="button" id="db-report-x" aria-label="Dismiss">&times;</button></span>';
     document.getElementById('db-report-x').addEventListener('click', renderRestingPill);
+    document.getElementById('db-report-info').addEventListener('click', openDbDialog);
     Array.prototype.forEach.call(pillRow.querySelectorAll('.rlink'), function (b) {
       b.addEventListener('click', function () {
         var idx = pageIndexById(b.getAttribute('data-page'));
