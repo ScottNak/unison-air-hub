@@ -1,6 +1,6 @@
 {
- "version": "db28-2026-10-23",
- "cardCount": 5645,
+ "version": "db29-2026-10-25",
+ "cardCount": 5648,
  "cards": [
   {
    "id": 1,
@@ -84676,6 +84676,51 @@
    "cs": "Pe85%",
    "csBase": "Pe85%",
    "grad": true
+  },
+  {
+   "id": 6660,
+   "color": "B",
+   "title": "HAPPY 27th BIRTHDAY",
+   "member": "大沼晶保",
+   "memberEn": "Onuma Akiho",
+   "tot": 11859,
+   "sk": 0.0368,
+   "vo": 3780,
+   "da": 3862,
+   "pe": 3787,
+   "cs": "ALL35%",
+   "csBase": "ALL35%",
+   "grad": false
+  },
+  {
+   "id": 6661,
+   "color": "B",
+   "title": "HAPPY 27th BIRTHDAY",
+   "member": "松田里奈",
+   "memberEn": "Matsuda Rina",
+   "tot": 11860,
+   "sk": 0.0368,
+   "vo": 3780,
+   "da": 3863,
+   "pe": 3787,
+   "cs": "ALL35%",
+   "csBase": "ALL35%",
+   "grad": false
+  },
+  {
+   "id": 6662,
+   "color": "R",
+   "title": "HAPPY 28th BIRTHDAY",
+   "member": "田村保乃",
+   "memberEn": "Tamura Hono",
+   "tot": 11869,
+   "sk": 0.0368,
+   "vo": 3780,
+   "da": 3871,
+   "pe": 3788,
+   "cs": "ALL35%",
+   "csBase": "ALL35%",
+   "grad": false
   }
  ]
 }

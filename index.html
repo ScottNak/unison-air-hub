@@ -15,6 +15,19 @@
     background: linear-gradient(135deg, #1a1a2e, #16213e 60%, #0f3460);
   }
   header { padding: 20px 16px 0; flex: none; position: relative; }
+  .notice-banner {
+    display: none; align-items: flex-start; gap: 12px;
+    position: fixed; top: 12px; left: 16px; right: 16px; z-index: 25;
+    padding: 10px 14px; border-radius: 10px;
+    background: #ffeb3b; color: #3a2a00; font-size: 14px; line-height: 1.45;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+  }
+  .notice-banner.open { display: flex; }
+  .notice-banner .notice-text { flex: 1 1 auto; }
+  .notice-banner .notice-close {
+    flex: none; appearance: none; border: none; background: transparent; cursor: pointer;
+    font-size: 18px; line-height: 1; color: #3a2a00; padding: 0 2px;
+  }
   h1 { color: #fff; text-align: center; font-size: 24px; margin: 0 0 16px; text-shadow: 0 2px 8px rgba(0,0,0,0.4); }
 
   .gear-btn {
@@ -73,6 +86,11 @@
   }
   .tab.active { background: #fff; color: #2d2d42; }
   .tab:not(.active):hover { background: rgba(255,255,255,0.75); }
+  .tab .chg-dot {
+    display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+    background: #ffd97d; border: 1px solid rgba(0,0,0,0.35); margin-left: 6px;
+    vertical-align: middle;
+  }
 
   .frame-wrap { flex: 1 1 auto; background: #fff; margin: 0 16px 16px; border-radius: 0 12px 12px 12px;
     box-shadow: 0 8px 28px rgba(0,0,0,0.35); overflow: hidden; position: relative; }
@@ -349,6 +367,23 @@
 </style>
 </head>
 <body>
+<div class="notice-banner" id="notice-banner" role="status">
+  <div class="notice-text">Attention: A big scoring engine fix was implemented recently. This could mean your best teams and spotlight teams may have changed drastically. <b>Please take a look and reach out to me @scottnak on Discord if you see anything wildly off. </b></div>
+  <button type="button" class="notice-close" id="notice-close" aria-label="Close">&#10005;</button>
+</div>
+<script>
+(function () {
+  var KEY = 'uniair_hub_notice_engine_2026_10';
+  var el = document.getElementById('notice-banner');
+  var closed = false;
+  try { closed = localStorage.getItem(KEY) === '1'; } catch (e) { }
+  if (!closed) el.classList.add('open');
+  document.getElementById('notice-close').addEventListener('click', function () {
+    el.classList.remove('open');
+    try { localStorage.setItem(KEY, '1'); } catch (e) { }
+  });
+})();
+</script>
 <header>
   <h1>UNI'S ON AIR — Hub</h1>
   <button class="gear-btn" id="hub-gear-btn" title="Export / Import" aria-label="Export / Import" aria-haspopup="true">&#9881;</button>
@@ -370,7 +405,7 @@
     <input type="file" id="hub-import-file" accept="application/json" style="display:none">
     <span class="save-note" id="hub-save-note">&nbsp;</span>
   </div>
-  <div class="page-version-badge">v16</div>
+  <div class="page-version-badge">v17</div>
 </header>
 
 <div class="bday-box" id="bday-box"></div>
@@ -684,6 +719,22 @@
     framesStarted = true;
     pages.forEach(function (page, i) { iframes[i].src = frameSrc(page); });
   }
+
+  window.addEventListener('message', function (e) {
+    var msg = e.data;
+    if (!msg || typeof msg !== 'object' || msg.type !== 'uniair-change-dots') return;
+    for (var i = 0; i < iframes.length; i++) {
+      if (iframes[i].contentWindow !== e.source) continue;
+      var dot = tabButtons[i].querySelector('.chg-dot');
+      if (msg.any && !dot) {
+        dot = document.createElement('span');
+        dot.className = 'chg-dot';
+        tabButtons[i].appendChild(dot);
+      } else if (!msg.any && dot) {
+        dot.remove();
+      }
+    }
+  });
 
   window.addEventListener('message', function (e) {
     var msg = e.data;
