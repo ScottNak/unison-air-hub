@@ -22,7 +22,7 @@
     background: #ffeb3b; color: #3a2a00; font-size: 14px; line-height: 1.45;
     box-shadow: 0 4px 14px rgba(0,0,0,0.35);
   }
-  .notice-banner.open { display: flex; }
+  .notice-banner.open { display: flex; cursor: pointer; }
   .notice-banner .notice-text { flex: 1 1 auto; }
   .notice-banner .notice-close {
     flex: none; appearance: none; border: none; background: transparent; cursor: pointer;
@@ -108,7 +108,7 @@
   body.import-mode .pill-row { display: none; }
   body.import-mode .import-overlay { display: block; }
   
-  body.import-mode .bday-box, body.welcome-mode .bday-box { display: none; }
+  body.import-mode .corner-left, body.welcome-mode .corner-left { display: none; }
 
   
   .welcome-overlay {
@@ -168,9 +168,18 @@
     color: #7a8296; text-align: center; }
 
   
-  .bday-box {
+  .corner-left {
     position: fixed; top: 14px; left: 16px; z-index: 20;
-    border-radius: 12px; color: #2d2d42;
+    display: flex; flex-direction: column; gap: 8px; align-items: flex-start;
+  }
+  .notice-btn {
+    appearance: none; border: none; cursor: pointer; color: #2d2d42;
+    padding: 9px 13px; font-size: 19px; line-height: 1; border-radius: 12px;
+    background: rgba(255,255,255,0.88); box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+  }
+  .notice-btn:hover { background: #fff; }
+  .bday-box {
+    position: relative; border-radius: 12px; color: #2d2d42;
     background: rgba(255,255,255,0.88);
     box-shadow: 0 4px 14px rgba(0,0,0,0.3);
     overflow: hidden;
@@ -192,6 +201,18 @@
   .bday-box.open .bday-close { display: block; }
   .bday-content { display: none; max-width: 290px; padding: 10px 34px 10px 14px; font-size: 12px; line-height: 1.45; }
   .bday-box.open .bday-content { display: block; }
+  .bday-box.open { cursor: pointer; }
+  .bday-toggle { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; touch-action: none; }
+  .bday-list-scrim { position: fixed; inset: 0; z-index: 40; cursor: pointer; }
+  .bday-list {
+    position: absolute; top: 14px; left: 16px; width: 230px; max-height: calc(100vh - 28px); overflow-y: auto;
+    background: #fff; color: #2d2d42; border-radius: 12px; box-shadow: 0 6px 22px rgba(0,0,0,0.4);
+    padding: 10px 14px; font-size: 12px; line-height: 1.45;
+  }
+  .bday-list-head { font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: .04em;
+    color: #6a6f8a; margin-bottom: 6px; }
+  .bday-list-row { display: flex; gap: 10px; padding: 3px 0; border-top: 1px solid #f0f0f4; }
+  .bday-list-date { flex: 0 0 46px; color: #666; font-variant-numeric: tabular-nums; }
   .bday-greet { white-space: nowrap; }
   .bday-entry + .bday-entry {
     margin-top: 8px; padding-top: 8px; border-top: 1px dashed rgba(45,45,66,0.25);
@@ -368,22 +389,9 @@
 </head>
 <body>
 <div class="notice-banner" id="notice-banner" role="status">
-  <div class="notice-text">Attention: A big scoring engine fix was implemented recently. This could mean your best teams and spotlight teams may have changed drastically. <b>Please take a look and reach out to me @scottnak on Discord if you see anything wildly off. </b></div>
+  <div class="notice-text">New Discovery tab added. All team building options not for your best team have been moved here.</div>
   <button type="button" class="notice-close" id="notice-close" aria-label="Close">&#10005;</button>
 </div>
-<script>
-(function () {
-  var KEY = 'uniair_hub_notice_engine_2026_10';
-  var el = document.getElementById('notice-banner');
-  var closed = false;
-  try { closed = localStorage.getItem(KEY) === '1'; } catch (e) { }
-  if (!closed) el.classList.add('open');
-  document.getElementById('notice-close').addEventListener('click', function () {
-    el.classList.remove('open');
-    try { localStorage.setItem(KEY, '1'); } catch (e) { }
-  });
-})();
-</script>
 <header>
   <h1>UNI'S ON AIR — Hub</h1>
   <button class="gear-btn" id="hub-gear-btn" title="Export / Import" aria-label="Export / Import" aria-haspopup="true">&#9881;</button>
@@ -405,10 +413,29 @@
     <input type="file" id="hub-import-file" accept="application/json" style="display:none">
     <span class="save-note" id="hub-save-note">&nbsp;</span>
   </div>
-  <div class="page-version-badge">v17</div>
+  <div class="page-version-badge">v18</div>
 </header>
 
-<div class="bday-box" id="bday-box"></div>
+<div class="corner-left" id="corner-left">
+  <button type="button" class="notice-btn" id="notice-btn" title="Announcement" aria-label="Show announcement">&#128227;</button>
+  <div class="bday-box" id="bday-box"></div>
+</div>
+<script>
+(function () {
+  var KEY = 'uniair_hub_notice_discovery_2026_10';
+  var el = document.getElementById('notice-banner');
+  var closed = false;
+  try { closed = localStorage.getItem(KEY) === '1'; } catch (e) { }
+  if (!closed) el.classList.add('open');
+  el.addEventListener('click', function () {
+    el.classList.remove('open');
+    try { localStorage.setItem(KEY, '1'); } catch (e) { }
+  });
+  document.getElementById('notice-btn').addEventListener('click', function () {
+    el.classList.add('open');
+  });
+})();
+</script>
 
 <div class="pill-row tight" id="db-pill-row"></div>
 <div class="db-scrim" id="db-scrim"><div class="dlg" id="db-dlg"></div></div>
@@ -603,17 +630,18 @@
     if (bdayBox) {
       bdayBox.addEventListener('click', function (ev) {
         if (ev.target.closest && ev.target.closest('.bday-toggle')) {
+          if (bdayHeld) { bdayHeld = false; return; }
           bdayBox.classList.add('open');
           try { localStorage.setItem(BDAY_COLLAPSE_KEY, '0'); } catch (err) { }
           return;
         }
-        if (ev.target.closest && ev.target.closest('.bday-close')) {
+        var t = ev.target.closest && ev.target.closest('.bday-code');
+        if (!t) {
+          if (ev.target.closest && ev.target.closest('a')) return;
           bdayBox.classList.remove('open');
           try { localStorage.setItem(BDAY_COLLAPSE_KEY, '1'); } catch (err) { }
           return;
         }
-        var t = ev.target.closest && ev.target.closest('.bday-code');
-        if (!t) return;
         var codeVal = t.getAttribute('data-code');
         if (!codeVal) return;
         copyToClipboard(codeVal);
@@ -625,6 +653,51 @@
           t.classList.remove('copied');
         }, 1200);
       });
+
+      // Hidden: holding the cake lists every current member's birthday, soonest first.
+      var bdayHeld = false, holdTimer = null;
+      function endHold() { if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; } }
+      bdayBox.addEventListener('pointerdown', function (ev) {
+        if (!(ev.target.closest && ev.target.closest('.bday-toggle'))) return;
+        bdayHeld = false;
+        endHold();
+        holdTimer = setTimeout(function () { holdTimer = null; bdayHeld = true; openBdayList(); }, 500);
+      });
+      ['pointerup', 'pointerleave', 'pointercancel'].forEach(function (t) { bdayBox.addEventListener(t, endHold); });
+      // A touch release would otherwise land a click on the list and close it at once.
+      bdayBox.addEventListener('touchend', function (ev) { if (bdayHeld) ev.preventDefault(); }, { passive: false });
+      bdayBox.addEventListener('contextmenu', function (ev) {
+        if (ev.target.closest && ev.target.closest('.bday-toggle')) ev.preventDefault();
+      });
+    }
+
+    function openBdayList() {
+      var profiles = window.UNIAIR_MEMBER_PROFILES;
+      if (!profiles) return;
+      var parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Tokyo', year: 'numeric', month: '2-digit', day: '2-digit' })
+        .format(new Date()).split('-');
+      var t0 = Date.UTC(2001, +parts[1] - 1, +parts[2]);
+      var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      var rows = [];
+      Object.keys(profiles).forEach(function (jp) {
+        var e = profiles[jp];
+        if (e.graduated || !e.birthday) return;
+        var b = e.birthday.split('-');
+        var diff = Math.round((Date.UTC(2001, +b[1] - 1, +b[2]) - t0) / 86400000);
+        if (diff < 0) diff += 365;
+        rows.push({ diff: diff, id: +String(e.id).slice(1), m: +b[1], d: +b[2], e: e });
+      });
+      rows.sort(function (a, b) { return a.diff - b.diff || a.id - b.id; });
+      var scrim = document.createElement('div');
+      scrim.className = 'bday-list-scrim';
+      scrim.innerHTML = '<div class="bday-list"><div class="bday-list-head">Upcoming Birthdays</div>' +
+        rows.map(function (r) {
+          return '<div class="bday-list-row"><span class="bday-list-date">' + MONTHS[r.m - 1] + ' ' + r.d + '</span>' +
+            '<span class="bday-name ' + (r.e.group === 'S' ? 'sakura' : 'hinata') + '">' +
+            r.e.english.family + ' ' + r.e.english.given + '</span></div>';
+        }).join('') + '</div>';
+      scrim.addEventListener('click', function () { scrim.remove(); });
+      document.body.appendChild(scrim);
     }
   })();
 </script>
@@ -636,7 +709,8 @@
     { id: "songs", label: "Discography", file: "song_overview.html" },
     { id: "kizuna", label: "Kizuna Bond", file: "kizuna.html" },
     { id: "bestteams", label: "Best Teams", file: "best_teams.html" },
-    { id: "spotlight", label: "Spotlight", file: "spotlight.html" }
+    { id: "spotlight", label: "Spotlight", file: "spotlight.html" },
+    { id: "discovery", label: "Discovery", file: "discovery.html" }
   ];
 
   var tabsEl = document.getElementById('tabs');
@@ -646,7 +720,7 @@
 
   var INPUT_KEYS = ['uniair_public_owned', 'uniair_public_kizuna_v1',
                     'uniair_public_song_overview_overrides_v1'];
-  var RECALC_PAGES = { bestteams: true, spotlight: true };
+  var RECALC_PAGES = { bestteams: true, spotlight: true, discovery: true };
   var lastInputSig = {};
 
   function inputSignature() {
@@ -677,6 +751,7 @@
     tabButtons[i].classList.add('active');
     iframes[i].classList.add('active');
     recalcIfInputsMoved(i);
+    try { iframes[i].contentWindow.postMessage({ type: 'uniair-tab-active' }, '*'); } catch (err) { }
   }
 
   var pageVersions = window.UNIAIR_PAGE_VERSIONS || {};
@@ -809,7 +884,7 @@
   }
 
   function missingLabels(replies) {
-    var silent = { bestteams: true };
+    var silent = { bestteams: true, discovery: true };
     return pages
       .filter(function (p) { return !silent[p.id] && !(p.id in replies); })
       .map(function (p) { return p.label; });
