@@ -135,7 +135,7 @@
 </style>
 </head>
 <body>
-<div class="page-version-badge">v1</div>
+<div class="page-version-badge">v2</div>
 <div class="wrap">
   <div class="note">
     Accuracy depends on your owned cards in the <a href="catalog.html" target="_top">Card Database</a>,
@@ -1719,7 +1719,7 @@ var RESULTS = {};
 
 var CACHE_KEY = 'uniair_public_discovery_results_v1';
 var CACHE_SV = 1;
-var PAGE_VERSION = 'v1';
+var PAGE_VERSION = 'v2';
 function cacheFp() {
   var b = getBase();
   return inputsFingerprint(b.owned, b.kz, b.disco, b.inputs.pool) + '|' + PAGE_VERSION;
@@ -1862,7 +1862,7 @@ function cellHtml(entry, sel) {
     : (tags.every(function(t) { return t === 'Upgrade'; }) ? 'upgrade' : 'pull-upgrade');
   var cls = 'cell' + (entry.added ? ' added' : '') + (entry.nopass ? ' nopass' : '');
   return '<div class="' + cls + '" data-sel="' + esc(JSON.stringify(sel)) + '" style="--sel-bg:' + tintBg(entry.letter, 0.30) +
-    ';--sel-bd:' + borderOf(entry.letter) + '"' + (entry.nopass ? ' title="Can&rsquo;t become a best team"' : '') + '>' +
+    ';--sel-bd:' + borderOf(entry.letter) + '"' + (entry.nopass ? ' title="Difficult to become best team"' : '') + '>' +
     '<div class="l1"><span class="nm">' + esc(uniairName(c.member)) + '</span>' +
     (need ? '<span class="need ' + kind + '" title="' + need + (need === 1 ? ' card' : ' cards') + ' to get: ' + tags.join(', ') + '">' + need + '</span>' : '') + '</div>' +
     '<div class="l2"><span class="sg">' + esc(c.song) + ' &middot; ' + esc(shortSkillText(c.centerSkill)) + '</span>' +
@@ -1926,7 +1926,7 @@ function renderPanel() {
   P.classList.toggle('nopass', entry.nopass);
   var need = teamCards(spec).filter(function(x) { return !b.owned[x.id]; });
   var h = '<div class="ph"><div class="ph-l"><div class="ph-t">' + sq(c.color) + '<span class="title">' + esc(uniairName(c.member)) + ' / ' + esc(c.song) + '</span>' +
-    (entry.nopass ? '<span class="np" title="Even with every disco &amp; coaching line done it reaches ' + esc(pctText(entry.reach)) + ' vs your best">Can&rsquo;t become a best team</span>' : '') + '</div></div>' +
+    (entry.nopass ? '<span class="np" title="Even with every disco &amp; coaching line done it reaches ' + esc(pctText(entry.reach)) + ' vs your best">Difficult to become best team</span>' : '') + '</div></div>' +
     '<span class="gapbox">' + (entry.isBest
       ? '<span class="gapnum best">Best</span>'
       : '<span class="qual">vs best ' + COLOR_LABEL[k] + ':</span><span class="gapnum">' + pct(entry.gap) + '</span>') + '</span>' +
@@ -1936,7 +1936,8 @@ function renderPanel() {
   var col = entry.isBest ? 'Team gain' : 'Gain';
   var star = function(onBest) { return onBest && !entry.isBest ? ' <span class="ob" title="Also on your best team">&#9733;</span>' : ''; };
   var anyNeed = need.length > 0;
-  h += '<div class="two"><div><div class="sub" style="color:' + textOf(k) + '">Build this team</div><table class="team"><tbody>' +
+  h += '<div class="two"><div><div class="sub" style="color:' + textOf(k) + '">Build this team</div><table class="team"><thead><tr><th>Color</th><th>Member</th><th>Card / Song</th><th>Status</th>' +
+    (anyNeed ? '<th class="num">Gain</th>' : '') + '</tr></thead><tbody>' +
     teamCards(spec).map(function(x, j) {
       var owned = !!b.owned[x.id];
       var tag = owned ? 'Owned' : classifyAcquisition(x, b.owned).tag;
@@ -1954,7 +1955,8 @@ function renderPanel() {
       }
       return '<tr class="' + (j ? '' : 'lead') + '"><td>' + sq(x.color) + '</td><td title="' + esc(uniairName(x.member)) + '">' +
         esc(uniairName(x.member)) + '</td><td class="song" title="' + esc(x.song) + '">' + esc(x.song) + '</td><td>' + pill(tag) + '</td>' + val + '</tr>';
-    }).join('') + '</tbody></table>';
+    }).join('') + '</tbody></table>' +
+    (anyNeed ? '<div class="foot">The gains for this team are assumed in the top right percent value.</div>' : '');
   h += '<div class="sub" style="margin-top:16px">Additional Gains: Kizuna</div>' +
     '<table><colgroup><col><col style="width:64px"><col style="width:130px"></colgroup>' +
     '<thead><tr><th>Member</th><th class="num">Now</th><th class="num">Gain (Per 10 LV)</th></tr></thead><tbody>' +

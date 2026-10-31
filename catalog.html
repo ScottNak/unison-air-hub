@@ -358,7 +358,7 @@
 </style>
 </head>
 <body>
-  <div class="page-version-badge">v17</div>
+  <div class="page-version-badge">v18</div>
   <div class="wrap">
     <div class="panel">
       <div class="controls">
@@ -407,6 +407,7 @@
           <span class="cs-div"></span>
           <label class="filter-toggle-label"><input type="checkbox" id="grad-filter"> Exclude graduated</label>
           <label class="filter-toggle-label"><input type="checkbox" id="has-plus-filter"> Has SSR+</label>
+          <label class="filter-toggle-label"><input type="checkbox" id="recent-filter"> Recently added</label>
           <span class="cs-div"></span>
           <button class="pull-order-btn" id="pull-order-toggle" type="button" aria-pressed="false">Show Pull Order</button>
           <button class="pull-order-btn" id="pull-order-edit-btn" type="button">Edit Pull Order</button>
@@ -538,6 +539,7 @@ let ownedFilter = 'all';
 let pullOrderMode = false; 
 let excludeGrads = false;
 let hasPlusOnly = false; 
+let recentOnly = false; 
 
 const tbody = document.getElementById('tbody');
 const colorFiltersEl = document.getElementById('color-filters');
@@ -918,6 +920,11 @@ document.getElementById('has-plus-filter').addEventListener('change', (e) => {
   render();
 });
 
+document.getElementById('recent-filter').addEventListener('change', (e) => {
+  recentOnly = e.target.checked;
+  render();
+});
+
 
 
 
@@ -1094,6 +1101,7 @@ function render() {
     if (ownedFilter === 'unowned' && rowOwned(row)) return false;
     if (excludeGrads && c.grad) return false;
     if (hasPlusOnly && !row.plus) return false;
+    if (recentOnly && !(RECENT_IDS.has(row.base.id) || (row.plus && RECENT_IDS.has(row.plus.id)))) return false;
     return true;
   });
 
@@ -1527,6 +1535,7 @@ function filtersSummaryItems() {
   if (ownedFilter !== 'all') items.push({ key: 'owned', label: 'Owned:', value: ownedFilter === 'owned' ? 'Owned' : 'Unowned' });
   if (excludeGrads) items.push({ key: 'grad', label: 'Exclude graduated', value: '' });
   if (hasPlusOnly) items.push({ key: 'plus', label: 'Has SSR+', value: '' });
+  if (recentOnly) items.push({ key: 'recent', label: 'Recently added', value: '' });
   return items;
 }
 
@@ -1549,6 +1558,7 @@ document.getElementById('filters-summary').addEventListener('click', (e) => {
   }
   else if (k === 'grad') { excludeGrads = false; document.getElementById('grad-filter').checked = false; }
   else if (k === 'plus') { hasPlusOnly = false; document.getElementById('has-plus-filter').checked = false; }
+  else if (k === 'recent') { recentOnly = false; document.getElementById('recent-filter').checked = false; }
   render();
 });
 
@@ -1928,6 +1938,14 @@ function upMemberSuggestions() {
 
 
 const NEWEST_SONGS = ["新参者二〇二五"];
+const CARD_UPDATES = [{"date":"2026-10-30","ids":[6663,6664,6665,6666,6667,6668,6669,6670,6671,6672,6673,6674,6675,6676,6677,6678,6679,6680,6681]},{"date":"2026-10-25","ids":[6660,6661,6662]},{"date":"2026-10-23","ids":[6659]},{"date":"2026-10-21","ids":[6646,6647,6648,6649,6650,6651,6652,6653,6654,6655,6656,6657,6658]},{"date":"2026-10-05","ids":[6639,6640,6641,6642,6643,6644,6645]},{"date":"2026-10-02","ids":[6638]},{"date":"2026-09-27","ids":[6636,6637]},{"date":"2026-09-23","ids":[6635]},{"date":"2026-09-23","ids":[6633,6634]},{"date":"2026-09-23","ids":[6577,6578,6579,6580,6581,6582,6583,6584,6585,6586,6587,6588,6589,6590,6591,6592,6593,6594,6595,6596,6597,6598,6599,6600,6601,6602,6603,6604,6605,6606,6607,6608,6609,6610,6611,6612,6613,6614,6615,6616,6617,6618,6619,6620,6621,6622,6623,6624,6625,6626,6627,6628,6629,6630,6631,6632]},{"date":"2026-09-10","ids":[6567,6568,6569,6570,6571,6572,6573,6574,6575,6576]},{"date":"2026-09-07","ids":[6523,6524,6525,6526,6527,6528,6529,6530,6531,6532,6533,6534,6535,6536,6537,6538,6539,6540,6541,6542,6543,6544,6545,6546,6547,6548,6549,6550,6551,6552,6553,6554,6555,6556,6557,6558,6559,6560,6561,6562,6563,6564,6565,6566]},{"date":"2026-08-29","ids":[6501,6502,6503,6504,6505,6506,6507,6508,6509,6510,6511,6512,6513,6514,6515,6516,6517,6518,6519,6520,6521,6522]}];
+const RECENT_IDS = (() => {
+  const d = new Date();
+  d.setDate(d.getDate() - 7);
+  const cutoff = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  const hits = CARD_UPDATES.filter(u => u.date >= cutoff);
+  return new Set((hits.length ? hits : CARD_UPDATES.slice(0, 1)).flatMap(u => u.ids));
+})();
 function upSongSuggestions() {
   const terms = upMemberTerms();
   const song = upSongTerm();
@@ -2047,6 +2065,9 @@ function resetFilters() {
 
   hasPlusOnly = false;
   document.getElementById('has-plus-filter').checked = false;
+
+  recentOnly = false;
+  document.getElementById('recent-filter').checked = false;
 
   setPullOrderMode(false);
 
