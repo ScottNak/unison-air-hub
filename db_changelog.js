@@ -1,6 +1,169 @@
 window.UNIAIR_DB_CHANGELOG = {
  "entries": [
   {
+   "version": "db30-2026-10-30",
+   "date": "2026-10-30",
+   "added": 19,
+   "cardCount": 5667,
+   "titles": [
+    "新参者二〇二五"
+   ],
+   "cards": [
+    {
+     "id": 6663,
+     "color": "Y",
+     "memberEn": "Matsumoto Wako",
+     "title": "新参者二〇二五",
+     "cs": "Pe85%",
+     "sk": 0.034
+    },
+    {
+     "id": 6664,
+     "color": "P",
+     "memberEn": "Asai Konomi",
+     "title": "新参者二〇二五",
+     "cs": "Da70%",
+     "sk": 0.0252
+    },
+    {
+     "id": 6665,
+     "color": "G",
+     "memberEn": "Katsumata Haru",
+     "title": "新参者二〇二五",
+     "cs": "Vo70%",
+     "sk": 0.0232
+    },
+    {
+     "id": 6666,
+     "color": "R",
+     "memberEn": "Inaguma Hina",
+     "title": "新参者二〇二五",
+     "cs": "Da70%",
+     "sk": 0.0173
+    },
+    {
+     "id": 6667,
+     "color": "B",
+     "memberEn": "Sato Neo",
+     "title": "新参者二〇二五",
+     "cs": "Pe70%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6668,
+     "color": "Y",
+     "memberEn": "Yamada Momomi",
+     "title": "新参者二〇二五",
+     "cs": "Da70%",
+     "sk": 0.0078
+    },
+    {
+     "id": 6669,
+     "color": "G",
+     "memberEn": "Nakagawa Chihiro",
+     "title": "新参者二〇二五",
+     "cs": "Vo70%+仕上がり度50%",
+     "sk": 0.0067
+    },
+    {
+     "id": 6670,
+     "color": "R",
+     "memberEn": "Yamakawa Ui",
+     "title": "新参者二〇二五",
+     "cs": "Vo70%",
+     "sk": 0.0
+    },
+    {
+     "id": 6671,
+     "color": "P",
+     "memberEn": "Meguro Hiro",
+     "title": "新参者二〇二五",
+     "cs": "Pe85%",
+     "sk": 0.0368
+    },
+    {
+     "id": 6672,
+     "color": "G",
+     "memberEn": "Ota Mizuki",
+     "title": "新参者二〇二五",
+     "cs": "Pe85%",
+     "sk": 0.034
+    },
+    {
+     "id": 6673,
+     "color": "Y",
+     "memberEn": "Tsurusaki Niko",
+     "title": "新参者二〇二五",
+     "cs": "Da85%",
+     "sk": 0.0334
+    },
+    {
+     "id": 6674,
+     "color": "R",
+     "memberEn": "Katayama Saki",
+     "title": "新参者二〇二五",
+     "cs": "Pe70%",
+     "sk": 0.025
+    },
+    {
+     "id": 6675,
+     "color": "Y",
+     "memberEn": "Kuramori Hinano",
+     "title": "新参者二〇二五",
+     "cs": "Vo70%",
+     "sk": 0.0246
+    },
+    {
+     "id": 6676,
+     "color": "B",
+     "memberEn": "Sato Yu",
+     "title": "新参者二〇二五",
+     "cs": "Pe70%",
+     "sk": 0.0173
+    },
+    {
+     "id": 6677,
+     "color": "P",
+     "memberEn": "Ono Manami",
+     "title": "新参者二〇二五",
+     "cs": "Vo70%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6678,
+     "color": "B",
+     "memberEn": "Takai Rika",
+     "title": "新参者二〇二五",
+     "cs": "Da70%",
+     "sk": 0.0078
+    },
+    {
+     "id": 6679,
+     "color": "P",
+     "memberEn": "Matsuo Sakura",
+     "title": "新参者二〇二五",
+     "cs": "Pe70%+仕上がり度50%",
+     "sk": 0.0067
+    },
+    {
+     "id": 6680,
+     "color": "R",
+     "memberEn": "Shimoda Izuki",
+     "title": "新参者二〇二五",
+     "cs": "Da70%",
+     "sk": 0.0
+    },
+    {
+     "id": 6681,
+     "color": "G",
+     "memberEn": "Sakai Nina",
+     "title": "新参者二〇二五",
+     "cs": "Da70%",
+     "sk": 0.0
+    }
+   ]
+  },
+  {
    "version": "db29-2026-10-25",
    "date": "2026-10-25",
    "added": 3,
@@ -1502,25 +1665,6 @@ window.UNIAIR_DB_CHANGELOG = {
    "titles": [],
    "cards": [],
    "note": "Updated English names to be consistent (last name - first name)"
-  },
-  {
-   "version": "db10-2026-08-25",
-   "date": "2026-08-25",
-   "added": 1,
-   "cardCount": 5486,
-   "titles": [
-    "海風とわがまま"
-   ],
-   "cards": [
-    {
-     "id": 6500,
-     "color": "Y",
-     "memberEn": "Yamaguchi Haruyo",
-     "title": "海風とわがまま",
-     "cs": "Da85%",
-     "sk": 0.0368
-    }
-   ]
   }
  ]
 };
