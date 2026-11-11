@@ -1,6 +1,315 @@
 window.UNIAIR_DB_CHANGELOG = {
  "entries": [
   {
+   "version": "db31-2026-11-10",
+   "date": "2026-11-10",
+   "added": 37,
+   "cardCount": 5704,
+   "titles": [
+    "Make or Break",
+    "港区パセリ",
+    "お願いバッハ！"
+   ],
+   "cards": [
+    {
+     "id": 6682,
+     "color": "B",
+     "memberEn": "Matono Mio",
+     "title": "Make or Break",
+     "cs": "Vo85%",
+     "sk": 0.0368
+    },
+    {
+     "id": 6683,
+     "color": "R",
+     "memberEn": "Yamasaki Ten",
+     "title": "Make or Break",
+     "cs": "Pe70%",
+     "sk": 0.0252
+    },
+    {
+     "id": 6684,
+     "color": "G",
+     "memberEn": "Murai Yu",
+     "title": "Make or Break",
+     "cs": "Da70%",
+     "sk": 0.025
+    },
+    {
+     "id": 6685,
+     "color": "P",
+     "memberEn": "Taniguchi Airi",
+     "title": "Make or Break",
+     "cs": "Da70%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6686,
+     "color": "Y",
+     "memberEn": "Yamashita Shizuki",
+     "title": "Make or Break",
+     "cs": "Da70%",
+     "sk": 0.0078
+    },
+    {
+     "id": 6687,
+     "color": "R",
+     "memberEn": "Fujiyoshi Karin",
+     "title": "Make or Break",
+     "cs": "Pe70%",
+     "sk": 0.0
+    },
+    {
+     "id": 6688,
+     "color": "G",
+     "memberEn": "Ozono Rei",
+     "title": "Make or Break",
+     "cs": "Da70%",
+     "sk": 0.0
+    },
+    {
+     "id": 6689,
+     "color": "P",
+     "memberEn": "Tamura Hono",
+     "title": "Make or Break",
+     "cs": "Pe85%",
+     "sk": 0.034
+    },
+    {
+     "id": 6690,
+     "color": "B",
+     "memberEn": "Morita Hikaru",
+     "title": "Make or Break",
+     "cs": "VoPe50%",
+     "sk": 0.0246
+    },
+    {
+     "id": 6691,
+     "color": "Y",
+     "memberEn": "Mukai Itoha",
+     "title": "Make or Break",
+     "cs": "Da70%",
+     "sk": 0.0232
+    },
+    {
+     "id": 6692,
+     "color": "P",
+     "memberEn": "Matsuda Rina",
+     "title": "Make or Break",
+     "cs": "Da70%",
+     "sk": 0.0173
+    },
+    {
+     "id": 6693,
+     "color": "R",
+     "memberEn": "Murayama Miu",
+     "title": "Make or Break",
+     "cs": "Pe70%",
+     "sk": 0.0067
+    },
+    {
+     "id": 6694,
+     "color": "B",
+     "memberEn": "Moriya Rena",
+     "title": "Make or Break",
+     "cs": "Pe70%",
+     "sk": 0.0
+    },
+    {
+     "id": 6695,
+     "color": "G",
+     "memberEn": "Nakashima Yuzuki",
+     "title": "Make or Break",
+     "cs": "Vo70%",
+     "sk": 0.0
+    },
+    {
+     "id": 6696,
+     "color": "G",
+     "memberEn": "Ishimori Rika",
+     "title": "港区パセリ",
+     "cs": "Vo85%",
+     "sk": 0.0368
+    },
+    {
+     "id": 6697,
+     "color": "P",
+     "memberEn": "Endo Riko",
+     "title": "港区パセリ",
+     "cs": "Da70%",
+     "sk": 0.0252
+    },
+    {
+     "id": 6698,
+     "color": "Y",
+     "memberEn": "Endo Hikari",
+     "title": "港区パセリ",
+     "cs": "VoPe50%",
+     "sk": 0.0232
+    },
+    {
+     "id": 6699,
+     "color": "B",
+     "memberEn": "Odakura Reina",
+     "title": "港区パセリ",
+     "cs": "Vo70%",
+     "sk": 0.0173
+    },
+    {
+     "id": 6700,
+     "color": "G",
+     "memberEn": "Onuma Akiho",
+     "title": "港区パセリ",
+     "cs": "Vo70%",
+     "sk": 0.0067
+    },
+    {
+     "id": 6701,
+     "color": "P",
+     "memberEn": "Kosaka Marino",
+     "title": "港区パセリ",
+     "cs": "Pe70%",
+     "sk": 0.0
+    },
+    {
+     "id": 6702,
+     "color": "R",
+     "memberEn": "Kojima Nagisa",
+     "title": "港区パセリ",
+     "cs": "Pe70%",
+     "sk": 0.0
+    },
+    {
+     "id": 6703,
+     "color": "Y",
+     "memberEn": "Kosaka Nao",
+     "title": "お願いバッハ！",
+     "cs": "VoPe50%",
+     "sk": 0.0368
+    },
+    {
+     "id": 6704,
+     "color": "G",
+     "memberEn": "Kamimura Hinano",
+     "title": "お願いバッハ！",
+     "cs": "ALL45%",
+     "sk": 0.0252
+    },
+    {
+     "id": 6705,
+     "color": "P",
+     "memberEn": "Shimizu Rio",
+     "title": "お願いバッハ！",
+     "cs": "Pe70%",
+     "sk": 0.0246
+    },
+    {
+     "id": 6706,
+     "color": "G",
+     "memberEn": "Ishizuka Tamaki",
+     "title": "お願いバッハ！",
+     "cs": "Vo70%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6707,
+     "color": "R",
+     "memberEn": "Hirao Honoka",
+     "title": "お願いバッハ！",
+     "cs": "Pe70%",
+     "sk": 0.0078
+    },
+    {
+     "id": 6708,
+     "color": "B",
+     "memberEn": "Hiraoka Mitsuki",
+     "title": "お願いバッハ！",
+     "cs": "Da70%",
+     "sk": 0.0
+    },
+    {
+     "id": 6709,
+     "color": "Y",
+     "memberEn": "Kanemura Miku",
+     "title": "お願いバッハ！",
+     "cs": "Pe85%",
+     "sk": 0.0368
+    },
+    {
+     "id": 6710,
+     "color": "P",
+     "memberEn": "Konishi Nanami",
+     "title": "お願いバッハ！",
+     "cs": "ALL45%",
+     "sk": 0.025
+    },
+    {
+     "id": 6711,
+     "color": "R",
+     "memberEn": "Takeuchi Kirari",
+     "title": "お願いバッハ！",
+     "cs": "Pe70%",
+     "sk": 0.0232
+    },
+    {
+     "id": 6712,
+     "color": "G",
+     "memberEn": "Fujishima Kaho",
+     "title": "お願いバッハ！",
+     "cs": "Da70%",
+     "sk": 0.0173
+    },
+    {
+     "id": 6713,
+     "color": "B",
+     "memberEn": "Morimoto Marie",
+     "title": "お願いバッハ！",
+     "cs": "Da70%",
+     "sk": 0.0078
+    },
+    {
+     "id": 6714,
+     "color": "R",
+     "memberEn": "Watanabe Rina",
+     "title": "お願いバッハ！",
+     "cs": "ALL45%",
+     "sk": 0.034
+    },
+    {
+     "id": 6715,
+     "color": "G",
+     "memberEn": "Shogenji Yoko",
+     "title": "お願いバッハ！",
+     "cs": "Pe70%",
+     "sk": 0.0252
+    },
+    {
+     "id": 6716,
+     "color": "B",
+     "memberEn": "Miyachi Sumire",
+     "title": "お願いバッハ！",
+     "cs": "Vo70%",
+     "sk": 0.025
+    },
+    {
+     "id": 6717,
+     "color": "P",
+     "memberEn": "Yamashita Haruka",
+     "title": "お願いバッハ！",
+     "cs": "Da70%",
+     "sk": 0.0163
+    },
+    {
+     "id": 6718,
+     "color": "Y",
+     "memberEn": "Takahashi Mikuni",
+     "title": "お願いバッハ！",
+     "cs": "Vo70%",
+     "sk": 0.0067
+    }
+   ]
+  },
+  {
    "version": "db30-2026-10-30",
    "date": "2026-10-30",
    "added": 19,
@@ -1656,15 +1965,6 @@ window.UNIAIR_DB_CHANGELOG = {
      "sk": 0.0057
     }
    ]
-  },
-  {
-   "version": "db11-2026-08-28",
-   "date": "2026-08-28",
-   "added": 0,
-   "cardCount": 5486,
-   "titles": [],
-   "cards": [],
-   "note": "Updated English names to be consistent (last name - first name)"
   }
  ]
 };
